@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_profile" android:icon="@drawable/ic_account_box_black_24dp"
+            android:title="@string/profile" />
+        <item android:id="@+id/nav_my_places" android:icon="@drawable/ic_collections_black_24dp"
+            android:title="@string/places" />
+        <item android:id="@+id/nav_new_event" android:icon="@drawable/ic_add_to_photos_black_24dp"
+            android:title="@string/event" />
+        <item android:id="@+id/nav_search" android:icon="@drawable/ic_search_black_24dp"
+            android:title="@string/find" />
+        <item android:id="@+id/nav_category" android:icon="@drawable/ic_sort_black_24dp"
+            android:title="@string/category" />
+        <item android:id="@+id/nav_settings" android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/settings" />
+    </group>
+
+</menu>

@@ -1,0 +1,120 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:rsb="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.polina.meethere.fragments.NewEventFragment"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_name"
+        android:layout_gravity="center_horizontal"
+        android:inputType="none"
+        android:hint="@string/add_name"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/edit_details"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:hint="@string/details"/>
+
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_category"
+            android:layout_weight="10"
+            />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/imageView2"
+            android:src="@drawable/location"
+            android:clickable="true"
+            android:onClick="onMap"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/from"
+            android:id="@+id/button_from"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="30dp"
+            android:onClick="onStart"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/till"
+            android:id="@+id/button_till"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="30dp"
+            android:onClick="onAnd"/>
+    </LinearLayout>
+
+    <com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        rsb:absoluteMinValue="20"
+        rsb:absoluteMaxValue="150"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/budget"
+            android:id="@+id/textView2"
+            android:layout_weight="3" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText3"
+            android:inputType="number"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/spinner2"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button5"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

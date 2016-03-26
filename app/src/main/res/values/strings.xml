@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">Meethere</string>
+    <string name="facebook_app_id">1515739352065701</string>
+    <string name="facebook_button">connect_with_facebook</string>
+    <string name="email">enter email</string>
+    <string name="password">enter password</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="log_in_with_email">log in with email</string>
+    <string name="sign_up">sign up</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_map">Map</string>
+    <string name="title_activity_maps">Map</string>
+    
+    <string name="profile">Профаил</string>
+    <string name="places">Мои места</string>
+    <string name="event">Создать ивент</string>
+    <string name="find">Найти ивент</string>
+    <string name="category">Категории</string>
+    <string name="settings">Настройки</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_my_places">MyPlacesActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="past_events">Прошлые встречи</string>
+    <string name="future_events">Будущие встречи</string>
+    <string name="createt_by_my">Созданные мной</string>
+    <string name="add_name">Название</string>
+    <string name="details">Описание</string>
+    <string name="from">начало</string>
+    <string name="till">конец</string>
+    <string name="budget">Бюджет</string>
+    <string-array name="category">
+        <item>Выберете категорию...</item>
+        <item>Встреча с друзьями</item>
+        <item>Искусство и культура</item>
+        <item>Книжные клубы</item>
+        <item>Карьера и бизне</item>
+        <item>Автомобили и мотоциклы</item>
+        <item>Сообщество и Окружающая среда</item>
+        <item>Танцы</item>
+        <item>Образование и обучение</item>
+        <item>Мода и красота</item>
+        <item>Фитнес</item>
+        <item>Еда, напитки</item>
+        <item>Игры</item>
+        <item>Здоровье и благополучие</item>
+        <item>Хобби и ремесла</item>
+        <item>Национальные сообщества</item>
+        <item>Стиль жизни</item>
+        <item>Движения и Политика</item>
+        <item>Фильмы и кино</item>
+        <item>Музыка</item>
+        <item>Духовность</item>
+        <item>На открытом воздухе и приключения</item>
+        <item>Паранормальное явление</item>
+        <item>Родители и семья</item>
+        <item>Домашние животные</item>
+        <item>Фотография</item>
+        <item>Религия и Убеждения</item>
+        <item>Фантастика и Фэнтези</item>
+        <item>Для одиноких</item>
+        <item>Общение</item>
+        <item>Спорт и отдых</item>
+        <item>Поддержка</item>
+        <item>Технологии</item>
+        <item>Другое</item>
+    </string-array>
+
+</resources>
