@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Meethere</string>
-    <string name="facebook_app_id">1515739352065701</string>
+    <string name="facebook_app_id"></string>
     <string name="facebook_button">connect_with_facebook</string>
     <string name="email">enter email</string>
     <string name="password">enter password</string>
@@ -12,7 +12,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Настройки</string>
     <string name="action_map">Map</string>
     <string name="title_activity_maps">Map</string>
     
@@ -27,49 +27,145 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_my_places">MyPlacesActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
-    <string name="past_events">Прошлые встречи</string>
-    <string name="future_events">Будущие встречи</string>
-    <string name="createt_by_my">Созданные мной</string>
+    <string name="past_events">Планируемые</string>
+    <string name="future_events">Ближайшие</string>
+    <string name="createt_by_my">Созданые</string>
     <string name="add_name">Название</string>
     <string name="details">Описание</string>
-    <string name="from">начало</string>
-    <string name="till">конец</string>
     <string name="budget">Бюджет</string>
+    <string name="new_event">Создать</string>
+    <string name="more">ЕЩЕ</string>
+    <string name="start">от...</string>
+    <string name="to">...до</string>
+    <string name="sort_by">Сортировать по</string>
+    <string name="ok">Выбрать</string>
     <string-array name="category">
+
         <item>Выберете категорию...</item>
-        <item>Встреча с друзьями</item>
-        <item>Искусство и культура</item>
-        <item>Книжные клубы</item>
-        <item>Карьера и бизне</item>
-        <item>Автомобили и мотоциклы</item>
-        <item>Сообщество и Окружающая среда</item>
-        <item>Танцы</item>
-        <item>Образование и обучение</item>
-        <item>Мода и красота</item>
-        <item>Фитнес</item>
-        <item>Еда, напитки</item>
+      <item>Встреча с друзьями</item>
+       <item>Авто мото</item>
+       <item>Для одиноких</item>
+       <item>Духовность</item>
+       <item>Еда и напитки</item>
+       <item>Животные</item>
+        <item>Здоровье</item>
         <item>Игры</item>
-        <item>Здоровье и благополучие</item>
-        <item>Хобби и ремесла</item>
-        <item>Национальные сообщества</item>
-        <item>Стиль жизни</item>
-        <item>Движения и Политика</item>
-        <item>Фильмы и кино</item>
+        <item>Искусство и культура</item>
+        <item>Карьера и бизнес</item>
+        <item>Кино</item>
+        <item>Книги</item>
+        <item>Мода и красота</item>
         <item>Музыка</item>
-        <item>Духовность</item>
-        <item>На открытом воздухе и приключения</item>
-        <item>Паранормальное явление</item>
-        <item>Родители и семья</item>
-        <item>Домашние животные</item>
-        <item>Фотография</item>
-        <item>Религия и Убеждения</item>
-        <item>Фантастика и Фэнтези</item>
-        <item>Для одиноких</item>
+        <item>На природе</item>
+        <item>Образование и развитие</item>
         <item>Общение</item>
-        <item>Спорт и отдых</item>
+        <item>Паранормальное явление</item>
         <item>Поддержка</item>
+        <item>Политика</item>
+        <item>Родители и семья</item>
+        <item>Сообщества</item>
+        <item>Спорт и отдых</item>
+        <item>Стиль жизни</item>
+        <item>Танцы</item>
         <item>Технологии</item>
+        <item>Фантастика и Фэнтези</item>
+        <item>Фитнес</item>
+        <item>Фотография</item>
+        <item>Хобби</item>
         <item>Другое</item>
     </string-array>
+    <string-array name="sort_array">
+        <item>Выберите сортировку по</item>
+        <item>дате</item>
+        <item>расположениею</item>
+        <item>популярности</item>
+        <item>бюджету: от большего к меньшему</item>
+        <item>бюджету: от меньшего к большему</item>
+        <item></item>
+    </string-array>
+    <string name="title_activity_list">ListActivity</string>
+    <string name="ololo">ololo</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_privacy">Приватность</string>
+
+    <string name="pref_title_coming_event">Приближении ваших событий</string>
+    <string name="pref_title_close_event">События поблизости</string>
+    <string name="pref_title_interesting_event">Интересные вам события</string>
+    <string name="pref_title_adding">Добавление участников в ваши события</string>
+
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_email">Email</string>
+    <string name="pref_title_phone">Телефоны</string>
+    <string name="pref_title_private_information">Личную информация</string>
+    <string name="pref_title_preferences">Предпочтения</string>
+    <string name="pref_title_attends">Посещения</string>
+    <string name="pref_title_send_mass">Сообщения</string>
+
+    <string name="pref_title_comments_mass">Сообщения, коментарии</string>
+
+
+
+    <string-array name="pref_notification_list_titles">
+        <item>Друзья</item>
+        <item>Все в сети</item>
+        <item>Никто</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_notification_in_facebook">Оповещения в facebook</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Оповещения</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="pref_how_can_see_title">Кто может видить</string>
+    <string name="pref_how_can_send_title">Кто может отсылать</string>
+    <string name="my_location">мое местоположение</string>
+    <string name="start_age">15</string>
+    <string name="end_age">45</string>
+    <string name="age">Возраст</string>
+    <string name="pin">место на карте</string>
+    <string name="start_budget">10</string>
+    <string name="end_budget">500</string>
+    <string name="created_by_me">мое событие</string>
+    <string name="all_catrgory">Все категории</string>
+    <string name="bigger">Больше</string>
 
 </resources>

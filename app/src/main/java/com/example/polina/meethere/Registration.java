@@ -29,7 +29,7 @@ public class Registration extends Activity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                System.out.println(loginResult);
+               startActivity(new Intent(Registration.this, MainActivity.class));
 
             }
 

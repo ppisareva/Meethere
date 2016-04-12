@@ -2,19 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/horizontal_list"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout"
         android:layout_alignParentStart="true" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:id="@+id/linearLayout">
@@ -27,19 +27,23 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:layout_weight="1"
-            android:contextClickable="true" />
+            android:contextClickable="true"
+            android:layout_gravity="center_vertical"
+            android:textSize="18dp"
+            android:layout_marginLeft="7dp" />
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:text="больше"
+            android:layout_height="wrap_content"
+            android:text="@string/more"
             android:id="@+id/list_learn_more"
             android:background="@android:color/transparent"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:textSize="10dp"
             android:textColor="@color/blue"
-            android:textStyle="italic" />
+            android:textStyle="italic"
+            android:layout_gravity="center_vertical" />
     </LinearLayout>
 
     <TextView

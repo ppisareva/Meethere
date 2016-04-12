@@ -10,12 +10,32 @@ public class Event {
     private String name;
     private String details;
     private Date date;
+    private String rating;
+    private String budget;
 
-    public Event(int photo, String name, String details, Date date) {
+    public Event(int photo, String name, String details, Date date, String rating, String budget) {
         this.photo = photo;
         this.name = name;
         this.details = details;
         this.date = date;
+        this.rating = rating;
+        this.budget = budget;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public String getBudget() {
+        return budget;
+    }
+
+    public void setBudget(String budget) {
+        this.budget = budget;
     }
 
     public String getDetails() {

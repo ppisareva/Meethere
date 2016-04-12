@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -18,19 +20,25 @@ import android.view.View;
 import android.widget.DatePicker;
 
 import com.example.polina.meethere.fragments.CategoryFragment;
+import com.example.polina.meethere.fragments.FindEventFragment;
 import com.example.polina.meethere.fragments.MyEventsListsFragment;
 import com.example.polina.meethere.fragments.NewEventFragment;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
     private static int MAX_WIDTH = 3000;
+    private static int START = 20202;
+    private static int END = 20002;
     private CategoryFragment categoryFragment;
     private MyEventsListsFragment myEventsListsFragment;
     private NewEventFragment newEventFragment;
+    private FindEventFragment findEventFragment;
 
 
 
@@ -42,6 +50,7 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_main, categoryFragment).commit();
         myEventsListsFragment = MyEventsListsFragment.newInstance();
         newEventFragment = NewEventFragment.newInstance();
+        findEventFragment = FindEventFragment.newInstance();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -54,6 +63,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -63,13 +73,51 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-//    public void onStart (View v){
-//        DatePickerDialog datePickerDialog = new DatePickerDialog(this, onDateSetListener,)
-//    }
+    public void onStart (View v){
+       chooseTimeDialog(START);
+    }
 
-    DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
+    public void onAnd (View v){
+        chooseTimeDialog(END);
+    }
+
+    public void onImageAdd (View v){
+
+    }
+
+
+    public void chooseTimeDialog(Integer i){
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog datePickerDialog;
+        if(i==START) {
+            datePickerDialog = new DatePickerDialog(this, onDateStartListener, year, month, day);
+        } else {
+            datePickerDialog = new DatePickerDialog(this, onDateEndListener, year, month, day);
+        }
+        datePickerDialog.show();
+
+    }
+
+
+
+
+    DatePickerDialog.OnDateSetListener onDateStartListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+           newEventFragment.changeStartTime(dayOfMonth + "/" + monthOfYear + 1 + "/" + year);
+
+
+        }
+    };
+
+    DatePickerDialog.OnDateSetListener onDateEndListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+            newEventFragment.changeEndTime(dayOfMonth + "/" + monthOfYear + 1 + "/" + year);
 
         }
     };
@@ -123,14 +171,21 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_profile) {
         } else if (id == R.id.nav_my_places) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, myEventsListsFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, myEventsListsFragment)
+                    .addToBackStack(null).commit();
         } else if (id == R.id.nav_new_event) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, newEventFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, newEventFragment)
+                    .addToBackStack(null).commit();
         } else if (id == R.id.nav_search) {
-
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, findEventFragment)
+                    .addToBackStack(null).commit();
         } else if (id == R.id.nav_category) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, categoryFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, categoryFragment)
+                    .addToBackStack(null).commit();
+
         } else if (id == R.id.nav_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

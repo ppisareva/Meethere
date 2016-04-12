@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,16 +35,14 @@ public class MyEventsListsFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_my_events_lists, container, false);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
         tabLayout = (TabLayout) v.findViewById(R.id.tabs);
+        tabLayout.setVisibility(View.VISIBLE);
         mViewPager = (ViewPager) v.findViewById(R.id.container);
         mViewPager.setVisibility(View.VISIBLE);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         tabLayout.setupWithViewPager(mViewPager);
-        // подписать таб
-        tabLayout.getTabAt(Utils.FRAGMENT_PAST_EVENTS).setText(R.string.past_events);
-        tabLayout.getTabAt(Utils.FRAGMENT_FUTURE_EVENTS).setText(R.string.future_events);
-        tabLayout.getTabAt(Utils.FRAGMENT_CREATED_BY_ME_EVENTS).setText(R.string.createt_by_my);
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         return v;
     }
 
@@ -81,11 +80,11 @@ public class MyEventsListsFragment extends android.support.v4.app.Fragment {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return getString(R.string.createt_by_my);
                 case 1:
-                    return "SECTION 2";
+                    return getString(R.string.future_events);
                 case 2:
-                    return "SECTION 3";
+                    return getString(R.string.past_events);
             }
             return null;
         }

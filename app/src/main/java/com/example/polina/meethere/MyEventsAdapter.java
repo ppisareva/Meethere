@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,8 +42,10 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
         Event event = eventList.get(position);
         holder.name.setText(event.getName());
         holder.image.setImageResource(event.getPhoto());
-        holder.time.setText(event.getDate().getDay()+" "+ event.getDate().getMonth()+", "+ event.getDate().getHours()+":" +event.getDate().getMinutes());
-        holder.text.setText(event.getDetails());
+        holder.time.setText("24 Марта, 12:30");
+        holder.rating.setText(event.getRating());
+        holder.budget.setText(event.getBudget());
+
     }
 
 
@@ -56,16 +59,23 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
 
 
         private ImageView image;
+        private CheckBox imageJoin;
         private TextView name;
-        private TextView text;
+        private TextView rating;
+        private TextView myEvent;
+        private TextView budget;
         private TextView time;
 
         public ViewHolder(View itemView) {
             super(itemView);
             image = (ImageView) itemView.findViewById(R.id.image_my_event);
-            text = (TextView) itemView.findViewById(R.id.details_my_event);
             name = (TextView) itemView.findViewById(R.id.name_my_event);
             time = (TextView) itemView.findViewById(R.id.time_my_event);
+            imageJoin = (CheckBox) itemView.findViewById(R.id.join_event);
+            rating = (TextView) itemView.findViewById(R.id.rating_my_event);
+            myEvent = (TextView)itemView.findViewById(R.id.my_event);
+            budget = (TextView) itemView.findViewById(R.id.my_event_budget);
+
 
         }
 

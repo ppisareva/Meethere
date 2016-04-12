@@ -1,37 +1,91 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:id="@+id/image_my_event"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:text="name"
-        android:id="@+id/name_my_event"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/image_my_event" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="time"
-        android:id="@+id/time_my_event"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:textSize="7dp" />
-
-    <TextView
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:text="New Text"
-        android:id="@+id/details_my_event"
-        android:layout_alignBottom="@+id/image_my_event"
-        android:layout_toEndOf="@+id/image_my_event" />
+        android:layout_height="match_parent"
+        card_view:cardCornerRadius="5dp"
+
+        card_view:cardBackgroundColor="#e4e4e4"
+        android:layout_marginTop="6dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:id="@+id/image_my_event"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:text="name"
+                android:id="@+id/name_my_event"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/image_my_event"
+                android:layout_marginTop="10dp"
+                android:textSize="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="time"
+                android:id="@+id/time_my_event"
+                android:textSize="10dp"
+                android:layout_alignBottom="@+id/image_my_event"
+                android:layout_alignLeft="@+id/rating_my_event"
+                android:layout_alignStart="@+id/rating_my_event" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100 (+) 27(-)"
+                android:id="@+id/rating_my_event"
+                android:textSize="12dp"
+                android:textColor="#2849f0"
+                android:layout_below="@+id/name_my_event"
+                android:layout_alignLeft="@+id/name_my_event"
+                android:layout_alignStart="@+id/name_my_event"
+                android:layout_marginTop="2dp" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/join_event"
+                android:button="@drawable/chack_box_join"
+                android:layout_alignRight="@+id/name_my_event"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/my_event"
+                android:layout_alignTop="@+id/rating_my_event"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/my_event_budget"
+                android:layout_alignTop="@+id/time_my_event"
+                android:layout_alignRight="@+id/name_my_event"
+                android:layout_alignEnd="@+id/name_my_event"
+                android:textColor="#2cb11a" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+
 
 </RelativeLayout>
