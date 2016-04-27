@@ -20,5 +20,40 @@
         <attr name="singleThumb" format="boolean"/>
     </declare-styleable>
 
+    <style name="RadioButtonStyleMale" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/male_radio_button</item>
+    </style>
+
+    <style name="RadioButtonStyleFemale" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/female_radio_button</item>
+    </style>
+
+    <style name="RadioButtonStyle" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:layout_marginLeft" >10dp</item>
+        <item name="android:layout_marginRight" >10dp</item>
+    </style>
+
+    <style name="RadioButtonStyleTime" parent="RadioButtonStyle">
+        <item name="android:button">@drawable/time_radio_button</item>
+    </style>
+
+    <style name="RadioButtonStyleDistance" parent="RadioButtonStyle">
+        <item name="android:button">@drawable/distance_radio_button</item>
+
+    </style> <style name="RadioButtonStyleRating" parent="RadioButtonStyle">
+        <item name="android:button">@drawable/rating_radio_button</item>
+
+    </style> <style name="RadioButtonStyleLow" parent="RadioButtonStyle">
+        <item name="android:button">@drawable/low_radio_button</item>
+
+    </style> <style name="RadioButtonStyleHigh" parent="RadioButtonStyle">
+        <item name="android:button">@drawable/high_radio_button</item>
+    </style>
+    <style name="Margin" >
+        <item name="android:paddingBottom">@dimen/activity_vertical_margin</item>
+        <item name="android:paddingTop">@dimen/activity_vertical_margin</item>
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+    </style>
 
 </resources>

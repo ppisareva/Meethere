@@ -3,14 +3,14 @@ package com.example.polina.meethere.Adapters;
 /**
  * Created by polina on 11.04.16.
  */
-public class AllCategory {
+public class SimpleItem {
 
     int image;
-    String category;
+    String name;
 
-    public AllCategory(int image, String category) {
+    public SimpleItem(int image, String name) {
         this.image = image;
-        this.category = category;
+        this.name = name;
     }
 
     public int getImage() {
@@ -21,11 +21,11 @@ public class AllCategory {
         this.image = image;
     }
 
-    public String getCategory() {
-        return category;
+    public String getName() {
+        return name;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setName(String category) {
+        this.name = category;
     }
 }

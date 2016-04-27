@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.example.polina.meethere.CategoryListActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/all_catrgory"
+        android:id="@+id/title_category"
+        android:textSize="18dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/all_category_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/title_category"
+                android:layout_alignLeft="@+id/title_category"
+                android:layout_alignStart="@+id/title_category" />
+
+
+</RelativeLayout>

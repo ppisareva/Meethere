@@ -1,14 +1,12 @@
 package com.example.polina.meethere;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-import com.example.polina.meethere.Adapters.AllCategory;
+import com.example.polina.meethere.Adapters.SimpleItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +19,7 @@ public class CategoryListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_list);
-        AllCategoryListAdapter listAdapter = new AllCategoryListAdapter(getAllCategory());
+        SimpleListAdapter listAdapter = new SimpleListAdapter(Utils.getAllCategory(this));
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.all_category_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(listAdapter);
@@ -29,19 +27,7 @@ public class CategoryListActivity extends AppCompatActivity {
 
     }
 
-    public List<AllCategory> getAllCategory() {
-        List<AllCategory> allCategory= new ArrayList<>();
-        String arr [] = getResources().getStringArray(R.array.category);
-        allCategory.add(new AllCategory(R.drawable.ic_people_black_24dp, arr[1]));
-        allCategory.add(new AllCategory(R.drawable.ic_palette_black_24dp, arr[2]));
-        allCategory.add(new AllCategory(R.drawable.ic_book_black_24dp, arr[3]));
-        allCategory.add(new AllCategory(R.drawable.ic_business, arr[4]));
-        allCategory.add(new AllCategory(R.drawable.ic_car, arr[5]));
-        for(int i =6; i<arr.length; i++){
-            allCategory.add(new AllCategory(R.drawable.ic_android, arr[i]));
-        }
-        return allCategory;
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

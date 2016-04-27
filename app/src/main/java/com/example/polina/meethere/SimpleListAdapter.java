@@ -7,49 +7,49 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.polina.meethere.Adapters.AllCategory;
+import com.example.polina.meethere.Adapters.SimpleItem;
 
 import java.util.List;
 
 /**
  * Created by polina on 11.04.16.
  */
-public class AllCategoryListAdapter  extends RecyclerView.Adapter<AllCategoryListAdapter.ViewHolder>{
-    List<AllCategory> allCategories;
+public class SimpleListAdapter extends RecyclerView.Adapter<SimpleListAdapter.ViewHolder>{
+    List<SimpleItem> simpleItems;
 
-    public AllCategoryListAdapter(List<AllCategory> allCategories) {
-        this.allCategories = allCategories;
+    public SimpleListAdapter(List<SimpleItem> allCategories) {
+        this.simpleItems = allCategories;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.all_category, parent, false);
+                .inflate(R.layout.simple_view, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        AllCategory category = allCategories.get(position);
-        holder.category.setText(category.getCategory());
+        SimpleItem category = simpleItems.get(position);
+        holder.text.setText(category.getName());
         holder.icon.setImageResource(category.getImage());
 
     }
 
     @Override
     public int getItemCount() {
-        return (allCategories!=null? allCategories.size():0);
+        return (simpleItems !=null? simpleItems.size():0);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
         ImageView icon;
-        TextView category;
+        TextView text;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            icon = (ImageView) itemView.findViewById(R.id.all_category_icon);
-            category = (TextView) itemView.findViewById(R.id.all_category_category);
+            icon = (ImageView) itemView.findViewById(R.id.simple_icon);
+            text = (TextView) itemView.findViewById(R.id.simple_text);
         }
     }
 }

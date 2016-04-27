@@ -1,0 +1,328 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/Margin"
+    android:orientation="vertical"
+    tools:context="com.example.polina.meethere.fragments.SearchResultsFragment">
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    style="@style/RadioButtonStyleTime"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButton_time"
+                    android:background="@drawable/ic_today_black_24dp" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButton_distance"
+                    style="@style/RadioButtonStyleDistance"
+                    android:background="@drawable/ic_directions_black_24dp"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButton_popular"
+                    style="@style/RadioButtonStyleRating"
+                   android:background="@drawable/ic_sentiment_satisfied_black_24dp" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/RadioButtonStyleLow"
+                    android:id="@+id/radioButton_lower_price"
+                   android:background="@drawable/ic_call_made_black_24dp" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/RadioButtonStyleHigh"
+                    android:id="@+id/radioButton_higher_price"
+                    android:background="@drawable/ic_call_received_black_24dp" />
+
+            </RadioGroup>
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="235dp"
+        android:orientation="vertical"
+        android:id="@+id/advanced_search"
+        android:visibility="gone"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:id="@+id/spinner_category" />
+
+             <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"></LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ПН 12.04.16"
+                android:id="@+id/button_from"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:onClick="onStartDate"
+                android:layout_gravity="center_horizontal" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:id="@+id/button_from_time"
+                android:onClick="onStartTime"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:autoText="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ПН 12.04.16"
+                android:id="@+id/button_till"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:onClick="onAndDate"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:id="@+id/button_till_time"
+                android:onClick="onAndTime"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_gravity="center_horizontal" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/age"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/start_age"
+                android:id="@+id/leftIndexValue"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.edmodo.rangebar.RangeBar
+                    xmlns:custom="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/range_bar_ege"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    custom:tickCount="30" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="@string/end_age"
+                android:id="@+id/rightIndexValue"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical|center_horizontal" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_gravity="center_horizontal" />
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/budget"
+                android:layout_weight="1"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:textIsSelectable="false" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/start_budget"
+                android:id="@+id/leftIndexValue_budget"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.edmodo.rangebar.RangeBar
+                    xmlns:custom="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/range_bar_budget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    custom:tickCount="41" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="@string/end_budget"
+                android:id="@+id/rightIndexValue_budget"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical|center_horizontal" />
+
+
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_gravity="center_horizontal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="3dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_location" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/checkBox_myLocation"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pin"
+                android:id="@+id/textView2"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView2"
+                android:src="@drawable/ic_pin_drop_black_24dp"
+                android:clickable="true"
+                android:onClick="onMap"
+                android:layout_gravity="center_vertical|right"
+                android:contentDescription="@string/ololo"
+                android:layout_marginBottom="5dp" />
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="@string/use"
+            android:background="@android:color/transparent"
+            android:id="@+id/button"
+            android:onClick="onUse"
+            android:layout_gravity="center_horizontal" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/search_results"/>
+
+
+
+
+
+
+
+</LinearLayout>

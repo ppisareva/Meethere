@@ -14,15 +14,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import com.edmodo.rangebar.RangeBar;
 import com.example.polina.meethere.MainActivity;
-import com.example.polina.meethere.MapsActivity;
 import com.example.polina.meethere.R;
-
-import java.sql.SQLOutput;
+import com.example.polina.meethere.Utils;
 
 public class NewEventFragment extends android.support.v4.app.Fragment{
 
-    Button start;
-    Button end;
+    Button startDate;
+    Button startTime;
+    Button endDate;
+    Button endTime;
     RangeBar rangeBarAge;
     RangeBar rangeBarBudget;
     TextView rightIndexAge;
@@ -55,8 +55,15 @@ public class NewEventFragment extends android.support.v4.app.Fragment{
         spinnerCategory.setAdapter(adapter);
 
 
-        start = (Button) v.findViewById(R.id.button_from);
-        end = (Button) v.findViewById(R.id.button_till);
+        startDate = (Button) v.findViewById(R.id.button_from);
+      startDate.setText(Utils.getCurrentDate());
+        startTime = (Button) v.findViewById(R.id.button_from_time);
+        startTime.setText(Utils.getCurrentTime());
+        endDate = (Button) v.findViewById(R.id.button_till);
+        endDate.setText(Utils.getCurrentTimePlusHour()[0]);
+        endTime = (Button) v.findViewById(R.id.button_till_time);
+        endTime.setText(Utils.getCurrentTimePlusHour()[1]);
+
         rangeBarAge =(RangeBar) v.findViewById(R.id.range_bar_ege);
         rangeBarBudget = (RangeBar) v.findViewById(R.id.range_bar_budget);
        leftIndexAge = (TextView)v. findViewById(R.id.leftIndexValue);
@@ -92,15 +99,21 @@ public class NewEventFragment extends android.support.v4.app.Fragment{
     }
 
 
-    public void changeStartTime(String st){
-      start.setText(st);
+    public void changeStartDate(String st){
+      startDate.setText(st);
+    }
+    public void changeTimeStart (String st) {
+startTime.setText(st);
+    }
+    public void changeEndDate(String st){
+        endDate.setText(st);
     }
     public void changeEndTime(String st){
-        end.setText(st);
+        endTime.setText(st);
     }
+
     public void getData(){
         System.out.println("trololol");
-
     }
 
     @Override
@@ -118,4 +131,6 @@ public class NewEventFragment extends android.support.v4.app.Fragment{
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.polina.meethere.fragments.FindEventFragment"
-   >
+    style="@style/Margin">
 
    <include layout="@layout/layout_form"
        android:id="@+id/include"></include>
@@ -10,30 +10,66 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/distance"
+        android:id="@+id/distance"
+        android:layout_below="@id/include"
+        android:layout_weight="1"
+        android:textSize="17dp"
+        android:layout_marginBottom="5dp" />
+
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:id="@+id/linearLayout"
+        android:layout_below="@+id/distance"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:text="@string/start_radius"
+            android:id="@+id/leftIndexValue_distance"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <com.edmodo.rangebar.RangeBar
+                xmlns:custom="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/range_bar_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                custom:tickCount="21" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:text="@string/end_radius"
+            android:id="@+id/rightIndexValue_distance"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical|center_horizontal" />
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/bigger"
-        android:layout_below="@+id/include"
+        android:layout_below="@+id/linearLayout"
         android:layout_alignParentStart="true"
         android:textSize="17dp"
         android:id="@+id/textView3"
         android:layout_marginTop="20dp" />
-
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:id="@+id/imageView3"
-        android:src="@drawable/female"
-        android:layout_marginEnd="48dp"
-        android:layout_alignTop="@+id/imageView4"
-        android:layout_toStartOf="@+id/imageView4" />
-
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:id="@+id/imageView4"
-        android:src="@drawable/male"
-        android:layout_alignTop="@+id/textView3"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="40dp" />
 
     <Spinner
         android:layout_width="match_parent"
@@ -43,5 +79,56 @@
         android:layout_below="@+id/textView3"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_above="@+id/spinner_sort"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/radioGroup">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/RadioButtonStyleMale"
+            android:id="@+id/radioButtonMale"
+            android:layout_marginRight="30dp" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButtonFemale"
+            style="@style/RadioButtonStyleFemale" />
+    </RadioGroup>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox_distance"
+        android:checked="false"
+        android:layout_above="@+id/linearLayout"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/do_not_matter"
+        android:id="@+id/textView10"
+        android:layout_alignBottom="@+id/distance"
+        android:layout_toLeftOf="@+id/checkBox_distance"
+        android:layout_toStartOf="@+id/checkBox_distance"
+        android:paddingBottom="1dp" />
+
+    <TextView
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textView11"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/textView3"
+        android:layout_alignEnd="@+id/textView3" />
 
 </RelativeLayout>

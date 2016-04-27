@@ -2,44 +2,62 @@ package com.example.polina.meethere;
 
 import android.app.DatePickerDialog;
 import android.app.SearchManager;
+import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.EntityIterator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
+import android.support.v4.widget.SearchViewCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
 import android.widget.DatePicker;
+import android.widget.ImageView;
+import android.widget.TimePicker;
 
+import com.example.polina.meethere.Adapters.SimpleItem;
 import com.example.polina.meethere.fragments.CategoryFragment;
 import com.example.polina.meethere.fragments.FindEventFragment;
 import com.example.polina.meethere.fragments.MyEventsListsFragment;
 import com.example.polina.meethere.fragments.NewEventFragment;
+import com.example.polina.meethere.fragments.ProfileFragment;
+import com.example.polina.meethere.fragments.SearchResultsFragment;
 
-import java.util.ArrayList;
+import java.lang.reflect.Field;
 import java.util.Calendar;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
-    private static int MAX_WIDTH = 3000;
-    private static int START = 20202;
-    private static int END = 20002;
+    private static final int MAX_WIDTH = 3000;
+    private static final int START_DATE = 20202;
+    public static final String NEW_EVENT = "new event";
+    public static final String SEARCH = "search event";
+
+    private static final int START_TIME = 202122;
+
+    private static final int END_DATE = 20002;
+    private static final int END_TIME = 2000232;
     private CategoryFragment categoryFragment;
     private MyEventsListsFragment myEventsListsFragment;
     private NewEventFragment newEventFragment;
-    private FindEventFragment findEventFragment;
+    private ProfileFragment profileFragment;
+    SearchResultsFragment searchResultsFragment;
 
+    private FindEventFragment findEventFragment;
 
 
     @Override
@@ -51,6 +69,8 @@ public class MainActivity extends AppCompatActivity
         myEventsListsFragment = MyEventsListsFragment.newInstance();
         newEventFragment = NewEventFragment.newInstance();
         findEventFragment = FindEventFragment.newInstance();
+        searchResultsFragment = SearchResultsFragment.newInstance();
+        profileFragment = ProfileFragment.newInstance();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -73,42 +93,87 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void onStart (View v){
-       chooseTimeDialog(START);
+    public void onStartDate(View v) {
+        chooseTimeDialog(START_DATE);
     }
 
-    public void onAnd (View v){
-        chooseTimeDialog(END);
+    public void onStartTime(View v) {
+        chooseTimeDialog(START_TIME);
     }
 
-    public void onImageAdd (View v){
+    public void onAndDate(View v) {
+        chooseTimeDialog(END_DATE);
+    }
 
+    public void onAndTime(View v) {
+        chooseTimeDialog(END_TIME);
+    }
+
+    public void onImageAdd(View v) {
+
+    }
+    public void onUse (View v){
+        searchResultsFragment.highAdditionalParameters();
+    }
+
+    public void onEditProfile (View v){
+        startActivity(new Intent(this, MyInformationActivity.class));
     }
 
 
-    public void chooseTimeDialog(Integer i){
+    public void chooseTimeDialog(Integer i) {
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
         DatePickerDialog datePickerDialog;
-        if(i==START) {
-            datePickerDialog = new DatePickerDialog(this, onDateStartListener, year, month, day);
-        } else {
-            datePickerDialog = new DatePickerDialog(this, onDateEndListener, year, month, day);
+        TimePickerDialog timePickerDialog;
+        switch (i) {
+            case START_DATE:
+                datePickerDialog = new DatePickerDialog(this, onDateStartListener, year, month, day);
+                datePickerDialog.show();
+                break;
+            case END_DATE:
+                datePickerDialog = new DatePickerDialog(this, onDateEndListener, year, month, day);
+                datePickerDialog.show();
+                break;
+            case START_TIME:
+                timePickerDialog = new TimePickerDialog(this, onTimeSetListenerStart, hour, minute, true);
+                timePickerDialog.show();
+                break;
+            case END_TIME:
+                timePickerDialog = new TimePickerDialog(this, onTimeSetListenerEnd, hour, minute, true);
+                timePickerDialog.show();
+                break;
         }
-        datePickerDialog.show();
-
     }
 
-
+    private boolean newEventFragment(){
+        NewEventFragment newFragment = (NewEventFragment)getSupportFragmentManager().findFragmentByTag(NEW_EVENT);
+        if (newFragment != null && newFragment.isVisible()) {
+           return true;
+        }
+        return false;
+    }
+    private boolean searchFragment(){
+        SearchResultsFragment newFragment = (SearchResultsFragment)getSupportFragmentManager().findFragmentByTag(SEARCH);
+        if (newFragment != null && newFragment.isVisible()) {
+           return true;
+        }
+        return false;
+    }
 
 
     DatePickerDialog.OnDateSetListener onDateStartListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-           newEventFragment.changeStartTime(dayOfMonth + "/" + monthOfYear + 1 + "/" + year);
+            String st = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
 
+            if (newEventFragment()) newEventFragment.changeStartDate(st);
+
+                if(searchFragment()) findEventFragment.changeStartDate(st);
 
         }
     };
@@ -116,11 +181,59 @@ public class MainActivity extends AppCompatActivity
     DatePickerDialog.OnDateSetListener onDateEndListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            String st = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
 
-            newEventFragment.changeEndTime(dayOfMonth + "/" + monthOfYear + 1 + "/" + year);
+               if(newEventFragment()) newEventFragment.changeEndDate(st);
+
+                   if(searchFragment()) findEventFragment.changeEndDate(st);
 
         }
     };
+
+    TimePickerDialog.OnTimeSetListener onTimeSetListenerStart = new TimePickerDialog.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            String st = hourOfDay + ":" + minute;
+
+             if(newEventFragment())   newEventFragment.changeTimeStart(st);
+
+                if(searchFragment())    findEventFragment.changeTimeStart(st);
+
+        }
+    };
+
+    TimePickerDialog.OnTimeSetListener onTimeSetListenerEnd = new TimePickerDialog.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            String st = hourOfDay + ":" + minute;
+
+
+              if(newEventFragment())  newEventFragment.changeEndTime(st);
+
+               if(searchFragment())     findEventFragment.changeEndTime(st);
+
+        }
+    };
+
+    private void changeCloseButton(SearchView searchView){
+        try {
+            Field searchField = SearchView.class.getDeclaredField("mCloseButton");
+            searchField.setAccessible(true);
+            ImageView mSearchCloseButton = (ImageView) searchField.get(searchView);
+            if (mSearchCloseButton != null) {
+                mSearchCloseButton.setImageResource(R.drawable.ic_tune_white_24dp);
+
+                mSearchCloseButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                      searchResultsFragment.showAdvancedSearch();
+                    }
+                });
+            }
+        } catch (Exception e) {
+            Log.e("", "Error finding close button", e);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -130,11 +243,28 @@ public class MainActivity extends AppCompatActivity
         SearchView searchView = null;
         if (searchItem != null) {
             searchView = (SearchView) searchItem.getActionView();
+            MenuItemCompat.setOnActionExpandListener(searchItem,new MenuItemCompat.OnActionExpandListener() {
+                @Override
+                public boolean onMenuItemActionExpand(MenuItem item) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, searchResultsFragment)
+                            .addToBackStack(null).commit();
+                    return true;
+                }
+
+                @Override
+                public boolean onMenuItemActionCollapse(MenuItem item) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, categoryFragment)
+                            .addToBackStack(null).commit();
+                    return true;
+                }
+            });
         }
         if (searchView != null) {
+           changeCloseButton(searchView);
             searchView.setMaxWidth(MAX_WIDTH);
             searchView.setSearchableInfo(searchManager.getSearchableInfo(MainActivity.this.getComponentName()));
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     System.out.println(query + "------------------------------");
@@ -144,6 +274,13 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public boolean onQueryTextChange(String newText) {
                     System.out.println(newText + "++++++++++++++++++++++++++++++++++++");
+                   if(!newText.isEmpty()){
+                       if(newText.length()==1){
+                           searchResultsFragment.clear();
+                       }
+                       searchResultsFragment.changeList(new SimpleItem(R.drawable.ic_android, newText));
+                   }
+
 
                     return true;
                 }
@@ -155,7 +292,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id==R.id.action_map){
+        if (id == R.id.action_map) {
             Intent intent = new Intent(MainActivity.this, MapsActivity.class);
             startActivity(intent);
         }
@@ -170,15 +307,18 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_profile) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, profileFragment)
+                    .addToBackStack(null).commit();
         } else if (id == R.id.nav_my_places) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, myEventsListsFragment)
                     .addToBackStack(null).commit();
         } else if (id == R.id.nav_new_event) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, newEventFragment)
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, newEventFragment, NEW_EVENT )
                     .addToBackStack(null).commit();
         } else if (id == R.id.nav_search) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, findEventFragment)
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, searchResultsFragment, SEARCH)
                     .addToBackStack(null).commit();
+
         } else if (id == R.id.nav_category) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, categoryFragment)
                     .addToBackStack(null).commit();
@@ -195,3 +335,5 @@ public class MainActivity extends AppCompatActivity
 
 
 }
+
+

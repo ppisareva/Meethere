@@ -16,18 +16,15 @@
     <string name="action_map">Map</string>
     <string name="title_activity_maps">Map</string>
     
-    <string name="profile">Профаил</string>
+    <string name="profile">Мой профиль</string>
     <string name="places">Мои места</string>
     <string name="event">Создать ивент</string>
     <string name="find">Найти ивент</string>
     <string name="category">Категории</string>
     <string name="settings">Настройки</string>
-
-<!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_my_places">MyPlacesActivity</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-    <string name="past_events">Планируемые</string>
+    <string name="past_events">Прошедшие</string>
     <string name="future_events">Ближайшие</string>
     <string name="createt_by_my">Созданые</string>
     <string name="add_name">Название</string>
@@ -73,6 +70,41 @@
         <item>Фотография</item>
         <item>Хобби</item>
         <item>Другое</item>
+    </string-array>
+
+    <string-array name="category_images">
+        <item>@drawable/ic_android</item>
+        <item>@drawable/avto_moto</item>
+        <item>@drawable/for_single</item>
+        <item>@drawable/spiritual</item>
+        <item>@drawable/food</item>
+        <item>@drawable/ic_android</item>
+        <item>@drawable/ic_android</item>
+        <item>@drawable/games</item>
+        <item>@drawable/culture</item>
+        <item>@drawable/business</item>
+        <item>@drawable/cinema</item>
+        <item>@drawable/books</item>
+        <item>@drawable/biuty</item>
+        <item>@drawable/music</item>
+        <item>@drawable/outdoor</item>
+        <item>@drawable/development</item>
+        <item>@drawable/communication</item>
+        <item>@drawable/paranormal</item>
+        <item>@drawable/support</item>
+        <item>@drawable/politic</item>
+        <item>@drawable/family</item>
+        <item>@drawable/comunity</item>
+        <item>@drawable/sport</item>
+        <item>@drawable/ic_android</item>
+        <item>@drawable/ic_android</item>
+        <item>@drawable/tech</item>
+        <item>@drawable/ic_android</item>
+        <item>@drawable/ic_android</item>
+        <item>@drawable/phto</item>
+        <item>@drawable/ic_android</item>
+        <item>@drawable/ic_android</item>
+
     </string-array>
     <string-array name="sort_array">
         <item>Выберите сортировку по</item>
@@ -133,6 +165,7 @@
         <item>1 hour</item>
         <item>3 hours</item>
         <item>6 hours</item>
+
         <item>Never</item>
     </string-array>
     <string-array name="pref_sync_frequency_values">
@@ -162,10 +195,28 @@
     <string name="end_age">45</string>
     <string name="age">Возраст</string>
     <string name="pin">место на карте</string>
-    <string name="start_budget">10</string>
-    <string name="end_budget">500</string>
+    <string name="start_budget">0</string>
+    <string name="end_budget">2000</string>
+
     <string name="created_by_me">мое событие</string>
     <string name="all_catrgory">Все категории</string>
     <string name="bigger">Больше</string>
+    <string name="start_radius">0</string>
+    <string name="end_radius">10000</string>
+    <string name="distance" >Дистанция</string>
+    <string name="do_not_matter">не имеет значения</string>
+    <string name="use">применить</string>
+    <string name="contact_information">Контактная информация</string>
+    <string name="telefone">Мобильный телефон</string>
+    <string name="adress">Адресс</string>
+    <string name="skype">Skype</string>
+    <string name="e_mail">Эл. почта</string>
+    <string name="personal_information">Личная информация</string>
+    <string name="day_of_birth">Дата рождения</string>
+    <string name="gender">Пол</string>
+    <string name="male">Мужской</string>
+    <string name="female">Женский</string>
+    <string name="preferences">Предпочтения</string>
+    <string name="enter_preferences">Добавить предпочтение</string>
 
 </resources>

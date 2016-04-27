@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.polina.meethere.Adapters.Event;
-
 import java.util.List;
 
 /**
@@ -53,7 +51,7 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
         if (position == getItemCount()-1) {
             v.getContext().startActivity(new Intent(v.getContext(), CategoryListActivity.class));
         } else {
-            v.getContext().startActivity(new Intent(v.getContext(), ListOfEventsActivity.class));
+            v.getContext().startActivity(new Intent(v.getContext(), CategoryInActivity.class));
         }
     }
 

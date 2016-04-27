@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ListOfEventsActivity extends AppCompatActivity {
+public class CategoryInActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_category_list);
+        setContentView(R.layout.activity_in_category);
         MyEventsAdapter adapter = new MyEventsAdapter(this, getListEvents());
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.all_category_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

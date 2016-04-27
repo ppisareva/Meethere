@@ -8,6 +8,7 @@
         app:actionViewClass="android.support.v7.widget.SearchView" />
 
     <item android:id="@+id/action_map" android:title="@string/action_map"
-        android:icon="@android:drawable/ic_dialog_map"
-        android:orderInCategory="100" app:showAsAction="always" />
+        android:icon="@drawable/ic_map_white_24dp"
+        android:orderInCategory="100"
+        app:showAsAction="always" />
 </menu>

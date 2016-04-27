@@ -1,6 +1,8 @@
 package com.example.polina.meethere;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -45,6 +47,8 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
         holder.time.setText("24 Марта, 12:30");
         holder.rating.setText(event.getRating());
         holder.budget.setText(event.getBudget());
+        holder.setPosition(position);
+
 
     }
 
@@ -55,7 +59,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
 
         private ImageView image;
@@ -65,11 +69,19 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
         private TextView myEvent;
         private TextView budget;
         private TextView time;
+        private CardView cardView;
+        int position;
+
+        public void setPosition(int position) {
+            this.position = position;
+        }
 
         public ViewHolder(View itemView) {
             super(itemView);
             image = (ImageView) itemView.findViewById(R.id.image_my_event);
             name = (TextView) itemView.findViewById(R.id.name_my_event);
+            cardView = (CardView) itemView.findViewById(R.id.card);
+            cardView.setOnClickListener(this);
             time = (TextView) itemView.findViewById(R.id.time_my_event);
             imageJoin = (CheckBox) itemView.findViewById(R.id.join_event);
             rating = (TextView) itemView.findViewById(R.id.rating_my_event);
@@ -80,5 +92,12 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
         }
 
 
+        @Override
+        public void onClick(View v) {
+            Event item = eventList.get(position);
+            System.out.println(position);
+            Intent intent = new Intent(context, EventActivity.class);
+            context.startActivity(intent);
+        }
     }
 }

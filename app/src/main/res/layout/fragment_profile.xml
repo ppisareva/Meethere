@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/nav_header_height"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@drawable/side_nav_bar"
+       style="@style/Margin"
+        android:clickable="true"
+        android:onClick="onChangeBackground"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        tools:context="com.example.polina.meethere.fragments.ProfileFragment">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="70dp"
+            android:layout_height="75dp"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:src="@drawable/river"
+            android:id="@+id/imageView"
+            android:layout_marginRight="10dp"
+            android:onClick="onChangeProfileImage"
+            android:clickable="true"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#ffffff"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:text="Полина Слюсарчук"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1" />
+
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:id="@+id/imageEdit"
+        android:clickable="true"
+        android:src="@android:drawable/ic_menu_edit"
+        android:onClick="onEditProfile" />
+</LinearLayout>
+

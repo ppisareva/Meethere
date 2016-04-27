@@ -18,40 +18,6 @@
         android:layout_gravity="center_horizontal" />
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/my_location" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkBox_myLocation"
-            android:layout_weight="1" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pin"
-            android:id="@+id/textView2"
-            android:layout_weight="1" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView2"
-            android:src="@drawable/ic_pin_drop_black_24dp"
-            android:clickable="true"
-            android:onClick="onMap"
-            android:layout_gravity="center_vertical|right"
-            android:contentDescription="@string/ololo" />
-    </LinearLayout>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -72,7 +38,7 @@
             android:id="@+id/button_from"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:onClick="onStart"
+            android:onClick="onStartDate"
             android:layout_gravity="center_horizontal" />
 
         <Button
@@ -80,15 +46,15 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:id="@+id/button_from_time"
-            android:text="15:00"
+            android:onClick="onStartTime"
             android:layout_weight="1" />
 
         <TextView
             android:layout_width="30dp"
             android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
             android:layout_weight="1"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:autoText="true" />
 
         <Button
             android:layout_width="wrap_content"
@@ -97,14 +63,14 @@
             android:id="@+id/button_till"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:onClick="onAnd"/>
+            android:onClick="onAndDate"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:id="@+id/button_till_time"
-            android:text="16:00"
+            android:onClick="onAndTime"
             android:layout_weight="1" />
 
     </LinearLayout>
@@ -121,13 +87,35 @@
         android:background="@android:color/darker_gray"
         android:layout_gravity="center_horizontal" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/age"
-        android:layout_weight="1"
-        android:textSize="17dp"
-        android:layout_marginTop="7dp" />
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/age"
+            android:layout_weight="1"
+            android:textSize="17dp"
+            android:layout_marginTop="7dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/do_not_matter"
+            android:id="@+id/textView8"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="3dp" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox_age"
+            android:checked="false"
+            android:layout_marginTop="7dp" />
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -174,14 +162,34 @@
         android:background="@android:color/darker_gray"
         android:layout_gravity="center_horizontal" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/budget"
-        android:layout_weight="1"
-        android:textSize="17sp"
-        android:layout_marginTop="7dp" />
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/budget"
+            android:layout_weight="1"
+            android:textSize="17sp"
+            android:layout_marginTop="7dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/do_not_matter"
+            android:id="@+id/textView9"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="3dp" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox_budget"
+            android:checked="false" />
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -209,7 +217,7 @@
                 android:id="@+id/range_bar_budget"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                custom:tickCount="500" />
+                custom:tickCount="41" />
         </LinearLayout>
 
         <TextView
@@ -228,5 +236,49 @@
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"
         android:layout_gravity="center_horizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_location" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox_myLocation"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pin"
+            android:id="@+id/textView2"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView2"
+            android:src="@drawable/ic_pin_drop_black_24dp"
+            android:clickable="true"
+            android:onClick="onMap"
+            android:layout_gravity="center_vertical|right"
+            android:contentDescription="@string/ololo"
+            android:layout_marginBottom="5dp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:text="New Text"
+        android:id="@+id/textView12"
+        android:layout_gravity="center_horizontal"
+        android:background="#c4c2c2" />
 
 </LinearLayout>
