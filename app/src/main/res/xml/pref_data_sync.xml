@@ -1,0 +1,21 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:key="switch_adding_facebook"
+        android:title="@string/pref_title_comments_mass"
+        android:defaultValue="true" />
+
+    <SwitchPreference
+        android:key="switch_mass_event_facebook"
+        android:title="@string/pref_title_coming_event"
+        android:defaultValue="true" />
+
+    <SwitchPreference
+        android:key="switch_close_event_facebook"
+        android:title="@string/pref_title_close_event"
+        android:defaultValue="true" />
+    <SwitchPreference
+        android:key="switch_interesting_event_facebook"
+        android:title="@string/pref_title_interesting_event"
+        android:defaultValue="true" />
+
+</PreferenceScreen>
