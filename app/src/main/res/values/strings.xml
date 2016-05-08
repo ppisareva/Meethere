@@ -225,5 +225,8 @@
     <string name="exit">Выход</string>
     <string name="location">Местоположение</string>
     <string name="error_auth">Something goes wrong.. :(</string>
+    <string name="promo_1">Немаєш компанії зашпілити у футбік?</string>
+    <string name="promo_2">Нема з ким піти на рибалку?</string>
+    <string name="promo_3">Не знаєш, як провести час?</string>
 
 </resources>
