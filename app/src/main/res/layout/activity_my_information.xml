@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_marginTop="16dp"
     tools:context="com.example.polina.meethere.MyInformationActivity"
-    android:id="@+id/QQQ">
+    >
 
     <TextView
         android:layout_width="wrap_content"
@@ -17,7 +15,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/textView13"
-        android:textSize="17dp" />
+        android:textSize="17dp"
+        android:layout_marginLeft="16dp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="2dp"
@@ -40,7 +39,8 @@
             android:layout_above="@+id/textView16"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_marginLeft="16dp" />
 
         <EditText
             android:layout_width="match_parent"
@@ -51,7 +51,8 @@
             android:layout_below="@+id/textView14"
             android:layout_toRightOf="@+id/textView15"
             android:layout_toEndOf="@+id/textView15"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textSize="15dp" />
     </LinearLayout>
 
     <TextView
@@ -78,7 +79,8 @@
             android:layout_alignBottom="@+id/editText"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_marginLeft="16dp" />
 
         <EditText
             android:layout_width="match_parent"
@@ -90,7 +92,8 @@
             android:layout_below="@+id/textView16"
             android:layout_alignLeft="@+id/edit_telephone"
             android:layout_alignStart="@+id/edit_telephone"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_marginRight="16dp" />
     </LinearLayout>
 
     <TextView
@@ -116,7 +119,8 @@
             android:layout_alignBottom="@+id/textView20"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_marginLeft="16dp" />
 
         <EditText
             android:layout_width="match_parent"
@@ -127,7 +131,8 @@
             android:layout_below="@+id/textView18"
             android:layout_alignLeft="@+id/editText"
             android:layout_alignStart="@+id/editText"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textSize="15dp" />
     </LinearLayout>
 
     <TextView
@@ -153,7 +158,8 @@
             android:layout_above="@+id/textView23"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_marginLeft="16dp" />
 
         <EditText
             android:layout_width="match_parent"
@@ -164,7 +170,9 @@
             android:layout_alignTop="@+id/textView20"
             android:layout_alignLeft="@+id/editText2"
             android:layout_alignStart="@+id/editText2"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textSize="15dp"
+            android:layout_marginRight="16dp" />
     </LinearLayout>
 
     <TextView
@@ -186,7 +194,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="16dp"
-        android:textSize="17dp" />
+        android:textSize="17dp"
+        android:layout_marginLeft="16dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -211,7 +220,8 @@
             android:layout_below="@+id/textView24"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_marginLeft="16dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -223,7 +233,8 @@
             android:layout_alignTop="@+id/textView24"
             android:layout_toRightOf="@+id/textView23"
             android:layout_toEndOf="@+id/textView23"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textSize="15dp" />
     </LinearLayout>
 
     <TextView
@@ -248,7 +259,8 @@
             android:layout_height="wrap_content"
             android:text="@string/gender"
             android:id="@+id/textView27"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_marginLeft="16dp" />
 
         <TextView
             android:layout_width="fill_parent"
@@ -257,7 +269,8 @@
             android:clickable="true"
             android:onClick="onGander"
             android:id="@+id/textView28"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textSize="15dp" />
     </LinearLayout>
 
     <TextView
@@ -272,7 +285,8 @@
         android:layout_height="wrap_content"
         android:text="@string/preferences"
         android:id="@+id/textView30"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -280,17 +294,73 @@
         android:text="New Text"
         android:id="@+id/textView31"
         android:background="@color/gray" />
-
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/enter_preferences"
-        android:id="@+id/editText5" />
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:hint="@string/enter_preferences"
+            android:id="@+id/editText5"
+            android:textSize="15dp"
+            android:layout_marginLeft="16dp"
+            android:layout_gravity="center" />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:clickable="true"
+            android:onClick="onAddPreferences"
+            android:src="@drawable/ic_add_black_24dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_gravity="center" />
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"></LinearLayout>
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Игры"
+            android:background="@drawable/preferences"
+            android:id="@+id/textView32"
+            android:layout_marginLeft="16dp"
+            android:drawableEnd="@drawable/ic_cencel"
+            android:layout_marginRight="3dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/preferences"
+            android:text="На природе"
+            android:drawableEnd="@drawable/ic_cencel"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:id="@+id/textView33"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/preferences"
+            android:drawableEnd="@drawable/ic_cencel"
+            android:text="Можводовое порно"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:id="@+id/textView34"
+            android:layout_weight="1" />
+    </LinearLayout>
+
 
 </LinearLayout>

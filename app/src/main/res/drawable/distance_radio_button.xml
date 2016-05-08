@@ -3,6 +3,7 @@
 
     <item android:state_checked="true" android:state_window_focused="false"
         android:drawable="@drawable/ic_directions_black_24dp"
+
         />
     <item android:state_checked="false" android:state_window_focused="false"
         android:drawable="@drawable/ic_directions_black_24dp" />

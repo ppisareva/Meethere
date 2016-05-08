@@ -34,6 +34,7 @@ import com.example.polina.meethere.fragments.MyEventsListsFragment;
 import com.example.polina.meethere.fragments.NewEventFragment;
 import com.example.polina.meethere.fragments.ProfileFragment;
 import com.example.polina.meethere.fragments.SearchResultsFragment;
+import com.facebook.login.LoginManager;
 
 import java.lang.reflect.Field;
 import java.util.Calendar;
@@ -118,6 +119,32 @@ public class MainActivity extends AppCompatActivity
 
     public void onEditProfile (View v){
         startActivity(new Intent(this, MyInformationActivity.class));
+    }
+
+    public void onMyEvent(View v){
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, myEventsListsFragment)
+                .addToBackStack(null).commit();
+    }
+
+    public void onFavorite(View v){
+
+    }
+
+    public void onPreferences (View v){
+        Intent intent = new Intent(this, MyPreferencesActivity.class);
+        startActivity(intent);
+
+    }
+
+    public void onSettings(View v){
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    public void onLogOut(View v){
+        LoginManager.getInstance().logOut();
+        startActivity(new Intent(this, Registration.class));
+
     }
 
 

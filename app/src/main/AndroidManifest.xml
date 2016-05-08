@@ -69,6 +69,8 @@
         </activity>
         <activity android:name=".MyInformationActivity" >
         </activity>
+        <activity android:name=".MyPreferencesActivity" >
+        </activity>
     </application>
 
 </manifest>

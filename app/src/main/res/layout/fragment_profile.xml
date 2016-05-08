@@ -1,8 +1,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="com.example.polina.meethere.fragments.ProfileFragment">
+
+<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/nav_header_height"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:background="@drawable/side_nav_bar"
        style="@style/Margin"
         android:clickable="true"
@@ -10,7 +16,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         android:orientation="horizontal"
         android:gravity="bottom"
-        tools:context="com.example.polina.meethere.fragments.ProfileFragment">
+       >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="70dp"
@@ -24,15 +30,32 @@
             app:civ_border_width="1dp"
             app:civ_border_color="#ffffff"/>
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="10">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/nav_header_vertical_spacing"
+                android:text="Полина Слюсарчук"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:textSize="17dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:text="Полина Слюсарчук"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:text="Mountain View, CA, USA"
+            android:id="@+id/textView"
+            android:layout_weight="1"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1" />
+            android:foregroundGravity="clip_horizontal" />
+    </LinearLayout>
 
     <ImageView
         android:layout_width="15dp"
@@ -40,6 +63,152 @@
         android:id="@+id/imageEdit"
         android:clickable="true"
         android:src="@android:drawable/ic_menu_edit"
-        android:onClick="onEditProfile" />
+        android:onClick="onEditProfile"
+        android:layout_weight="1" />
 </LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_marginTop="7dp"
+        android:onClick="onMyEvent"
+        android:clickable="true"
+        android:background="@android:color/white"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_event_black_24dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_events"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:textColor="#000000" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:clickable="true"
+        android:onClick="onFavorite"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_marginTop="7dp"
+        android:background="@android:color/white"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_star_rate_black_18dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/favorite"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:textColor="#000000" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:onClick="onPreferences"
+        android:layout_marginTop="7dp"
+        android:background="@android:color/white"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_thumb_up_black_24dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_preferences"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:textColor="#000000" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:onClick="onSettings"
+        android:clickable="true"
+        android:layout_marginTop="7dp"
+        android:background="@android:color/white"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_build_black_24dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:textColor="#000000" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:onClick="onLogOut"
+        android:clickable="true"
+        android:layout_marginTop="7dp"
+        android:background="@android:color/white"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_power_settings_new_black_24dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/exit"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:textColor="#000000" />
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

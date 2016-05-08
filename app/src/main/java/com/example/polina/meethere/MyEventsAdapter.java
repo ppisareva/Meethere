@@ -2,18 +2,16 @@ package com.example.polina.meethere;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.polina.meethere.Adapters.Event;
-import com.example.polina.meethere.Adapters.Events;
 
 import java.util.List;
 
@@ -69,7 +67,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
         private TextView myEvent;
         private TextView budget;
         private TextView time;
-        private CardView cardView;
+        private RelativeLayout cardView;
         int position;
 
         public void setPosition(int position) {
@@ -80,11 +78,11 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
             super(itemView);
             image = (ImageView) itemView.findViewById(R.id.image_my_event);
             name = (TextView) itemView.findViewById(R.id.name_my_event);
-            cardView = (CardView) itemView.findViewById(R.id.card);
+            cardView = (RelativeLayout) itemView.findViewById(R.id.card);
             cardView.setOnClickListener(this);
             time = (TextView) itemView.findViewById(R.id.time_my_event);
             imageJoin = (CheckBox) itemView.findViewById(R.id.join_event);
-            rating = (TextView) itemView.findViewById(R.id.rating_my_event);
+            rating = (TextView) itemView.findViewById(R.id.adress_myevent);
             myEvent = (TextView)itemView.findViewById(R.id.my_event);
             budget = (TextView) itemView.findViewById(R.id.my_event_budget);
 

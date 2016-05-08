@@ -38,8 +38,6 @@ public class FindEventFragment extends android.support.v4.app.Fragment {
     TextView leftIndexAge;
     TextView rightIndexBudget;
     TextView leftIndexBudget;
-    CheckBox checkBoxAge;
-    CheckBox checkBoxBudget;
     CheckBox checkBoxDistance;
     public static final int MIN_AGE = 15;
     public static final int MIN_BUDGET = 50;
@@ -87,21 +85,7 @@ public class FindEventFragment extends android.support.v4.app.Fragment {
         rangeBarAge =(RangeBar) v.findViewById(R.id.range_bar_ege);
         rangeBarBudget = (RangeBar) v.findViewById(R.id.range_bar_budget);
         rangeBarDistance = (RangeBar) v.findViewById(R.id.range_bar_distance);
-        checkBoxAge = (CheckBox) v.findViewById(R.id.checkBox_age);
-        checkBoxAge.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    rangeBarAge.setEnabled(false);
-                    rangeBarAge.setThumbColorNormal(Color.GRAY);
-                    rangeBarAge.setConnectingLineColor(Color.GRAY);
-                    rangeBarAge.setConnectingLineColor(Color.GRAY);
-                }
-            }
-        });
-        checkBoxBudget = (CheckBox)v.findViewById(R.id.checkBox_budget);
         checkBoxDistance = (CheckBox)v.findViewById(R.id.checkBox_distance);
-
         leftIndexAge = (TextView)v. findViewById(R.id.leftIndexValue);
         leftIndexDictance = (TextView)v. findViewById(R.id.leftIndexValue_distance);
         leftIndexBudget = (TextView)v. findViewById(R.id.leftIndexValue_budget);

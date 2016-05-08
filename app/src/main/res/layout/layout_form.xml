@@ -8,7 +8,8 @@
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:id="@+id/spinner_category" />
+        android:id="@+id/spinner_category"
+        android:layout_marginLeft="10dp" />
 
 
     <TextView
@@ -39,7 +40,8 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:onClick="onStartDate"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp" />
 
         <Button
             android:layout_width="wrap_content"
@@ -99,22 +101,9 @@
             android:text="@string/age"
             android:layout_weight="1"
             android:textSize="17dp"
-            android:layout_marginTop="7dp" />
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="10dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/do_not_matter"
-            android:id="@+id/textView8"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="3dp" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkBox_age"
-            android:checked="false"
-            android:layout_marginTop="7dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -174,21 +163,9 @@
             android:text="@string/budget"
             android:layout_weight="1"
             android:textSize="17sp"
-            android:layout_marginTop="7dp" />
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="10dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/do_not_matter"
-            android:id="@+id/textView9"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="3dp" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkBox_budget"
-            android:checked="false" />
     </LinearLayout>
 
     <LinearLayout
@@ -246,7 +223,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/my_location" />
+            android:text="@string/my_location"
+            android:layout_marginLeft="10dp" />
 
         <CheckBox
             android:layout_width="wrap_content"

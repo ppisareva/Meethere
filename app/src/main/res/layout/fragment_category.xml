@@ -1,7 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="@style/Margin">
+    >
 
 
     <android.support.v7.widget.RecyclerView
@@ -12,6 +12,7 @@
 
     <com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader
         android:id="@+id/header"
+        android:layout_marginTop="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|top">

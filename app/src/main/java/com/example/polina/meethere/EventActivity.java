@@ -3,6 +3,8 @@ package com.example.polina.meethere;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 public class EventActivity extends AppCompatActivity {
 
@@ -11,6 +13,13 @@ public class EventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        CheckBox join = (CheckBox) findViewById(R.id.join_event);
+        join.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                System.out.println(isChecked + " join event");
+            }
+        });
     }
 
     @Override

@@ -1,14 +1,18 @@
 package com.example.polina.meethere.fragments;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.polina.meethere.Adapters.SimpleItem;
 import com.example.polina.meethere.R;
+import com.example.polina.meethere.SimpleListAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileFragment extends android.support.v4.app.Fragment {
 
@@ -29,5 +33,8 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
         return v;
     }
+
+
+
 
 }

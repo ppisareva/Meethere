@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -21,9 +22,9 @@ public class Registration extends Activity {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_registration);
-                Intent i = new Intent(Registration.this, MainActivity.class );
-                startActivity(i);
-        callbackManager = CallbackManager.Factory.create();
+                        callbackManager = CallbackManager.Factory.create();
+        startActivity(new Intent(Registration.this, MainActivity.class));
+        if(isLoggedIn()) startActivity(new Intent(this, MainActivity.class));
         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("user_friends");
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -64,5 +65,10 @@ public class Registration extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public boolean isLoggedIn() {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        return accessToken != null;
     }
 }

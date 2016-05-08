@@ -1,7 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/Margin"
+    android:layout_marginTop="10dp"
     tools:context="com.example.polina.meethere.fragments.MyEventsFragment">
 
     <android.support.v7.widget.RecyclerView

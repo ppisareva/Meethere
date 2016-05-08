@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.polina.meethere.fragments.FindEventFragment"
-    style="@style/Margin">
+   >
 
    <include layout="@layout/layout_form"
        android:id="@+id/include"></include>

@@ -3,37 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@android:color/white"
     tools:context="com.example.polina.meethere.EventActivity">
 
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        card_view:cardCornerRadius="5dp"
-
-        card_view:cardBackgroundColor="#e4e4e4"
-        android:layout_marginTop="6dp"
-        android:id="@+id/textView5">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
             <ImageView
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:id="@+id/image_my_event"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="16dp"
                 android:src="@drawable/carrot"
                 android:layout_marginRight="10dp"
                 android:scaleType="centerCrop"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginBottom="9dp" />
 
             <TextView
@@ -43,7 +27,7 @@
                 android:id="@+id/name_my_event"
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@+id/image_my_event"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="16dp"
                 android:textSize="15dp"
                 android:layout_marginRight="30dp" />
 
@@ -54,14 +38,14 @@
                 android:id="@+id/time_my_event"
                 android:textSize="10dp"
                 android:layout_alignBottom="@+id/image_my_event"
-                android:layout_alignLeft="@+id/rating_my_event"
-                android:layout_alignStart="@+id/rating_my_event" />
+                android:layout_alignLeft="@+id/adress_myevent"
+                android:layout_alignStart="@+id/adress_myevent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="100 (+) 27(-)"
-                android:id="@+id/rating_my_event"
+                android:id="@+id/adress_myevent"
                 android:textSize="12dp"
                 android:textColor="#2849f0"
                 android:layout_below="@+id/name_my_event"
@@ -76,7 +60,8 @@
                 android:button="@drawable/chack_box_join"
                 android:layout_alignTop="@+id/name_my_event"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="16dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -86,7 +71,8 @@
                 android:textColor="#2cb11a"
                 android:layout_alignTop="@+id/time_my_event"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="16dp" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -113,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:text="(25)"
                     android:id="@+id/textView7"
-                    android:layout_marginRight="5dp" />
+                    android:layout_marginRight="16dp" />
             </LinearLayout>
 
             <TextView
@@ -136,18 +122,21 @@
                 android:clickable="true"
                 android:layout_alignBottom="@+id/textView6"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="16dp" />
 
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
+
+
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Масала - традиционный бодрящий и согревающий индийский напиток на основе молока, чая и специй. На мастер-классе Риши Листерман вы узнаете несколько рецептов масалы, как правильно варить этот напиток и какова его история, как его пьют в Индии, и другое. Конечно, вы приготовите ее сами, а потом попробуете! Вас ждет теплая компания и обстановка, интересные истории и познавательные факты. Стоимость участия - 250 руб. Необходима предварительная запись по телефону!"
         android:id="@+id/textView4"
-        android:layout_below="@+id/textView5"
+        android:layout_below="@+id/image_my_event"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp" />
 </RelativeLayout>

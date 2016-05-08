@@ -23,12 +23,29 @@
         app:civ_border_width="1dp"
         app:civ_border_color="#ffffff"/>
 
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="Полина Слюсарчук"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:text="Полина Слюсарчук"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mountain View CA, USA"
+            android:id="@+id/location"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:textSize="10dp"
+            android:layout_marginTop="5dp" />
+    </LinearLayout>
+
 </LinearLayout>

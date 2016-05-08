@@ -1,20 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+    android:id="@+id/card"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:background="@android:color/white">
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        card_view:cardCornerRadius="5dp"
-        android:id="@+id/card"
-        android:clickable="true"
-        card_view:cardBackgroundColor="#e4e4e4"
-        android:layout_marginTop="6dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
@@ -23,7 +14,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:layout_marginLeft="16dp" />
 
             <TextView
                 android:layout_width="fill_parent"
@@ -42,14 +34,14 @@
                 android:id="@+id/time_my_event"
                 android:textSize="10dp"
                 android:layout_alignBottom="@+id/image_my_event"
-                android:layout_alignLeft="@+id/rating_my_event"
-                android:layout_alignStart="@+id/rating_my_event" />
+                android:layout_alignLeft="@+id/adress_myevent"
+                android:layout_alignStart="@+id/adress_myevent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="100 (+) 27(-)"
-                android:id="@+id/rating_my_event"
+                android:text="Богатырская 6, Киев"
+                android:id="@+id/adress_myevent"
                 android:textSize="12dp"
                 android:textColor="#2849f0"
                 android:layout_below="@+id/name_my_event"
@@ -70,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/my_event"
-                android:layout_alignTop="@+id/rating_my_event"
+                android:layout_alignTop="@+id/adress_myevent"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
@@ -86,8 +78,3 @@
                 android:layout_marginRight="7dp" />
 
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
-
-
-
-</RelativeLayout>
