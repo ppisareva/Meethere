@@ -4,27 +4,24 @@ import android.app.DatePickerDialog;
 import android.app.SearchManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.EntityIterator;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SearchViewCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputConnection;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.polina.meethere.Adapters.SimpleItem;
@@ -34,12 +31,14 @@ import com.example.polina.meethere.fragments.MyEventsListsFragment;
 import com.example.polina.meethere.fragments.NewEventFragment;
 import com.example.polina.meethere.fragments.ProfileFragment;
 import com.example.polina.meethere.fragments.SearchResultsFragment;
+import com.facebook.drawee.generic.RoundingParams;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.login.LoginManager;
 
 import java.lang.reflect.Field;
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AbstractMeethereActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
@@ -82,6 +81,19 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        initUserInfo();
+    }
+
+    private void initUserInfo() {
+        NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
+        View root = nv.getHeaderView(0);
+        ((TextView)root.findViewById(R.id.user_name)).setText(app().getUserProfile().getName());
+        ((TextView)root.findViewById(R.id.location)).setText(app().getUserProfile().getLocation());
+        SimpleDraweeView profileImage = (SimpleDraweeView)root.findViewById(R.id.profile_image);
+        profileImage.setImageURI(Uri.parse(app().getUserProfile().getProfileUrl()));
+        RoundingParams roundingParams = RoundingParams.asCircle();
+        profileImage.getHierarchy().setRoundingParams(roundingParams);
+
     }
 
 
@@ -143,7 +155,7 @@ public class MainActivity extends AppCompatActivity
 
     public void onLogOut(View v){
         LoginManager.getInstance().logOut();
-        startActivity(new Intent(this, Registration.class));
+        startActivity(new Intent(this, LoginActivity.class));
 
     }
 

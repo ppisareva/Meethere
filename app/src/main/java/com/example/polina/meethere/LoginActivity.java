@@ -2,8 +2,9 @@ package com.example.polina.meethere;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -13,7 +14,9 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-public class Registration extends Activity {
+import org.json.JSONObject;
+
+public class LoginActivity extends AbstractMeethereActivity {
     LoginButton loginButton;
     CallbackManager callbackManager;
 
@@ -22,16 +25,14 @@ public class Registration extends Activity {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_registration);
-                        callbackManager = CallbackManager.Factory.create();
-        startActivity(new Intent(Registration.this, MainActivity.class));
-        if(isLoggedIn()) startActivity(new Intent(this, MainActivity.class));
+        callbackManager = CallbackManager.Factory.create();
+        if(app().getUserProfile() != null) startActivity(new Intent(this, MainActivity.class));
         loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions("user_friends");
+        loginButton.setReadPermissions("user_friends", "user_location");
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-               startActivity(new Intent(Registration.this, MainActivity.class));
-
+                new LoginWithFbTask().execute(loginResult.getAccessToken().getToken());
             }
 
 
@@ -47,19 +48,23 @@ public class Registration extends Activity {
         });
     }
 
-//    public void onClick(View v){
-//        Intent intent = new Intent();
-//        switch (v.getId()){
-//            case R.id.button_log_in:
-//                intent = new Intent(this, SignUpActivity.class);
-//                break;
-//            case R.id.button_sign_up:
-//                intent = new Intent(this, LogInActivity.class);
-//                break;
-//        }
-//        startActivity(intent);
-//    }
+    class LoginWithFbTask extends AsyncTask<String, Void, JSONObject> {
 
+        @Override
+        protected JSONObject doInBackground(String... params) {
+            return app().getServerApi().auth(params[0]);
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            if (jsonObject == null) {
+                Toast.makeText(getApplicationContext(), R.string.error_auth, Toast.LENGTH_LONG).show();
+                return;
+            }
+            app().saveUserProfile(jsonObject);
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Meethere</string>
-    <string name="facebook_app_id">1515739352065701</string>
+    <string name="facebook_app_id">463560493836897</string>
     <string name="facebook_button">connect_with_facebook</string>
     <string name="email">enter email</string>
     <string name="password">enter password</string>
@@ -224,5 +224,6 @@
     <string name="my_preferences">Мои предпочтения</string>
     <string name="exit">Выход</string>
     <string name="location">Местоположение</string>
+    <string name="error_auth">Something goes wrong.. :(</string>
 
 </resources>

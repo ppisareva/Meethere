@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/nav_header_height"
         android:background="@drawable/side_nav_bar"
-       style="@style/Margin"
+        style="@style/Margin"
         android:clickable="true"
         android:onClick="onChangeBackground"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
@@ -18,17 +18,15 @@
         android:gravity="bottom"
        >
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:layout_width="70dp"
             android:layout_height="75dp"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             android:src="@drawable/river"
-            android:id="@+id/imageView"
+            android:id="@+id/profile_image"
             android:layout_marginRight="10dp"
             android:onClick="onChangeProfileImage"
-            android:clickable="true"
-            app:civ_border_width="1dp"
-            app:civ_border_color="#ffffff"/>
+            android:clickable="true"/>
 
     <LinearLayout
         android:orientation="vertical"
@@ -37,6 +35,7 @@
         android:layout_weight="10">
 
         <TextView
+                android:id="@+id/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/nav_header_vertical_spacing"
@@ -51,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mountain View, CA, USA"
-            android:id="@+id/textView"
+            android:id="@+id/location"
             android:layout_weight="1"
             android:layout_marginLeft="5dp"
             android:foregroundGravity="clip_horizontal" />
