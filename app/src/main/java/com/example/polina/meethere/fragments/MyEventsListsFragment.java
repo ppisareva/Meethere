@@ -19,6 +19,9 @@ public class MyEventsListsFragment extends android.support.v4.app.Fragment {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     TabLayout tabLayout;
+    public final int FRAGMENT_PAST_EVENTS = 0;
+    public final int FRAGMENT_FUTURE_EVENTS = 1;
+    public final int FRAGMENT_CREATED_BY_ME_EVENTS = 2;
 
     public static MyEventsListsFragment newInstance() {
         MyEventsListsFragment fragment = new MyEventsListsFragment();
@@ -37,9 +40,7 @@ public class MyEventsListsFragment extends android.support.v4.app.Fragment {
         View v =  inflater.inflate(R.layout.fragment_my_events_lists, container, false);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
         tabLayout = (TabLayout) v.findViewById(R.id.tabs);
-        tabLayout.setVisibility(View.VISIBLE);
         mViewPager = (ViewPager) v.findViewById(R.id.container);
-        mViewPager.setVisibility(View.VISIBLE);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         tabLayout.setupWithViewPager(mViewPager);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -58,11 +59,11 @@ public class MyEventsListsFragment extends android.support.v4.app.Fragment {
         @Override
         public android.support.v4.app.Fragment getItem(int position) {
             switch (position){
-                case Utils.FRAGMENT_CREATED_BY_ME_EVENTS:
+                case FRAGMENT_CREATED_BY_ME_EVENTS:
                     return MyEventsFragment.newInstance();
-                case  Utils.FRAGMENT_FUTURE_EVENTS:
+                case  FRAGMENT_FUTURE_EVENTS:
                     return MyEventsFragment.newInstance();
-                case Utils.FRAGMENT_PAST_EVENTS:
+                case FRAGMENT_PAST_EVENTS:
                     return MyEventsFragment.newInstance();
 
             }

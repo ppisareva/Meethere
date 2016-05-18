@@ -51,7 +51,7 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
         if (position == getItemCount()-1) {
             v.getContext().startActivity(new Intent(v.getContext(), CategoryListActivity.class));
         } else {
-            v.getContext().startActivity(new Intent(v.getContext(), CategoryInActivity.class));
+            v.getContext().startActivity(new Intent(v.getContext(), ListOfEventsActivity.class));
         }
     }
 

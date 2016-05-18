@@ -22,6 +22,7 @@ import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -74,7 +75,6 @@ public class LoginActivity extends AbstractMeethereActivity {
 
     private void goToMain() {
         finish();
-        overridePendingTransition(0, 0);
         startActivity(new Intent(this, MainActivity.class));
     }
 

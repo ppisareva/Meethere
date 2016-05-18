@@ -1,6 +1,7 @@
 package com.example.polina.meethere.fragments;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +24,7 @@ import com.example.polina.meethere.SimpleListAdapter;
 import com.example.polina.meethere.Utils;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -44,8 +46,13 @@ public class SearchResultsFragment extends android.support.v4.app.Fragment {
     TextView leftIndexAge;
     TextView rightIndexBudget;
     TextView leftIndexBudget;
+    boolean highPrice = false;
+    boolean lowPrice = false;
     public static final int MIN_AGE = 15;
     public static final int MIN_BUDGET = 50;
+
+    TextView distance;
+    TextView price;
 
     public static SearchResultsFragment newInstance() {
         SearchResultsFragment fragment = new SearchResultsFragment();
@@ -73,20 +80,20 @@ public class SearchResultsFragment extends android.support.v4.app.Fragment {
 
         listResults = (RecyclerView) v.findViewById(R.id.search_results);
         layout = (LinearLayout) v.findViewById(R.id.advanced_search);
+        final LinearLayout layoutFilter = ( LinearLayout) v.findViewById(R.id.filters_layout);
         listResults.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
-        itemList.addAll(Utils.getAllCategory(getActivity()));
         adapter = new SimpleListAdapter(itemList);
 
         listResults.setAdapter(adapter);
-
-
 
         Spinner spinnerCategory = (Spinner) v.findViewById(R.id.spinner_category);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.category, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(adapter);
+
+
 
 
         startDate = (Button) v.findViewById(R.id.button_from);
@@ -105,6 +112,9 @@ public class SearchResultsFragment extends android.support.v4.app.Fragment {
         rightIndexAge = (TextView)v. findViewById(R.id.rightIndexValue);
         rightIndexDistance = (TextView)v. findViewById(R.id.rightIndexValue_distance);
         rightIndexBudget = (TextView)v. findViewById(R.id.rightIndexValue_budget);
+
+        distance =(TextView)v.findViewById(R.id.distance_filter);
+        price = (TextView) v.findViewById(R.id.price_filter);
 
 
 
@@ -135,6 +145,47 @@ public class SearchResultsFragment extends android.support.v4.app.Fragment {
 
         return v;
 
+
+    }
+
+    public void onDistancePress(){
+        distance.setTextColor(getResources().getColor(R.color.filter));
+        price.setTextColor(getResources().getColor(R.color.white));
+        Drawable img =  getResources().getDrawable(R.drawable.ic_price);
+        img.setBounds(0, 0, 45, 45);
+        price.setCompoundDrawables(null, null,img, null);
+        highPrice= false;
+        lowPrice = false;
+
+
+    }
+
+    public void onPricePress() {
+        distance.setTextColor(getResources().getColor(R.color.white));
+        price.setTextColor(getResources().getColor(R.color.filter));
+        if(highPrice || lowPrice){
+            if(highPrice) {
+                Drawable img =  getResources().getDrawable(R.drawable.ic_price_down_24dp);
+                img.setBounds(0, 0, 45, 45);
+                price.setCompoundDrawables(null, null,img, null);
+                lowPrice = true;
+                highPrice = false;
+            } else {
+
+            if(lowPrice) {
+                Drawable img =  getResources().getDrawable(R.drawable.ic_price_up_24dp);
+                img.setBounds(0, 0, 45, 45);
+                price.setCompoundDrawables(null, null,img, null);
+                lowPrice = false;
+                highPrice = true;
+            }}
+        } else {
+
+            lowPrice=true;
+            Drawable img =  getResources().getDrawable(R.drawable.ic_price_down_24dp);
+            img.setBounds(0, 0, 45, 45);
+            price.setCompoundDrawables(null, null,img, null);
+        }
 
     }
 
@@ -178,4 +229,6 @@ public class SearchResultsFragment extends android.support.v4.app.Fragment {
     public void changeEndTime(String st){
         endTime.setText(st);
     }
+
+
 }

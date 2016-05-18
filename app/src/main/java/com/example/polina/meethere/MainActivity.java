@@ -8,11 +8,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -26,6 +26,7 @@ import android.widget.TimePicker;
 
 import com.example.polina.meethere.Adapters.SimpleItem;
 import com.example.polina.meethere.fragments.CategoryFragment;
+import com.example.polina.meethere.fragments.FeedFragment;
 import com.example.polina.meethere.fragments.FindEventFragment;
 import com.example.polina.meethere.fragments.MyEventsListsFragment;
 import com.example.polina.meethere.fragments.NewEventFragment;
@@ -55,9 +56,13 @@ public class MainActivity extends AbstractMeethereActivity
     private MyEventsListsFragment myEventsListsFragment;
     private NewEventFragment newEventFragment;
     private ProfileFragment profileFragment;
+    private FeedFragment feedFragment;
     SearchResultsFragment searchResultsFragment;
 
     private FindEventFragment findEventFragment;
+    private String FEED = "feed";
+
+
 
 
     @Override
@@ -65,7 +70,8 @@ public class MainActivity extends AbstractMeethereActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         categoryFragment = CategoryFragment.newInstance();
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_main, categoryFragment).commit();
+        feedFragment = FeedFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, feedFragment, FEED).addToBackStack(null).commit();
         myEventsListsFragment = MyEventsListsFragment.newInstance();
         newEventFragment = NewEventFragment.newInstance();
         findEventFragment = FindEventFragment.newInstance();
@@ -155,7 +161,26 @@ public class MainActivity extends AbstractMeethereActivity
 
     public void onLogOut(View v){
         LoginManager.getInstance().logOut();
-        startActivity(new Intent(this, LoginActivity.class));
+        app().logout();
+        System.err.println("====================!!!!! >>>>>>>>>>>>>>>>>>");
+        finish();
+        startActivity(new Intent(this, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+
+    }
+
+    public void onDistance(View v){
+
+            searchResultsFragment.onDistancePress();
+
+
+    }
+
+    public void onPrice (View v){
+        searchResultsFragment.onPricePress();
+
+    }
+
+    public void onFilter (View v){
 
     }
 
@@ -292,7 +317,7 @@ public class MainActivity extends AbstractMeethereActivity
 
                 @Override
                 public boolean onMenuItemActionCollapse(MenuItem item) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, categoryFragment)
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, feedFragment)
                             .addToBackStack(null).commit();
                     return true;
                 }
@@ -346,20 +371,23 @@ public class MainActivity extends AbstractMeethereActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_profile) {
+            profileFragment = ProfileFragment.newInstance();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, profileFragment)
                     .addToBackStack(null).commit();
         } else if (id == R.id.nav_my_places) {
+            myEventsListsFragment = MyEventsListsFragment.newInstance();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, myEventsListsFragment)
                     .addToBackStack(null).commit();
         } else if (id == R.id.nav_new_event) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, newEventFragment, NEW_EVENT )
-                    .addToBackStack(null).commit();
-        } else if (id == R.id.nav_search) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, searchResultsFragment, SEARCH)
+            startActivity(new Intent(this, NewEventActivity.class));
+        } else if (id == R.id.nav_category) {
+            categoryFragment = CategoryFragment.newInstance();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, categoryFragment)
                     .addToBackStack(null).commit();
 
-        } else if (id == R.id.nav_category) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, categoryFragment)
+        } else if (id == R.id.nav_news) {
+            feedFragment = FeedFragment.newInstance();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, feedFragment)
                     .addToBackStack(null).commit();
 
         } else if (id == R.id.nav_settings) {

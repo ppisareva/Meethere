@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -22,9 +24,12 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".LoginActivity" android:theme="@style/AppTheme.NoActionBar" >
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -61,13 +66,15 @@
         </activity>
         <activity android:name=".CategoryListActivity" >
         </activity>
-        <activity android:name=".CategoryInActivity" >
-        </activity>
         <activity android:name=".EventActivity" >
         </activity>
         <activity android:name=".MyInformationActivity" >
         </activity>
         <activity android:name=".MyPreferencesActivity" >
+        </activity>
+        <activity android:name=".ListOfEventsActivity" >
+        </activity>
+        <activity android:name=".NewEventActivity" >
         </activity>
     </application>
 

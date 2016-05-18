@@ -1,52 +1,9 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.polina.meethere.fragments.SearchResultsFragment">
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal">
-
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/radioButton_distance"
-                    android:text="Растояние"
-                    android:textColor="@color/radio_button"
-                    style="@style/RadioButtonStyleDistance"/>
-
-
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Цена"
-                    android:textColor="@color/radio_button"
-                    android:id="@+id/radioButton_lower_price"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Цена"
-                    android:textColor="@color/radio_button"
-                    android:id="@+id/radioButton_higher_price"
-                    android:background="@drawable/ic_call_received_black_24dp" />
-
-            </RadioGroup>
-        </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -286,12 +243,55 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/search_results"/>
+        android:id="@+id/search_results"
+        android:layout_marginTop="3dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/filters_layout"
+        android:layout_marginBottom="15dp"
+        android:background="#861738f8">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:text="@string/distance"
+            android:layout_weight="1"
+            android:id="@+id/distance_filter"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:clickable="true"
+            android:onClick="onDistance"
+            android:textColor="@android:color/white" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="17dp"
+            android:text="@string/price"
+            android:clickable="true"
+            android:id="@+id/price_filter"
+            android:drawableEnd="@drawable/ic_price"
+            android:onClick="onPrice"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:textColor="@android:color/white" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:text="@string/filter"
+            android:clickable="true"
+            android:onClick="onFilter"
+            android:id="@+id/filter"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:textColor="@android:color/white" />
+
+
+    </LinearLayout>
 
 
 
-
-
-
-
-</LinearLayout>
+</RelativeLayout>

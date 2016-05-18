@@ -5,15 +5,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.polina.meethere.CategoryListActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/all_catrgory"
-        android:id="@+id/title_category"
-        android:textSize="18dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp" />
+
 
 
 

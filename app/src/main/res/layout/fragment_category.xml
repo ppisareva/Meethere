@@ -1,29 +1,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
-
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.polina.meethere.fragments.CategoryFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/vertical_list"
+        android:id="@+id/all_category_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal|top" />
-
-    <com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader
-        android:id="@+id/header"
-        android:layout_marginTop="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/category_list_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-
-    </com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader>
+        android:layout_below="@+id/title_category"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 

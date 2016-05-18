@@ -13,6 +13,7 @@ public class ServerApi {
     public static final String AUTH_HEADER = "Authorization";
 
     public JSONObject auth(String fbToken) {
+        System.err.println("FB TOKEN: " + fbToken);
         HttpConnector connector = new HttpConnector(HOST + AUTH);
         connector.setHeader(AUTH_HEADER, "Bearer facebook " + fbToken);
         return connector.response();

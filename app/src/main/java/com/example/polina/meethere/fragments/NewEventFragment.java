@@ -48,6 +48,7 @@ public class NewEventFragment extends android.support.v4.app.Fragment{
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_new_event, container, false);
         setHasOptionsMenu(true);
+
         Spinner spinnerCategory = (Spinner) v.findViewById(R.id.spinner_category);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.category, android.R.layout.simple_spinner_item);

@@ -4,6 +4,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_marginTop="7dp"
+    android:clickable="true"
+    android:id="@+id/simpleLayout"
     android:background="@android:color/white"
     android:layout_height="wrap_content">
 
