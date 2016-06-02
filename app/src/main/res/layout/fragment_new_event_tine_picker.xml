@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.polina.meethere.fragments.NewEventTinePickerFragment">
+    tools:context="com.example.polina.meethere.fragments.NewEventTimePickerFragment">
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -59,37 +59,43 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_above="@+id/textView35"
-        android:layout_alignParentLeft="true"
         android:background="@color/backgroung"
-
-        android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout4">
+        android:id="@+id/linearLayout_repeat"
+        android:layout_below="@+id/day_of_week"
+        android:layout_alignRight="@+id/repeated_event"
+        android:layout_alignEnd="@+id/repeated_event"
+        android:gravity="center_horizontal"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/begining"
-            android:id="@+id/textView8"
-            android:layout_weight="1"
-            android:layout_marginLeft="16dp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ПН 12.04.16"
-            android:id="@+id/button_from"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:onClick="onStartDate" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:id="@+id/button_from_time"
-            android:onClick="onStartTime"
+            android:text="@string/repite"
+            android:layout_marginLeft="16dp"
+            android:layout_gravity="center"
             android:layout_weight="1" />
+
+        <Spinner
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView41"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/week"
+            android:id="@+id/textView40"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center_horizontal" />
+
     </LinearLayout>
 
     <TextView
@@ -108,7 +114,7 @@
         android:layout_height="wrap_content"
     android:text="Повторяющееся событие"
         android:id="@+id/repeated_event"
-        android:layout_above="@+id/linearLayout4"
+        android:layout_above="@+id/linearLayo"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="10dp"
@@ -172,6 +178,43 @@
             android:text="ВС"
             android:id="@+id/checkBox8"
             android:checked="false" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/backgroung"
+
+        android:id="@+id/linearLayo"
+        android:layout_above="@+id/textView35"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/begining"
+            android:id="@+id/textView8"
+            android:layout_weight="1"
+            android:layout_marginLeft="16dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ПН 12.04.16"
+            android:id="@+id/button_from"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:onClick="onStartDate" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:id="@+id/button_from_time"
+            android:onClick="onStartTime"
+            android:layout_weight="1" />
     </LinearLayout>
 
 </RelativeLayout>

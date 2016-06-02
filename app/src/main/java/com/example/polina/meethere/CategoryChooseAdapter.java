@@ -8,6 +8,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -65,5 +67,10 @@ public class CategoryChooseAdapter extends RecyclerView.Adapter<CategoryChooseAd
             checkBox = (CheckBox) itemView.findViewById(R.id.check_category);
 
         }
+
+    }
+
+    public Collection<Integer> getTags (){
+        return checked;
     }
 }

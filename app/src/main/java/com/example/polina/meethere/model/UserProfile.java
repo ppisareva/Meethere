@@ -12,6 +12,8 @@ public class UserProfile {
     public static final String MINI_PROFILE_URL = "profile_mini_image_url";
     public static final String USER_ID = "user_id";
     public static final String LOCATION = "location";
+    public static final String TOKEN = "token";
+
 
     private int id;
     private String firstName;
@@ -19,7 +21,7 @@ public class UserProfile {
     private String profileUrl;
     private String miniProfileUrl;
     private String location;
-
+    private String accessToken;
 
     public static UserProfile init(SharedPreferences pref) {
         if (! pref.contains(USER_ID)) return null;
@@ -29,6 +31,7 @@ public class UserProfile {
         up.profileUrl = pref.getString(PROFILE_URL, null);
         up.miniProfileUrl = pref.getString(MINI_PROFILE_URL, null);
         up.location = pref.getString(LOCATION, null);
+        up.accessToken = pref.getString(TOKEN, null);
         up.id = pref.getInt(USER_ID, -1);
         return up;
     }
@@ -59,5 +62,9 @@ public class UserProfile {
 
     public String getName() {
         return firstName + " " + lastName;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
     }
 }

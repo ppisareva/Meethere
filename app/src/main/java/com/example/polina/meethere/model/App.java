@@ -22,11 +22,15 @@ public class App extends Application {
     private UserProfile userProfile = null;
 
 
+
     @Override
     public void onCreate() {
         super.onCreate();
         Fresco.initialize(this);
         userProfile = UserProfile.init(pref());
+        if (userProfile != null)
+            serverApi.setAuthToken(userProfile.getAccessToken());
+
     }
 
     public ServerApi getServerApi() {
@@ -45,8 +49,10 @@ public class App extends Application {
         editor.putString(UserProfile.PROFILE_URL, o.optString(UserProfile.PROFILE_URL));
         editor.putString(UserProfile.MINI_PROFILE_URL, o.optString(UserProfile.MINI_PROFILE_URL));
         editor.putString(UserProfile.LOCATION, o.optString(UserProfile.LOCATION));
+        editor.putString(UserProfile.TOKEN, o.optString(UserProfile.TOKEN));
         editor.apply();
         userProfile = UserProfile.init(pref());
+        serverApi.setAuthToken(userProfile.getAccessToken());
     }
 
     public SharedPreferences pref() {

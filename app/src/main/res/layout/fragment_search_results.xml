@@ -5,6 +5,92 @@
     android:orientation="vertical"
     tools:context="com.example.polina.meethere.fragments.SearchResultsFragment">
 
+
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/search_results"
+        android:layout_marginTop="3dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/filters_layout"
+        android:layout_marginBottom="15dp"
+        android:background="#861738f8">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:text="@string/distance"
+            android:layout_weight="1"
+            android:id="@+id/distance_filter"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:clickable="true"
+            android:onClick="onDistance"
+            android:textColor="@android:color/white" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/advanced_search"
+            android:layout_toRightOf="@+id/advanced_search"
+            android:layout_toEndOf="@+id/advanced_search"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/price"
+
+                android:clickable="true"
+                android:id="@+id/price_filter"
+                android:onClick="onPrice"
+                android:layout_gravity="center_vertical"
+                android:textColor="@android:color/white" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/image_price"
+                android:src="@drawable/ic_price"/>
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:text="@string/filter"
+            android:clickable="true"
+            android:onClick="onFilter"
+            android:id="@+id/filter"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:textColor="@android:color/white" />
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="235dp"
@@ -12,10 +98,10 @@
         android:id="@+id/advanced_search"
         android:visibility="gone">
 
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:id="@+id/spinner_category" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:id="@+id/spinner_category" />
 
 
         <LinearLayout
@@ -236,62 +322,5 @@
             android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
-
-
-
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/search_results"
-        android:layout_marginTop="3dp" />
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/filters_layout"
-        android:layout_marginBottom="15dp"
-        android:background="#861738f8">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="18dp"
-            android:text="@string/distance"
-            android:layout_weight="1"
-            android:id="@+id/distance_filter"
-            android:layout_gravity="center"
-            android:gravity="center_horizontal"
-            android:clickable="true"
-            android:onClick="onDistance"
-            android:textColor="@android:color/white" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:text="@string/price"
-            android:clickable="true"
-            android:id="@+id/price_filter"
-            android:drawableEnd="@drawable/ic_price"
-            android:onClick="onPrice"
-            android:layout_gravity="center"
-            android:gravity="center_horizontal"
-            android:textColor="@android:color/white" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="18dp"
-            android:text="@string/filter"
-            android:clickable="true"
-            android:onClick="onFilter"
-            android:id="@+id/filter"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:gravity="center_horizontal"
-            android:textColor="@android:color/white" />
-
-
-    </LinearLayout>
-
-
 
 </RelativeLayout>

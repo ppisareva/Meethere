@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.polina.meethere.fragments.NewEventAditionFragment">
+    tools:context=".fragments.NewEventAdditionFragment">
 
 
     <TextView
@@ -31,10 +31,11 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/linearLayout8"
         android:layout_below="@+id/linearLayout3"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout8">
+        android:layout_marginTop="40dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -170,10 +171,9 @@
         android:text="@string/do_not_matter"
         android:id="@+id/checkBox_budget"
         android:checked="false"
-        android:layout_below="@+id/textView37"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="10dp" />
+        android:layout_alignTop="@+id/linearLayout3"
+        android:layout_alignLeft="@+id/checkBox"
+        android:layout_alignStart="@+id/checkBox" />
 
     <CheckBox
         android:layout_width="wrap_content"

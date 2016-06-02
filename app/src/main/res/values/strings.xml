@@ -145,11 +145,15 @@
 
 
     <string-array name="pref_notification_list_titles">
+        <item>Автор события со мной</item>
+        <item>Учасники события со мной</item>
         <item>Друзья</item>
         <item>Все в сети</item>
         <item>Никто</item>
     </string-array>
     <string-array name="pref_example_list_values">
+        <item>3</item>
+        <item>2</item>
         <item>1</item>
         <item>0</item>
         <item>-1</item>
@@ -241,6 +245,10 @@
     <string name="aditional">Дополнитеные параметры</string>
     <string name="from">от...</string>
     <string name="quantity">Количество людей</string>
+    <string name="repite">Повторение</string>
+    <string name="week">недель</string>
+    <string name="time_difference">Временной промежуток</string>
+    <string name="free">Бесплатно</string>
 
 
 </resources>

@@ -34,6 +34,8 @@ import com.example.polina.meethere.fragments.ProfileFragment;
 import com.example.polina.meethere.fragments.SearchResultsFragment;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
+
+
 import com.facebook.login.LoginManager;
 
 import java.lang.reflect.Field;
@@ -139,6 +141,9 @@ public class MainActivity extends AbstractMeethereActivity
         startActivity(new Intent(this, MyInformationActivity.class));
     }
 
+    public void onChangeProfileImage (View v){
+
+    }
     public void onMyEvent(View v){
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, myEventsListsFragment)
                 .addToBackStack(null).commit();
@@ -146,6 +151,11 @@ public class MainActivity extends AbstractMeethereActivity
 
     public void onFavorite(View v){
 
+    }
+
+    public void onMore (View v){
+        Intent intent = new Intent(this, ListOfEventsActivity.class);
+       startActivity(intent);
     }
 
     public void onPreferences (View v){
@@ -181,6 +191,7 @@ public class MainActivity extends AbstractMeethereActivity
     }
 
     public void onFilter (View v){
+        startActivity( new Intent(this, SearchFiltersActivity.class));
 
     }
 
@@ -278,26 +289,26 @@ public class MainActivity extends AbstractMeethereActivity
 
         }
     };
-
-    private void changeCloseButton(SearchView searchView){
-        try {
-            Field searchField = SearchView.class.getDeclaredField("mCloseButton");
-            searchField.setAccessible(true);
-            ImageView mSearchCloseButton = (ImageView) searchField.get(searchView);
-            if (mSearchCloseButton != null) {
-                mSearchCloseButton.setImageResource(R.drawable.ic_tune_white_24dp);
-
-                mSearchCloseButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                      searchResultsFragment.showAdvancedSearch();
-                    }
-                });
-            }
-        } catch (Exception e) {
-            Log.e("", "Error finding close button", e);
-        }
-    }
+//
+//    private void changeCloseButton(SearchView searchView){
+//        try {
+//            Field searchField = SearchView.class.getDeclaredField("mCloseButton");
+//            searchField.setAccessible(true);
+//            ImageView mSearchCloseButton = (ImageView) searchField.get(searchView);
+//            if (mSearchCloseButton != null) {
+//                mSearchCloseButton.setImageResource(R.drawable.ic_tune_white_24dp);
+//
+//                mSearchCloseButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                      searchResultsFragment.showAdvancedSearch();
+//                    }
+//                });
+//            }
+//        } catch (Exception e) {
+//            Log.e("", "Error finding close button", e);
+//        }
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -324,7 +335,7 @@ public class MainActivity extends AbstractMeethereActivity
             });
         }
         if (searchView != null) {
-           changeCloseButton(searchView);
+//          changeCloseButton(searchView);
             searchView.setMaxWidth(MAX_WIDTH);
             searchView.setSearchableInfo(searchManager.getSearchableInfo(MainActivity.this.getComponentName()));
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

@@ -11,12 +11,14 @@
         android:layout_height="@dimen/nav_header_height"
         android:background="@drawable/side_nav_bar"
         style="@style/Margin"
-        android:clickable="true"
-        android:onClick="onChangeBackground"
+
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         android:orientation="horizontal"
         android:gravity="bottom"
        >
+
+    <!--android:clickable="true"-->
+    <!--android:onClick="onChangeBackground"-->
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:layout_width="70dp"

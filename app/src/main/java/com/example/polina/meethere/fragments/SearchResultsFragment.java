@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -46,6 +47,7 @@ public class SearchResultsFragment extends android.support.v4.app.Fragment {
     TextView leftIndexAge;
     TextView rightIndexBudget;
     TextView leftIndexBudget;
+    ImageView imageView;
     boolean highPrice = false;
     boolean lowPrice = false;
     public static final int MIN_AGE = 15;
@@ -81,6 +83,7 @@ public class SearchResultsFragment extends android.support.v4.app.Fragment {
         listResults = (RecyclerView) v.findViewById(R.id.search_results);
         layout = (LinearLayout) v.findViewById(R.id.advanced_search);
         final LinearLayout layoutFilter = ( LinearLayout) v.findViewById(R.id.filters_layout);
+        imageView = (ImageView) v.findViewById(R.id.image_price);
         listResults.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         adapter = new SimpleListAdapter(itemList);
@@ -151,9 +154,6 @@ public class SearchResultsFragment extends android.support.v4.app.Fragment {
     public void onDistancePress(){
         distance.setTextColor(getResources().getColor(R.color.filter));
         price.setTextColor(getResources().getColor(R.color.white));
-        Drawable img =  getResources().getDrawable(R.drawable.ic_price);
-        img.setBounds(0, 0, 45, 45);
-        price.setCompoundDrawables(null, null,img, null);
         highPrice= false;
         lowPrice = false;
 
@@ -165,26 +165,23 @@ public class SearchResultsFragment extends android.support.v4.app.Fragment {
         price.setTextColor(getResources().getColor(R.color.filter));
         if(highPrice || lowPrice){
             if(highPrice) {
-                Drawable img =  getResources().getDrawable(R.drawable.ic_price_down_24dp);
-                img.setBounds(0, 0, 45, 45);
-                price.setCompoundDrawables(null, null,img, null);
+                imageView.setImageResource(R.drawable.ic_price_down_24dp);
                 lowPrice = true;
                 highPrice = false;
             } else {
 
             if(lowPrice) {
-                Drawable img =  getResources().getDrawable(R.drawable.ic_price_up_24dp);
-                img.setBounds(0, 0, 45, 45);
-                price.setCompoundDrawables(null, null,img, null);
+                imageView.setImageResource(R.drawable.ic_price_up_24dp);
                 lowPrice = false;
                 highPrice = true;
             }}
         } else {
 
             lowPrice=true;
-            Drawable img =  getResources().getDrawable(R.drawable.ic_price_down_24dp);
-            img.setBounds(0, 0, 45, 45);
-            price.setCompoundDrawables(null, null,img, null);
+            imageView.setImageResource(R.drawable.ic_price_down_24dp);
+//            Drawable img =  getResources().getDrawable(R.drawable.ic_price_down_24dp);
+//            img.setBounds(0, 0, 45, 45);
+//            price.setCompoundDrawables(null, null,img, null);
         }
 
     }

@@ -36,6 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/more"
+            android:onClick="onMore"
             android:id="@+id/list_learn_more"
             android:background="@android:color/transparent"
             android:layout_alignParentTop="true"
