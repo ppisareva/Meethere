@@ -2,6 +2,7 @@ package com.example.polina.meethere;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,23 +13,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-import com.example.polina.meethere.Adapters.Event;
+import com.example.polina.meethere.model.Event;
 
 import java.util.List;
 
 /**
  * Created by polina on 08.03.16.
  */
-public class HorizontalEventAdapter extends RecyclerView.Adapter<HorizontalEventAdapter.ViewHolder> {
+public class HorizontalEventAdapter extends CursorRecyclerAdapter<HorizontalEventAdapter.ViewHolder> {
 
+    private static final int NAME = 1;
     private Activity context;
-    private List<Event> eventList;
 
 
 
-    public HorizontalEventAdapter(Activity context, List<Event> eventList) {
+    public HorizontalEventAdapter(Activity context, Cursor eventList) {
+        super(eventList);
         this.context = context;
-        this.eventList = eventList;
     }
 
     @Override
@@ -41,20 +42,15 @@ public class HorizontalEventAdapter extends RecyclerView.Adapter<HorizontalEvent
 
 
 
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Event event = eventList.get(position);
-        holder.text.setText(event.getName());
-        holder.setItemPosition(position);
-        try {
-            holder.image.setImageResource(event.getPhoto());
-        }catch (Throwable t) {}
-    }
 
     @Override
-    public int getItemCount() {
-        return    (null!=eventList? eventList.size(): 0);
+    public void onBindViewHolderCursor(ViewHolder holder, Cursor cursor) {
+            holder.text.setText(cursor.getString(NAME));
+            holder.setItemPosition(cursor.getPosition());
+            holder.image.setImageResource(R.drawable.cappuccino);
     }
+
+
 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -69,7 +65,6 @@ public class HorizontalEventAdapter extends RecyclerView.Adapter<HorizontalEvent
 
         @Override
         public void onClick(View v) {
-            Event item = eventList.get(itemPosition);
             System.out.println(itemPosition);
             Intent intent = new Intent(context, EventActivity.class);
             context.startActivity(intent);

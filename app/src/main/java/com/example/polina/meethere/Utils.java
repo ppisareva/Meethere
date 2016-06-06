@@ -9,6 +9,11 @@ import android.net.Uri;
 import android.provider.MediaStore;
 
 import com.example.polina.meethere.Adapters.SimpleItem;
+import com.example.polina.meethere.model.Event;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -29,8 +34,7 @@ public class Utils {
 
     private final static int WIDTH = 100;
     private final static int HEIGHT = 100;
-
-
+    private static final String RESULTS = "results";
 
 
     public static String getCurrentTime( ){
@@ -135,5 +139,48 @@ public class Utils {
     }
 
 
+    public static List<Event> parseEventList(JSONObject o) {
 
+        List<Event> list = new ArrayList<>();
+        JSONArray arr = new JSONArray();
+        try {
+            arr = o.getJSONArray(RESULTS);
+
+        for(int i=0; i<arr.length(); i++){
+            Event event = new Event();
+           final JSONObject eventJSON = arr.getJSONObject(i);
+            event.setId(eventJSON.optString(Event.ID));
+            event.setName(eventJSON.optString(Event.NAME));
+            event.setDescription(eventJSON.optString(Event.DESCRIPTION));
+
+//            event.setStart(eventJSON.optString(Event.START));
+//            event.setEnd(eventJSON.optString(Event.END));
+//
+//            event.setPlace(new ArrayList<Double>(){{
+//                add(eventJSON.optJSONArray(Event.PLACE).getDouble(0));
+//                add(eventJSON.optJSONArray(Event.PLACE).getDouble(1));
+//            }});
+//
+//            JSONArray array = o.optJSONArray(Event.TAGS);
+//            List<Integer> listOfTags = new ArrayList<>();
+//            for(int j = 0; j<array.length(); j++){
+//                listOfTags.add(array.getInt(j));
+//            }
+//            event.setTag(listOfTags);
+//            event.setAddress(eventJSON.optString(Event.ADDRESS));
+//            event.setAgeMax(eventJSON.optInt(Event.AGE_MAX));
+//            event.setAgeMin(eventJSON.optInt(Event.AGE_MIN));
+//            event.setBudgetMax(eventJSON.optInt(Event.BUDGET_MAX));
+//            event.setBudgetMin(eventJSON.optInt(Event.BUDGET_MIN));
+            list.add(event);
+            System.out.println("List of Events: event "+ i + "________ " + event.toString()  );
+        }
+
+
+        return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

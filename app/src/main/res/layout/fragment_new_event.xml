@@ -41,7 +41,7 @@
         android:id="@+id/edit_details"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
-        android:hint="@string/details"/>
+        android:hint="@string/description"/>
 
 
 

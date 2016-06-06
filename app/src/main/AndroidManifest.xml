@@ -82,6 +82,12 @@
             android:name=".network.NetworkService"
             android:exported="false" >
         </service>
+        
+        <provider
+            android:authorities="com.example.polina.meethere.data.data"
+            android:name="com.example.polina.meethere.data.ContentProvider">
+
+        </provider>
     </application>
 
 </manifest>

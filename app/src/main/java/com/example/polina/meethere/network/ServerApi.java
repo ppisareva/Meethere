@@ -20,6 +20,8 @@ public class ServerApi {
     public static final String HOST = "https://meethere-dev.herokuapp.com/";
     public static final String AUTH = "myauth";
     public static final String EVENT = "event/";
+    public static final String EVENTS_BY_CATEGORY = "find-event/tags/all/";
+
     public static final String AUTH_HEADER = "Authorization";
     private String accessToken;
 
@@ -101,5 +103,11 @@ public class ServerApi {
         char[] buffer = new char[len];
         reader.read(buffer);
         return new String(buffer);
+    }
+
+    public JSONObject loadEventsByCategory(int category) {
+        HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+category);
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return connector.response();
     }
 }

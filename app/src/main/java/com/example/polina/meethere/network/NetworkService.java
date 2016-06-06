@@ -25,6 +25,7 @@ public class NetworkService extends IntentService {
     // TODO: Rename actions, choose action names that describe tasks that this
     // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
     public static final String ACTION_CREATE_EVENT = "com.example.polina.meethere.network.action.FOO";
+    private static final String ACTION_LOAD_EVENTS = "com.example.polina.meethere.network.action.LOAD" ;
     private static final String ACTION_BAZ = "com.example.polina.meethere.network.action.BAZ";
 
     // TODO: Rename parameters
@@ -32,6 +33,7 @@ public class NetworkService extends IntentService {
     private static final String EXTRA_PARAM2 = "com.example.polina.meethere.network.extra.PARAM2";
     public static final String STATUS = "status";
     public static final String ID = "auto_id_0";
+    private static final String CATEGORY = "category";
 
     /**
      * Starts this service to perform action Foo with the given parameters. If
@@ -48,6 +50,13 @@ public class NetworkService extends IntentService {
         intent.setAction(ACTION_CREATE_EVENT);
         intent.putExtra(EXTRA_PARAM1, data);
         intent.putExtra(EXTRA_PARAM2, byteArray);
+        context.startService(intent);
+    }
+
+    public static void startActionLoadEventsByCategory(Context context, int category) {
+        Intent intent = new Intent(context, NetworkService.class);
+        intent.setAction(ACTION_LOAD_EVENTS);
+        intent.putExtra(CATEGORY,category);
         context.startService(intent);
     }
 
@@ -74,15 +83,19 @@ public class NetworkService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
-            if (ACTION_CREATE_EVENT.equals(action)) {
-                final String param1 = intent.getStringExtra(EXTRA_PARAM1);
-                final byte [] param2 = intent.getByteArrayExtra(EXTRA_PARAM2);
-                handleActionCreateEvent(param1, param2);
-            } else if (ACTION_BAZ.equals(action)) {
-                final String param1 = intent.getStringExtra(EXTRA_PARAM1);
-                final String param2 = intent.getStringExtra(EXTRA_PARAM2);
-                handleActionBaz(param1, param2);
+            switch (action){
+                case ACTION_CREATE_EVENT:
+                    final String param1 = intent.getStringExtra(EXTRA_PARAM1);
+                    final byte [] param2 = intent.getByteArrayExtra(EXTRA_PARAM2);
+                    handleActionCreateEvent(param1, param2);
+                    break;
+                case ACTION_LOAD_EVENTS:
+                    final int category = intent.getIntExtra(CATEGORY,0);
+                    handleActionLoadEventsByCategory(category);
+                    break;
+
             }
+
         }
     }
 
@@ -110,6 +123,14 @@ public class NetworkService extends IntentService {
         LocalBroadcastManager.getInstance(getBaseContext()).sendBroadcast(intent);
     }
 
+
+    private void handleActionLoadEventsByCategory(int category) {
+        ServerApi serverApi = ((App) getApplication()).getServerApi();
+        JSONObject o = serverApi.loadEventsByCategory(category);
+        Intent intent = new Intent(ACTION_LOAD_EVENTS);
+        intent.putExtra(STATUS, o != null);
+        LocalBroadcastManager.getInstance(getBaseContext()).sendBroadcast(intent);
+    }
     /**
      * Handle action Baz in the provided background thread with the provided
      * parameters.

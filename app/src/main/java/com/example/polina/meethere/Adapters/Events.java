@@ -1,5 +1,7 @@
 package com.example.polina.meethere.Adapters;
 
+import android.database.Cursor;
+
 import java.util.List;
 
 /**
@@ -7,11 +9,11 @@ import java.util.List;
  */
 public class Events  {
     String category;
-    List<Event> eventList;
+    Cursor cursor;
 
-    public Events(String category, List<Event> eventList) {
+    public Events(String category,Cursor cursor) {
         this.category = category;
-        this.eventList = eventList;
+        this.cursor = cursor;
     }
 
     public String getCategory() {
@@ -22,11 +24,13 @@ public class Events  {
         this.category = category;
     }
 
-    public List<Event> getEventList() {
-        return eventList;
+
+
+    public Cursor getCursor() {
+        return cursor;
     }
 
-    public void setEventList(List<Event> eventList) {
-        this.eventList = eventList;
+    public void setCursor(Cursor cursor) {
+        this.cursor = cursor;
     }
 }

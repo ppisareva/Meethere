@@ -34,11 +34,9 @@ import com.example.polina.meethere.fragments.ProfileFragment;
 import com.example.polina.meethere.fragments.SearchResultsFragment;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
-
-
 import com.facebook.login.LoginManager;
 
-import java.lang.reflect.Field;
+
 import java.util.Calendar;
 
 public class MainActivity extends AbstractMeethereActivity

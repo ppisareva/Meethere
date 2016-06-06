@@ -8,7 +8,7 @@ import java.util.Date;
 public class Event {
     private int photo;
     private String name;
-    private String details;
+    private String description;
     private Date date;
     private String rating;
     private String budget;
@@ -16,7 +16,7 @@ public class Event {
     public Event(int photo, String name, String details, Date date, String rating, String budget) {
         this.photo = photo;
         this.name = name;
-        this.details = details;
+        this.description = details;
         this.date = date;
         this.rating = rating;
         this.budget = budget;
@@ -38,12 +38,12 @@ public class Event {
         this.budget = budget;
     }
 
-    public String getDetails() {
-        return details;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDetails(String details) {
-        this.details = details;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Date getDate() {

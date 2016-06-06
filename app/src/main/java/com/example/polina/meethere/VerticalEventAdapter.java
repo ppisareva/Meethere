@@ -41,14 +41,15 @@ public class VerticalEventAdapter extends RecyclerView.Adapter<VerticalEventAdap
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Events events = eventsList.get(position);
         holder.textView.setText(events.getCategory());
-        LinearLayoutManager layoutManager
-                = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-        System.err.println("EVENT LIST: " + events.getEventList());
-        HorizontalEventAdapter horizontalEventAdapter
-                = new HorizontalEventAdapter(context, events.getEventList());
+
+
+        System.err.println("EVENT LIST: " + events.getCursor());
+
+        HorizontalEventAdapter horizontalEventAdapter = new HorizontalEventAdapter(context, events.getCursor());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        holder.recyclerView.setLayoutManager(layoutManager);
         holder.recyclerView.setAdapter(horizontalEventAdapter);
         holder.recyclerView.setNestedScrollingEnabled(false);
-        holder.recyclerView.setLayoutManager(layoutManager);
     }
 
     @Override
