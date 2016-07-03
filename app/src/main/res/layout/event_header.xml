@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/app_bar_main"
+    android:padding="16dp"
+    tools:context=".activities.EventActivity">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/time_my_event"
+        android:textSize="12sp"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/join_event"
+        android:button="@drawable/chack_box_join"
+        android:checked="false"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/address_myevent"
+        android:drawableRight="@android:drawable/ic_dialog_map"
+        android:onClick="onMap"
+        android:layout_below="@+id/time_my_event"
+        android:layout_marginTop="12dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/my_event_budget"
+        android:textColor="#2cb11a"
+        android:layout_below="@+id/address_myevent"
+        android:layout_marginTop="12dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="0"
+        android:clickable="true"
+        android:onClick="onJoiners"
+        android:id="@+id/people_quantity_my_event"
+        android:drawableLeft="@drawable/people"
+        android:drawablePadding="5dp"
+        android:layout_alignTop="@+id/my_event_budget"
+        android:layout_alignRight="@+id/join_event"
+        android:layout_alignEnd="@+id/join_event"
+        android:gravity="center_vertical" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/people_quantity_my_event"
+        android:id="@+id/descriprion_my_event" />
+
+    <EditText
+        android:id="@+id/make_comments"
+        android:hint="@string/make_comment"
+        android:layout_below="@id/descriprion_my_event"
+        android:layout_toLeftOf="@+id/comment"
+        android:imeOptions="actionSend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageButton
+        android:id="@+id/comment"
+        android:enabled="false"
+        android:src="@android:drawable/ic_menu_send"
+        android:onClick="onSendComment"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/make_comments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+</RelativeLayout>

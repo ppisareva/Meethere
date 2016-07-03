@@ -2,6 +2,11 @@ package com.example.polina.meethere.network;
 
 import android.content.SharedPreferences;
 
+import com.example.polina.meethere.Utils;
+import com.example.polina.meethere.data.Comment;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.DataOutputStream;
@@ -12,6 +17,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ko3a4ok on 5/7/16.
@@ -19,6 +26,7 @@ import java.net.URL;
 public class ServerApi {
     public static final String HOST = "https://meethere-dev.herokuapp.com/";
     public static final String AUTH = "myauth";
+    public static final String COMMENT = "/comment/";
     public static final String EVENT = "event/";
     public static final String MANAGE = "/manage";
     public static final String SEARCH = "search/?q=";
@@ -190,5 +198,33 @@ public class ServerApi {
         HttpConnector connector = new HttpConnector(HOST + SEARCH+ search +SORT_LOW_PRICE);
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return connector.response();
+    }
+
+    public Comment sendComment(String eventId, String str) {
+        HttpConnector connector = new HttpConnector(HOST + EVENT+ eventId +COMMENT);
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        JSONObject o = new JSONObject();
+        try {
+            o.put("text", str);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        connector.setData(o.toString());
+        o = connector.response();
+        if (o == null) return null;
+        return new Comment(o);
+
+    }
+
+    public List<Comment> getComments(String eventId, int offset) {
+        HttpConnector connector = new HttpConnector(HOST + EVENT+ eventId +COMMENT + "?offset="+offset + "&limit=5");
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        JSONObject o = connector.response();
+        if (o == null) return null;
+        JSONArray arr = o.optJSONArray(Utils.RESULTS);
+        List<Comment> comments = new ArrayList();
+        for (int i = 0; i < arr.length(); i++)
+            comments.add(new Comment(arr.optJSONObject(i)));
+        return comments;
     }
 }

@@ -35,13 +35,16 @@ public class Utils {
 
     private final static int WIDTH = 100;
     private final static int HEIGHT = 100;
-    private static final String RESULTS = "results";
+    public static final String RESULTS = "results";
     public static final String CATEGORY = "category";
     public static final String EVENT_ID = "event_id";
     public static final String TIME_TAG = "tag";
     public static final String SEARCH = "search";
     public static final String EVENT_NAME = "name";
-
+    public static final SimpleDateFormat INPUT_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    static {
+        INPUT_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
+    }
 
     public static String getCurrentTime() {
         DateFormat dateFormat = new SimpleDateFormat("HH:mm");

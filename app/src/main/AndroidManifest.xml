@@ -64,7 +64,9 @@
             android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_settings"></activity>
         <activity android:name=".activities.CategoryListActivity"></activity>
-        <activity android:name=".activities.EventActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activities.EventActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".activities.MyInformationActivity"></activity>
         <activity android:name=".activities.MyPreferencesActivity"></activity>
         <activity android:name=".activities.ListOfEventsActivity"></activity>
