@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.polina.meethere.activities.EventActivity;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;

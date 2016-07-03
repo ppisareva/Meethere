@@ -4,6 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
    android:id="@+id/fragment"
-    tools:context="com.example.polina.meethere.MyEventsActivity">
+    tools:context=".activities.MyEventsActivity">
 
 </RelativeLayout>

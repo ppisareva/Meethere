@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_container"
     android:orientation="vertical"
-    tools:context="com.example.polina.meethere.NewEventActivity">
+    tools:context=".activities.NewEventActivity">
 
     <com.pixelcan.inkpageindicator.InkPageIndicator
         android:id="@+id/indicator"

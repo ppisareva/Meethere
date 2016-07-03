@@ -1,7 +1,9 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.polina.meethere.R;
 
 public class SignUpActivity extends AppCompatActivity {
 

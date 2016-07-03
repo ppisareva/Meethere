@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="created_by_me">мое событие</string>
+    <string name="all_catrgory">Все категории</string>
+    <string name="bigger">Больше</string>
+    <string name="distance">Дистанция</string>
+    <string name="do_not_matter">не имеет значения</string>
+    <string name="use">применить</string>
+    <string name="contact_information">Контактная информация</string>
+    <string name="telefone">Мобильный телефон</string>
+    <string name="adress">Адресс</string>
+    <string name="skype">Skype</string>
+    <string name="e_mail">Эл. почта</string>
+    <string name="personal_information">Личная информация</string>
+    <string name="day_of_birth">Дата рождения</string>
+    <string name="gender">Пол</string>
+    <string name="male">Мужской</string>
+    <string name="female">Женский</string>
+    <string name="preferences">Предпочтения</string>
+    <string name="enter_preferences">Добавить предпочтение</string>
+    <string name="plan_to_visit">Мои встречи</string>
+    <string name="my_events">Мои встречи</string>
+    <string name="favorite">Избранные</string>
+    <string name="my_preferences">Мои предпочтения</string>
+    <string name="exit">Выход</string>
+    <string name="location">Местоположение</string>
+    <string name="price">Цена</string>
+    <string name="filter">Фильтер</string>
+    <string name="next">Далее</string>
+    <string name="description">Описание</string>
+    <string name="choose_time">Выберите время</string>
+    <string name="end">Конец</string>
+    <string name="begining">Начало</string>
+    <string name="choose_category">Выберите категорию</string>
+    <string name="load_photo">Загрузить фото</string>
+    <string name="enter_location">Введите адресс</string>
+    <string name="aditional">Дополнитеные параметры</string>
+    <string name="from">от...</string>
+    <string name="quantity">Количество людей</string>
+    <string name="repite">Повторение</string>
+    <string name="week">недель</string>
+    <string name="time_difference">Временной промежуток</string>
+    <string name="free">Бесплатно</string>
+    <string name="see_on_map">Посмотреть на карте</string>
+    <string name="action_map">Место</string>
+
+    <string name="action_settings">Настройки</string>
+    <string name="profile">Мой профиль</string>
+    <string name="places">Мои места</string>
+    <string name="event">Создать ивент</string>
+    <string name="find">Категории</string>
+    <string name="category">Новости</string>
+    <string name="settings">Настройки</string>
+    <string name="past_events">Прошедшие</string>
+    <string name="future_events">Ближайшие</string>
+    <string name="createt_by_my">Созданые</string>
+    <string name="add_name">Название</string>
+    <string name="budget">Бюджет</string>
+    <string name="new_event">Создать</string>
+    <string name="more">ЕЩЕ</string>
+    <string name="start">от...</string>
+    <string name="to">...до</string>
+    <string name="sort_by">Сортировать по</string>
+    <string name="ok">Выбрать</string>
+    <string-array name="category">
+
+
+        <item>Авто мото</item>
+        <item>Встреча с друзьями</item>
+        <item>Вечеринки</item>
+
+
+        <item>Для одиноких</item>
+        <item>Духовность</item>
+        <item>Еда и напитки</item>
+        <item>Животные</item>
+        <item>Здоровье</item>
+        <item>Игры</item>
+        <item>Искусство и культура</item>
+        <item>Карьера и бизнес</item>
+        <item>Кино</item>
+        <item>Книги</item>
+        <item>Мода и красота</item>
+        <item>Музыка</item>
+        <item>На природе</item>
+        <item>Образование и развитие</item>
+        <item>Общение</item>
+        <item>Паранормальное явление</item>
+        <item>Поддержка</item>
+        <item>Политика</item>
+        <item>Родители и семья</item>
+        <item>Сообщества</item>
+        <item>Спорт и отдых</item>
+        <item>Стиль жизни</item>
+        <item>Технологии</item>
+        <item>Фантастика и Фэнтези</item>
+        <item>Фитнес</item>
+        <item>Фотография</item>
+        <item>Хобби</item>
+        <item>Другое</item>
+    </string-array>
+    <string-array name="sort_array">
+        <item>Выберите сортировку по</item>
+        <item>дате</item>
+        <item>расположениею</item>
+        <item>популярности</item>
+        <item>бюджету: от большего к меньшему</item>
+        <item>бюджету: от меньшего к большему</item>
+        <item></item>
+    </string-array>
+
+    <string name="pref_header_privacy">Приватность</string>
+
+    <string name="pref_title_coming_event">Приближении ваших событий</string>
+    <string name="pref_title_close_event">События поблизости</string>
+    <string name="pref_title_interesting_event">Интересные вам события</string>
+    <string name="pref_title_adding">Добавление участников в ваши события</string>
+
+
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_email">Email</string>
+    <string name="pref_title_phone">Телефоны</string>
+    <string name="pref_title_private_information">Личную информация</string>
+    <string name="pref_title_preferences">Предпочтения</string>
+    <string name="pref_title_attends">Посещения</string>
+    <string name="pref_title_send_mass">Сообщения</string>
+
+    <string name="pref_title_comments_mass">Сообщения, коментарии</string>
+
+
+    <string-array name="pref_notification_list_titles">
+        <item>Автор события со мной</item>
+        <item>Учасники события со мной</item>
+        <item>Друзья</item>
+        <item>Все в сети</item>
+        <item>Никто</item>
+    </string-array>
+    <string name="age">Возраст</string>
+    <string name="pin">место на карте</string>
+    <string name="pref_how_can_see_title">Кто может видить</string>
+    <string name="pref_how_can_send_title">Кто может отсылать</string>
+    <string name="my_location">мое местоположение</string>
+    <string name="pref_header_notifications">Оповещения</string>
+
+</resources>

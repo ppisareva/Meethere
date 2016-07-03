@@ -1,9 +1,10 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.polina.meethere.R;
 import com.example.polina.meethere.fragments.MyEventsListsFragment;
 
 public class MyEventsActivity extends AppCompatActivity {

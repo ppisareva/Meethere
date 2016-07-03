@@ -28,7 +28,7 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,9 +41,9 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".activities.SignUpActivity"></activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -58,19 +58,19 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".activities.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_settings"></activity>
-        <activity android:name=".CategoryListActivity"></activity>
-        <activity android:name=".EventActivity"></activity>
-        <activity android:name=".MyInformationActivity"></activity>
-        <activity android:name=".MyPreferencesActivity"></activity>
-        <activity android:name=".ListOfEventsActivity"></activity>
-        <activity android:name=".NewEventActivity"></activity>
-        <activity android:name=".SearchFiltersActivity"></activity>
-        <activity android:name=".ListOfEventSearchActivity"></activity>
+        <activity android:name=".activities.CategoryListActivity"></activity>
+        <activity android:name=".activities.EventActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activities.MyInformationActivity"></activity>
+        <activity android:name=".activities.MyPreferencesActivity"></activity>
+        <activity android:name=".activities.ListOfEventsActivity"></activity>
+        <activity android:name=".activities.NewEventActivity"></activity>
+        <activity android:name=".activities.SearchFiltersActivity"></activity>
+        <activity android:name=".activities.ListOfEventSearchActivity"></activity>
 
         <service
             android:name=".network.NetworkService"
@@ -90,7 +90,7 @@
             android:name=".data.EventProvider"
             android:authorities="com.example.polina.meethere.data.data"></provider>
 
-        <activity android:name=".MyEventsActivity"></activity>
+        <activity android:name=".activities.MyEventsActivity"></activity>
     </application>
 
 </manifest>

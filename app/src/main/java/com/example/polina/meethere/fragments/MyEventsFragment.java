@@ -13,14 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.polina.meethere.Adapters.Event;
 import com.example.polina.meethere.MyEventsAdapter;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.Utils;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class MyEventsFragment extends android.support.v4.app.Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 

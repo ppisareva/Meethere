@@ -1,4 +1,4 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.edmodo.rangebar.RangeBar;
+import com.example.polina.meethere.R;
+import com.example.polina.meethere.Utils;
 
 public class SearchFiltersActivity extends AppCompatActivity {
 

@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.polina.meethere.Adapters.Event;
-import com.example.polina.meethere.Adapters.SimpleItem;
+import com.example.polina.meethere.adapters.SimpleItem;
+import com.example.polina.meethere.activities.ListOfEventsActivity;
 
 import java.util.List;
 

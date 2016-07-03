@@ -1,4 +1,4 @@
-package com.example.polina.meethere.Adapters;
+package com.example.polina.meethere.adapters;
 
 
 /**

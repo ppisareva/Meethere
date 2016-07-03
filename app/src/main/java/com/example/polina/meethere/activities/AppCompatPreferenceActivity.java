@@ -1,4 +1,4 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.activities;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

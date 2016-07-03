@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.polina.meethere.activities.CategoryListActivity;
+import com.example.polina.meethere.activities.ListOfEventsActivity;
+
 import java.util.List;
 
 /**

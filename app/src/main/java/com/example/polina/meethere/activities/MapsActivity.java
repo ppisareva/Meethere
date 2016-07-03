@@ -1,10 +1,11 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.activities;
 
 import android.content.Intent;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.example.polina.meethere.R;
 import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.Event;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -14,11 +15,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends AbstractMeethereActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    App application;
-    Location location;
     LatLng pin;
 
     @Override
@@ -26,12 +25,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        application =  (App) getApplication();
-        location = application.getCurrentLocation();
 
         if(getIntent()!=null) {
 
-            pin = new LatLng(getIntent().getDoubleExtra(Event.LAT, location.getLatitude()), getIntent().getDoubleExtra(Event.LNG, location.getLatitude()));
+            pin = new LatLng(getIntent().getDoubleExtra(Event.LAT, 0), getIntent().getDoubleExtra(Event.LNG, 0));
         }
 
 

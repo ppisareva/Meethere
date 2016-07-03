@@ -1,4 +1,4 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.activities;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -7,11 +7,10 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.polina.meethere.R;
 import com.example.polina.meethere.views.FadeView;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -22,10 +21,8 @@ import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONObject;
 
-import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
-import com.crittercism.app.Crittercism;
 
 public class LoginActivity extends AbstractMeethereActivity {
     LoginButton loginButton;

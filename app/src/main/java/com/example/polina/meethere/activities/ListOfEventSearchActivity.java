@@ -1,13 +1,13 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.activities;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
@@ -15,45 +15,44 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.polina.meethere.Adapters.Event;
+import com.example.polina.meethere.MyEventsAdapter;
+import com.example.polina.meethere.R;
+import com.example.polina.meethere.Utils;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-public class ListOfEventsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>  {
+/**
+ * Created by polina on 28.06.16.
+ */
+public class ListOfEventSearchActivity  extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     MyEventsAdapter myEventsAdapter;
     boolean highPrice = false;
     boolean lowPrice = false;
+    public static final int SEARCH_LOUDER = 20330;
+    public static final int SEARCH_BY_LOW_PRICE = 203990;
+    public static final int SEARCH_BY_HIGH_PRICE = 2033430;
+
+
 
     TextView distance;
     TextView price;
     ImageView imageView;
-
-
-    public static final int CATEGORY = 20330;
-    public static final int BY_LOW_PRICE = 203000990;
-    public static final int BY_HIGH_PRICE = 2090933430;
-
-
-
+    String search;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_events);
-        int category = getIntent().getIntExtra(Utils.CATEGORY, -1);
 
-        distance =(TextView)findViewById(R.id.distance_filter);
-        price = (TextView)findViewById(R.id.price_filter);
-        imageView = (ImageView)findViewById(R.id.image_price);
-        System.out.println(" category # " + category);
+        search = getIntent().getStringExtra(Utils.SEARCH);
+        distance = (TextView) findViewById(R.id.distance_filter);
+        price = (TextView) findViewById(R.id.price_filter);
+        imageView = (ImageView) findViewById(R.id.image_price);
+
         Bundle arg = new Bundle();
-        arg.putString(Utils.CATEGORY, category+"");
+        arg.putString(Utils.SEARCH, search);
 
-        getSupportLoaderManager().initLoader(CATEGORY, arg, this);
+        getSupportLoaderManager().initLoader(SEARCH_LOUDER, arg, this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.events_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -62,37 +61,46 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
     }
 
 
+    public void onDistance(View v) {
+        distance.setTextColor(getResources().getColor(R.color.filter));
+        price.setTextColor(getResources().getColor(R.color.white));
+        imageView.setImageResource(R.drawable.ic_price);
+        highPrice = false;
+        lowPrice = false;
+    }
+
     public void onPrice(View v) {
         distance.setTextColor(getResources().getColor(R.color.white));
         price.setTextColor(getResources().getColor(R.color.filter));
-
+        Bundle arg = new Bundle();
+        arg.putString(Utils.SEARCH, search);
         if (highPrice || lowPrice) {
             if (highPrice) {
                 imageView.setImageResource(R.drawable.ic_price_down_24dp);
                 lowPrice = true;
                 highPrice = false;
 
-                getSupportLoaderManager().initLoader(BY_HIGH_PRICE, null, this);
+                getSupportLoaderManager().initLoader(SEARCH_BY_HIGH_PRICE, arg, this);
             } else {
 
                 if (lowPrice) {
                     imageView.setImageResource(R.drawable.ic_price_up_24dp);
                     lowPrice = false;
                     highPrice = true;
-                    getSupportLoaderManager().initLoader(BY_LOW_PRICE, null, this);
+                    getSupportLoaderManager().initLoader(SEARCH_BY_LOW_PRICE, arg, this);
                 }
             }
         } else {
 
             lowPrice = true;
             imageView.setImageResource(R.drawable.ic_price_down_24dp);
-            getSupportLoaderManager().initLoader(BY_HIGH_PRICE, null, this);
+            getSupportLoaderManager().initLoader(SEARCH_BY_HIGH_PRICE, arg, this);
 
         }
     }
 
-    public void onFilter (View v){
-        startActivity( new Intent(this, SearchFiltersActivity.class));
+    public void onFilter(View v) {
+        startActivity(new Intent(this, SearchFiltersActivity.class));
 
     }
 
@@ -115,20 +123,20 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
                 com.example.polina.meethere.model.Event.PLACE, com.example.polina.meethere.model.Event.ADDRESS,
                 com.example.polina.meethere.model.Event.AGE_MAX, com.example.polina.meethere.model.Event.AGE_MIN,
                 com.example.polina.meethere.model.Event.BUDGET_MAX, com.example.polina.meethere.model.Event.BUDGET_MIN};
-        String category = args.getString(Utils.CATEGORY);
-        Uri uri = null;
+        String search = args.getString(Utils.SEARCH);
+         Uri uri = null;
 
 
         switch (id){
-            case CATEGORY:
-                uri =   Uri.parse("content://com.example.polina.meethere.data.data/category/" + category);
+            case SEARCH_LOUDER:
+                     uri =   Uri.parse("content://com.example.polina.meethere.data.data/words_search/" + search);
                 break;
-//            case BY_LOW_PRICE:
-//                uri =  Uri.parse("content://com.example.polina.meethere.data.data/low_price_search/" + search);
-//                break;
-//            case BY_HIGH_PRICE:
-//                uri=    Uri.parse("content://com.example.polina.meethere.data.data/high_price_search/" + search);
-//                break;
+            case SEARCH_BY_LOW_PRICE:
+                  uri =  Uri.parse("content://com.example.polina.meethere.data.data/low_price_search/" + search);
+                break;
+            case SEARCH_BY_HIGH_PRICE:
+                    uri=    Uri.parse("content://com.example.polina.meethere.data.data/high_price_search/" + search);
+                break;
 
         }
         return new CursorLoader(this, uri,arr, null, null, null);
@@ -136,10 +144,7 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if(data==null){
-
-        }
-       myEventsAdapter.swapCursor(data);
+        myEventsAdapter.swapCursor(data);
 
     }
 
@@ -147,6 +152,6 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
     public void onLoaderReset(Loader<Cursor> loader) {
 
     }
-
-
 }
+
+

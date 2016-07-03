@@ -11,7 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.polina.meethere.Adapters.Category;
+import com.example.polina.meethere.adapters.Category;
+import com.example.polina.meethere.activities.ListOfEventsActivity;
 
 import java.util.HashMap;
 import java.util.List;

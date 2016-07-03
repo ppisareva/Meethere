@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
-import com.example.polina.meethere.Adapters.Category;
+import com.example.polina.meethere.adapters.Category;
 import com.example.polina.meethere.HeaderAdapter;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.VerticalEventAdapter;

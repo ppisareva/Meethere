@@ -1,7 +1,6 @@
 package com.example.polina.meethere.fragments;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,12 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.edmodo.rangebar.RangeBar;
-import com.example.polina.meethere.MainActivity;
+import com.example.polina.meethere.activities.MainActivity;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.Utils;
 

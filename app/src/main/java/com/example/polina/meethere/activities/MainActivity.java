@@ -1,31 +1,27 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.activities;
 
 import android.app.DatePickerDialog;
 import android.app.SearchManager;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.crittercism.app.Crittercism;
-import com.example.polina.meethere.Adapters.SimpleItem;
+import com.example.polina.meethere.R;
+import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.fragments.CategoryFragment;
 import com.example.polina.meethere.fragments.FeedFragment;
 import com.example.polina.meethere.fragments.FindEventFragment;
@@ -315,7 +311,7 @@ public class MainActivity extends AbstractMeethereActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchManager searchManager = (SearchManager) MainActivity.this.getSystemService(Context.SEARCH_SERVICE);
+        SearchManager searchManager = (SearchManager) MainActivity.this.getSystemService(SEARCH_SERVICE);
         SearchView searchView = null;
         if (searchItem != null) {
 

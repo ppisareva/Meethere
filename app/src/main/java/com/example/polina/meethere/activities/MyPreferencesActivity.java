@@ -1,4 +1,4 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
+import com.example.polina.meethere.PreferencesAdapter;
+import com.example.polina.meethere.R;
 
 import java.util.ArrayList;
 import java.util.List;

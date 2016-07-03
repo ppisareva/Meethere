@@ -1,4 +1,4 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.activities;
 
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;

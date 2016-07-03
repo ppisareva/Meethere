@@ -1,10 +1,10 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.activities;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
@@ -12,7 +12,8 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.polina.meethere.model.App;
+import com.example.polina.meethere.R;
+import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.model.Event;
 import com.example.polina.meethere.model.User;
 import com.example.polina.meethere.network.ServerApi;
@@ -24,8 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class EventActivity extends AppCompatActivity {
-    TextView name;
+public class EventActivity extends AbstractMeethereActivity {
     TextView description;
     ImageView image;
     String id;
@@ -34,7 +34,6 @@ public class EventActivity extends AppCompatActivity {
     TextView budget;
     TextView address;
     TextView    quantity;
-    ImageView imageMap;
     ServerApi serverApi;
     Double lat;
     Double lng;
@@ -43,21 +42,21 @@ public class EventActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event);
+        setContentView(R.layout.event_layout_container);
         id = getIntent().getStringExtra(Utils.EVENT_ID);
-        serverApi = ((App) getApplication()).getServerApi();
-        name =  (TextView) findViewById(R.id.name_my_event);
+        serverApi = app().getServerApi();
         description = (TextView) findViewById(R.id.descriprion_my_event);
         image = (ImageView) findViewById(R.id.image_my_event);
         join = (CheckBox) findViewById(R.id.join_event);
         time = (TextView) findViewById(R.id.time_my_event);
         budget = (TextView) findViewById(R.id.my_event_budget);
         address = (TextView) findViewById(R.id.address_myevent);
-        imageMap = (ImageView) findViewById(R.id.image_map);
         quantity = (TextView) findViewById(R.id.people_quantity_my_event);
 
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getIntent().getStringExtra(Utils.EVENT_NAME));
         join.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -65,7 +64,9 @@ public class EventActivity extends AppCompatActivity {
                new JoinEvent().execute(isChecked);
             }
         });
-      new LoadEvent().execute(id);
+        String url = String.format(IMG_PATTERN, id);
+        image.setImageURI(Uri.parse(url));
+        new LoadEvent().execute(id);
         new LoadJoiners().execute(id);
     }
 
@@ -123,12 +124,10 @@ public class EventActivity extends AppCompatActivity {
 
         protected void onPostExecute(JSONObject result) {
             try {
-            Event event = Utils.parseEvent(result);
-            name.setText(event.getName());
-            description.setText(event.getDescription());
+                Event event = Utils.parseEvent(result);
+                description.setText(event.getDescription());
                 join.setChecked(event.getJoin());
-
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                 Date dateStart = simpleDateFormat.parse(event.getStart());
                 Date dateEnd = simpleDateFormat.parse(event.getEnd());
                 simpleDateFormat = new SimpleDateFormat("EEE, MMM dd kk:mm");
@@ -136,23 +135,22 @@ public class EventActivity extends AppCompatActivity {
 
 
 
-            time.setText(simpleDateFormat.format(dateStart) + " - " + simpleDateFormat.format(dateEnd));
-                if(event.getBudgetMax()-event.getBudgetMin()==0){
-                    budget.setText(event.getBudgetMin()+"");
+                time.setText(simpleDateFormat.format(dateStart) + " - " + simpleDateFormat.format(dateEnd));
+                if(event.getBudgetMax() == event.getBudgetMin()){
+                    budget.setText("" + event.getBudgetMin());
                 } else {
                     budget.setText(event.getBudgetMin()+ " - " + event.getBudgetMax());
                 }
 
-            if(event.getPlace()!=null){
-                address.setText(getResources().getString(R.string.see_on_map));
-                imageMap.setVisibility(View.VISIBLE);
-                lat = event.getPlace().get(1);
-                lng = event.getPlace().get(0);
-            } else {
-                address.setText(event.getAddress());
-            }
-            String url = String.format(IMG_PATTERN, id);
-            image.setImageURI(Uri.parse(url));
+                if(event.getPlace()!=null){
+                    address.setClickable(true);
+                    lat = event.getPlace().get(1);
+                    lng = event.getPlace().get(0);
+                    address.setText(R.string.see_on_map);
+                } else {
+                    address.setCompoundDrawables(null, null, null, null);
+                    address.setText(event.getAddress());
+                }
             } catch (ParseException e) {
                 e.printStackTrace();
             }

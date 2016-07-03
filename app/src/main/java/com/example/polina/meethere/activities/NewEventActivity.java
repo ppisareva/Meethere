@@ -1,4 +1,4 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.activities;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -19,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.polina.meethere.R;
 import com.example.polina.meethere.fragments.NewEventAdditionFragment;
 import com.example.polina.meethere.fragments.NewEventCategoryChooseFragment;
 import com.example.polina.meethere.fragments.NewEventDescriptionFragment;

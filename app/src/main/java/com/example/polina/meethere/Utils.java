@@ -8,7 +8,7 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.provider.MediaStore;
 
-import com.example.polina.meethere.Adapters.SimpleItem;
+import com.example.polina.meethere.adapters.SimpleItem;
 import com.example.polina.meethere.model.Event;
 import com.example.polina.meethere.model.User;
 
@@ -40,9 +40,7 @@ public class Utils {
     public static final String EVENT_ID = "event_id";
     public static final String TIME_TAG = "tag";
     public static final String SEARCH = "search";
-
-
-
+    public static final String EVENT_NAME = "name";
 
 
     public static String getCurrentTime() {

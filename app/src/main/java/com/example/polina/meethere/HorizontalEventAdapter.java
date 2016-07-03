@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import com.example.polina.meethere.model.Event;
+import com.example.polina.meethere.activities.EventActivity;
 
 /**
  * Created by polina on 08.03.16.
@@ -72,7 +72,8 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<HorizontalEven
             cursor.moveToPosition(itemPosition);
             Intent intent = new Intent(context, EventActivity.class);
             String id = cursor.getString(ID);
-            intent.putExtra(Utils.EVENT_ID,id );
+            intent.putExtra(Utils.EVENT_ID,id);
+            intent.putExtra(Utils.EVENT_NAME, cursor.getString(NAME));
             context.startActivity(intent);
         }
 

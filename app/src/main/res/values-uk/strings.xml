@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="end">Кінець</string>
+    <string name="begining">Початок</string>
+    <string name="choose_category">Виберіть категорію</string>
+    <string name="load_photo">Завантажити фото</string>
+    <string name="enter_location">Введіть адресу</string>
+    <string name="aditional">Додаткові параметри</string>
+    <string name="from">от...</string>
+    <string name="quantity">Кількість відвідувачів</string>
+    <string name="repite">Повторення</string>
+    <string name="week">тижнів</string>
+    <string name="time_difference">Часовий проміжок</string>
+    <string name="free">Халявно</string>
+    <string name="see_on_map">Глянути на мапі</string>
+    <string name="action_map">Місце</string>
+    <string name="promo_1">Немаєш компанії зашпілити у футбік?</string>
+    <string name="promo_2">Нема з ким піти на рибалку?</string>
+    <string name="promo_3">Не знаєш, як провести час?</string>
+    <string name="telefone">Мобільний телефон</string>
+
+</resources>

@@ -1,4 +1,4 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,10 +6,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
-import com.example.polina.meethere.Adapters.SimpleItem;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.polina.meethere.R;
+import com.example.polina.meethere.SimpleListAdapter;
+import com.example.polina.meethere.Utils;
 
 public class CategoryListActivity extends AppCompatActivity {
 
