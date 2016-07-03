@@ -22,6 +22,9 @@ public class Event  {
     public static final String   BUDGET_MIN=     "budget_min";
     public static final String    BUDGET_MAX =  "budget_max";
     public static final String   TAGS =     "tags";
+    public static final String LAT = "lat";
+    public static final String LNG = "lng";
+    public static final String JOINED = "joined";
 
 
     String id;
@@ -36,6 +39,15 @@ public class Event  {
     int budgetMin;
     int budgetMax;
     List<Integer> tag;
+    Boolean join;
+
+    public Boolean getJoin() {
+        return join;
+    }
+
+    public void setJoin(Boolean join) {
+        this.join = join;
+    }
 
     public String getId() {
         return id;

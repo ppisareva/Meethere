@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 
 import com.example.polina.meethere.Adapters.SimpleItem;
 import com.example.polina.meethere.model.Event;
+import com.example.polina.meethere.model.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,9 +36,16 @@ public class Utils {
     private final static int WIDTH = 100;
     private final static int HEIGHT = 100;
     private static final String RESULTS = "results";
+    public static final String CATEGORY = "category";
+    public static final String EVENT_ID = "event_id";
+    public static final String TIME_TAG = "tag";
+    public static final String SEARCH = "search";
 
 
-    public static String getCurrentTime( ){
+
+
+
+    public static String getCurrentTime() {
         DateFormat dateFormat = new SimpleDateFormat("HH:mm");
         Calendar c = Calendar.getInstance();
 
@@ -45,15 +53,15 @@ public class Utils {
 
     }
 
-    public static String[]  getCurrentTimePlusHour(){
+    public static String[] getCurrentTimePlusHour() {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.HOUR, 1);
 
-        return new String []{new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()), new SimpleDateFormat("HH:mm").format(c.getTime())};
+        return new String[]{new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()), new SimpleDateFormat("HH:mm").format(c.getTime())};
 
     }
 
-    public static String getCurrentDate(){
+    public static String getCurrentDate() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
 
@@ -62,11 +70,11 @@ public class Utils {
 
 
     public static List<SimpleItem> getAllCategory(Context context) {
-        List<SimpleItem> allCategory= new ArrayList<>();
-        String arr [] = context.getResources().getStringArray(R.array.category);
-       TypedArray image = context.getResources().obtainTypedArray(R.array.category_images);
-        for(int i =0; i<arr.length; i++){
-            allCategory.add(new SimpleItem(image.getResourceId(i+1, R.drawable.ic_android), arr[i]));
+        List<SimpleItem> allCategory = new ArrayList<>();
+        String arr[] = context.getResources().getStringArray(R.array.category);
+        TypedArray image = context.getResources().obtainTypedArray(R.array.category_images);
+        for (int i = 0; i < arr.length; i++) {
+            allCategory.add(new SimpleItem(image.getResourceId(i, R.drawable.ic_android), arr[i]));
         }
         return allCategory;
     }
@@ -146,41 +154,96 @@ public class Utils {
         try {
             arr = o.getJSONArray(RESULTS);
 
-        for(int i=0; i<arr.length(); i++){
-            Event event = new Event();
-           final JSONObject eventJSON = arr.getJSONObject(i);
-            event.setId(eventJSON.optString(Event.ID));
-            event.setName(eventJSON.optString(Event.NAME));
-            event.setDescription(eventJSON.optString(Event.DESCRIPTION));
-
-//            event.setStart(eventJSON.optString(Event.START));
-//            event.setEnd(eventJSON.optString(Event.END));
-//
-//            event.setPlace(new ArrayList<Double>(){{
-//                add(eventJSON.optJSONArray(Event.PLACE).getDouble(0));
-//                add(eventJSON.optJSONArray(Event.PLACE).getDouble(1));
-//            }});
-//
-//            JSONArray array = o.optJSONArray(Event.TAGS);
-//            List<Integer> listOfTags = new ArrayList<>();
-//            for(int j = 0; j<array.length(); j++){
-//                listOfTags.add(array.getInt(j));
-//            }
-//            event.setTag(listOfTags);
-//            event.setAddress(eventJSON.optString(Event.ADDRESS));
-//            event.setAgeMax(eventJSON.optInt(Event.AGE_MAX));
-//            event.setAgeMin(eventJSON.optInt(Event.AGE_MIN));
-//            event.setBudgetMax(eventJSON.optInt(Event.BUDGET_MAX));
-//            event.setBudgetMin(eventJSON.optInt(Event.BUDGET_MIN));
-            list.add(event);
-            System.out.println("List of Events: event "+ i + "________ " + event.toString()  );
-        }
+            for (int i = 0; i < arr.length(); i++) {
+                Event event = new Event();
+                final JSONObject eventJSON = arr.getJSONObject(i);
 
 
-        return list;
+                list.add(parseEvent(eventJSON));
+                System.out.println("List of Category: event " + i + "________ " + event.toString());
+            }
+
+
+            return list;
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static List<User> parseJoinedList(JSONObject o) {
+
+        List<User> list = new ArrayList<>();
+        JSONArray arr = new JSONArray();
+        try {
+            arr = o.getJSONArray(RESULTS);
+
+            for (int i = 0; i < arr.length(); i++) {
+                User event = new User();
+                final JSONObject eventJSON = arr.getJSONObject(i);
+
+
+                list.add(parseUser(eventJSON));
+                System.out.println("List of Category: event " + i + "________ " + event.toString());
+            }
+
+
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static User parseUser(JSONObject userJSON) {
+        User user = new User();
+        user.setId(userJSON.optString(user.ID));
+        user.setFirstName(userJSON.optString(user.FIRST_NAME));
+        user.setLastName(userJSON.optString(user.LAST_NAME));
+        user.setImage(userJSON.optString(user.IMAGE));
+        return user;
+    }
+
+
+    public static Event parseEvent(JSONObject eventJSON) {
+
+            Event event = new Event();
+            event.setId(eventJSON.optString(Event.ID));
+            event.setName(eventJSON.optString(Event.NAME));
+            event.setDescription(eventJSON.optString(Event.DESCRIPTION));
+            event.setStart(eventJSON.optString(Event.START));
+            event.setEnd(eventJSON.optString(Event.END));
+            event.setJoin(eventJSON.optBoolean(Event.JOINED));
+            List<Double> l = new ArrayList<>();
+            if(eventJSON.optJSONArray(Event.PLACE)!=null) {
+                try {
+                    l.add(eventJSON.optJSONArray(Event.PLACE).getDouble(0));
+                    l.add(eventJSON.optJSONArray(Event.PLACE).getDouble(1));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                event.setPlace(l);
+            }
+
+            JSONArray array = eventJSON.optJSONArray(Event.TAGS);
+            if(array!=null) {
+                List<Integer> listOfTags = new ArrayList<>();
+                for (int j = 0; j < array.length(); j++) {
+                    try {
+                        listOfTags.add(array.getInt(j));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                event.setTag(listOfTags);
+            }
+            event.setAddress(eventJSON.optString(Event.ADDRESS));
+            event.setAgeMax(eventJSON.optInt(Event.AGE_MAX, 45));
+            event.setAgeMin(eventJSON.optInt(Event.AGE_MIN, 15));
+            event.setBudgetMax(eventJSON.optInt(Event.BUDGET_MAX, 10000));
+            event.setBudgetMin(eventJSON.optInt(Event.BUDGET_MIN,0 ));
+            return event;
+
+
     }
 }

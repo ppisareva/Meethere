@@ -1,31 +1,33 @@
 package com.example.polina.meethere;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.polina.meethere.Adapters.Event;
-import com.example.polina.meethere.Adapters.Events;
+import com.example.polina.meethere.Adapters.Category;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by polina on 09.03.16.
  */
 public class VerticalEventAdapter extends RecyclerView.Adapter<VerticalEventAdapter.MyViewHolder> {
 
-    List<Events> eventsList;
+    List<Category> categoryList;
     Activity context;
+    final Map<Integer, HorizontalEventAdapter> adapters = new HashMap();
 
-    public VerticalEventAdapter(List<Events> eventsList, Activity context) {
-        this.eventsList = eventsList;
+    public VerticalEventAdapter(List<Category> categoryList, Activity context) {
+        this.categoryList = categoryList;
         this.context = context;
     }
 
@@ -37,37 +39,57 @@ public class VerticalEventAdapter extends RecyclerView.Adapter<VerticalEventAdap
         return vh;
     }
 
+    private CursorRecyclerAdapter getAdapter(int categoryId) {
+        if (!adapters.containsKey(categoryId))
+            adapters.put(categoryId, new HorizontalEventAdapter(context));
+        return adapters.get(categoryId);
+    }
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Events events = eventsList.get(position);
-        holder.textView.setText(events.getCategory());
-
-
-        System.err.println("EVENT LIST: " + events.getCursor());
-
-        HorizontalEventAdapter horizontalEventAdapter = new HorizontalEventAdapter(context, events.getCursor());
+        Category category = categoryList.get(position);
+        holder.textView.setText(category.getName());
+        holder.setCategory(category.getId());
+        System.err.println("EVENT LIST: " + category.getName());
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         holder.recyclerView.setLayoutManager(layoutManager);
-        holder.recyclerView.setAdapter(horizontalEventAdapter);
+        holder.recyclerView.setAdapter(getAdapter(category.getId()));
         holder.recyclerView.setNestedScrollingEnabled(false);
     }
 
     @Override
     public int getItemCount() {
-        return  (null!=eventsList? eventsList.size(): 0);
+        return  (null!= categoryList ? categoryList.size(): 0);
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         RecyclerView recyclerView;
         Button button;
         TextView textView;
+        private int category;
+
+        public void setCategory (int itemPosition) {
+            this.category = itemPosition;
+        }
 
         public MyViewHolder(View itemView) {
             super(itemView);
             button = (Button) itemView.findViewById(R.id.list_learn_more);
+            button.setOnClickListener(this);
             recyclerView = (RecyclerView) itemView.findViewById(R.id.horizontal_list);
             textView = (TextView) itemView.findViewById(R.id.list_category);
         }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(context, ListOfEventsActivity.class);
+            intent.putExtra(Utils.CATEGORY, category);
+            context.startActivity(intent);
+        }
+    }
+
+    public void updateCursor(int categoryId, Cursor cursor) {
+        getAdapter(categoryId).swapCursor(cursor);
+        System.err.println("UPDATED cursor for category #" + categoryId);
     }
 }

@@ -1,10 +1,15 @@
 package com.example.polina.meethere.fragments;
 
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -14,14 +19,19 @@ import android.view.ViewGroup;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.Utils;
 
-public class MyEventsListsFragment extends android.support.v4.app.Fragment {
+public class MyEventsListsFragment extends android.support.v4.app.Fragment  {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     TabLayout tabLayout;
-    public final int FRAGMENT_PAST_EVENTS = 0;
+
+    public final int FRAGMENT_PAST_EVENTS = 2;
     public final int FRAGMENT_FUTURE_EVENTS = 1;
-    public final int FRAGMENT_CREATED_BY_ME_EVENTS = 2;
+    public final int FRAGMENT_CREATED_BY_ME_EVENTS = 0;
+
+    public final int PAST_EVENTS = 4343430;
+    public final int FUTURE_EVENTS = 4343431;
+    public final int CREATED_BY_ME_EVENTS = 4343432;
 
     public static MyEventsListsFragment newInstance() {
         MyEventsListsFragment fragment = new MyEventsListsFragment();
@@ -49,7 +59,6 @@ public class MyEventsListsFragment extends android.support.v4.app.Fragment {
 
 
 
-
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -60,11 +69,11 @@ public class MyEventsListsFragment extends android.support.v4.app.Fragment {
         public android.support.v4.app.Fragment getItem(int position) {
             switch (position){
                 case FRAGMENT_CREATED_BY_ME_EVENTS:
-                    return MyEventsFragment.newInstance();
+                    return MyEventsFragment.newInstance(CREATED_BY_ME_EVENTS);
                 case  FRAGMENT_FUTURE_EVENTS:
-                    return MyEventsFragment.newInstance();
+                    return MyEventsFragment.newInstance(FUTURE_EVENTS);
                 case FRAGMENT_PAST_EVENTS:
-                    return MyEventsFragment.newInstance();
+                    return MyEventsFragment.newInstance(PAST_EVENTS);
 
             }
             return null;

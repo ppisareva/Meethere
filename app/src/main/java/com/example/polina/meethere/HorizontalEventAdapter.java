@@ -3,32 +3,32 @@ package com.example.polina.meethere;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
 import com.example.polina.meethere.model.Event;
-
-import java.util.List;
 
 /**
  * Created by polina on 08.03.16.
  */
 public class HorizontalEventAdapter extends CursorRecyclerAdapter<HorizontalEventAdapter.ViewHolder> {
 
+    private static final int ID = 0;
     private static final int NAME = 1;
+    private static final int DESCRIPTION = 2;
     private Activity context;
 
+    public static final String IMG_PATTERN = "https://s3-us-west-1.amazonaws.com/meethere/%s.jpg";
 
 
-    public HorizontalEventAdapter(Activity context, Cursor eventList) {
-        super(eventList);
+    public HorizontalEventAdapter(Activity context) {
+        super(null);
         this.context = context;
     }
 
@@ -47,7 +47,9 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<HorizontalEven
     public void onBindViewHolderCursor(ViewHolder holder, Cursor cursor) {
             holder.text.setText(cursor.getString(NAME));
             holder.setItemPosition(cursor.getPosition());
-            holder.image.setImageResource(R.drawable.cappuccino);
+            String id = cursor.getString(ID);
+            String url = String.format(IMG_PATTERN, id);
+            holder.image.setImageURI(Uri.parse(url));
     }
 
 
@@ -66,7 +68,11 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<HorizontalEven
         @Override
         public void onClick(View v) {
             System.out.println(itemPosition);
+            Cursor cursor = getCursor();
+            cursor.moveToPosition(itemPosition);
             Intent intent = new Intent(context, EventActivity.class);
+            String id = cursor.getString(ID);
+            intent.putExtra(Utils.EVENT_ID,id );
             context.startActivity(intent);
         }
 

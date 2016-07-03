@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.crittercism.app.Crittercism;
 import com.example.polina.meethere.Adapters.SimpleItem;
 import com.example.polina.meethere.fragments.CategoryFragment;
 import com.example.polina.meethere.fragments.FeedFragment;
@@ -35,6 +36,7 @@ import com.example.polina.meethere.fragments.SearchResultsFragment;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.login.LoginManager;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 
 import java.util.Calendar;
@@ -88,6 +90,8 @@ public class MainActivity extends AbstractMeethereActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         initUserInfo();
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        System.out.println(" TTTTTTTTTTTTTTTTTTTTTTTTTTTTTToken" + refreshedToken);
     }
 
     private void initUserInfo() {
@@ -143,18 +147,17 @@ public class MainActivity extends AbstractMeethereActivity
 
     }
     public void onMyEvent(View v){
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, myEventsListsFragment)
-                .addToBackStack(null).commit();
+        startActivity(new Intent(MainActivity.this, MyEventsActivity.class));
     }
 
     public void onFavorite(View v){
 
     }
 
-    public void onMore (View v){
-        Intent intent = new Intent(this, ListOfEventsActivity.class);
-       startActivity(intent);
-    }
+//    public void onMore (View v){
+//        Intent intent = new Intent(this, ListOfEventsActivity.class);
+//       startActivity(intent);
+//    }
 
     public void onPreferences (View v){
         Intent intent = new Intent(this, MyPreferencesActivity.class);
@@ -315,6 +318,7 @@ public class MainActivity extends AbstractMeethereActivity
         SearchManager searchManager = (SearchManager) MainActivity.this.getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = null;
         if (searchItem != null) {
+
             searchView = (SearchView) searchItem.getActionView();
             MenuItemCompat.setOnActionExpandListener(searchItem,new MenuItemCompat.OnActionExpandListener() {
                 @Override
@@ -326,8 +330,7 @@ public class MainActivity extends AbstractMeethereActivity
 
                 @Override
                 public boolean onMenuItemActionCollapse(MenuItem item) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, feedFragment)
-                            .addToBackStack(null).commit();
+                 getSupportFragmentManager().popBackStack();
                     return true;
                 }
             });
@@ -341,24 +344,28 @@ public class MainActivity extends AbstractMeethereActivity
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     System.out.println(query + "------------------------------");
+                    Intent intent = new Intent(MainActivity.this, ListOfEventSearchActivity.class);
+                    intent.putExtra(Utils.SEARCH, query);
+                    startActivity(intent);
                     return false;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    System.out.println(newText + "++++++++++++++++++++++++++++++++++++");
-                   if(!newText.isEmpty()){
-                       if(newText.length()==1){
-                           searchResultsFragment.clear();
-                       }
-                       searchResultsFragment.changeList(new SimpleItem(R.drawable.ic_android, newText));
-                   }
-
+//                    System.out.println(newText + "++++++++++++++++++++++++++++++++++++");
+//                   if(!newText.isEmpty()){
+//                       if(newText.length()==1){
+//                           searchResultsFragment.clear();
+//                       }
+//                       searchResultsFragment.changeList(new SimpleItem(R.drawable.ic_android, newText));
+//                   }
+//
 
                     return true;
                 }
             });
         }
+
         return true;
     }
 

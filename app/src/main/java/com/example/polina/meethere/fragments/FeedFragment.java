@@ -13,23 +13,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
-import com.example.polina.meethere.Adapters.Event;
-import com.example.polina.meethere.Adapters.Events;
-import com.example.polina.meethere.CursorRecyclerAdapter;
+import com.example.polina.meethere.Adapters.Category;
 import com.example.polina.meethere.HeaderAdapter;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.VerticalEventAdapter;
-import com.example.polina.meethere.network.NetworkService;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class FeedFragment extends android.support.v4.app.Fragment implements LoaderManager.LoaderCallbacks<Cursor>  {
 
-    private static final int LOADER_ID = 0x06;
     VerticalEventAdapter verticalEventAdapter;
-    List <Events> events = new ArrayList<>();
+    List <Category> events = getListEvents();
     RecyclerView verticalList;
     RecyclerViewHeader header;
     RecyclerView  headerView;
@@ -52,10 +47,19 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.fragment_feed, container, false);
-        getActivity().getSupportLoaderManager().initLoader(LOADER_ID, null, this);
+        verticalEventAdapter = new VerticalEventAdapter(events, getActivity());
+        for (Category c : events)
+            getActivity().getSupportLoaderManager().initLoader(c.getId(), null, this);
         headerView = (RecyclerView) v.findViewById(R.id.category_list_header);
         verticalList = (RecyclerView) v.findViewById(R.id.vertical_list);
         header = (RecyclerViewHeader) v.findViewById(R.id.header);
+
+        verticalList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        headerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        HeaderAdapter headerAdapter = new HeaderAdapter(getCategory());
+        headerView.setAdapter(headerAdapter);
+        header.attachTo(verticalList);
+        verticalList.setAdapter(verticalEventAdapter);
 
         return v;
     }
@@ -63,18 +67,18 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
 
 
 
-    public List<Events> getListEvents(Cursor cursor){
-        List<Events> eventsList = new ArrayList<>();
-        eventsList.add(new Events("Популярное", cursor));
-        eventsList.add(new Events("Фитнес", cursor));
-        eventsList.add(new Events("Еда и напитки", cursor));
-        eventsList.add(new Events("Духовность", cursor));
-        eventsList.add(new Events("С друзьями", cursor));
-        eventsList.add(new Events("На природе", cursor));
-        eventsList.add(new Events("Книги",cursor));
-        eventsList.add(new Events("Политика",cursor));
+    public List<Category> getListEvents(){
+        List<Category> categoryList = new ArrayList<>();
+        categoryList.add(new Category(0, "Популярное"));
+        categoryList.add(new Category(1, "Фитнес"));
+        categoryList.add(new Category(2, "Еда и напитки"));
+        categoryList.add(new Category(3, "Духовность"));
+        categoryList.add(new Category(4, "С друзьями"));
+        categoryList.add(new Category(5, "На природе"));
+        categoryList.add(new Category(6, "Книги"));
+        categoryList.add(new Category(7, "Политика"));
 
-        return  eventsList;
+        return categoryList;
     }
 
     public List<String> getCategory(){
@@ -91,7 +95,7 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(getActivity(),
-                Uri.parse("content://com.example.polina.meethere.data.data")
+                Uri.parse("content://com.example.polina.meethere.data.data/category/"+ id)
                 , new String[]{com.example.polina.meethere.model.Event.ID, com.example.polina.meethere.model.Event.NAME,
                 com.example.polina.meethere.model.Event.DESCRIPTION, com.example.polina.meethere.model.Event.START,
                 com.example.polina.meethere.model.Event.END, com.example.polina.meethere.model.Event.TAGS,
@@ -102,14 +106,7 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        events = getListEvents(data);
-        verticalList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        verticalEventAdapter = new VerticalEventAdapter(events, getActivity());
-        headerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        HeaderAdapter headerAdapter = new HeaderAdapter(getCategory());
-        headerView.setAdapter(headerAdapter);
-        header.attachTo(verticalList);
-        verticalList.setAdapter(verticalEventAdapter);
+        verticalEventAdapter.updateCursor(loader.getId(), data);
 
     }
 

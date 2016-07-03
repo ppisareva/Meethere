@@ -25,6 +25,7 @@ import org.json.JSONObject;
 import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
+import com.crittercism.app.Crittercism;
 
 public class LoginActivity extends AbstractMeethereActivity {
     LoginButton loginButton;
@@ -40,37 +41,38 @@ public class LoginActivity extends AbstractMeethereActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        setContentView(R.layout.activity_registration);
-        callbackManager = CallbackManager.Factory.create();
-        if(app().getUserProfile() != null){
-            goToMain();
-            return;
-        }
-        loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions("user_friends", "user_location");
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                new LoginWithFbTask().execute(loginResult.getAccessToken().getToken());
-            }
+
+      FacebookSdk.sdkInitialize(getApplicationContext());
+      setContentView(R.layout.activity_registration);
+      callbackManager = CallbackManager.Factory.create();
+      if (app().getUserProfile() != null) {
+          goToMain();
+          return;
+      }
+      loginButton = (LoginButton) findViewById(R.id.login_button);
+      loginButton.setReadPermissions("user_friends", "user_location");
+      loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+          @Override
+          public void onSuccess(LoginResult loginResult) {
+              new LoginWithFbTask().execute(loginResult.getAccessToken().getToken());
+          }
 
 
-            @Override
-            public void onCancel() {
-                // App code
-            }
+          @Override
+          public void onCancel() {
+              // App code
+          }
 
-            @Override
-            public void onError(FacebookException exception) {
-                // App code
-            }
-        });
+          @Override
+          public void onError(FacebookException exception) {
+              // App code
+          }
+      });
 
-        background = (FadeView) findViewById(R.id.fade_view);
-        background.setVisibility(View.VISIBLE);
-        initPager();
-        initTimer();
+      background = (FadeView) findViewById(R.id.fade_view);
+      background.setVisibility(View.VISIBLE);
+      initPager();
+      initTimer();
     }
 
     private void goToMain() {

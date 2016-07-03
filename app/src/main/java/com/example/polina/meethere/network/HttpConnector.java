@@ -4,6 +4,7 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -34,6 +35,40 @@ public class HttpConnector {
         // Starts the query
 
     }
+    public HttpConnector(String url, boolean b) {
+        try {
+            conn = (HttpURLConnection) new URL(url).openConnection();
+            conn.setRequestMethod("POST");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        conn.setReadTimeout(10000 /* milliseconds */);
+        conn.setConnectTimeout(15000 /* milliseconds */);
+        conn.setDoInput(true);
+        // Starts the query
+
+    }
+
+    public void deleteData(){
+
+        try {
+            conn.setRequestMethod("DELETE");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public void postData(){
+
+        try {
+            conn.setRequestMethod("POST");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }}
+
+
     public void setData(String data) {
         System.err.println("DATA: " + data);
         setHeader("Content-Type", "application/json");
@@ -56,7 +91,7 @@ public class HttpConnector {
 
     public JSONObject response() {
         InputStream is = null;
-        int len = 0xffff;
+        int len = 0xfffff;
         try {
             conn.connect();
             int response = conn.getResponseCode();
@@ -65,13 +100,13 @@ public class HttpConnector {
             is = conn.getInputStream();
 
             // Convert the InputStream into a string
-            String contentAsString = readIt(is, len);
+            String contentAsString = readIt(is);
             System.err.println("RESPONSE CONTENT: " + contentAsString);
             return new JSONObject(contentAsString);
         } catch (Exception ex) {
             ex.printStackTrace();
             try {
-                System.err.println("RESPONSE CONTENT: " + readIt(conn.getErrorStream(), len));
+                System.err.println("RESPONSE CONTENT: " + readIt(conn.getErrorStream()));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -87,13 +122,18 @@ public class HttpConnector {
         }
     }
 
+    private String readIt(InputStream stream) {
+        BufferedReader r = new BufferedReader(new InputStreamReader(stream));
+        StringBuilder total = new StringBuilder();
+        String line;
+        try {
+            while ((line = r.readLine()) != null) {
+                total.append(line).append('\n');
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return total.toString();
 
-    public String readIt(InputStream stream, int len) throws IOException {
-        Reader reader = null;
-        reader = new InputStreamReader(stream, "UTF-8");
-        char[] buffer = new char[len];
-        reader.read(buffer);
-        return new String(buffer);
     }
-
 }

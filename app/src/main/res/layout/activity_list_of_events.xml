@@ -11,39 +11,69 @@
         android:layout_alignParentStart="true" />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:id="@+id/linearLayout2"
+        android:id="@+id/filters_layout"
         android:layout_marginBottom="15dp"
         android:background="#861738f8">
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="@string/distance"
             android:layout_weight="1"
+            android:id="@+id/distance_filter"
             android:layout_gravity="center"
-            android:gravity="center_horizontal"
-            android:textColor="@android:color/white" />
-        <TextView
+            android:clickable="true"
+            android:onClick="onDistance"
+            android:textColor="@android:color/white"
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="18dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/price"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/advanced_search"
+            android:layout_toRightOf="@+id/advanced_search"
+            android:layout_toEndOf="@+id/advanced_search"
             android:layout_weight="1"
-            android:layout_gravity="center"
-            android:gravity="center_horizontal"
-            android:textColor="@android:color/white" />
+            android:clickable="true"
+            android:onClick="onPrice"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/price"
+                android:id="@+id/price_filter"
+                android:layout_gravity="center_vertical"
+                android:textColor="@android:color/white"
+                android:textSize="18dp" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/image_price"
+                android:src="@drawable/ic_price"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="@string/filter"
+            android:clickable="true"
+            android:onClick="onFilter"
+            android:id="@+id/filter"
             android:layout_weight="1"
             android:layout_gravity="center"
-            android:gravity="center_horizontal"
-            android:textColor="@android:color/white" />
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="@android:color/white"
+            android:textSize="18dp" />
 
 
     </LinearLayout>
-
 
 </RelativeLayout>

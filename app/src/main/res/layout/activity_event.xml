@@ -3,18 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white"
     tools:context="com.example.polina.meethere.EventActivity">
 
 
-            <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:id="@+id/image_my_event"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="16dp"
-                android:src="@drawable/carrot"
+        fresco:placeholderImage="@drawable/defualt"
                 android:layout_marginRight="10dp"
                 android:scaleType="centerCrop"
                 android:layout_marginLeft="16dp"
@@ -23,95 +24,57 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Тренинг по приготовке масалы "
                 android:id="@+id/name_my_event"
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@+id/image_my_event"
                 android:layout_marginTop="16dp"
                 android:textSize="15dp"
-                android:layout_marginRight="30dp" />
+                android:layout_marginRight="34dp"
+                android:text="sjnajkdhkajhdkjhkjhkjhkhkjhkhhkhkhkhkhkhkhkhkh" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="14.15.2016 13:30"
                 android:id="@+id/time_my_event"
                 android:textSize="10dp"
-                android:layout_alignBottom="@+id/image_my_event"
-                android:layout_alignLeft="@+id/adress_myevent"
-                android:layout_alignStart="@+id/adress_myevent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="100 (+) 27(-)"
-                android:id="@+id/adress_myevent"
-                android:textSize="12dp"
-                android:textColor="#2849f0"
+                android:text="фывфцвфцвфцвфцв"
                 android:layout_below="@+id/name_my_event"
                 android:layout_alignLeft="@+id/name_my_event"
                 android:layout_alignStart="@+id/name_my_event"
-                android:layout_marginTop="2dp" />
+                android:layout_marginTop="12dp" />
 
-            <CheckBox
+    <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/join_event"
                 android:button="@drawable/chack_box_join"
-                android:layout_alignTop="@+id/name_my_event"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="16dp" />
+        android:checked="false"
+        android:layout_alignTop="@+id/name_my_event"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="7dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="БЕСПЛАТНО"
                 android:id="@+id/my_event_budget"
                 android:textColor="#2cb11a"
-                android:layout_alignTop="@+id/time_my_event"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="16dp" />
+                android:text="BUDGET"
+                android:layout_below="@+id/address_myevent"
+                android:layout_alignLeft="@+id/name_my_event"
+                android:layout_alignStart="@+id/name_my_event"
+                android:layout_marginTop="12dp" />
 
-            <LinearLayout
-                android:orientation="horizontal"
+    <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/name_my_event"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/male"
-                   />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/female_gray"
-              />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="(25)"
-                    android:id="@+id/textView7"
-                    android:layout_marginRight="16dp" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Киев, Ул. Карпенко Карлого 23"
-                android:id="@+id/textView6"
-                android:layout_above="@+id/time_my_event"
-                android:layout_toRightOf="@+id/image_my_event"
-                android:layout_toEndOf="@+id/image_my_event"
-                android:textSize="10dp"
-                android:layout_marginBottom="5dp" />
+                android:id="@+id/address_myevent"
+        android:textSize="12dp"
+        android:text="ADRESS"
+        android:layout_below="@+id/time_my_event"
+        android:layout_alignLeft="@+id/time_my_event"
+        android:layout_alignStart="@+id/time_my_event"
+        android:layout_marginTop="12dp" />
 
             <ImageView
                 android:layout_width="20dp"
@@ -120,10 +83,11 @@
                 android:src="@drawable/ic_pin_drop_black_24dp"
                 android:onClick="onMap"
                 android:clickable="true"
-                android:layout_alignBottom="@+id/textView6"
+                android:layout_alignTop="@+id/address_myevent"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="16dp" />
+                android:layout_marginRight="7dp"
+                android:visibility="gone" />
 
 
 
@@ -131,12 +95,36 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Масала - традиционный бодрящий и согревающий индийский напиток на основе молока, чая и специй. На мастер-классе Риши Листерман вы узнаете несколько рецептов масалы, как правильно варить этот напиток и какова его история, как его пьют в Индии, и другое. Конечно, вы приготовите ее сами, а потом попробуете! Вас ждет теплая компания и обстановка, интересные истории и познавательные факты. Стоимость участия - 250 руб. Необходима предварительная запись по телефону!"
-        android:id="@+id/textView4"
+       android:id="@+id/descriprion_my_event"
         android:layout_below="@+id/image_my_event"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="0"
+        android:clickable="true"
+        android:onClick="onJoiners"
+        android:id="@+id/people_quantity_my_event"
+        android:layout_alignTop="@+id/my_event_budget"
+        android:layout_alignRight="@+id/join_event"
+        android:layout_alignEnd="@+id/join_event"
+        android:layout_marginRight="3dp"
+        android:gravity="center_vertical" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/imageView"
+        android:clickable="true"
+        android:onClick="onJoiners"
+        android:src="@drawable/people"
+        android:layout_alignTop="@+id/people_quantity_my_event"
+        android:layout_toLeftOf="@+id/people_quantity_my_event"
+        android:layout_toStartOf="@+id/people_quantity_my_event"
+        android:layout_marginRight="7dp" />
 </RelativeLayout>

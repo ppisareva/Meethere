@@ -15,7 +15,7 @@
     <string name="action_settings">Настройки</string>
     <string name="action_map">Map</string>
     <string name="title_activity_maps">Map</string>
-    
+
     <string name="profile">Мой профиль</string>
     <string name="places">Мои места</string>
     <string name="event">Создать ивент</string>
@@ -38,12 +38,15 @@
     <string-array name="category">
 
 
-      <item>Встреча с друзьями</item>
-       <item>Авто мото</item>
-       <item>Для одиноких</item>
-       <item>Духовность</item>
-       <item>Еда и напитки</item>
-       <item>Животные</item>
+        <item>Авто мото</item>
+        <item>Встреча с друзьями</item>
+        <item>Вечеринки</item>
+
+
+        <item>Для одиноких</item>
+        <item>Духовность</item>
+        <item>Еда и напитки</item>
+        <item>Животные</item>
         <item>Здоровье</item>
         <item>Игры</item>
         <item>Искусство и культура</item>
@@ -62,7 +65,6 @@
         <item>Сообщества</item>
         <item>Спорт и отдых</item>
         <item>Стиль жизни</item>
-        <item>Танцы</item>
         <item>Технологии</item>
         <item>Фантастика и Фэнтези</item>
         <item>Фитнес</item>
@@ -73,12 +75,15 @@
 
     <string-array name="category_images">
 
+
         <item>@drawable/avto_moto</item>
+        <item>@drawable/ic_social</item>
+        <item>@drawable/ic_party</item>
         <item>@drawable/for_single</item>
         <item>@drawable/spiritual</item>
         <item>@drawable/food</item>
-        <item>@drawable/ic_android</item>
-        <item>@drawable/ic_android</item>
+        <item>@drawable/ic_animal</item>
+        <item>@drawable/ic_helth</item>
         <item>@drawable/games</item>
         <item>@drawable/culture</item>
         <item>@drawable/business</item>
@@ -95,14 +100,13 @@
         <item>@drawable/family</item>
         <item>@drawable/comunity</item>
         <item>@drawable/sport</item>
-        <item>@drawable/ic_android</item>
-        <item>@drawable/ic_android</item>
+        <item>@drawable/ic_lifestyle</item>
         <item>@drawable/tech</item>
-        <item>@drawable/ic_android</item>
-        <item>@drawable/ic_android</item>
+        <item>@drawable/ic_fantacy</item>
+        <item>@drawable/ic_fitness</item>
         <item>@drawable/phto</item>
-        <item>@drawable/ic_android</item>
-        <item>@drawable/ic_android</item>
+        <item>@drawable/ic_hobby</item>
+        <item>@drawable/ic_other</item>
 
     </string-array>
     <string-array name="sort_array">
@@ -140,7 +144,6 @@
     <string name="pref_title_send_mass">Сообщения</string>
 
     <string name="pref_title_comments_mass">Сообщения, коментарии</string>
-
 
 
     <string-array name="pref_notification_list_titles">
@@ -206,7 +209,7 @@
     <string name="bigger">Больше</string>
     <string name="start_radius">0</string>
     <string name="end_radius">10000</string>
-    <string name="distance" >Дистанция</string>
+    <string name="distance">Дистанция</string>
     <string name="do_not_matter">не имеет значения</string>
     <string name="use">применить</string>
     <string name="contact_information">Контактная информация</string>
@@ -248,6 +251,7 @@
     <string name="week">недель</string>
     <string name="time_difference">Временной промежуток</string>
     <string name="free">Бесплатно</string>
+    <string name="see_on_map">Посмотреть на карте</string>
 
 
 </resources>

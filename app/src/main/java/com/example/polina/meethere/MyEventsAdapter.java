@@ -2,6 +2,8 @@ package com.example.polina.meethere;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,21 +13,28 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.polina.meethere.Adapters.Event;
-
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by polina on 18.03.16.
  */
-public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHolder> {
+public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewHolder >  {
 
-    List<Event> eventList;
+    private static final int ID = 0;
     Context context;
+    private static final int NAME = 1;
+    private static final int START = 3;
+    private static final int PLACE = 6;
+    private static final int ADDRESS = 7;
 
-    public MyEventsAdapter(Context context, List<Event> eventList) {
+
+    public static final String IMG_PATTERN = "https://s3-us-west-1.amazonaws.com/meethere/%s.jpg";
+
+    public MyEventsAdapter(Context context) {
+        super(null);
         this.context = context;
-        this.eventList = eventList;
     }
 
     @Override
@@ -37,24 +46,34 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
     }
 
 
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Event event = eventList.get(position);
-        holder.name.setText(event.getName());
-        holder.image.setImageResource(event.getPhoto());
-        holder.time.setText("24 Марта, 12:30");
-        holder.rating.setText(event.getRating());
-        holder.budget.setText(event.getBudget());
-        holder.setPosition(position);
-
-
-    }
-
 
     @Override
-    public int getItemCount() {
-        return (null != eventList ? eventList.size() : 0);
+    public void onBindViewHolderCursor(ViewHolder holder, Cursor cursor) {
+
+
+
+        holder.name.setText(cursor.getString(NAME));
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Date dateStart = null;
+        try {
+            dateStart = simpleDateFormat.parse(cursor.getString(START));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        simpleDateFormat = new SimpleDateFormat("EEE, MMM dd kk:mm");
+
+
+
+
+        holder.time.setText(simpleDateFormat.format(dateStart));
+
+        holder.setID(cursor.getString(ID));
+        String url = String.format(IMG_PATTERN, cursor.getString(ID));
+        holder.image.setImageURI(Uri.parse(url));
     }
+
 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -68,10 +87,10 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
         private TextView budget;
         private TextView time;
         private RelativeLayout cardView;
-        int position;
+        String id;
 
-        public void setPosition(int position) {
-            this.position = position;
+        public void setID(String id) {
+            this.id = id;
         }
 
         public ViewHolder(View itemView) {
@@ -82,7 +101,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
             cardView.setOnClickListener(this);
             time = (TextView) itemView.findViewById(R.id.time_my_event);
             imageJoin = (CheckBox) itemView.findViewById(R.id.join_event);
-            rating = (TextView) itemView.findViewById(R.id.adress_myevent);
+            rating = (TextView) itemView.findViewById(R.id.address_myevent);
             myEvent = (TextView)itemView.findViewById(R.id.my_event);
             budget = (TextView) itemView.findViewById(R.id.my_event_budget);
 
@@ -92,9 +111,9 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
 
         @Override
         public void onClick(View v) {
-            Event item = eventList.get(position);
-            System.out.println(position);
+            System.out.println(id);
             Intent intent = new Intent(context, EventActivity.class);
+            intent.putExtra(Utils.EVENT_ID, id);
             context.startActivity(intent);
         }
     }

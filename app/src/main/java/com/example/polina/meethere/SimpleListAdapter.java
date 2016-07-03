@@ -72,9 +72,9 @@ public class SimpleListAdapter extends RecyclerView.Adapter<SimpleListAdapter.Vi
 
         @Override
         public void onClick(View v) {
-            SimpleItem item = simpleItems.get(position);
             System.out.println(position);
             Intent intent = new Intent(context, ListOfEventsActivity.class);
+            intent.putExtra(Utils.CATEGORY, position);
             context.startActivity(intent);
         }
     }

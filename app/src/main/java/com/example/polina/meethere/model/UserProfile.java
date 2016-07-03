@@ -2,6 +2,8 @@ package com.example.polina.meethere.model;
 
 import android.content.SharedPreferences;
 
+import com.crittercism.app.Crittercism;
+
 /**
  * Created by ko3a4ok on 5/7/16.
  */
@@ -24,16 +26,21 @@ public class UserProfile {
     private String accessToken;
 
     public static UserProfile init(SharedPreferences pref) {
-        if (! pref.contains(USER_ID)) return null;
-        UserProfile up = new UserProfile();
-        up.firstName = pref.getString(FIRST_NAME, null);
-        up.lastName = pref.getString(LAST_NAME, null);
-        up.profileUrl = pref.getString(PROFILE_URL, null);
-        up.miniProfileUrl = pref.getString(MINI_PROFILE_URL, null);
-        up.location = pref.getString(LOCATION, null);
-        up.accessToken = pref.getString(TOKEN, null);
-        up.id = pref.getInt(USER_ID, -1);
-        return up;
+        try {
+            if (!pref.contains(USER_ID)) return null;
+            UserProfile up = new UserProfile();
+            up.firstName = pref.getString(FIRST_NAME, null);
+            up.lastName = pref.getString(LAST_NAME, null);
+            up.profileUrl = pref.getString(PROFILE_URL, null);
+            up.miniProfileUrl = pref.getString(MINI_PROFILE_URL, null);
+            up.location = pref.getString(LOCATION, null);
+            up.accessToken = pref.getString(TOKEN, null);
+            up.id = pref.getInt(USER_ID, -1);
+            return up;
+        }catch (Exception e){
+            Crittercism.logHandledException(e);
+            return null;
+        }
     }
 
     public int getId() {

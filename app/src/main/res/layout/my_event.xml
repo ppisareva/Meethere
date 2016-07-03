@@ -1,20 +1,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
     android:background="@android:color/white">
 
-            <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:id="@+id/image_my_event"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
+        android:layout_marginRight="10dp"
                 android:scaleType="centerCrop"
+                fresco:placeholderImage="@drawable/cappuccino"
                 android:layout_marginLeft="16dp" />
 
             <TextView
@@ -24,7 +25,7 @@
                 android:id="@+id/name_my_event"
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@+id/image_my_event"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="2dp"
                 android:textSize="15dp" />
 
             <TextView
@@ -34,14 +35,14 @@
                 android:id="@+id/time_my_event"
                 android:textSize="10dp"
                 android:layout_alignBottom="@+id/image_my_event"
-                android:layout_alignLeft="@+id/adress_myevent"
-                android:layout_alignStart="@+id/adress_myevent" />
+                android:layout_alignLeft="@+id/address_myevent"
+                android:layout_alignStart="@+id/address_myevent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Богатырская 6, Киев"
-                android:id="@+id/adress_myevent"
+                android:id="@+id/address_myevent"
                 android:textSize="12dp"
                 android:textColor="#2849f0"
                 android:layout_below="@+id/name_my_event"
@@ -49,32 +50,12 @@
                 android:layout_alignStart="@+id/name_my_event"
                 android:layout_marginTop="2dp" />
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/join_event"
-                android:button="@drawable/chack_box_join"
-                android:layout_alignRight="@+id/name_my_event"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp" />
-
-            <TextView
+    <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/my_event"
-                android:layout_alignTop="@+id/adress_myevent"
+                android:layout_alignTop="@+id/address_myevent"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Text"
-                android:id="@+id/my_event_budget"
-                android:layout_alignTop="@+id/time_my_event"
-                android:layout_alignRight="@+id/name_my_event"
-                android:layout_alignEnd="@+id/name_my_event"
-                android:textColor="#2cb11a"
-                android:layout_marginRight="7dp" />
-
-        </RelativeLayout>
+</RelativeLayout>

@@ -20,7 +20,22 @@ public class ServerApi {
     public static final String HOST = "https://meethere-dev.herokuapp.com/";
     public static final String AUTH = "myauth";
     public static final String EVENT = "event/";
+    public static final String MANAGE = "/manage";
+    public static final String SEARCH = "search/?q=";
+    public static final String SORT_LOW_PRICE = "&sort_by=+budget_min";
+    public static final String SORT_HIGH_PRICE = "&sort_by=-budget_max";
+
     public static final String EVENTS_BY_CATEGORY = "find-event/tags/all/";
+    public static final String USER = "user/";
+    public static final String ATTEND = "/attenders";
+    public static final String EVENTS_PAST = "/events/past";
+    public static final String EVENTS_FUTURE = "/events/future";
+    public static final String EVENTS_MY = "find-event?created_by=";
+
+
+    public final int FRAGMENT_PAST_EVENTS = 4343430;
+    public final int FRAGMENT_FUTURE_EVENTS = 4343431;
+    public final int FRAGMENT_CREATED_BY_ME_EVENTS = 4343432;
 
     public static final String AUTH_HEADER = "Authorization";
     private String accessToken;
@@ -37,6 +52,12 @@ public class ServerApi {
         HttpConnector connector = new HttpConnector(HOST + EVENT);
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         connector.setData(data);
+        return connector.response();
+    }
+
+    public JSONObject loadEvent(String id){
+        HttpConnector connector = new HttpConnector(HOST + EVENT+id);
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return connector.response();
     }
 
@@ -107,6 +128,66 @@ public class ServerApi {
 
     public JSONObject loadEventsByCategory(int category) {
         HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+category);
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return connector.response();
+    }
+
+    public JSONObject loadMyEvents(int timeStamp, int id) {
+        if(id==-1) return null;
+        String host = "";
+
+        switch (timeStamp){
+            case FRAGMENT_PAST_EVENTS:
+               host = (HOST + USER + id+ EVENTS_PAST);
+                break;
+            case FRAGMENT_FUTURE_EVENTS:
+                host =(HOST + USER +id+ EVENTS_FUTURE);
+                break;
+            case FRAGMENT_CREATED_BY_ME_EVENTS:
+                host =(HOST + EVENTS_MY+id);
+                break;
+        }
+        HttpConnector connector = new HttpConnector(host);
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return connector.response();
+    }
+
+    public JSONObject joinEvent(String id) {
+        HttpConnector connector = new HttpConnector(HOST + EVENT+id+MANAGE);
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        connector.postData();
+        return connector.response();
+
+    }
+
+    public JSONObject unjoinEvent(String id) {
+        HttpConnector connector = new HttpConnector(HOST + EVENT+id+MANAGE);
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        connector.deleteData();
+        return connector.response();
+    }
+
+    public JSONObject loadJoiners(String id) {
+        HttpConnector connector = new HttpConnector(HOST + EVENT+id+ATTEND);
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return connector.response();
+    }
+
+    public JSONObject loadEventsByWords(String search) {
+        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search);
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return connector.response();
+    }
+
+    public JSONObject loadEventsByHighPrice(String search) {
+        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search+SORT_HIGH_PRICE);
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return connector.response();
+    }
+
+
+    public JSONObject loadEventsByLowPrice(String search) {
+        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search +SORT_LOW_PRICE);
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return connector.response();
     }
