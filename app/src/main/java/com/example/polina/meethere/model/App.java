@@ -10,6 +10,7 @@ import android.os.Bundle;
 import com.crittercism.app.Crittercism;
 import com.example.polina.meethere.network.ServerApi;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONObject;
 
@@ -27,16 +28,12 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        String token = FirebaseInstanceId.getInstance().getToken();
         Crittercism.initialize(getApplicationContext(), "84ff039c90aa4f8a98e1c7da2917b52300555300");
-        try {
-            Fresco.initialize(this);
-            userProfile = UserProfile.init(pref());
-            if (userProfile != null)
-                serverApi.setAuthToken(userProfile.getAccessToken());
-        }catch (Exception e){
-            Crittercism.logHandledException(e);
-        }
+        Fresco.initialize(this);
+        userProfile = UserProfile.init(pref());
+        if (userProfile != null)
+            serverApi.setAuthToken(userProfile.getAccessToken());
 
     }
 

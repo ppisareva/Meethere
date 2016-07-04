@@ -1,19 +1,25 @@
 package com.example.polina.meethere.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -28,6 +34,7 @@ import com.example.polina.meethere.data.Comment;
 import com.example.polina.meethere.model.Event;
 import com.example.polina.meethere.model.User;
 import com.example.polina.meethere.network.ServerApi;
+import com.example.polina.meethere.views.EndlessRecyclerViewScrollListener;
 
 import org.json.JSONObject;
 
@@ -52,8 +59,9 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
     Double lat;
     Double lng;
 
-    public static final String IMG_PATTERN = "https://s3-us-west-1.amazonaws.com/meethere/%s.jpg";
 
+    public static final String IMG_PATTERN = "https://s3-us-west-1.amazonaws.com/meethere/%s.jpg";
+    public static final String BC_FILTER = "broadcast.filter.event.";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,16 +94,36 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         new LoadEvent().execute(id);
         new LoadJoiners().execute(id);
         initComments(header);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter(BC_FILTER + id));
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+    }
 
     private void initComments(View header) {
 
         recyclerView = (RecyclerView) findViewById(R.id.comments);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        LinearLayoutManager lm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(lm);
         commentAdapter = new CommentAdapter(this, header);
         recyclerView.setAdapter(commentAdapter);
-        getSupportLoaderManager().initLoader(1, null, this).forceLoad();
+        recyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(lm) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                Bundle b = new Bundle();
+                b.putInt("page", page*5);
+                getSupportLoaderManager().restartLoader(1, b, EventActivity.this).forceLoad();
+            }
+        });
+        Bundle b = new Bundle();
+        b.putInt("page", 0);
+        getSupportLoaderManager().initLoader(1, new Bundle(), this).forceLoad();
         final View sendButton = header.findViewById(R.id.comment);
         sendButton.setEnabled(false);
         comment.addTextChangedListener(new TextWatcher() {
@@ -119,6 +147,9 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
     public void onSendComment(View view) {
         final String str = comment.getText().toString();
         comment.getText().clear();
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(comment.getWindowToken(), 0);
+
         new AsyncTask<Void, Void, Comment>() {
             @Override
             protected Comment doInBackground(Void... params) {
@@ -133,31 +164,31 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
                     return;
                 }
                 commentAdapter.getComments().add(0, comment);
-                commentAdapter.notifyDataSetChanged();
+                commentAdapter.notifyItemInserted(1);
             }
         }.execute();
     }
 
     @Override
-    public Loader<List<Comment>> onCreateLoader(int id, Bundle args) {
+    public Loader<List<Comment>> onCreateLoader(int id, final Bundle args) {
         return new AsyncTaskLoader<List<Comment>>(this) {
             @Override
             public List<Comment> loadInBackground() {
-                return serverApi.getComments(EventActivity.this.id, 0);
+                return serverApi.getComments(EventActivity.this.id, args.getInt("page"));
             }
         };
     }
 
     @Override
     public void onLoadFinished(Loader<List<Comment>> loader, List<Comment> data) {
-        commentAdapter.setComments(data);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(commentAdapter);
+        commentAdapter.getComments().addAll(data);
+        int size = commentAdapter.getItemCount();
+        commentAdapter.notifyItemRangeInserted(size - data.size(), data.size());
     }
 
     @Override
     public void onLoaderReset(Loader<List<Comment>> loader) {
-        commentAdapter.setComments(null);
+        commentAdapter.getComments().clear();
 
     }
 
@@ -269,4 +300,15 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         }
         return super.onOptionsItemSelected(item);
     }
+
+    BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Comment c = new Comment(intent.getExtras());
+            if (!commentAdapter.getComments().isEmpty() && TextUtils.equals(c.getId(), commentAdapter.getComments().get(0).getId()))
+                return;
+            commentAdapter.getComments().add(0, c);
+            commentAdapter.notifyItemInserted(1);
+        }
+    };
 }

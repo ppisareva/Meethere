@@ -1,5 +1,7 @@
 package com.example.polina.meethere.data;
 
+import android.os.Bundle;
+
 import com.example.polina.meethere.Utils;
 
 import org.json.JSONObject;
@@ -22,7 +24,7 @@ public class Comment {
     public Comment(JSONObject o) {
         id = o.optString("id");
         text = o.optString("text");
-        JSONObject user = o.optJSONObject("user_id");
+        JSONObject user = o.optJSONObject("user");
         createdBy = user.optString("first_name") + " " + user.optString("last_name");
         createdByUrl = user.optString("mini_profile_url");
         try {
@@ -30,6 +32,20 @@ public class Comment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    public Comment(Bundle extras) {
+        id = extras.getString("id");
+        text = extras.getString("text");
+        try {
+            JSONObject user = new JSONObject(extras.getString("user"));
+            createdBy = user.optString("first_name") + " " + user.optString("last_name");
+            createdByUrl = user.optString("mini_profile_url");
+            createdAt = Utils.INPUT_FORMAT.parse(extras.getString("created_at")).getTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

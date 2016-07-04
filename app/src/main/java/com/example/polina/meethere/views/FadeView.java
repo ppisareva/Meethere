@@ -46,6 +46,7 @@ public class FadeView extends View {
         super.draw(canvas);
         for (int i = 0; i < PROMOS.length; i++) {
             ALPHA_PAINT.setAlpha((int) (255*alpha[i]));
+            if (images[i] == null) return;
             canvas.drawBitmap(images[i], new Rect(0, 0, images[i].getWidth(), images[i].getHeight()),
                     new Rect(0, 0, getWidth(), getHeight()), ALPHA_PAINT);
         }

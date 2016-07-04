@@ -18,6 +18,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONObject;
 
@@ -153,7 +154,7 @@ public class LoginActivity extends AbstractMeethereActivity {
 
         @Override
         protected JSONObject doInBackground(String... params) {
-            return app().getServerApi().auth(params[0]);
+            return app().getServerApi().auth(params[0], FirebaseInstanceId.getInstance().getToken());
         }
 
         @Override

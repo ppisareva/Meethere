@@ -49,9 +49,13 @@ public class ServerApi {
     private String accessToken;
 
 
-    public JSONObject auth(String fbToken) {
+    public JSONObject auth(String fbToken, String pnToken) {
         System.err.println("FB TOKEN: " + fbToken);
-        HttpConnector connector = new HttpConnector(HOST + AUTH);
+        System.err.println("Notification TOKEN: " + pnToken);
+        String url = HOST + AUTH;
+        if (pnToken != null)
+            url += "?notification_token="+pnToken;
+        HttpConnector connector = new HttpConnector(url);
         connector.setHeader(AUTH_HEADER, "Bearer facebook " + fbToken);
         return connector.response();
     }

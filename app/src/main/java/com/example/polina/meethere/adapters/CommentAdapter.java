@@ -15,6 +15,7 @@ import com.example.polina.meethere.data.Comment;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,16 +28,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     private static final int TYPE_ITEM = 1;
     private final Context context;
     private View header;
-    private List<Comment> comments;
+    final private List<Comment> comments = new ArrayList();
 
     public CommentAdapter(Context context, View header) {
         this.context = context;
         this.header = header;
     }
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
 
     public List<Comment> getComments() {
         return comments;

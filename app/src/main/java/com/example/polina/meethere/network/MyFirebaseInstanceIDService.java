@@ -1,5 +1,6 @@
 package com.example.polina.meethere.network;
 
+import com.example.polina.meethere.model.App;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
@@ -12,8 +13,5 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         // Get updated InstanceID token.
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         System.out.println(" TTTTTTTTTTTTTTTTTTTTTTTTTTTTTToken" + refreshedToken);
-
-        // TODO: Implement this method to send any registration to your app's servers.
-       // sendRegistrationToServer(refreshedToken);
     }
 }
