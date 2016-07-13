@@ -69,7 +69,7 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
 
     public List<Category> getListEvents(){
         List<Category> categoryList = new ArrayList<>();
-        categoryList.add(new Category(0, "Популярное"));
+        categoryList.add(new Category(445445, "Популярное"));
         categoryList.add(new Category(1, "Фитнес"));
         categoryList.add(new Category(2, "Еда и напитки"));
         categoryList.add(new Category(3, "Духовность"));

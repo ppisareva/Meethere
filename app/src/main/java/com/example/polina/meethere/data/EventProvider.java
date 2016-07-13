@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.location.Location;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 
@@ -25,12 +26,13 @@ public class EventProvider extends android.content.ContentProvider {
 
     public static final String AUTHORITY = "com.example.polina.meethere.data.data";
 
-    private static final int MY_EVENTS = 4;
+    private static final int MY_EVENTS = 5;
     private static final int CATEGORY_ID = 1;
-    private static final int SEARCH = 5;
-    private static final int SEARCH_LOW_PRICE = 3;
-    private static final int SEARCH_BY_HIGH = 2;
-    private static final int ENTITY_ID = 11;
+    private static final int SEARCH = 6;
+    private static final int SEARCH_LOW_PRICE = 4;
+    private static final int SEARCH_BY_HIGH = 3;
+    private static final int SEARCH_BY_DISTANCE = 2;
+
 
     private static final UriMatcher URI_MATCHER;
 
@@ -39,11 +41,14 @@ public class EventProvider extends android.content.ContentProvider {
         URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 
         URI_MATCHER.addURI(AUTHORITY,  "category/#",  CATEGORY_ID);
+        URI_MATCHER.addURI(AUTHORITY, "distance_search", SEARCH_BY_DISTANCE);
         URI_MATCHER.addURI(AUTHORITY, "high_price_search/*",  SEARCH_BY_HIGH);
 
         URI_MATCHER.addURI(AUTHORITY, "low_price_search/*", SEARCH_LOW_PRICE);
         URI_MATCHER.addURI(AUTHORITY, "myevents/*", MY_EVENTS);
         URI_MATCHER.addURI(AUTHORITY, "words_search/*", SEARCH);
+
+
 
 //        URI_MATCHER.addURI(AUTHORITY,
 //                "entities/#",
@@ -52,6 +57,7 @@ public class EventProvider extends android.content.ContentProvider {
 
     @Override
     public boolean onCreate() {
+
         return false;
     }
 
@@ -87,8 +93,8 @@ public class EventProvider extends android.content.ContentProvider {
                 events = Utils.parseEventList(h);
                 break;
             case SEARCH:
-               String searcha =uri.getLastPathSegment();
-                JSONObject d = serverApi.loadEventsByWords(searcha);
+               search =uri.getLastPathSegment();
+                JSONObject d = serverApi.loadEventsByWords(search);
                 events = Utils.parseEventList(d);
                 break;
             case SEARCH_BY_HIGH:
@@ -101,6 +107,12 @@ public class EventProvider extends android.content.ContentProvider {
                 JSONObject k = serverApi.loadEventsByLowPrice(low);
                 events = Utils.parseEventList(k);
                 break;
+            case SEARCH_BY_DISTANCE:
+                String lon = uri.getQueryParameter("lon");
+               String lat = uri.getQueryParameter("lat");
+              String  s = uri.getQueryParameter("search");
+                JSONObject g = serverApi.loadEventsByDistance(lon,lat, s);
+                events = Utils.parseEventList(g);
 
         }
         MatrixCursor cursor = new MatrixCursor(new String[]{"_id", Event.NAME, Event.DESCRIPTION, Event.START,
@@ -112,39 +124,6 @@ public class EventProvider extends android.content.ContentProvider {
         return cursor;
     }
 
-//    private Cursor categoryCursor(Uri uri) {
-//
-//        String par = uri.getLastPathSegment();
-//        String timeStamp = uri.getQueryParameter("timestamp");
-//        String search = uri.getQueryParameter("search");
-//
-//
-//        if (par != null) {
-//            int categoryId = Integer.parseInt(par);
-//            JSONObject o = serverApi.loadEventsByCategory(categoryId);
-//            events = Utils.parseEventList(o);
-//        } else {
-//            if (timeStamp != null) {
-//                SharedPreferences sharedPreferences = getContext().getSharedPreferences("pref", getContext().MODE_PRIVATE);
-//                int id = sharedPreferences.getInt(UserProfile.USER_ID, -1);
-//                JSONObject o = serverApi.loadMyEvents(Integer.parseInt(timeStamp), id);
-//                events = Utils.parseEventList(o);
-//            } else {
-//                JSONObject o = serverApi.loadEventsByWords(search);
-//                events = Utils.parseEventList(o);
-//            }
-//        }
-//
-//
-//        MatrixCursor cursor = new MatrixCursor(new String[]{"_id", Event.NAME, Event.DESCRIPTION, Event.START,
-//                Event.END, Event.TAGS, Event.PLACE, Event.ADDRESS, Event.AGE_MAX, Event.AGE_MIN, Event.BUDGET_MAX, Event.BUDGET_MIN});
-//        for (Event event : events) {
-//            cursor.addRow(new Object[]{event.getId(), event.getName(), event.getDescription(), event.getStart(), event.getEnd(),
-//                    event.getTag(), event.getPlace(), event.getAddress(), event.getAgeMax(), event.getAgeMin(), event.getBudgetMax(), event.getBudgetMin()});
-//        }
-//        return cursor;
-//
-//    }
 
     @Nullable
     @Override

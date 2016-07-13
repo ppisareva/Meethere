@@ -1,5 +1,6 @@
 package com.example.polina.meethere.fragments;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -95,8 +96,12 @@ public class MyEventsFragment extends android.support.v4.app.Fragment implements
         System.err.println("onLoaderReset");
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().getSupportLoaderManager().restartLoader(tag, null, this);
 
-
+    }
 
 
 }

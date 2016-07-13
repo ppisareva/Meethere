@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 
 import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.data.Comment;
+import com.example.polina.meethere.model.App;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,15 +31,20 @@ public class ServerApi {
     public static final String EVENT = "event/";
     public static final String MANAGE = "/manage";
     public static final String SEARCH = "search/?q=";
+    public static final String SEARCH_WORDS = "&q=";
+    public static final String SEARCH_LON = "search?lon=";
+    public static final String LAT = "&lat=";
     public static final String SORT_LOW_PRICE = "&sort_by=+budget_min";
     public static final String SORT_HIGH_PRICE = "&sort_by=-budget_max";
 
     public static final String EVENTS_BY_CATEGORY = "find-event/tags/all/";
     public static final String USER = "user/";
+    public static final String POPULAR = "popular";
     public static final String ATTEND = "/attenders";
     public static final String EVENTS_PAST = "/events/past";
     public static final String EVENTS_FUTURE = "/events/future";
     public static final String EVENTS_MY = "find-event?created_by=";
+    private static final int POPULAR_EVENTS = 445445;
 
 
     public final int FRAGMENT_PAST_EVENTS = 4343430;
@@ -47,6 +53,7 @@ public class ServerApi {
 
     public static final String AUTH_HEADER = "Authorization";
     private String accessToken;
+    App a;
 
 
     public JSONObject auth(String fbToken, String pnToken) {
@@ -140,6 +147,10 @@ public class ServerApi {
 
     public JSONObject loadEventsByCategory(int category) {
         HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+category);
+        if(category==POPULAR_EVENTS){
+           connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+POPULAR);
+        }
+
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return connector.response();
     }
@@ -230,5 +241,12 @@ public class ServerApi {
         for (int i = 0; i < arr.length(); i++)
             comments.add(new Comment(arr.optJSONObject(i)));
         return comments;
+    }
+
+    public JSONObject loadEventsByDistance(String longitude, String latitude, String search) {
+        HttpConnector connector = new HttpConnector(HOST + SEARCH_LON+ longitude +LAT+latitude + SEARCH_WORDS +search);
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return connector.response();
+
     }
 }

@@ -2,6 +2,7 @@ package com.example.polina.meethere.activities;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.example.polina.meethere.MyEventsAdapter;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.Utils;
+import com.example.polina.meethere.model.App;
 
 /**
  * Created by polina on 28.06.16.
@@ -30,6 +32,7 @@ public class ListOfEventSearchActivity  extends AppCompatActivity implements Loa
     public static final int SEARCH_LOUDER = 20330;
     public static final int SEARCH_BY_LOW_PRICE = 203990;
     public static final int SEARCH_BY_HIGH_PRICE = 2033430;
+    public static final int SEARCH_BY_DISTANCE = 20999430;
 
 
 
@@ -37,12 +40,14 @@ public class ListOfEventSearchActivity  extends AppCompatActivity implements Loa
     TextView price;
     ImageView imageView;
     String search;
+    App app;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_events);
+        app =(App) getApplication();
 
         search = getIntent().getStringExtra(Utils.SEARCH);
         distance = (TextView) findViewById(R.id.distance_filter);
@@ -67,6 +72,13 @@ public class ListOfEventSearchActivity  extends AppCompatActivity implements Loa
         imageView.setImageResource(R.drawable.ic_price);
         highPrice = false;
         lowPrice = false;
+        Bundle arg = new Bundle();
+        Location location = app.getCurrentLocation();
+        arg.putDouble(Utils.LON,location.getLongitude());
+        arg.putDouble(Utils.LAT,location.getLatitude());
+        arg.putString(Utils.SEARCH, search);
+        getSupportLoaderManager().initLoader(SEARCH_BY_DISTANCE,arg , this);
+
     }
 
     public void onPrice(View v) {
@@ -123,7 +135,7 @@ public class ListOfEventSearchActivity  extends AppCompatActivity implements Loa
                 com.example.polina.meethere.model.Event.PLACE, com.example.polina.meethere.model.Event.ADDRESS,
                 com.example.polina.meethere.model.Event.AGE_MAX, com.example.polina.meethere.model.Event.AGE_MIN,
                 com.example.polina.meethere.model.Event.BUDGET_MAX, com.example.polina.meethere.model.Event.BUDGET_MIN};
-        String search = args.getString(Utils.SEARCH);
+        String search = args.getString(Utils.SEARCH, "");
          Uri uri = null;
 
 
@@ -137,6 +149,10 @@ public class ListOfEventSearchActivity  extends AppCompatActivity implements Loa
             case SEARCH_BY_HIGH_PRICE:
                     uri=    Uri.parse("content://com.example.polina.meethere.data.data/high_price_search/" + search);
                 break;
+            case SEARCH_BY_DISTANCE:
+                String lon = String.valueOf(args.getDouble(Utils.LON));
+                String lat = String.valueOf(args.getDouble(Utils.LAT));
+                uri =   Uri.parse(String.format("content://com.example.polina.meethere.data.data/distance_search/?lon=%s&lat=%s&search=%s", lon, lat, search));
 
         }
         return new CursorLoader(this, uri,arr, null, null, null);

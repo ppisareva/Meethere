@@ -42,6 +42,9 @@ public class Utils {
     public static final String SEARCH = "search";
     public static final String EVENT_NAME = "name";
     public static final SimpleDateFormat INPUT_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    public static final String LON = "lon";
+    public static final String LAT = "lat";
+
     static {
         INPUT_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
