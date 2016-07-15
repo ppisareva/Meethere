@@ -340,7 +340,7 @@ public class MainActivity extends AbstractMeethereActivity
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     System.out.println(query + "------------------------------");
-                    Intent intent = new Intent(MainActivity.this, ListOfEventSearchActivity.class);
+                    Intent intent = new Intent(MainActivity.this, SearchResultsActivity.class);
                     intent.putExtra(Utils.SEARCH, query);
                     startActivity(intent);
                     return false;

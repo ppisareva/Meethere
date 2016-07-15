@@ -249,4 +249,10 @@ public class ServerApi {
         return connector.response();
 
     }
+
+    public JSONObject searchFriends(String name) {
+        HttpConnector connector = new HttpConnector(HOST + USER+ SEARCH + name);
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return connector.response();
+    }
 }

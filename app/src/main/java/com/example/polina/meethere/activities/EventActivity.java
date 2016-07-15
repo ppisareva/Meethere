@@ -223,7 +223,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         @Override
         protected void onPostExecute(JSONObject jsonObject) {
             System.out.println(jsonObject + " ------------------========================");
-            List<User> users = Utils.parseJoinedList(jsonObject);
+            List<User> users = Utils.parseUsersList(jsonObject);
             System.out.println(users.toArray().toString());
             quantity.setText(users.size()+"");
 

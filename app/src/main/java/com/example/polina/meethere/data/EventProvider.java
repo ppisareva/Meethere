@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.Event;
+import com.example.polina.meethere.model.User;
 import com.example.polina.meethere.model.UserProfile;
 import com.example.polina.meethere.network.ServerApi;
 
@@ -26,15 +27,17 @@ public class EventProvider extends android.content.ContentProvider {
 
     public static final String AUTHORITY = "com.example.polina.meethere.data.data";
 
-    private static final int MY_EVENTS = 5;
+    private static final int MY_EVENTS = 6;
     private static final int CATEGORY_ID = 1;
-    private static final int SEARCH = 6;
-    private static final int SEARCH_LOW_PRICE = 4;
-    private static final int SEARCH_BY_HIGH = 3;
+    private static final int SEARCH = 7;
+    private static final int SEARCH_LOW_PRICE = 5;
+    private static final int SEARCH_BY_HIGH = 4;
     private static final int SEARCH_BY_DISTANCE = 2;
 
 
     private static final UriMatcher URI_MATCHER;
+
+    private static final int SEARCH_FREINDS = 3 ;
 
     // prepare the UriMatcher
     static {
@@ -42,6 +45,7 @@ public class EventProvider extends android.content.ContentProvider {
 
         URI_MATCHER.addURI(AUTHORITY,  "category/#",  CATEGORY_ID);
         URI_MATCHER.addURI(AUTHORITY, "distance_search", SEARCH_BY_DISTANCE);
+        URI_MATCHER.addURI(AUTHORITY, "friends_search/*", SEARCH_FREINDS);
         URI_MATCHER.addURI(AUTHORITY, "high_price_search/*",  SEARCH_BY_HIGH);
 
         URI_MATCHER.addURI(AUTHORITY, "low_price_search/*", SEARCH_LOW_PRICE);
@@ -113,10 +117,23 @@ public class EventProvider extends android.content.ContentProvider {
               String  s = uri.getQueryParameter("search");
                 JSONObject g = serverApi.loadEventsByDistance(lon,lat, s);
                 events = Utils.parseEventList(g);
+                break;
+            case SEARCH_FREINDS:
+                String  name = uri.getLastPathSegment();
+                JSONObject w = serverApi.searchFriends(name);
+               List <User> userlist = Utils.parseUsersList(w);
+              MatrixCursor cursor = new MatrixCursor(new String[]{"_id", User.FIRST_NAME,User.LAST_NAME, User.IMAGE});
+                for (User user : userlist ) {
+                    cursor.addRow(new Object[]{user.getId(), user.getFirstName(), user.getLastName(), user.getImage()});
+                }
+                return cursor;
 
         }
         MatrixCursor cursor = new MatrixCursor(new String[]{"_id", Event.NAME, Event.DESCRIPTION, Event.START,
                 Event.END, Event.TAGS, Event.PLACE, Event.ADDRESS, Event.AGE_MAX, Event.AGE_MIN, Event.BUDGET_MAX, Event.BUDGET_MIN});
+
+
+        if(events==null) return null;
         for (Event event : events) {
             cursor.addRow(new Object[]{event.getId(), event.getName(), event.getDescription(), event.getStart(), event.getEnd(),
                     event.getTag(), event.getPlace(), event.getAddress(), event.getAgeMax(), event.getAgeMin(), event.getBudgetMax(), event.getBudgetMin()});

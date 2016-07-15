@@ -175,7 +175,7 @@ public class Utils {
         }
     }
 
-    public static List<User> parseJoinedList(JSONObject o) {
+    public static List<User> parseUsersList(JSONObject o) {
 
         List<User> list = new ArrayList<>();
         JSONArray arr = new JSONArray();
@@ -250,4 +250,6 @@ public class Utils {
 
 
     }
+
+
 }

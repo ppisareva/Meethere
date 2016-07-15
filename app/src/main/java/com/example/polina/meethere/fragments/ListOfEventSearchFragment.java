@@ -1,20 +1,23 @@
-package com.example.polina.meethere.activities;
+package com.example.polina.meethere.fragments;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.polina.meethere.MyEventsAdapter;
 import com.example.polina.meethere.R;
@@ -24,7 +27,7 @@ import com.example.polina.meethere.model.App;
 /**
  * Created by polina on 28.06.16.
  */
-public class ListOfEventSearchActivity  extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class ListOfEventSearchFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     MyEventsAdapter myEventsAdapter;
     boolean highPrice = false;
@@ -41,32 +44,69 @@ public class ListOfEventSearchActivity  extends AppCompatActivity implements Loa
     ImageView imageView;
     String search;
     App app;
+    LinearLayout l;
 
+    public static ListOfEventSearchFragment newInstance(String search) {
+        Bundle args = new Bundle();
+        args.putString(Utils.SEARCH, search);
+        ListOfEventSearchFragment fragment = new ListOfEventSearchFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_of_events);
-        app =(App) getApplication();
+    public ListOfEventSearchFragment(){
 
-        search = getIntent().getStringExtra(Utils.SEARCH);
-        distance = (TextView) findViewById(R.id.distance_filter);
-        price = (TextView) findViewById(R.id.price_filter);
-        imageView = (ImageView) findViewById(R.id.image_price);
-
-        Bundle arg = new Bundle();
-        arg.putString(Utils.SEARCH, search);
-
-        getSupportLoaderManager().initLoader(SEARCH_LOUDER, arg, this);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.events_list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        myEventsAdapter = new MyEventsAdapter(this);
-        recyclerView.setAdapter(myEventsAdapter);
     }
 
 
-    public void onDistance(View v) {
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View v =  inflater.inflate(R.layout.activity_list_of_events, container, false);
+        distance = (TextView)v. findViewById(R.id.distance_filter);
+        price = (TextView) v.findViewById(R.id.price_filter);
+        imageView = (ImageView)v. findViewById(R.id.image_price);
+        l=(LinearLayout) v.findViewById(R.id.no_result);
+        RecyclerView recyclerView = (RecyclerView)v. findViewById(R.id.events_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        myEventsAdapter = new MyEventsAdapter(getActivity());
+        recyclerView.setAdapter(myEventsAdapter);
+
+        return v;
+    }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initLoader();
+    }
+
+    private void initLoader() {
+        if (getArguments() != null) {
+           search = getArguments().getString(Utils.SEARCH);
+            Bundle arg = new Bundle();
+            arg.putString(Utils.SEARCH, search);
+           getActivity().getSupportLoaderManager().initLoader(SEARCH_LOUDER, arg, this);
+
+        }
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        app =(App) getActivity().getApplication();
+        setRetainInstance(true);
+
+
+
+
+    }
+
+
+    public  void onDistance() {
         distance.setTextColor(getResources().getColor(R.color.filter));
         price.setTextColor(getResources().getColor(R.color.white));
         imageView.setImageResource(R.drawable.ic_price);
@@ -77,11 +117,11 @@ public class ListOfEventSearchActivity  extends AppCompatActivity implements Loa
         arg.putDouble(Utils.LON,location.getLongitude());
         arg.putDouble(Utils.LAT,location.getLatitude());
         arg.putString(Utils.SEARCH, search);
-        getSupportLoaderManager().initLoader(SEARCH_BY_DISTANCE,arg , this);
+        getActivity().getSupportLoaderManager().initLoader(SEARCH_BY_DISTANCE,arg , this);
 
     }
 
-    public void onPrice(View v) {
+    public void onPrice() {
         distance.setTextColor(getResources().getColor(R.color.white));
         price.setTextColor(getResources().getColor(R.color.filter));
         Bundle arg = new Bundle();
@@ -92,39 +132,26 @@ public class ListOfEventSearchActivity  extends AppCompatActivity implements Loa
                 lowPrice = true;
                 highPrice = false;
 
-                getSupportLoaderManager().initLoader(SEARCH_BY_HIGH_PRICE, arg, this);
+               getActivity().getSupportLoaderManager().initLoader(SEARCH_BY_HIGH_PRICE, arg, this);
             } else {
 
                 if (lowPrice) {
                     imageView.setImageResource(R.drawable.ic_price_up_24dp);
                     lowPrice = false;
                     highPrice = true;
-                    getSupportLoaderManager().initLoader(SEARCH_BY_LOW_PRICE, arg, this);
+                    getActivity().getSupportLoaderManager().initLoader(SEARCH_BY_LOW_PRICE, arg, this);
                 }
             }
         } else {
 
             lowPrice = true;
             imageView.setImageResource(R.drawable.ic_price_down_24dp);
-            getSupportLoaderManager().initLoader(SEARCH_BY_HIGH_PRICE, arg, this);
+            getActivity().getSupportLoaderManager().initLoader(SEARCH_BY_HIGH_PRICE, arg, this);
 
         }
     }
 
-    public void onFilter(View v) {
-        startActivity(new Intent(this, SearchFiltersActivity.class));
 
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            finish();
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
 
     @Override
@@ -155,12 +182,17 @@ public class ListOfEventSearchActivity  extends AppCompatActivity implements Loa
                 uri =   Uri.parse(String.format("content://com.example.polina.meethere.data.data/distance_search/?lon=%s&lat=%s&search=%s", lon, lat, search));
 
         }
-        return new CursorLoader(this, uri,arr, null, null, null);
+        return new CursorLoader(getActivity(), uri,arr, null, null, null);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        myEventsAdapter.swapCursor(data);
+        if(data !=null&&data.getCount()!=0) {
+            l.setVisibility(View.GONE);
+            myEventsAdapter.swapCursor(data);
+        } else {
+            l.setVisibility(View.VISIBLE);
+        }
 
     }
 

@@ -194,6 +194,9 @@
     <string name="use">Apply</string>
     <string name="week">weeks</string>
     <string name="make_comment">Make an Comment</string>
+    <string name="events">События</string>
+    <string name="people">Друзья</string>
+    <string name="no_results">Результат не найден</string>
 
 
 </resources>
