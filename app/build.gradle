@@ -3,14 +3,10 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
-    dexOptions {
-        javaMaxHeapSize "4g"
-    }
     defaultConfig {
         applicationId "com.example.polina.meethere"
         minSdkVersion 16
-        multiDexEnabled true
-        targetSdkVersion 23
+        targetSdkVersion 19
         versionCode 1
         versionName "1.0"
     }
@@ -20,23 +16,26 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    lintOptions {
-        abortOnError false
-    }
-    productFlavors {
-    }
+
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.facebook.android:facebook-android-sdk:4.+'
-    compile 'com.android.support:design:23.2.1'
-    compile 'com.google.android.gms:play-services:8.4.0'
-    compile 'com.android.support:cardview-v7:22.0.+'
+    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:design:24.0.0'
+    compile 'com.android.support:cardview-v7:24.0.0'
+    compile 'com.android.support:support-v4:24.0.0'
+    compile 'com.facebook.android:facebook-android-sdk:4.13.2'
+    compile 'com.google.android.gms:play-services-maps:9.0.2'
     compile 'com.bartoszlipinski:recyclerviewheader2:2.0.0'
     compile 'com.edmodo:rangebar:1.0.0'
-    compile 'com.android.support:support-v4:23.2.1'
+    compile 'com.pacioianu.david:ink-page-indicator:1.1.1'
     compile 'com.facebook.fresco:fresco:0.10.0'
+    compile 'com.crittercism:crittercism-android-agent:5.6.4'
+    compile 'com.google.firebase:firebase-core:9.0.2'
+    compile 'com.google.firebase:firebase-messaging:9.0.2'
 }
+
+
+apply plugin: 'com.google.gms.google-services'
