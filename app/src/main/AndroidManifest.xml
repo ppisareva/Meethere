@@ -94,7 +94,8 @@
             android:authorities="com.example.polina.meethere.data.data" />
 
         <activity android:name=".activities.MyEventsActivity" />
-        <activity android:name=".activities.SearchResultsActivity"></activity>
+        <activity android:name=".activities.SearchResultsActivity" />
+        <activity android:name=".activities.UserProfileActivity"></activity>
     </application>
 
 </manifest>

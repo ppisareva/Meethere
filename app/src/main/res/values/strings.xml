@@ -197,6 +197,9 @@
     <string name="events">События</string>
     <string name="people">Друзья</string>
     <string name="no_results">Результат не найден</string>
+    <string name="followers">Подписчики</string>
+    <string name="followings">Отслеживаю</string>
+    <string name="follow">Подписаться</string>
 
 
 </resources>

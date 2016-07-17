@@ -89,7 +89,7 @@ public class ListOfFriendsSearchFragment extends Fragment implements LoaderManag
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
-       if(data!=null){
+       if(data !=null&&data.getCount()!=0){
            layout.setVisibility(View.GONE);
            adapter.swapCursor(data);
        } else {

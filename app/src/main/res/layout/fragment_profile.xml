@@ -36,16 +36,57 @@
         android:layout_height="wrap_content"
         android:layout_weight="10">
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:text="@string/followers"
+                android:clickable="true"
+                android:onClick="onFollowers"
+                android:layout_marginLeft="5dp"
+                android:textSize="11dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:clickable="true"
+                android:onClick="onFollowers"
+                android:id="@+id/followers"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:text="@string/followings"
+                android:clickable="true"
+                android:onClick="onFollowings"
+                android:textSize="11dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:clickable="true"
+                android:onClick="onFollowings"
+                android:id="@+id/followings"
+                android:layout_weight="1" />
+        </LinearLayout>
+
         <TextView
                 android:id="@+id/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/nav_header_vertical_spacing"
                 android:text="Полина Слюсарчук"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
+            android:layout_weight="1"
                 android:textSize="17dp" />
 
         <TextView

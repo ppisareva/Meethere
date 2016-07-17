@@ -1,8 +1,16 @@
 package com.example.polina.meethere.model;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.crittercism.app.Crittercism;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by ko3a4ok on 5/7/16.
@@ -15,6 +23,16 @@ public class UserProfile {
     public static final String USER_ID = "user_id";
     public static final String LOCATION = "location";
     public static final String TOKEN = "token";
+    public static final String PHONE = "phone";
+    public static final String EMAIL = "email";
+    public static final String BIRTHDAY = "birthday";
+    public static final String GENDER = "gender";
+    public static final String FOLLOWERS= "followers_count";
+    public static final String FOLLOWINGS= "followings_count";
+    public static final String FOLLOW= "follow";
+    public static final String CATEGORY= "categories";
+
+
 
 
     private int id;
@@ -24,6 +42,18 @@ public class UserProfile {
     private String miniProfileUrl;
     private String location;
     private String accessToken;
+    private String phone;
+    private String email;
+    private String birthday;
+    private boolean gender;
+    private int followers;
+    private int followings;
+    private boolean follow;
+    private Set<String> category;
+
+
+
+
 
     public static UserProfile init(SharedPreferences pref) {
         try {
@@ -36,11 +66,112 @@ public class UserProfile {
             up.location = pref.getString(LOCATION, null);
             up.accessToken = pref.getString(TOKEN, null);
             up.id = pref.getInt(USER_ID, -1);
+            up.phone = pref.getString(PHONE, null);
+            up.email = pref.getString(EMAIL, null);
+            up.birthday = pref.getString(BIRTHDAY, null);
+            up.gender = pref.getBoolean(GENDER, true);
+            up.followers = pref.getInt(FOLLOWERS, -1);
+            up.followings = pref.getInt(FOLLOWINGS, -1);
+            up.follow = pref.getBoolean(FOLLOW, false);
+            up.category = pref.getStringSet(CATEGORY, null);
+
+
             return up;
         }catch (Exception e){
             Crittercism.logHandledException(e);
             return null;
         }
+    }
+
+    public static UserProfile parseUserProfile(JSONObject o)  {
+       UserProfile userProfile = new UserProfile();
+        userProfile.setId(o.optInt(UserProfile.USER_ID));
+        userProfile.setFirstName(o.optString(UserProfile.FIRST_NAME));
+        userProfile.setLastName(o.optString(UserProfile.LAST_NAME));
+        userProfile.setProfileUrl(o.optString(UserProfile.PROFILE_URL));
+        userProfile.setMiniProfileUrl(o.optString(UserProfile.MINI_PROFILE_URL));
+        userProfile.setLocation(o.optString(UserProfile.LOCATION));
+        userProfile.setPhone(o.optString(UserProfile.PHONE));
+        userProfile.setEmail(o.optString(UserProfile.EMAIL));
+        userProfile.setBirthday( o.optString(UserProfile.BIRTHDAY));
+        userProfile.setGender( o.optBoolean(UserProfile.GENDER));
+        userProfile.setFollowers(o.optInt(UserProfile.FOLLOWERS));
+        userProfile.setFollowings( o.optInt(UserProfile.FOLLOWINGS));
+        userProfile.setFollow(o.optBoolean(UserProfile.FOLLOW));
+        JSONArray array = o.optJSONArray(UserProfile.CATEGORY);
+        Set<String > set = null;
+        if(array!=null){
+            for(int i = 0; i<array.length();i++ ){
+                try {
+                    set.add(""+array.get(i));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        userProfile.setCategory(set);
+        return userProfile;
+
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setProfileUrl(String profileUrl) {
+        this.profileUrl = profileUrl;
+    }
+
+    public void setMiniProfileUrl(String miniProfileUrl) {
+        this.miniProfileUrl = miniProfileUrl;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
+    }
+
+    public void setFollowers(int followers) {
+        this.followers = followers;
+    }
+
+    public void setFollowings(int followings) {
+        this.followings = followings;
+    }
+
+    public void setFollow(boolean follow) {
+        this.follow = follow;
+    }
+
+    public void setCategory(Set<String> category) {
+        this.category = category;
     }
 
     public int getId() {
@@ -73,5 +204,37 @@ public class UserProfile {
 
     public String getAccessToken() {
         return accessToken;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public Set<String> getCategory() {
+        return category;
+    }
+
+    public boolean isFollow() {
+        return follow;
+    }
+
+    public int getFollowers() {
+        return followers;
+    }
+
+    public boolean isGender() {
+        return gender;
+    }
+
+    public int getFollowings() {
+        return followings;
     }
 }

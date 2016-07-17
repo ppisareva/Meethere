@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.polina.meethere.activities.EventActivity;
+import com.example.polina.meethere.activities.UserProfileActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 /**
@@ -77,9 +78,9 @@ public class MyFriendsAdapter extends CursorRecyclerAdapter<MyFriendsAdapter.Vie
         @Override
         public void onClick(View v) {
             System.out.println(id);
-//            Intent intent = new Intent(context, EventActivity.class);
-//            intent.putExtra(Utils.EVENT_ID, id);
-//            context.startActivity(intent);
+            Intent intent = new Intent(context, UserProfileActivity.class);
+            intent.putExtra(Utils.USER_ID, id);
+            context.startActivity(intent);
         }
     }
 }

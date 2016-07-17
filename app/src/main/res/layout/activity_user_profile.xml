@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.polina.meethere.activities.UserProfileActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/nav_header_height"
+        android:background="@drawable/side_nav_bar"
+        style="@style/Margin"
+
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:id="@+id/linearLayout2">
+
+        <!--android:clickable="true"-->
+        <!--android:onClick="onChangeBackground"-->
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:layout_width="70dp"
+            android:layout_height="75dp"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:src="@drawable/river"
+            android:id="@+id/profile_image"
+            android:layout_marginRight="10dp"
+            android:onClick="onChangeProfileImage"
+            android:clickable="true"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:layout_marginRight="15dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="209dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:text="@string/followers"
+                    android:clickable="true"
+                    android:onClick="onFollowers"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="11dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:clickable="true"
+                    android:onClick="onFollowers"
+                    android:id="@+id/followers"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:text="@string/followings"
+                    android:clickable="true"
+                    android:onClick="onFollowings"
+                    android:textSize="11dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:clickable="true"
+                    android:onClick="onFollowings"
+                    android:id="@+id/followings"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Полина Слюсарчук"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:textSize="17dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mountain View, CA, USA"
+                android:id="@+id/location"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:foregroundGravity="clip_horizontal" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/follow"
+        android:clickable="true"
+        android:text="@string/follow"
+        android:textColor="@android:color/white"
+        android:onClick="onFollow"
+        android:drawableLeft="@drawable/ic_add_white_18dp"
+        android:layout_weight="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="16dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout2"></LinearLayout>
+</RelativeLayout>

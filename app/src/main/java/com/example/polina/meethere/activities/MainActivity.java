@@ -192,6 +192,14 @@ public class MainActivity extends AbstractMeethereActivity
 
     }
 
+    public void onFollowers(View v){
+        profileFragment.onFollowers();
+    }
+
+    public void onFollowings(View v){
+        profileFragment.onFollowings();
+    }
+
 
     public void chooseTimeDialog(Integer i) {
         final Calendar c = Calendar.getInstance();
@@ -341,7 +349,7 @@ public class MainActivity extends AbstractMeethereActivity
                 public boolean onQueryTextSubmit(String query) {
                     System.out.println(query + "------------------------------");
                     Intent intent = new Intent(MainActivity.this, SearchResultsActivity.class);
-                    intent.putExtra(Utils.SEARCH, query);
+                    intent.putExtra(Utils.SEARCH, query.replace(" ", "+"));
                     startActivity(intent);
                     return false;
                 }

@@ -12,7 +12,11 @@ import com.example.polina.meethere.network.ServerApi;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Set;
 
 
 /**
@@ -45,7 +49,7 @@ public class App extends Application {
         return userProfile;
     }
 
-    public void saveUserProfile(JSONObject o) {
+    public void saveUserProfile(JSONObject o) throws JSONException {
         SharedPreferences.Editor editor = pref().edit();
         editor.putInt(UserProfile.USER_ID, o.optInt(UserProfile.USER_ID));
         editor.putString(UserProfile.FIRST_NAME, o.optString(UserProfile.FIRST_NAME));
@@ -54,6 +58,22 @@ public class App extends Application {
         editor.putString(UserProfile.MINI_PROFILE_URL, o.optString(UserProfile.MINI_PROFILE_URL));
         editor.putString(UserProfile.LOCATION, o.optString(UserProfile.LOCATION));
         editor.putString(UserProfile.TOKEN, o.optString(UserProfile.TOKEN));
+        editor.putString(UserProfile.PHONE, o.optString(UserProfile.PHONE));
+        editor.putString(UserProfile.EMAIL, o.optString(UserProfile.EMAIL));
+        editor.putString(UserProfile.BIRTHDAY, o.optString(UserProfile.BIRTHDAY));
+        editor.putBoolean(UserProfile.GENDER, o.optBoolean(UserProfile.GENDER));
+        editor.putInt(UserProfile.FOLLOWERS, o.optInt(UserProfile.FOLLOWERS));
+        editor.putInt(UserProfile.FOLLOWINGS, o.optInt(UserProfile.FOLLOWINGS));
+        editor.putBoolean(UserProfile.FOLLOW, o.optBoolean(UserProfile.FOLLOW));
+        JSONArray array = o.optJSONArray(UserProfile.CATEGORY);
+        Set<String > set = null;
+       if(array!=null){
+           for(int i = 0; i<array.length();i++ ){
+               set.add(""+array.get(i));
+           }
+       }
+        editor.putStringSet(UserProfile.CATEGORY,set);
+
         editor.apply();
         userProfile = UserProfile.init(pref());
         serverApi.setAuthToken(userProfile.getAccessToken());

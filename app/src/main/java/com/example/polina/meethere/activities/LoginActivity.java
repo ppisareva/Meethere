@@ -20,6 +20,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Timer;
@@ -159,13 +160,18 @@ public class LoginActivity extends AbstractMeethereActivity {
 
         @Override
         protected void onPostExecute(JSONObject jsonObject) {
+            System.out.println("User profile " +jsonObject);
             if (findViewById(R.id.avloadingIndicatorView) == null) return;
             findViewById(R.id.avloadingIndicatorView).setVisibility(View.GONE);
             if (jsonObject == null) {
                 Toast.makeText(getApplicationContext(), R.string.error_auth, Toast.LENGTH_LONG).show();
                 return;
             }
-            app().saveUserProfile(jsonObject);
+            try {
+                app().saveUserProfile(jsonObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             goToMain();
         }
     }

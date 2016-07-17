@@ -39,6 +39,8 @@ public class ServerApi {
 
     public static final String EVENTS_BY_CATEGORY = "find-event/tags/all/";
     public static final String USER = "user/";
+    public static final String PROFILE = "/profile/";
+
     public static final String POPULAR = "popular";
     public static final String ATTEND = "/attenders";
     public static final String EVENTS_PAST = "/events/past";
@@ -167,8 +169,7 @@ public class ServerApi {
                 host =(HOST + USER +id+ EVENTS_FUTURE);
                 break;
             case FRAGMENT_CREATED_BY_ME_EVENTS:
-                host =(HOST + EVENTS_MY+id);
-                break;
+                return loadUserEvents(id+"");
         }
         HttpConnector connector = new HttpConnector(host);
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
@@ -252,6 +253,18 @@ public class ServerApi {
 
     public JSONObject searchFriends(String name) {
         HttpConnector connector = new HttpConnector(HOST + USER+ SEARCH + name);
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return connector.response();
+    }
+
+    public JSONObject loadUserEvents(String userId) {
+        HttpConnector connector = new HttpConnector(HOST + EVENTS_MY+userId);
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return connector.response();
+    }
+
+    public JSONObject loadUserProfile(String param) {
+        HttpConnector connector = new HttpConnector(HOST + PROFILE+param);
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return connector.response();
     }

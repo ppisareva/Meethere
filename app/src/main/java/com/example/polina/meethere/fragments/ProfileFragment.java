@@ -14,6 +14,8 @@ import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 public class ProfileFragment extends android.support.v4.app.Fragment {
+    TextView followers;
+    TextView followings;
 
     public static ProfileFragment newInstance() {
         ProfileFragment fragment = new ProfileFragment();
@@ -33,6 +35,8 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
         ((TextView)v.findViewById(R.id.user_name)).setText(up.getName());
         ((TextView)v.findViewById(R.id.location)).setText(up.getLocation());
+        followers = (TextView) v.findViewById(R.id.followers);
+        followings = (TextView)v.findViewById(R.id.followings);
         SimpleDraweeView profileImage = (SimpleDraweeView)v.findViewById(R.id.profile_image);
         profileImage.setImageURI(Uri.parse(up.getProfileUrl()));
         RoundingParams roundingParams = RoundingParams.asCircle();
@@ -41,6 +45,13 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
     }
 
 
+    public void onFollowers(){
+
+    }
+
+    public void onFollowings(){
+
+    }
 
 
 }

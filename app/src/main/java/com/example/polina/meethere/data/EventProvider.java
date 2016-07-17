@@ -28,8 +28,9 @@ public class EventProvider extends android.content.ContentProvider {
     public static final String AUTHORITY = "com.example.polina.meethere.data.data";
 
     private static final int MY_EVENTS = 6;
+    private static final int USER_EVENTS = 7;
     private static final int CATEGORY_ID = 1;
-    private static final int SEARCH = 7;
+    private static final int SEARCH = 8;
     private static final int SEARCH_LOW_PRICE = 5;
     private static final int SEARCH_BY_HIGH = 4;
     private static final int SEARCH_BY_DISTANCE = 2;
@@ -47,16 +48,11 @@ public class EventProvider extends android.content.ContentProvider {
         URI_MATCHER.addURI(AUTHORITY, "distance_search", SEARCH_BY_DISTANCE);
         URI_MATCHER.addURI(AUTHORITY, "friends_search/*", SEARCH_FREINDS);
         URI_MATCHER.addURI(AUTHORITY, "high_price_search/*",  SEARCH_BY_HIGH);
-
         URI_MATCHER.addURI(AUTHORITY, "low_price_search/*", SEARCH_LOW_PRICE);
         URI_MATCHER.addURI(AUTHORITY, "myevents/*", MY_EVENTS);
+        URI_MATCHER.addURI(AUTHORITY, "userevents/*", USER_EVENTS);
         URI_MATCHER.addURI(AUTHORITY, "words_search/*", SEARCH);
 
-
-
-//        URI_MATCHER.addURI(AUTHORITY,
-//                "entities/#",
-//                ENTITY_ID);
     }
 
     @Override
@@ -117,6 +113,11 @@ public class EventProvider extends android.content.ContentProvider {
               String  s = uri.getQueryParameter("search");
                 JSONObject g = serverApi.loadEventsByDistance(lon,lat, s);
                 events = Utils.parseEventList(g);
+                break;
+            case USER_EVENTS:
+                String userId =uri.getLastPathSegment();
+                JSONObject hd = serverApi.loadUserEvents(userId);
+                events = Utils.parseEventList(hd);
                 break;
             case SEARCH_FREINDS:
                 String  name = uri.getLastPathSegment();
