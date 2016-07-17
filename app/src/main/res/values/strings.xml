@@ -201,5 +201,10 @@
     <string name="followings">Отслеживаю</string>
     <string name="follow">Подписаться</string>
 
+    <string name="notification_invite">%1$s invites you to %2$s</string>
+    <string name="notification_joined">%1$s just joined  to %2$s</string>
+    <string name="notification_create_event">%1$s created event %2$s</string>
+    <string name="notification_follow">%1$s started following you</string>
+    <string name="notification_comment">%1$s commented %2$s</string>
 
 </resources>

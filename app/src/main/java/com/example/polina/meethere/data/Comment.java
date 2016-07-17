@@ -34,19 +34,6 @@ public class Comment {
         }
     }
 
-    public Comment(Bundle extras) {
-        id = extras.getString("id");
-        text = extras.getString("text");
-        try {
-            JSONObject user = new JSONObject(extras.getString("user"));
-            createdBy = user.optString("first_name") + " " + user.optString("last_name");
-            createdByUrl = user.optString("mini_profile_url");
-            createdAt = Utils.INPUT_FORMAT.parse(extras.getString("created_at")).getTime();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
 
     @Override
     public String toString() {

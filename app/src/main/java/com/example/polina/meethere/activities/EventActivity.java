@@ -36,6 +36,7 @@ import com.example.polina.meethere.model.User;
 import com.example.polina.meethere.network.ServerApi;
 import com.example.polina.meethere.views.EndlessRecyclerViewScrollListener;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
@@ -304,7 +305,12 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Comment c = new Comment(intent.getExtras());
+            Comment c = null;
+            try {
+                c = new Comment(new JSONObject(intent.getStringExtra("data")));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             if (!commentAdapter.getComments().isEmpty() && TextUtils.equals(c.getId(), commentAdapter.getComments().get(0).getId()))
                 return;
             commentAdapter.getComments().add(0, c);

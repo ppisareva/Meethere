@@ -19,4 +19,10 @@
     <string name="promo_3">Не знаєш, як провести час?</string>
     <string name="telefone">Мобільний телефон</string>
 
+    <string name="notification_invite">%1$s запрошує до %2$s</string>
+    <string name="notification_joined">%1$s щойно приєднався до %2$s</string>
+    <string name="notification_create_event">%1$s створив подію %2$s</string>
+    <string name="notification_follow">%1$s почав фоловити вас</string>
+    <string name="notification_comment">%1$s відкоментував %2$s</string>
+
 </resources>

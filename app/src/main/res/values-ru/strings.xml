@@ -144,4 +144,10 @@
     <string name="my_location">мое местоположение</string>
     <string name="pref_header_notifications">Оповещения</string>
 
+    <string name="notification_invite">%1$s приклашает на %2$s</string>
+    <string name="notification_joined">%1$s присоединился к %2$s</string>
+    <string name="notification_create_event">%1$s создал собЬІтие %2$s</string>
+    <string name="notification_follow">%1$s начал фоловить тебя</string>
+    <string name="notification_comment">%1$s откоментировал %2$s</string>
+
 </resources>
