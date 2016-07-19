@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ public class UserProfile {
     public static final String FIRST_NAME = "first_name";
     public static final String LAST_NAME = "last_name";
     public static final String PROFILE_URL = "profile_image_url";
-    public static final String MINI_PROFILE_URL = "profile_mini_image_url";
+    public static final String MINI_PROFILE_URL = "mini_profile_url";
     public static final String USER_ID = "user_id";
     public static final String LOCATION = "location";
     public static final String TOKEN = "token";
@@ -99,7 +100,7 @@ public class UserProfile {
         userProfile.setFollowings( o.optInt(UserProfile.FOLLOWINGS));
         userProfile.setFollow(o.optBoolean(UserProfile.FOLLOW));
         JSONArray array = o.optJSONArray(UserProfile.CATEGORY);
-        Set<String > set = null;
+        Set<String > set = new HashSet<>();
         if(array!=null){
             for(int i = 0; i<array.length();i++ ){
                 try {

@@ -35,15 +35,6 @@ public class MyEventsFragment extends android.support.v4.app.Fragment implements
         return fragment;
     }
 
-    public static MyEventsFragment newInstance(int tag, int userId) {
-        MyEventsFragment fragment = new MyEventsFragment();
-        Bundle arg = new Bundle();
-        arg.putInt(Utils.TIME_TAG, tag);
-        arg.putInt(Utils.USER_ID, userId);
-        fragment.setArguments(arg);
-        return fragment;
-    }
-
     public MyEventsFragment() {
         // Required empty public constructor
     }
@@ -62,12 +53,8 @@ public class MyEventsFragment extends android.support.v4.app.Fragment implements
 
     private void initLoader() {
         if (getArguments() != null) {
-            Bundle bundle = null;
-            int user_id= getArguments().getInt(Utils.USER_ID, 0);
             tag = getArguments().getInt(Utils.TIME_TAG);
-            bundle.putInt(Utils.USER_ID, getArguments().getInt(Utils.USER_ID));
-
-            getActivity().getSupportLoaderManager().initLoader(tag+user_id, bundle, this);
+            getActivity().getSupportLoaderManager().initLoader(tag, null, this);
         }
     }
 
@@ -86,19 +73,14 @@ public class MyEventsFragment extends android.support.v4.app.Fragment implements
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String arr[] = new String[]{com.example.polina.meethere.model.Event.ID, com.example.polina.meethere.model.Event.NAME,
+        return new CursorLoader(getActivity(),
+                Uri.parse("content://com.example.polina.meethere.data.data/myevents/"+(id))
+                , new String[]{com.example.polina.meethere.model.Event.ID, com.example.polina.meethere.model.Event.NAME,
                 com.example.polina.meethere.model.Event.DESCRIPTION, com.example.polina.meethere.model.Event.START,
                 com.example.polina.meethere.model.Event.END, com.example.polina.meethere.model.Event.TAGS,
                 com.example.polina.meethere.model.Event.PLACE, com.example.polina.meethere.model.Event.ADDRESS,
                 com.example.polina.meethere.model.Event.AGE_MAX, com.example.polina.meethere.model.Event.AGE_MIN,
-                com.example.polina.meethere.model.Event.BUDGET_MAX, com.example.polina.meethere.model.Event.BUDGET_MIN};
-        int userId = args.getInt(Utils.USER_ID);
-
-        Uri uri =  Uri.parse("content://com.example.polina.meethere.data.data/myevents/"+(id));
-        if(userId!=0){
-           uri =  Uri.parse("content://com.example.polina.meethere.data.data/userevents/"+(userId));
-        }
-        return new CursorLoader(getActivity(), uri, arr, null, null, null);
+                com.example.polina.meethere.model.Event.BUDGET_MAX, com.example.polina.meethere.model.Event.BUDGET_MIN}, null, null, null);
 
 
     }

@@ -56,20 +56,20 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
 
         holder.name.setText(cursor.getString(NAME));
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        Date dateStart = null;
-        try {
-            dateStart = simpleDateFormat.parse(cursor.getString(START));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        simpleDateFormat = new SimpleDateFormat("EEE, MMM dd kk:mm");
-
-
-
-
-        holder.time.setText(simpleDateFormat.format(dateStart));
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+//        Date dateStart = null;
+//        try {
+//            dateStart = simpleDateFormat.parse(cursor.getString(START));
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+//        simpleDateFormat = new SimpleDateFormat("EEE, MMM dd kk:mm");
+//
+//
+//
+//
+//        holder.time.setText(simpleDateFormat.format(dateStart));
 
         holder.setID(cursor.getString(ID));
         String url = String.format(IMG_PATTERN, cursor.getString(ID));

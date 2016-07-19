@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import com.example.polina.meethere.adapters.SimpleItem;
 import com.example.polina.meethere.model.Event;
 import com.example.polina.meethere.model.User;
+import com.example.polina.meethere.model.UserProfile;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -199,6 +200,26 @@ public class Utils {
             return null;
         }
     }
+
+
+    public static List<UserProfile> parseUsersProfile(JSONObject o) {
+
+        List<UserProfile> list = new ArrayList<>();
+        JSONArray arr = new JSONArray();
+        try {
+            arr = o.getJSONArray(RESULTS);
+
+            for (int i = 0; i < arr.length(); i++) {
+                final JSONObject eventJSON = arr.getJSONObject(i);
+                list.add(UserProfile.parseUserProfile(eventJSON));
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     private static User parseUser(JSONObject userJSON) {
         User user = new User();

@@ -169,7 +169,8 @@ public class ServerApi {
                 host =(HOST + USER +id+ EVENTS_FUTURE);
                 break;
             case FRAGMENT_CREATED_BY_ME_EVENTS:
-                return loadUserEvents(id+"");
+                host =(HOST + EVENTS_MY+id);
+                break;
         }
         HttpConnector connector = new HttpConnector(host);
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);

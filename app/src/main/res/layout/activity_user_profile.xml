@@ -117,11 +117,12 @@
         android:layout_marginRight="25dp"
         android:layout_marginTop="16dp" />
 
-    <LinearLayout
+        <android.support.v7.widget.RecyclerView
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
+        android:id="@+id/list_of_created_events"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/linearLayout2"></LinearLayout>
+        android:layout_below="@+id/linearLayout2"/>
 </RelativeLayout>

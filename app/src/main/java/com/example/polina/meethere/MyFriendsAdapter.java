@@ -38,7 +38,7 @@ public class MyFriendsAdapter extends CursorRecyclerAdapter<MyFriendsAdapter.Vie
     @Override
     public void onBindViewHolderCursor(MyFriendsAdapter.ViewHolder holder, Cursor cursor) {
         holder.name.setText(cursor.getString(NAME)+ " " +cursor.getString(LAST_NAME));
-        holder.setID(cursor.getString(ID));
+        holder.setID(cursor.getInt(ID)+"");
         holder.image.setImageURI(Uri.parse(cursor.getString(URL)));
     }
 

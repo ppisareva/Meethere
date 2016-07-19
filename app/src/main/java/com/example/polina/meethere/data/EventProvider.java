@@ -122,10 +122,10 @@ public class EventProvider extends android.content.ContentProvider {
             case SEARCH_FREINDS:
                 String  name = uri.getLastPathSegment();
                 JSONObject w = serverApi.searchFriends(name);
-               List <User> userlist = Utils.parseUsersList(w);
+               List <UserProfile> userlist = Utils.parseUsersProfile(w) ;
               MatrixCursor cursor = new MatrixCursor(new String[]{"_id", User.FIRST_NAME,User.LAST_NAME, User.IMAGE});
-                for (User user : userlist ) {
-                    cursor.addRow(new Object[]{user.getId(), user.getFirstName(), user.getLastName(), user.getImage()});
+                for (UserProfile user : userlist ) {
+                    cursor.addRow(new Object[]{user.getId(), user.getFirstName(), user.getLastName(), user.getMiniProfileUrl()});
                 }
                 return cursor;
 
