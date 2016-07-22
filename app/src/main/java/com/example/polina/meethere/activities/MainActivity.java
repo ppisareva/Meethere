@@ -32,6 +32,8 @@ import com.example.polina.meethere.fragments.SearchResultsFragment;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.login.LoginManager;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 
@@ -93,6 +95,7 @@ public class MainActivity extends AbstractMeethereActivity
     private void initUserInfo() {
         NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
         View root = nv.getHeaderView(0);
+        FirebaseCrash.log("Main Activity: user_id=" + app().getUserProfile().getId());
         ((TextView)root.findViewById(R.id.user_name)).setText(app().getUserProfile().getName());
         ((TextView)root.findViewById(R.id.location)).setText(app().getUserProfile().getLocation());
         SimpleDraweeView profileImage = (SimpleDraweeView)root.findViewById(R.id.profile_image);

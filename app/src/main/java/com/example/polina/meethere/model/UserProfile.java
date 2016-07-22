@@ -2,8 +2,8 @@ package com.example.polina.meethere.model;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
-import com.crittercism.app.Crittercism;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,7 +19,7 @@ import java.util.Set;
 public class UserProfile {
     public static final String FIRST_NAME = "first_name";
     public static final String LAST_NAME = "last_name";
-    public static final String PROFILE_URL = "profile_image_url";
+    public static final String PROFILE_URL = "profile_url";
     public static final String MINI_PROFILE_URL = "mini_profile_url";
     public static final String USER_ID = "user_id";
     public static final String LOCATION = "location";
@@ -59,6 +59,7 @@ public class UserProfile {
     public static UserProfile init(SharedPreferences pref) {
         try {
             if (!pref.contains(USER_ID)) return null;
+            if (TextUtils.isEmpty(pref.getString(TOKEN, null)))return null;
             UserProfile up = new UserProfile();
             up.firstName = pref.getString(FIRST_NAME, null);
             up.lastName = pref.getString(LAST_NAME, null);
@@ -79,7 +80,6 @@ public class UserProfile {
 
             return up;
         }catch (Exception e){
-            Crittercism.logHandledException(e);
             return null;
         }
     }

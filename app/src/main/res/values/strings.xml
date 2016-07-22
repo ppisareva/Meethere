@@ -206,5 +206,6 @@
     <string name="notification_create_event">%1$s created event %2$s</string>
     <string name="notification_follow">%1$s started following you</string>
     <string name="notification_comment">%1$s commented %2$s</string>
+    <string name="unfollow">Отписаться</string>
 
 </resources>

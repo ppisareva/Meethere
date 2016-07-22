@@ -73,10 +73,6 @@ public class EventProvider extends android.content.ContentProvider {
         List<Event> events = null;
         ServerApi serverApi = ((App) getContext().getApplicationContext()).getServerApi();
         String search = "";
-        String padr = uri.getLastPathSegment();
-        System.out.println(padr) ;
-        String fff = uri.getQueryParameter("words_search");
-        System.out.println(fff);
 
         switch (URI_MATCHER.match(uri)) {
             case CATEGORY_ID:

@@ -46,6 +46,7 @@ public class ServerApi {
     public static final String EVENTS_PAST = "/events/past";
     public static final String EVENTS_FUTURE = "/events/future";
     public static final String EVENTS_MY = "find-event?created_by=";
+    public static final String FOLLOW = "/follow";
     private static final int POPULAR_EVENTS = 445445;
 
 
@@ -267,6 +268,20 @@ public class ServerApi {
     public JSONObject loadUserProfile(String param) {
         HttpConnector connector = new HttpConnector(HOST + PROFILE+param);
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return connector.response();
+    }
+
+    public JSONObject follow(String userId) {
+        HttpConnector connector = new HttpConnector(HOST + USER+userId+FOLLOW);
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        connector.postData();
+        return connector.response();
+    }
+
+    public JSONObject unfollow(String userId) {
+        HttpConnector connector = new HttpConnector(HOST +USER+userId+FOLLOW);
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        connector.deleteData();
         return connector.response();
     }
 }

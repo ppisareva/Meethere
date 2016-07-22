@@ -7,9 +7,11 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
-import com.crittercism.app.Crittercism;
 import com.example.polina.meethere.network.ServerApi;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.crash.FirebaseCrash;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONArray;
@@ -32,8 +34,6 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        String token = FirebaseInstanceId.getInstance().getToken();
-        Crittercism.initialize(getApplicationContext(), "84ff039c90aa4f8a98e1c7da2917b52300555300");
         Fresco.initialize(this);
         userProfile = UserProfile.init(pref());
         if (userProfile != null)
@@ -57,7 +57,8 @@ public class App extends Application {
         editor.putString(UserProfile.PROFILE_URL, o.optString(UserProfile.PROFILE_URL));
         editor.putString(UserProfile.MINI_PROFILE_URL, o.optString(UserProfile.MINI_PROFILE_URL));
         editor.putString(UserProfile.LOCATION, o.optString(UserProfile.LOCATION));
-        editor.putString(UserProfile.TOKEN, o.optString(UserProfile.TOKEN));
+        if (o.has(UserProfile.TOKEN))
+            editor.putString(UserProfile.TOKEN, o.optString(UserProfile.TOKEN));
         editor.putString(UserProfile.PHONE, o.optString(UserProfile.PHONE));
         editor.putString(UserProfile.EMAIL, o.optString(UserProfile.EMAIL));
         editor.putString(UserProfile.BIRTHDAY, o.optString(UserProfile.BIRTHDAY));
