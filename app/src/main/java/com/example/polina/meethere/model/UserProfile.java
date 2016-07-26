@@ -100,7 +100,7 @@ public class UserProfile {
         userProfile.setFollowings( o.optInt(UserProfile.FOLLOWINGS));
         userProfile.setFollow(o.optBoolean(UserProfile.FOLLOW));
         JSONArray array = o.optJSONArray(UserProfile.CATEGORY);
-        Set<String > set = new HashSet<>();
+        Set<String> set = new HashSet<>();
         if(array!=null){
             for(int i = 0; i<array.length();i++ ){
                 try {

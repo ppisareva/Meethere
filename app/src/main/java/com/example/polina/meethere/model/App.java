@@ -18,6 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -67,12 +68,13 @@ public class App extends Application {
         editor.putInt(UserProfile.FOLLOWINGS, o.optInt(UserProfile.FOLLOWINGS));
         editor.putBoolean(UserProfile.FOLLOW, o.optBoolean(UserProfile.FOLLOW));
         JSONArray array = o.optJSONArray(UserProfile.CATEGORY);
-        Set<String > set = null;
+        Set<String > set = new HashSet<>( );
        if(array!=null){
            for(int i = 0; i<array.length();i++ ){
                set.add(""+array.get(i));
            }
        }
+
         editor.putStringSet(UserProfile.CATEGORY,set);
 
         editor.apply();

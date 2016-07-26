@@ -40,6 +40,7 @@ public class ServerApi {
     public static final String EVENTS_BY_CATEGORY = "find-event/tags/all/";
     public static final String USER = "user/";
     public static final String PROFILE = "/profile/";
+    public static final String PRO = "profile/";
 
     public static final String POPULAR = "popular";
     public static final String ATTEND = "/attenders";
@@ -282,6 +283,14 @@ public class ServerApi {
         HttpConnector connector = new HttpConnector(HOST +USER+userId+FOLLOW);
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         connector.deleteData();
+        return connector.response();
+    }
+
+    public JSONObject updateProfile(JSONObject param, String id) {
+        HttpConnector connector = new HttpConnector(HOST + PRO+id +"/");
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        connector.patchData(param.toString());
+
         return connector.response();
     }
 }

@@ -207,5 +207,10 @@
     <string name="notification_follow">%1$s started following you</string>
     <string name="notification_comment">%1$s commented %2$s</string>
     <string name="unfollow">Отписаться</string>
+    <string name="set_birthday">Задать дату рождения</string>
+    <string name="set_email">Задать эл.почту</string>
+    <string name="set_location">Задать адресс</string>
+    <string name="set_phone">Задать телефон</string>
+    <string name="add">Добавить</string>
 
 </resources>

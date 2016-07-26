@@ -56,4 +56,12 @@
         <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
     </style>
 
+    <style name="CategoryInProfile">
+        <item name="android:background">@drawable/preferences</item>
+        <item name="android:drawableEnd">@drawable/ic_cencel</item>
+        <item name="android:layout_margin">3dp</item>
+
+
+    </style>
+
 </resources>

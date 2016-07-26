@@ -55,7 +55,7 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
 
 
         holder.name.setText(cursor.getString(NAME));
-
+//
 //        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 //        Date dateStart = null;
 //        try {
@@ -64,11 +64,11 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
 //            e.printStackTrace();
 //        }
 //
-//        simpleDateFormat = new SimpleDateFormat("EEE, MMM dd kk:mm");
-//
-//
-//
-//
+//        simpleDateFormat = new SimpleDateFormat("EEE, MM dd kk:mm");
+
+
+
+
 //        holder.time.setText(simpleDateFormat.format(dateStart));
 
         holder.setID(cursor.getString(ID));

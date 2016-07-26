@@ -158,23 +158,26 @@ public class Utils {
         List<Event> list = new ArrayList<>();
         JSONArray arr = new JSONArray();
         try {
-            arr = o.getJSONArray(RESULTS);
+            if(o!=null) {
+                arr = o.getJSONArray(RESULTS);
 
-            for (int i = 0; i < arr.length(); i++) {
-                Event event = new Event();
-                final JSONObject eventJSON = arr.getJSONObject(i);
+                for (int i = 0; i < arr.length(); i++) {
+                    Event event = new Event();
+                    final JSONObject eventJSON = arr.getJSONObject(i);
 
 
-                list.add(parseEvent(eventJSON));
-                System.out.println("List of Category: event " + i + "________ " + event.toString());
+                    list.add(parseEvent(eventJSON));
+                    System.out.println("List of Category: event " + i + "________ " + event.toString());
+                }
+
+
+                return list;
             }
-
-
-            return list;
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
         }
+        return null;
     }
 
     public static List<User> parseUsersList(JSONObject o) {

@@ -84,6 +84,21 @@ public class HttpConnector {
         }
     }
 
+    public void patchData(String data) {
+        System.err.println("DATA: " + data);
+        setHeader("Content-Type", "application/json");
+        try {
+            conn.setRequestMethod("PATCH");
+            conn.setDoOutput(true);
+            OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
+            writer.write(data);
+            writer.flush();
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setHeader(String key, String value) {
         System.err.println("HEADER: "  + key + ":" + value);
         conn.setRequestProperty(key, value);
@@ -136,4 +151,6 @@ public class HttpConnector {
         return total.toString();
 
     }
+
+
 }

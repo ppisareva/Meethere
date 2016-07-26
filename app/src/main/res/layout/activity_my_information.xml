@@ -29,7 +29,8 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -46,13 +47,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edit_telephone"
-            android:hint="063 433 00 22"
+            android:hint="@string/set_phone"
             android:background="@android:color/transparent"
             android:layout_below="@+id/textView14"
             android:layout_toRightOf="@+id/textView15"
             android:layout_toEndOf="@+id/textView15"
             android:layout_weight="1"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:textStyle="italic" />
     </LinearLayout>
 
     <TextView
@@ -69,7 +71,8 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -87,13 +90,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/edit_address"
             android:background="@android:color/transparent"
-            android:hint="Маунтин Вью, ул. Вилла, дом 1600, кв 288"
-            android:textSize="13dp"
+            android:hint="@string/set_location"
+            android:textSize="15dp"
             android:layout_below="@+id/textView16"
             android:layout_alignLeft="@+id/edit_telephone"
             android:layout_alignStart="@+id/edit_telephone"
             android:layout_weight="1"
-            android:layout_marginRight="16dp" />
+            android:layout_marginRight="16dp"
+            android:textStyle="italic" />
     </LinearLayout>
 
     <TextView
@@ -108,7 +112,8 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -125,14 +130,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edit_email"
-            android:hint="polina.pisareva@gmail.com"
+            android:hint="@string/set_email"
             android:background="@android:color/transparent"
             android:layout_alignTop="@+id/textView20"
             android:layout_alignLeft="@+id/editText2"
             android:layout_alignStart="@+id/editText2"
             android:layout_weight="1"
             android:textSize="15dp"
-            android:layout_marginRight="16dp" />
+            android:layout_marginRight="16dp"
+            android:textStyle="italic" />
     </LinearLayout>
 
     <TextView
@@ -153,7 +159,7 @@
         android:layout_below="@+id/textView22"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="25dp"
         android:textSize="17dp"
         android:layout_marginLeft="16dp" />
 
@@ -167,10 +173,10 @@
         android:background="@color/gray" />
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -186,15 +192,16 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText4"
-            android:text="24.06.1990"
+            android:id="@+id/birthday"
             android:clickable="true"
-            android:onClick="onDateOfBirth"
+            android:text="@string/set_birthday"
+            android:onClick="onBirthDay"
             android:layout_alignTop="@+id/textView24"
             android:layout_toRightOf="@+id/textView23"
             android:layout_toEndOf="@+id/textView23"
             android:layout_weight="1"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:textStyle="italic" />
     </LinearLayout>
 
     <TextView
@@ -212,7 +219,8 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -222,15 +230,14 @@
             android:layout_weight="1"
             android:layout_marginLeft="16dp" />
 
-        <TextView
-            android:layout_width="fill_parent"
+        <CheckBox
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/female"
-            android:clickable="true"
-            android:onClick="onGander"
-            android:id="@+id/textView28"
+            android:button="@drawable/chack_box_gender"
+            android:id="@+id/gender"
+            android:text="@string/male"
             android:layout_weight="1"
-            android:textSize="15dp" />
+            android:checked="false" />
     </LinearLayout>
 
     <TextView
@@ -257,7 +264,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
 
         <Spinner
             android:layout_width="match_parent"
@@ -267,58 +275,32 @@
             android:id="@+id/spinner_category" />
 
 
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
             android:clickable="true"
             android:onClick="onAddPreferences"
-            android:src="@drawable/ic_add_black_24dp"
+            android:text="@string/add"
+            android:background="@drawable/preferences"
             android:layout_marginLeft="7dp"
             android:layout_marginRight="7dp"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:gravity="center_horizontal" />
 
 
     </LinearLayout>
 
-    <LinearLayout
+    <org.apmem.tools.layouts.FlowLayout
+        android:gravity="fill"
+        android:padding="5dp"
+        android:id="@+id/flow_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Игры"
-            android:background="@drawable/preferences"
-            android:id="@+id/textView32"
-            android:layout_marginLeft="16dp"
-            android:drawableEnd="@drawable/ic_cencel"
-            android:layout_marginRight="3dp"
-            android:layout_weight="1" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/preferences"
-            android:text="На природе"
-            android:drawableEnd="@drawable/ic_cencel"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:id="@+id/textView33"
-            android:layout_weight="1" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/preferences"
-            android:drawableEnd="@drawable/ic_cencel"
-            android:text="Можводовое порно"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:id="@+id/textView34"
-            android:layout_weight="1" />
-    </LinearLayout>
+    </org.apmem.tools.layouts.FlowLayout>
 
 
 </LinearLayout>
