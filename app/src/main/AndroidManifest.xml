@@ -73,7 +73,7 @@
         <activity android:name=".activities.ListOfEventsActivity" />
         <activity android:name=".activities.NewEventActivity" />
         <activity android:name=".activities.SearchFiltersActivity" />
-        <!--<activity android:name=".fragments.ListOfEventSearchFragment" />-->
+        <!-- <activity android:name=".fragments.ListOfEventSearchFragment" /> -->
 
         <service
             android:name=".network.NetworkService"
@@ -95,7 +95,8 @@
 
         <activity android:name=".activities.MyEventsActivity" />
         <activity android:name=".activities.SearchResultsActivity" />
-        <activity android:name=".activities.UserProfileActivity"></activity>
+        <activity android:name=".activities.UserProfileActivity" />
+        <activity android:name=".activities.FeedActivity"></activity>
     </application>
 
 </manifest>

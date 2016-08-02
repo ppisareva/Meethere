@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="12dp"
                 android:text="12.09.2016, 18:00"
-                android:id="@+id/time_category"
+                android:id="@+id/event_time"
                 android:textSize="9dp"
                 android:textColor="#2277e5"
                 android:layout_margin="7dp"

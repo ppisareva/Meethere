@@ -229,7 +229,7 @@ public class NewEventActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id==R.id.action_new_event){
+        if(id==R.id.action_new_create){
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put(Event.NAME, newEventDescriprionFragment.getName());

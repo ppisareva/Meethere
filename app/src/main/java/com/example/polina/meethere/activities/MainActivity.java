@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -13,10 +14,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -42,6 +45,7 @@ import java.util.Calendar;
 public class MainActivity extends AbstractMeethereActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final int RESULT_LOAD_IMAGE = 1;
     private DrawerLayout drawer;
     private static final int MAX_WIDTH = 3000;
     private static final int START_DATE = 20202;
@@ -81,6 +85,7 @@ public class MainActivity extends AbstractMeethereActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -98,6 +103,15 @@ public class MainActivity extends AbstractMeethereActivity
         FirebaseCrash.log("Main Activity: user_id=" + app().getUserProfile().getId());
         ((TextView)root.findViewById(R.id.user_name)).setText(app().getUserProfile().getName());
         ((TextView)root.findViewById(R.id.location)).setText(app().getUserProfile().getLocation());
+        (root.findViewById(R.id.profile_open)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                profileFragment = ProfileFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, profileFragment)
+                        .addToBackStack(null).commit();
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
         SimpleDraweeView profileImage = (SimpleDraweeView)root.findViewById(R.id.profile_image);
         profileImage.setImageURI(Uri.parse(app().getUserProfile().getProfileUrl()));
         RoundingParams roundingParams = RoundingParams.asCircle();
@@ -142,14 +156,14 @@ public class MainActivity extends AbstractMeethereActivity
         startActivity(new Intent(this, MyInformationActivity.class));
     }
 
-    public void onChangeProfileImage (View v){
 
-    }
     public void onMyEvent(View v){
         startActivity(new Intent(MainActivity.this, MyEventsActivity.class));
     }
 
     public void onFavorite(View v){
+
+        startActivity(new Intent(this, FeedActivity.class));
 
     }
 
@@ -163,6 +177,8 @@ public class MainActivity extends AbstractMeethereActivity
         startActivity(intent);
 
     }
+
+
 
     public void onSettings(View v){
         Intent intent = new Intent(this, SettingsActivity.class);
@@ -320,8 +336,10 @@ public class MainActivity extends AbstractMeethereActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+      getMenuInflater().inflate(R.menu.main, menu);
+
         MenuItem searchItem = menu.findItem(R.id.action_search);
+
         SearchManager searchManager = (SearchManager) MainActivity.this.getSystemService(SEARCH_SERVICE);
         SearchView searchView = null;
         if (searchItem != null) {
@@ -407,7 +425,6 @@ public class MainActivity extends AbstractMeethereActivity
             categoryFragment = CategoryFragment.newInstance();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, categoryFragment)
                     .addToBackStack(null).commit();
-
         } else if (id == R.id.nav_news) {
             feedFragment = FeedFragment.newInstance();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, feedFragment)

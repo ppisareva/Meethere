@@ -1,65 +1,40 @@
 package com.example.polina.meethere.adapters;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Date;
 
 /**
  * Created by polina on 08.03.16.
  */
 public class Event {
-    private int photo;
+
     private String name;
     private String description;
-    private Date date;
-    private String rating;
-    private String budget;
+    private String start;
+    private int budget_min;
+    private String id;
 
-    public Event(int photo, String name, String details, Date date, String rating, String budget) {
-        this.photo = photo;
-        this.name = name;
-        this.description = details;
-        this.date = date;
-        this.rating = rating;
-        this.budget = budget;
-    }
+    public static final String START = "start";
+    public static final String BUDGET = "budget_min";
+    public static final String ID = "id";
+    public static final String NAME = "name";
+    public static final String DESCRIPTION = "description";
 
-    public String getRating() {
-        return rating;
-    }
+    public static Event parseEvent(JSONObject jsonObject) {
+        Event event = new Event();
+        try {
+            event.setId(jsonObject.getString(ID));
+            event.setBudget_min(jsonObject.getInt(BUDGET));
+            event.setName(jsonObject.getString(NAME));
+            event.setDescription(jsonObject.getString(DESCRIPTION));
+            event.setStart(jsonObject.getString(START));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
-
-    public String getBudget() {
-        return budget;
-    }
-
-    public void setBudget(String budget) {
-        this.budget = budget;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public int getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(int photo) {
-        this.photo = photo;
+        return event;
     }
 
 
@@ -70,4 +45,38 @@ public class Event {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public int getBudget_min() {
+        return budget_min;
+    }
+
+    public void setBudget_min(int budget_min) {
+        this.budget_min = budget_min;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+
 }

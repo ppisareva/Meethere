@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 
 import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.data.Comment;
+import com.example.polina.meethere.fragments.ProfileFragment;
 import com.example.polina.meethere.model.App;
 
 import org.json.JSONArray;
@@ -49,6 +50,8 @@ public class ServerApi {
     public static final String EVENTS_MY = "find-event?created_by=";
     public static final String FOLLOW = "/follow";
     private static final int POPULAR_EVENTS = 445445;
+    private static final String FEED = "feed/";
+    private static final String OFFSET = "?limit=10&offset=";
 
 
     public final int FRAGMENT_PAST_EVENTS = 4343430;
@@ -88,9 +91,17 @@ public class ServerApi {
         this.accessToken = accessToken;
     }
 
-    public void uploadImage(String id, byte[] imageByteArray) {
+    public void uploadImage(String id, byte[] imageByteArray, int direct) {
+        URL url = null;
         try {
-        URL url = new URL("https://meethere-dev.herokuapp.com/event/"+id+"/image_upload");
+            if(direct==Utils.EVENT){
+                url = new URL(HOST + EVENT +id+"/image_upload");
+            } else{
+                if(direct==Utils.PROFILE){
+                    url = new URL(HOST+USER+ PRO+ "photo");
+                }
+            }
+
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestProperty (AUTH_HEADER, "Token " + accessToken);
         sendRequest(connection, imageByteArray);
@@ -111,6 +122,8 @@ public class ServerApi {
         e.printStackTrace();
     }
     }
+
+
 
     public static void sendRequest(HttpURLConnection connection, byte[] byteArray) throws IOException {
         String attachmentName = "file";
@@ -150,7 +163,7 @@ public class ServerApi {
     }
 
     public JSONObject loadEventsByCategory(int category) {
-        HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+category);
+        HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+category );
         if(category==POPULAR_EVENTS){
            connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+POPULAR);
         }
@@ -200,21 +213,21 @@ public class ServerApi {
         return connector.response();
     }
 
-    public JSONObject loadEventsByWords(String search) {
-        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search);
+    public JSONObject loadEventsByWords(String search, int offset) {
+        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search + "?offset="+offset);
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return connector.response();
     }
 
-    public JSONObject loadEventsByHighPrice(String search) {
-        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search+SORT_HIGH_PRICE);
+    public JSONObject loadEventsByHighPrice(String search, int offset) {
+        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search+SORT_HIGH_PRICE + "?offset="+offset);
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return connector.response();
     }
 
 
-    public JSONObject loadEventsByLowPrice(String search) {
-        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search +SORT_LOW_PRICE);
+    public JSONObject loadEventsByLowPrice(String search, int offset) {
+        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search +SORT_LOW_PRICE + "?offset="+offset);
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return connector.response();
     }
@@ -247,8 +260,8 @@ public class ServerApi {
         return comments;
     }
 
-    public JSONObject loadEventsByDistance(String longitude, String latitude, String search) {
-        HttpConnector connector = new HttpConnector(HOST + SEARCH_LON+ longitude +LAT+latitude + SEARCH_WORDS +search);
+    public JSONObject loadEventsByDistance(String longitude, String latitude, String search, int offset) {
+        HttpConnector connector = new HttpConnector(HOST + SEARCH_LON+ longitude +LAT+latitude + SEARCH_WORDS +search+ "?offset="+offset) ;
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return connector.response();
 
@@ -293,4 +306,11 @@ public class ServerApi {
 
         return connector.response();
     }
+
+    public JSONObject loadFeed( String offset) {
+        HttpConnector connector = new HttpConnector(HOST + FEED + OFFSET+ offset);
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return connector.response();
+    }
+
 }

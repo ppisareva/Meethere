@@ -46,6 +46,9 @@ public class Utils {
     public static final String LON = "lon";
     public static final String LAT = "lat";
     public static final String USER_ID = "user_id" ;
+    public static final java.lang.String OFFSET = "offset";
+    public static final int PROFILE = 1;
+    public static final int EVENT = 0;
 
     static {
         INPUT_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -115,6 +118,8 @@ public class Utils {
             return null;
         }
     }
+
+
 
     public static Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
 
@@ -243,6 +248,7 @@ public class Utils {
             event.setStart(eventJSON.optString(Event.START));
             event.setEnd(eventJSON.optString(Event.END));
             event.setJoin(eventJSON.optBoolean(Event.JOINED));
+            event.setAttendances(eventJSON.optInt(Event.ATTENDANCES));
             List<Double> l = new ArrayList<>();
             if(eventJSON.optJSONArray(Event.PLACE)!=null) {
                 try {

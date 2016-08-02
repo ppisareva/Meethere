@@ -93,7 +93,6 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         String url = String.format(IMG_PATTERN, id);
         image.setImageURI(Uri.parse(url));
         new LoadEvent().execute(id);
-        new LoadJoiners().execute(id);
         initComments(header);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter(BC_FILTER + id));
@@ -209,28 +208,28 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         }
         }
 
-//    TODO: Polya, it's wrong!!!! As me, how to do it correctly
-    private class LoadJoiners extends AsyncTask<String, Void, JSONObject>{
 
-        @Override
-        protected JSONObject doInBackground(String... params) {
-            String id = params[0];
-
-            JSONObject jsonObject = serverApi.loadJoiners(id);
-
-            return jsonObject;
-        }
-
-        @Override
-        protected void onPostExecute(JSONObject jsonObject) {
-            System.out.println(jsonObject + " ------------------========================");
-            List<User> users = Utils.parseUsersList(jsonObject);
-            System.out.println(users.toArray().toString());
-            quantity.setText(users.size()+"");
-
-
-        }
-    }
+//    private class LoadJoiners extends AsyncTask<String, Void, JSONObject>{
+//
+//        @Override
+//        protected JSONObject doInBackground(String... params) {
+//            String id = params[0];
+//
+//            JSONObject jsonObject = serverApi.loadJoiners(id);
+//
+//            return jsonObject;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(JSONObject jsonObject) {
+//            System.out.println(jsonObject + " ------------------========================");
+//            List<User> users = Utils.parseUsersList(jsonObject);
+//            System.out.println(users.toArray().toString());
+//            quantity.setText(users.size()+"");
+//
+//
+//        }
+//    }
 
 
 
@@ -250,6 +249,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
                 Event event = Utils.parseEvent(result);
                 description.setText(event.getDescription());
                 join.setChecked(event.getJoin());
+                quantity.setText(event.getAttendances()+"");
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                 Date dateStart = simpleDateFormat.parse(event.getStart());
                 Date dateEnd = simpleDateFormat.parse(event.getEnd());

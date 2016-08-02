@@ -12,12 +12,14 @@ import android.support.annotation.Nullable;
 import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.Event;
+import com.example.polina.meethere.model.Feed;
 import com.example.polina.meethere.model.User;
 import com.example.polina.meethere.model.UserProfile;
 import com.example.polina.meethere.network.ServerApi;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,18 +29,21 @@ public class EventProvider extends android.content.ContentProvider {
 
     public static final String AUTHORITY = "com.example.polina.meethere.data.data";
 
-    private static final int MY_EVENTS = 6;
-    private static final int USER_EVENTS = 7;
+    private static final int MY_EVENTS = 7;
+    private static final int USER_EVENTS = 8;
     private static final int CATEGORY_ID = 1;
-    private static final int SEARCH = 8;
-    private static final int SEARCH_LOW_PRICE = 5;
-    private static final int SEARCH_BY_HIGH = 4;
+    private static final int SEARCH = 9;
+    private static final int SEARCH_LOW_PRICE = 6;
+    private static final int SEARCH_BY_HIGH = 5;
     private static final int SEARCH_BY_DISTANCE = 2;
+    private List<Object[]> feedData = new ArrayList<>();
 
 
     private static final UriMatcher URI_MATCHER;
 
-    private static final int SEARCH_FREINDS = 3 ;
+    private static final int SEARCH_FREINDS = 4 ;
+
+    private static final int FEED = 3;
 
     // prepare the UriMatcher
     static {
@@ -46,6 +51,7 @@ public class EventProvider extends android.content.ContentProvider {
 
         URI_MATCHER.addURI(AUTHORITY,  "category/#",  CATEGORY_ID);
         URI_MATCHER.addURI(AUTHORITY, "distance_search", SEARCH_BY_DISTANCE);
+        URI_MATCHER.addURI(AUTHORITY, "feed", FEED);
         URI_MATCHER.addURI(AUTHORITY, "friends_search/*", SEARCH_FREINDS);
         URI_MATCHER.addURI(AUTHORITY, "high_price_search/*",  SEARCH_BY_HIGH);
         URI_MATCHER.addURI(AUTHORITY, "low_price_search/*", SEARCH_LOW_PRICE);
@@ -90,24 +96,24 @@ public class EventProvider extends android.content.ContentProvider {
                 break;
             case SEARCH:
                search =uri.getLastPathSegment();
-                JSONObject d = serverApi.loadEventsByWords(search);
+                JSONObject d = serverApi.loadEventsByWords(search, 0);
                 events = Utils.parseEventList(d);
                 break;
             case SEARCH_BY_HIGH:
                String high =uri.getLastPathSegment();
-                JSONObject f = serverApi.loadEventsByHighPrice(high);
+                JSONObject f = serverApi.loadEventsByHighPrice(high, 0);
                 events = Utils.parseEventList(f);
                 break;
             case SEARCH_LOW_PRICE:
                 String low =uri.getLastPathSegment();
-                JSONObject k = serverApi.loadEventsByLowPrice(low);
+                JSONObject k = serverApi.loadEventsByLowPrice(low, 0);
                 events = Utils.parseEventList(k);
                 break;
             case SEARCH_BY_DISTANCE:
                 String lon = uri.getQueryParameter("lon");
                String lat = uri.getQueryParameter("lat");
               String  s = uri.getQueryParameter("search");
-                JSONObject g = serverApi.loadEventsByDistance(lon,lat, s);
+                JSONObject g = serverApi.loadEventsByDistance(lon,lat, s, 0);
                 events = Utils.parseEventList(g);
                 break;
             case USER_EVENTS:
@@ -124,8 +130,29 @@ public class EventProvider extends android.content.ContentProvider {
                     cursor.addRow(new Object[]{user.getId(), user.getFirstName(), user.getLastName(), user.getMiniProfileUrl()});
                 }
                 return cursor;
+            case FEED:
+                String offset = uri.getQueryParameter("offset");
+                JSONObject hh = serverApi.loadFeed(offset);
+                List<Feed> feed = Feed.parseFeed(hh);
+                MatrixCursor feedCursor = new MatrixCursor(new String[]{"_id", User.LAST_NAME,User.FIRST_NAME, User.IMAGE, User.ID, Feed.TYPE, Feed.TIME,
+                        com.example.polina.meethere.adapters.Event.START, com.example.polina.meethere.adapters.Event.BUDGET,
+                        com.example.polina.meethere.adapters.Event.ID, com.example.polina.meethere.adapters.Event.NAME, com.example.polina.meethere.adapters.Event.DESCRIPTION});
+                if ("0".equals(offset))
+                    feedData.clear();
+                int id_cursor=feedData.size();
+                for(int i =0; i<feed.size(); i++){
+                    feedData.add(new Object[]{i+id_cursor, feed.get(i).getUser().getLastName(), feed.get(i).getUser().getFirstName(), feed.get(i).getUser().getImage(), feed.get(i).getUser().getId(),
+                    feed.get(i).getType(), feed.get(i).getTime(), feed.get(i).getEvent().getStart(), feed.get(i).getEvent().getBudget_min(), feed.get(i).getEvent().getId(), feed.get(i).getEvent().getName()
+                    , feed.get(i).getEvent().getDescription()});
+                }
+                for (Object[] row : feedData) {
+                    feedCursor.addRow(row);
+                }
+                System.err.println("onLoaderFinished === " + feedCursor.getCount());
+                return feedCursor;
 
         }
+
         MatrixCursor cursor = new MatrixCursor(new String[]{"_id", Event.NAME, Event.DESCRIPTION, Event.START,
                 Event.END, Event.TAGS, Event.PLACE, Event.ADDRESS, Event.AGE_MAX, Event.AGE_MIN, Event.BUDGET_MAX, Event.BUDGET_MIN});
 

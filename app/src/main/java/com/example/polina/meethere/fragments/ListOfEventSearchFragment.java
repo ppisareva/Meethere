@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.polina.meethere.MyEventsAdapter;
 import com.example.polina.meethere.R;
+import com.example.polina.meethere.RecyclerViewPositionHelper;
 import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.model.App;
 
@@ -36,6 +37,8 @@ public class ListOfEventSearchFragment extends Fragment implements LoaderManager
     public static final int SEARCH_BY_LOW_PRICE = 203990;
     public static final int SEARCH_BY_HIGH_PRICE = 2033430;
     public static final int SEARCH_BY_DISTANCE = 20999430;
+    private final int STEP = 10;
+    private int offset = STEP;
 
 
 
@@ -72,6 +75,25 @@ public class ListOfEventSearchFragment extends Fragment implements LoaderManager
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         myEventsAdapter = new MyEventsAdapter(getActivity());
         recyclerView.setAdapter(myEventsAdapter);
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                RecyclerViewPositionHelper mRecyclerViewHelper = RecyclerViewPositionHelper.createHelper(recyclerView);
+                int visibleItemCount = recyclerView.getChildCount();
+                int totalItemCount = mRecyclerViewHelper.getItemCount();
+                int firstVisibleItem = mRecyclerViewHelper.findFirstVisibleItemPosition();
+                System.err.println("first visible id" + firstVisibleItem + "visibleItemCount " + visibleItemCount + "totalItemCount" + totalItemCount);
+                if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 1) {
+
+                    Bundle arg = new Bundle();
+                    arg.putString(Utils.SEARCH, search);
+                    arg.putInt(Utils.OFFSET, offset);
+                    getActivity().getSupportLoaderManager().initLoader(SEARCH_LOUDER, arg, ListOfEventSearchFragment.this);
+                    }
+
+            }
+        });
 
         return v;
     }
@@ -88,6 +110,7 @@ public class ListOfEventSearchFragment extends Fragment implements LoaderManager
            search = getArguments().getString(Utils.SEARCH);
             Bundle arg = new Bundle();
             arg.putString(Utils.SEARCH, search);
+            arg.putInt(Utils.OFFSET, offset);
            getActivity().getSupportLoaderManager().initLoader(SEARCH_LOUDER, arg, this);
 
         }
@@ -117,6 +140,8 @@ public class ListOfEventSearchFragment extends Fragment implements LoaderManager
         arg.putDouble(Utils.LON,location.getLongitude());
         arg.putDouble(Utils.LAT,location.getLatitude());
         arg.putString(Utils.SEARCH, search);
+        offset = STEP;
+        arg.putInt(Utils.OFFSET, offset);
         getActivity().getSupportLoaderManager().initLoader(SEARCH_BY_DISTANCE,arg , this);
 
     }
@@ -126,6 +151,8 @@ public class ListOfEventSearchFragment extends Fragment implements LoaderManager
         price.setTextColor(getResources().getColor(R.color.filter));
         Bundle arg = new Bundle();
         arg.putString(Utils.SEARCH, search);
+        offset = STEP;
+        arg.putInt(Utils.OFFSET, offset);
         if (highPrice || lowPrice) {
             if (highPrice) {
                 imageView.setImageResource(R.drawable.ic_price_down_24dp);
@@ -163,6 +190,7 @@ public class ListOfEventSearchFragment extends Fragment implements LoaderManager
                 com.example.polina.meethere.model.Event.AGE_MAX, com.example.polina.meethere.model.Event.AGE_MIN,
                 com.example.polina.meethere.model.Event.BUDGET_MAX, com.example.polina.meethere.model.Event.BUDGET_MIN};
         String search = args.getString(Utils.SEARCH, "");
+        int offset = args.getInt(Utils.OFFSET, STEP);
          Uri uri = null;
 
 
@@ -189,7 +217,10 @@ public class ListOfEventSearchFragment extends Fragment implements LoaderManager
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if(data !=null&&data.getCount()!=0) {
             l.setVisibility(View.GONE);
+
             myEventsAdapter.swapCursor(data);
+
+
         } else {
             l.setVisibility(View.VISIBLE);
         }

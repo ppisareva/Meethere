@@ -2,10 +2,14 @@ package com.example.polina.meethere.model;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 
 import com.example.polina.meethere.network.ServerApi;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -18,6 +22,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -121,5 +128,49 @@ public class App extends Application {
         if (location == null)
             location = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
         return location;
+    }
+
+    public Bitmap decodeUri(Uri uri) {
+        ParcelFileDescriptor parcelFD = null;
+        try {
+            parcelFD = getApplicationContext().getContentResolver().openFileDescriptor(uri, "r");
+            FileDescriptor imageSource = parcelFD.getFileDescriptor();
+
+            // Decode image size
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            BitmapFactory.decodeFileDescriptor(imageSource, null, o);
+
+            // the new size we want to scale to
+            final int REQUIRED_SIZE = 1024;
+
+            // Find the correct scale value. It should be the power of 2.
+            int width_tmp = o.outWidth, height_tmp = o.outHeight;
+            int scale = 1;
+            while (true) {
+                if (width_tmp < REQUIRED_SIZE && height_tmp < REQUIRED_SIZE) {
+                    break;
+                }
+                width_tmp /= 2;
+                height_tmp /= 2;
+                scale *= 2;
+            }
+
+            // decode with inSampleSize
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = scale;
+            return BitmapFactory.decodeFileDescriptor(imageSource, null, o2);
+
+
+        } catch (FileNotFoundException e) {
+            return null;
+        } finally {
+            if (parcelFD != null)
+                try {
+                    parcelFD.close();
+                } catch (IOException e) {
+                   return null;
+                }
+        }
     }
 }

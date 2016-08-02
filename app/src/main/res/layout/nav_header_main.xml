@@ -10,6 +10,8 @@
               android:theme="@style/ThemeOverlay.AppCompat.Dark"
               android:orientation="horizontal"
               android:gravity="bottom"
+              android:id="@+id/profile_open"
+              android:clickable="true"
               android:weightSum="1">
 
     <com.facebook.drawee.view.SimpleDraweeView

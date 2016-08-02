@@ -25,6 +25,8 @@ public class Event  {
     public static final String LAT = "lat";
     public static final String LNG = "lng";
     public static final String JOINED = "joined";
+    public static final String ATTENDANCES = "attenders_count";
+
 
 
     String id;
@@ -40,6 +42,15 @@ public class Event  {
     int budgetMax;
     List<Integer> tag;
     Boolean join;
+    int attendances;
+
+    public int getAttendances() {
+        return attendances;
+    }
+
+    public void setAttendances(int attendances) {
+        this.attendances = attendances;
+    }
 
     public Boolean getJoin() {
         return join;

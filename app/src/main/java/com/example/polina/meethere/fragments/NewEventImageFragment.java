@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.polina.meethere.R;
+import com.example.polina.meethere.model.App;
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -76,16 +77,7 @@ public class NewEventImageFragment extends android.support.v4.app.Fragment {
         System.err.println("INTENT DATA: " + data + " |||" + data.getExtras());
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == getActivity().RESULT_OK && data != null) {
             Uri uri = data.getData();
-            decodeUri(uri);
-//            if (uri != null) {
-//                String path = Utils.getRealPathFromURI(getContext(), uri);
-//                InputStream inputStream = Utils.getThumbnailImage(uri, getContext());
-//               String imageURI = S3Helper.uploadImage(path);
-//               String miniImageURI = S3Helper.uploadImage(inputStream);
-//
-//                System.out.println(" image URI" + imageURI + "image mini uri" + miniImageURI);
-//
-//            }
+            imageView.setImageBitmap(((App)getActivity().getApplication()).decodeUri(uri));
             imageButton.setAlpha(.5f);
 
 
@@ -98,49 +90,4 @@ public class NewEventImageFragment extends android.support.v4.app.Fragment {
     }
 
 
-    public void decodeUri(Uri uri) {
-        ParcelFileDescriptor parcelFD = null;
-        try {
-            parcelFD = getContext().getContentResolver().openFileDescriptor(uri, "r");
-            FileDescriptor imageSource = parcelFD.getFileDescriptor();
-
-            // Decode image size
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            BitmapFactory.decodeFileDescriptor(imageSource, null, o);
-
-            // the new size we want to scale to
-            final int REQUIRED_SIZE = 1024;
-
-            // Find the correct scale value. It should be the power of 2.
-            int width_tmp = o.outWidth, height_tmp = o.outHeight;
-            int scale = 1;
-            while (true) {
-                if (width_tmp < REQUIRED_SIZE && height_tmp < REQUIRED_SIZE) {
-                    break;
-                }
-                width_tmp /= 2;
-                height_tmp /= 2;
-                scale *= 2;
-            }
-
-            // decode with inSampleSize
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize = scale;
-            Bitmap bitmap = BitmapFactory.decodeFileDescriptor(imageSource, null, o2);
-
-            imageView.setImageBitmap(bitmap);
-
-
-
-        } catch (FileNotFoundException e) {
-            // handle errors
-        } finally {
-            if (parcelFD != null)
-                try {
-                    parcelFD.close();
-                } catch (IOException e) {
-                    // ignored
-                }
-        }
-    }}
+   }

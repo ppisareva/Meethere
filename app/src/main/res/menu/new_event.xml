@@ -4,7 +4,7 @@
 
 
 
-    <item android:id="@+id/action_new_event" android:title="@string/new_event"
+    <item android:id="@+id/action_new_create" android:title="@string/new_event"
         android:icon="@drawable/ic_done_white_24dp"
         android:orderInCategory="100" app:showAsAction="always" />
 </menu>

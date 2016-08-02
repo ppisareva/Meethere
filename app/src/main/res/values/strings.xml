@@ -212,5 +212,8 @@
     <string name="set_location">Задать адресс</string>
     <string name="set_phone">Задать телефон</string>
     <string name="add">Добавить</string>
+    <string name="news">Мои новости</string>
+    <string name="first_name">Имя</string>
+    <string name="last_name">Фамилия</string>
 
 </resources>

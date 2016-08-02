@@ -110,6 +110,7 @@ public class HttpConnector {
         try {
             conn.connect();
             int response = conn.getResponseCode();
+            System.err.println("REQUEST URL: " + conn.getURL());
             System.err.println("RESPONSE CODE: " + response);
 
             is = conn.getInputStream();

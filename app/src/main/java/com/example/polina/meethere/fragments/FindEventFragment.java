@@ -146,7 +146,7 @@ public class FindEventFragment extends android.support.v4.app.Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id==R.id.action_new_event){
+        if(id==R.id.action_new_create){
             startActivity(new Intent(getActivity(), MainActivity.class));
             System.out.println(" olololololol--------------------------olololololol");
         }

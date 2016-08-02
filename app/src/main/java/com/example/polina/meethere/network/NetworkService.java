@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.model.App;
 
 import org.json.JSONException;
@@ -109,7 +110,7 @@ public class NetworkService extends IntentService {
         if(o!=null){
             try {
                 String id = o.getString(ID);
-                serverApi.uploadImage(id, imageByteArray);
+                serverApi.uploadImage(id, imageByteArray, Utils.EVENT);
 
             } catch (Exception e) {
                 e.printStackTrace();

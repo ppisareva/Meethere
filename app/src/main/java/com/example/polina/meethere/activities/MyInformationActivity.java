@@ -1,52 +1,37 @@
 package com.example.polina.meethere.activities;
 
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.polina.meethere.R;
-import com.example.polina.meethere.adapters.Category;
 import com.example.polina.meethere.model.App;
-import com.example.polina.meethere.model.Event;
-import com.example.polina.meethere.model.User;
 import com.example.polina.meethere.model.UserProfile;
-import com.example.polina.meethere.network.NetworkService;
 
 import org.apmem.tools.layouts.FlowLayout;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class MyInformationActivity extends AppCompatActivity {
@@ -62,6 +47,8 @@ public class MyInformationActivity extends AppCompatActivity {
     JSONObject jsonObject = new JSONObject();
     FlowLayout flowLayout;
    Set<Integer> categoryList = new HashSet<>();
+    EditText name;
+    EditText lastName;
 
 
 
@@ -80,17 +67,8 @@ public class MyInformationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         comeFromServer = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         viewData =  new SimpleDateFormat("MM/dd/yyyy");
-
-
-
-
-
-
-
-
         UserProfile userProfile = ((App)getApplication()).getUserProfile();
         setContentView(R.layout.activity_my_information);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -104,6 +82,11 @@ public class MyInformationActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.edit_email);
         email.setOnFocusChangeListener(onFocusChangeListener);
         email.setHint(!userProfile.getEmail().equals("null")?userProfile.getEmail():getString(R.string.set_email));
+        name = (EditText) findViewById(R.id.first_name);
+        name.setHint(userProfile.getFirstName());
+        lastName = (EditText) findViewById(R.id.last_name);
+        lastName.setText(userProfile.getLastName());
+
         gender = (CheckBox) findViewById(R.id.gender);
         gender.setChecked(userProfile.isGender());
         for(String i: userProfile.getCategory()){
@@ -194,7 +177,7 @@ public class MyInformationActivity extends AppCompatActivity {
         if (id == android.R.id.home) {
             finish();
         }
-        if(id==R.id.action_new_event) {
+        if(id==R.id.action_new_create) {
 
             try {
                 if(!TextUtils.isEmpty(phone.getText())) jsonObject.put(UserProfile.PHONE, phone.getText());
