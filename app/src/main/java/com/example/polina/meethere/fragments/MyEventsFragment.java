@@ -150,7 +150,7 @@ public class MyEventsFragment extends android.support.v4.app.Fragment implements
         super.onResume();
         Bundle b = new Bundle();
         b.putInt(Utils.OFFSET, offset);
-        getActivity().getSupportLoaderManager().restartLoader(tag, b , this);
+        getActivity().getSupportLoaderManager().restartLoader(tag, b, this);
 
     }
 

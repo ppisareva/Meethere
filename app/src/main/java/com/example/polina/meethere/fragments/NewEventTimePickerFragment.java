@@ -94,6 +94,8 @@ public class NewEventTimePickerFragment extends android.support.v4.app.Fragment 
 
     public void changeStartDate(String st){
         startDate.setText(st);
+        endDate.setText(st);
+
     }
     public void changeTimeStart (String st) {
         startTime.setText(st);
