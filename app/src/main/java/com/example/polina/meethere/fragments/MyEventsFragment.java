@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.example.polina.meethere.MyEventsAdapter;
 import com.example.polina.meethere.R;
+import com.example.polina.meethere.RecyclerViewPositionHelper;
 import com.example.polina.meethere.Utils;
 
 public class MyEventsFragment extends android.support.v4.app.Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
@@ -23,6 +24,18 @@ public class MyEventsFragment extends android.support.v4.app.Fragment implements
     private RecyclerView list;
     MyEventsAdapter adapter;
     int tag;
+    int offset = 0;
+    private int STEP =10;
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
+
+    boolean flag;
 
 
 
@@ -54,7 +67,9 @@ public class MyEventsFragment extends android.support.v4.app.Fragment implements
     private void initLoader() {
         if (getArguments() != null) {
             tag = getArguments().getInt(Utils.TIME_TAG);
-            getActivity().getSupportLoaderManager().initLoader(tag, null, this);
+            Bundle b = new Bundle();
+            b.putInt(Utils.OFFSET, offset);
+            getActivity().getSupportLoaderManager().initLoader(tag, b, this);
         }
     }
 
@@ -66,6 +81,31 @@ public class MyEventsFragment extends android.support.v4.app.Fragment implements
         list.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         adapter = new MyEventsAdapter(getActivity());
         list.setAdapter(adapter);
+        list.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                RecyclerViewPositionHelper mRecyclerViewHelper = RecyclerViewPositionHelper.createHelper(recyclerView);
+                int visibleItemCount = recyclerView.getChildCount();
+                int totalItemCount = mRecyclerViewHelper.getItemCount();
+                int firstVisibleItem = mRecyclerViewHelper.findFirstVisibleItemPosition();
+                System.err.println("first visible id" + firstVisibleItem + "visibleItemCount " + visibleItemCount + "totalItemCount" + totalItemCount);
+                if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 1) {
+                    if(isFlag()) {
+                        setFlag(false);
+                        Bundle arg = new Bundle();
+                        offset+=STEP;
+                        arg.putInt(Utils.OFFSET, offset);
+                        getActivity().getSupportLoaderManager().restartLoader(tag, arg, MyEventsFragment.this);
+
+
+
+                    }
+                }
+
+
+            }
+        });
         return v;
 
     }
@@ -73,8 +113,12 @@ public class MyEventsFragment extends android.support.v4.app.Fragment implements
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        String o = ""+args.getInt(Utils.OFFSET, 0);
+        Uri uri =  Uri.parse(String.format("content://com.example.polina.meethere.data.data/myevents/?offset=%s&id=%s", o, (id+"")));
+
+
         return new CursorLoader(getActivity(),
-                Uri.parse("content://com.example.polina.meethere.data.data/myevents/"+(id))
+               uri
                 , new String[]{com.example.polina.meethere.model.Event.ID, com.example.polina.meethere.model.Event.NAME,
                 com.example.polina.meethere.model.Event.DESCRIPTION, com.example.polina.meethere.model.Event.START,
                 com.example.polina.meethere.model.Event.END, com.example.polina.meethere.model.Event.TAGS,
@@ -87,6 +131,11 @@ public class MyEventsFragment extends android.support.v4.app.Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if(adapter.getItemCount() < data.getCount()) {
+
+            setFlag(true);
+        }
+
 
         adapter.swapCursor(data);
     }
@@ -99,7 +148,9 @@ public class MyEventsFragment extends android.support.v4.app.Fragment implements
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().getSupportLoaderManager().restartLoader(tag, null, this);
+        Bundle b = new Bundle();
+        b.putInt(Utils.OFFSET, offset);
+        getActivity().getSupportLoaderManager().restartLoader(tag, b , this);
 
     }
 
