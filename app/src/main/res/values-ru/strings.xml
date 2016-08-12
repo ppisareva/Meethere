@@ -147,5 +147,6 @@
     <string name="notification_create_event">%1$s создал собЬІтие %2$s</string>
     <string name="notification_follow">%1$s начал фоловить тебя</string>
     <string name="notification_comment">%1$s откоментировал %2$s</string>
+    <string name="remove_this_comment">Удалить коментарий?</string>
 
 </resources>

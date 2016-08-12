@@ -277,6 +277,8 @@ public class Utils {
             event.setAgeMin(eventJSON.optInt(Event.AGE_MIN, 15));
             event.setBudgetMax(eventJSON.optInt(Event.BUDGET_MAX, 10000));
             event.setBudgetMin(eventJSON.optInt(Event.BUDGET_MIN,0 ));
+            if (eventJSON.has("created_by"))
+                event.setCreatedBy(User.parseUser(eventJSON.optJSONObject("created_by")));
             return event;
 
 

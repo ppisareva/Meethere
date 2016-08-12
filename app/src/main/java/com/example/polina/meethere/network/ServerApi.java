@@ -29,6 +29,7 @@ public class ServerApi {
     public static final String HOST = "https://meethere-dev.herokuapp.com/";
     public static final String AUTH = "myauth";
     public static final String COMMENT = "/comment/";
+    public static final String COMMENT_EDIT = "/event/%s/comment/%s/";
     public static final String EVENT = "event/";
     public static final String MANAGE = "/manage";
     public static final String SEARCH = "search/?q=";
@@ -313,4 +314,10 @@ public class ServerApi {
         return connector.response();
     }
 
+    public void deleteComment(String eventId, String commentId) {
+        HttpConnector connector = new HttpConnector(HOST + String.format(COMMENT_EDIT, eventId, commentId));
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        connector.deleteData();
+        connector.response();
+    }
 }

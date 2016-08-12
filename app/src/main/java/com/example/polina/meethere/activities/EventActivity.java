@@ -1,7 +1,9 @@
 package com.example.polina.meethere.activities;
 
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
@@ -11,6 +13,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +23,7 @@ import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -45,6 +49,7 @@ import java.util.Date;
 import java.util.List;
 
 public class EventActivity extends AbstractMeethereActivity implements LoaderManager.LoaderCallbacks<List<Comment>> {
+    private static final int DIALOG_REMOVE_COMMENT = 101011;
     TextView description;
     ImageView image;
     String id;
@@ -59,7 +64,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
     ServerApi serverApi;
     Double lat;
     Double lng;
-
+    Event event;
 
     public static final String IMG_PATTERN = "https://s3-us-west-1.amazonaws.com/meethere/%s.jpg";
     public static final String BC_FILTER = "broadcast.filter.event.";
@@ -109,7 +114,21 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         recyclerView = (RecyclerView) findViewById(R.id.comments);
         LinearLayoutManager lm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(lm);
-        commentAdapter = new CommentAdapter(this, header);
+        final int userId = app().getUserProfile().getId();
+        commentAdapter = new CommentAdapter(this, header, new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Comment c = commentAdapter.getComments().get(position);
+                if (c.getCreatedById() !=  userId && userId != Integer.parseInt(event.getCreatedBy().getId()))
+                    return false;
+                Bundle b = new Bundle();
+                b.putInt("position", position);
+                b.putString("comment_id", c.getId());
+                b.putString("comment_text", c.getText());
+                showDialog(DIALOG_REMOVE_COMMENT, b);
+                return true;
+            }
+        });
         recyclerView.setAdapter(commentAdapter);
         recyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(lm) {
             @Override
@@ -209,29 +228,6 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         }
 
 
-//    private class LoadJoiners extends AsyncTask<String, Void, JSONObject>{
-//
-//        @Override
-//        protected JSONObject doInBackground(String... params) {
-//            String id = params[0];
-//
-//            JSONObject jsonObject = serverApi.loadJoiners(id);
-//
-//            return jsonObject;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(JSONObject jsonObject) {
-//            System.out.println(jsonObject + " ------------------========================");
-//            List<User> users = Utils.parseUsersList(jsonObject);
-//            System.out.println(users.toArray().toString());
-//            quantity.setText(users.size()+"");
-//
-//
-//        }
-//    }
-
-
 
     private class LoadEvent extends AsyncTask<String, Void, JSONObject> {
         protected JSONObject doInBackground(String... args) {
@@ -246,7 +242,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
 
         protected void onPostExecute(JSONObject result) {
             try {
-                Event event = Utils.parseEvent(result);
+                event = Utils.parseEvent(result);
                 description.setText(event.getDescription());
                 join.setChecked(event.getJoin());
                 quantity.setText(event.getAttendances()+"");
@@ -300,6 +296,50 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    protected void onPrepareDialog(int id, final Dialog dialog, final Bundle args) {
+        final AlertDialog ad = (AlertDialog)dialog;
+        ad.setMessage(args.getString("comment_text"));
+        View.OnClickListener dialogClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View btn) {
+                ad.dismiss();
+                int pos = args.getInt("position");
+                commentAdapter.getComments().remove(pos);
+                commentAdapter.notifyItemRemoved(pos+1);
+                if (btn.getTag() != null) {
+                    new AsyncTask<Void, Void, Void>() {
+
+                        @Override
+                        protected Void doInBackground(Void... params) {
+                            serverApi.deleteComment(event.getId(), args.getString("comment_id"));
+                            return null;
+                        }
+                    }.execute();
+
+                }
+            }
+        };
+        ad.getButton(DialogInterface.BUTTON_POSITIVE).setTag(new Object());
+        ad.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(dialogClickListener);
+        ad.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(dialogClickListener);
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        if (id == DIALOG_REMOVE_COMMENT) {
+            AlertDialog.Builder ab = new AlertDialog.Builder(this);
+            ab.setTitle(R.string.remove_this_comment);
+            ab.setPositiveButton(android.R.string.yes, null);
+            ab.setNegativeButton(android.R.string.no, null);
+            ab.setMessage("");
+            return ab.create();
+        }
+        return null;
+
     }
 
     BroadcastReceiver receiver = new BroadcastReceiver() {

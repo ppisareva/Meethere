@@ -24,5 +24,6 @@
     <string name="notification_create_event">%1$s створив подію %2$s</string>
     <string name="notification_follow">%1$s почав фоловити вас</string>
     <string name="notification_comment">%1$s відкоментував %2$s</string>
+    <string name="remove_this_comment">Геть цей коментар!</string>
 
 </resources>

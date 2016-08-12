@@ -215,5 +215,6 @@
     <string name="news">Мои новости</string>
     <string name="first_name">Имя</string>
     <string name="last_name">Фамилия</string>
+    <string name="remove_this_comment">Delete this comment?</string>
 
 </resources>

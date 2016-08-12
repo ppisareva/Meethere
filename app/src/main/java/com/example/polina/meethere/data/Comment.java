@@ -18,6 +18,7 @@ public class Comment {
     private String id;
     private String text;
     private String createdBy;
+    private int createdById;
     private String createdByUrl;
     private long createdAt;
 
@@ -26,6 +27,7 @@ public class Comment {
         text = o.optString("text");
         JSONObject user = o.optJSONObject("user");
         createdBy = user.optString("first_name") + " " + user.optString("last_name");
+        createdById = user.optInt("user_id", 0);
         createdByUrl = user.optString("mini_profile_url");
         try {
             createdAt = Utils.INPUT_FORMAT.parse(o.optString("created_at")).getTime();
@@ -67,6 +69,7 @@ public class Comment {
     }
 
 
-
-
+    public int getCreatedById() {
+        return createdById;
+    }
 }

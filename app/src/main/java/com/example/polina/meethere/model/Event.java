@@ -43,6 +43,7 @@ public class Event  {
     List<Integer> tag;
     Boolean join;
     int attendances;
+    User createdBy;
 
     public int getAttendances() {
         return attendances;
@@ -154,5 +155,13 @@ public class Event  {
 
     public void setTag(List<Integer> tag) {
         this.tag = tag;
+    }
+
+    public User getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
     }
 }

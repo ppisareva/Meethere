@@ -7,7 +7,7 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.example.polina.meethere.R;
@@ -16,23 +16,25 @@ import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
 
 /**
  * Created by polina on 03.07.16.
  */
-public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
+public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> implements View.OnLongClickListener {
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
     private final Context context;
     private View header;
+    private AdapterView.OnItemLongClickListener listener;
     final private List<Comment> comments = new ArrayList();
 
-    public CommentAdapter(Context context, View header) {
+    public CommentAdapter(Context context, View header, AdapterView.OnItemLongClickListener listener) {
         this.context = context;
         this.header = header;
+        this.listener = listener;
     }
 
 
@@ -63,6 +65,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public void onBindViewHolder(ViewHolder h, int position) {
         if (position == 0) return;
         position--;
+        h.itemView.setTag(position);
         ItemViewHolder holder = (ItemViewHolder)h;
         Comment c = comments.get(position);
         holder.createBy.setText(c.getCreatedBy());
@@ -78,14 +81,25 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         return comments == null ? 1 : comments.size()+1;
     }
 
+    @Override
+    public boolean onLongClick(View v) {
+        if (listener != null) {
+            int position = (int) v.getTag();
+            listener.onItemLongClick(null, v, position, 0);
+        }
+        return false;
+    }
+
     public class ItemViewHolder extends ViewHolder {
         public TextView text;
         public TextView createBy;
         public TextView createdAt;
         public SimpleDraweeView image;
+        public View container;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnLongClickListener(CommentAdapter.this);
             text = (TextView) itemView.findViewById(R.id.text);
             createBy = (TextView) itemView.findViewById(R.id.created_by);
             createdAt = (TextView) itemView.findViewById(R.id.created_at);
