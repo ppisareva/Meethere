@@ -8,7 +8,6 @@
         android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
         android:id="@+id/linearLayout_end"
-        android:background="@color/blue"
         android:layout_below="@+id/textView35"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -21,8 +20,7 @@
 
             android:id="@+id/end_day"
             android:layout_weight="1"
-            android:layout_marginLeft="16dp"
-            android:textColor="@android:color/white" />
+            android:layout_marginLeft="16dp" />
 
         <Button
             android:layout_width="wrap_content"
@@ -31,8 +29,7 @@
             android:id="@+id/button_till"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:onClick="onAndDate"
-            android:textColor="@android:color/white" />
+            android:onClick="onAndDate" />
 
         <Button
             android:layout_width="wrap_content"
@@ -40,8 +37,7 @@
             android:background="@android:color/transparent"
             android:id="@+id/button_till_time"
             android:onClick="onAndTime"
-            android:layout_weight="1"
-            android:textColor="@android:color/white" />
+            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -59,7 +55,6 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/backgroung"
         android:id="@+id/linearLayout_repeat"
         android:layout_below="@+id/day_of_week"
         android:layout_alignRight="@+id/repeated_event"
@@ -101,7 +96,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/blue"
         android:id="@+id/textView35"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
@@ -184,7 +178,6 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/backgroung"
 
         android:id="@+id/linearLayo"
         android:layout_above="@+id/textView35"

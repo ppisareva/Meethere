@@ -29,9 +29,9 @@ public class MyEventsListsFragment extends android.support.v4.app.Fragment  {
     public final int FRAGMENT_FUTURE_EVENTS = 1;
     public final int FRAGMENT_CREATED_BY_ME_EVENTS = 0;
 
-    public final int PAST_EVENTS = 4343430;
-    public final int FUTURE_EVENTS = 4343431;
-    public final int CREATED_BY_ME_EVENTS = 4343432;
+    public static final int PAST_EVENTS = 4343430;
+    public static final int FUTURE_EVENTS = 4343431;
+    public static final int CREATED_BY_ME_EVENTS = 4343432;
 
     public static MyEventsListsFragment newInstance() {
         MyEventsListsFragment fragment = new MyEventsListsFragment();

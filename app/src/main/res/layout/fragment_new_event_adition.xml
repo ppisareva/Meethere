@@ -122,6 +122,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linearLayout7"
+        android:visibility="gone"
         android:layout_marginTop="40dp"
         android:layout_below="@+id/linearLayout6"
         android:layout_alignParentLeft="true"
@@ -173,7 +174,8 @@
         android:checked="false"
         android:layout_alignTop="@+id/linearLayout3"
         android:layout_alignLeft="@+id/checkBox"
-        android:layout_alignStart="@+id/checkBox" />
+        android:layout_alignStart="@+id/checkBox"
+        android:visibility="gone" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -185,7 +187,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="22dp"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="10dp"
+        android:visibility="gone" />
 
     <CheckBox
         android:layout_width="wrap_content"

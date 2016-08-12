@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.polina.meethere.MyEventsAdapter;
 import com.example.polina.meethere.R;
+import com.example.polina.meethere.RecyclerViewPositionHelper;
 import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.fragments.MyEventsFragment;
 import com.example.polina.meethere.model.App;
@@ -41,6 +42,19 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
     Boolean follow;
     TextView followView;
 
+    int offset = 0;
+    private int STEP =10;
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
+
+    boolean flag;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +63,32 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
         list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         adapter = new MyEventsAdapter(this);
         list.setAdapter(adapter);
+        list.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                RecyclerViewPositionHelper mRecyclerViewHelper = RecyclerViewPositionHelper.createHelper(recyclerView);
+                int visibleItemCount = recyclerView.getChildCount();
+                int totalItemCount = mRecyclerViewHelper.getItemCount();
+                int firstVisibleItem = mRecyclerViewHelper.findFirstVisibleItemPosition();
+                System.err.println("first visible id" + firstVisibleItem + "visibleItemCount " + visibleItemCount + "totalItemCount" + totalItemCount);
+                if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 1) {
+                    if(isFlag()) {
+                        setFlag(false);
+                        Bundle arg = new Bundle();
+                        offset+=STEP;
+                        arg.putInt(Utils.OFFSET, offset);
+                        arg.putString(Utils.USER_ID, userId);
+                        getSupportLoaderManager().restartLoader(CREATED_BY_USER_EVENTS, arg, UserProfileActivity.this);
+
+
+
+                    }
+                }
+
+
+            }
+        });
         userId = getIntent().getStringExtra(Utils.USER_ID);
         app = (App)getApplication();
         serverApi = app.getServerApi();
@@ -61,6 +101,7 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
         new LoadUserInfo().execute(userId);
         Bundle bundle = new Bundle();
         bundle.putString(Utils.USER_ID, userId);
+        bundle.putInt(Utils.OFFSET, offset);
         getSupportLoaderManager().initLoader(CREATED_BY_USER_EVENTS, bundle, this);
 
     }
@@ -107,8 +148,9 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
                 com.example.polina.meethere.model.Event.AGE_MAX, com.example.polina.meethere.model.Event.AGE_MIN,
                 com.example.polina.meethere.model.Event.BUDGET_MAX, com.example.polina.meethere.model.Event.BUDGET_MIN};
        String userId = args.getString(Utils.USER_ID);
+        String o = ""+args.getInt(Utils.OFFSET, 0);
 
-           Uri uri =  Uri.parse("content://com.example.polina.meethere.data.data/userevents/"+(userId));
+           Uri uri =  Uri.parse(String.format("content://com.example.polina.meethere.data.data/userevents/?offset=%s&user_id=%s",  o, userId));
 
         return new CursorLoader(this, uri, arr, null, null, null);
 
@@ -117,8 +159,9 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
-        adapter.swapCursor(data);
+        if(adapter.getItemCount() < data.getCount()) {
+            setFlag(true);
+        }        adapter.swapCursor(data);
     }
 
     @Override
