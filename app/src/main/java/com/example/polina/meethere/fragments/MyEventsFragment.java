@@ -1,5 +1,6 @@
 package com.example.polina.meethere.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -18,9 +19,11 @@ import com.example.polina.meethere.MyEventsAdapter;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.RecyclerViewPositionHelper;
 import com.example.polina.meethere.Utils;
+import com.example.polina.meethere.model.Event;
 
 public class MyEventsFragment extends android.support.v4.app.Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
+    private static final int CHANGE_EVENT_REQUEST = 7;
     private RecyclerView list;
     MyEventsAdapter adapter;
     int tag;
@@ -119,12 +122,12 @@ public class MyEventsFragment extends android.support.v4.app.Fragment implements
 
         return new CursorLoader(getActivity(),
                uri
-                , new String[]{com.example.polina.meethere.model.Event.ID, com.example.polina.meethere.model.Event.NAME,
-                com.example.polina.meethere.model.Event.DESCRIPTION, com.example.polina.meethere.model.Event.START,
-                com.example.polina.meethere.model.Event.END, com.example.polina.meethere.model.Event.TAGS,
-                com.example.polina.meethere.model.Event.PLACE, com.example.polina.meethere.model.Event.ADDRESS,
-                com.example.polina.meethere.model.Event.AGE_MAX, com.example.polina.meethere.model.Event.AGE_MIN,
-                com.example.polina.meethere.model.Event.BUDGET_MAX, com.example.polina.meethere.model.Event.BUDGET_MIN}, null, null, null);
+                ,    new String[]{Event.ID, Event.NAME,
+                Event.DESCRIPTION, Event.START,
+                Event.END, Event.TAGS,
+                Event.PLACE, Event.ADDRESS,
+                Event.AGE_MAX, Event.AGE_MIN,
+                Event.BUDGET_MAX, Event.BUDGET_MIN, Event.LAT, Event.LNG}, null, null, null);
 
 
     }
@@ -154,5 +157,19 @@ public class MyEventsFragment extends android.support.v4.app.Fragment implements
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CHANGE_EVENT_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode ==  getActivity().RESULT_OK) {
+
+                data.getStringExtra(Event.NAME);
+                data.getStringExtra(Event.ADDRESS);
+                data.getStringExtra(Event.START);
+
+
+            }
+        }
+    }
 
 }

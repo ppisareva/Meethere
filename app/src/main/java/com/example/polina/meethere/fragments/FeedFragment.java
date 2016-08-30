@@ -1,8 +1,10 @@
 package com.example.polina.meethere.fragments;
 
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -13,28 +15,49 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
+import com.example.polina.meethere.RecyclerViewPositionHelper;
+import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.adapters.Category;
 import com.example.polina.meethere.HeaderAdapter;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.VerticalEventAdapter;
+import com.example.polina.meethere.model.App;
+import com.example.polina.meethere.model.Event;
+import com.example.polina.meethere.model.UserProfile;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class FeedFragment extends android.support.v4.app.Fragment implements LoaderManager.LoaderCallbacks<Cursor>  {
 
     VerticalEventAdapter verticalEventAdapter;
-    List <Category> events = getListEvents();
+    List <Category> events = new ArrayList<>();
     RecyclerView verticalList;
     RecyclerViewHeader header;
     RecyclerView  headerView;
+    Set<String> category;
 
 
 
-    public static FeedFragment newInstance() {
+    public static FeedFragment newInstance(Set<String> c) {
         FeedFragment fragment = new FeedFragment();
-
+        Bundle b = new Bundle();
+        ArrayList<String> list = new ArrayList<String>(c);
+        b.putStringArrayList(Utils.CATEGORY, list);
+        fragment.setArguments(b);
         return fragment;
+
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+           category = new HashSet<>(getArguments().getStringArrayList(Utils.CATEGORY));
+
+        }
     }
 
     public FeedFragment() {
@@ -47,6 +70,7 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.fragment_feed, container, false);
+        events =getListEvents();
         verticalEventAdapter = new VerticalEventAdapter(events, getActivity());
         for (Category c : events)
             getActivity().getSupportLoaderManager().initLoader(c.getId(), null, this);
@@ -60,6 +84,20 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
         headerView.setAdapter(headerAdapter);
         header.attachTo(verticalList);
         verticalList.setAdapter(verticalEventAdapter);
+//        verticalList.setOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                RecyclerViewPositionHelper mRecyclerViewHelper = RecyclerViewPositionHelper.createHelper(recyclerView);
+//                int visibleItemCount = recyclerView.getChildCount();
+//                int totalItemCount = mRecyclerViewHelper.getItemCount();
+//                int firstVisibleItem = mRecyclerViewHelper.findFirstVisibleItemPosition();
+//                if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 1) {
+//                    // load more category
+//                }
+//                }
+//
+//        });
 
         return v;
     }
@@ -69,14 +107,21 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
 
     public List<Category> getListEvents(){
         List<Category> categoryList = new ArrayList<>();
+
+        String arr[] = getResources().getStringArray(R.array.category);
+
         categoryList.add(new Category(445445, "Популярное"));
-        categoryList.add(new Category(1, "Фитнес"));
-        categoryList.add(new Category(2, "Еда и напитки"));
-        categoryList.add(new Category(3, "Духовность"));
-        categoryList.add(new Category(4, "С друзьями"));
-        categoryList.add(new Category(5, "На природе"));
-        categoryList.add(new Category(6, "Книги"));
-        categoryList.add(new Category(7, "Политика"));
+        for(String c: category){
+            int idCategory = Integer.parseInt(c);
+            categoryList.add(new Category(idCategory, arr[idCategory]));
+        }
+//        categoryList.add(new Category(1, "Фитнес"));
+//        categoryList.add(new Category(2, "Еда и напитки"));
+//        categoryList.add(new Category(3, "Духовность"));
+//        categoryList.add(new Category(4, "С друзьями"));
+//        categoryList.add(new Category(5, "На природе"));
+//        categoryList.add(new Category(6, "Книги"));
+//        categoryList.add(new Category(7, "Политика"));
 
         return categoryList;
     }
@@ -95,13 +140,13 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(getActivity(),
-                Uri.parse("content://com.example.polina.meethere.data.data/category/"+ id)
-                , new String[]{com.example.polina.meethere.model.Event.ID, com.example.polina.meethere.model.Event.NAME,
-                com.example.polina.meethere.model.Event.DESCRIPTION, com.example.polina.meethere.model.Event.START,
-                com.example.polina.meethere.model.Event.END, com.example.polina.meethere.model.Event.TAGS,
-                com.example.polina.meethere.model.Event.PLACE, com.example.polina.meethere.model.Event.ADDRESS,
-                com.example.polina.meethere.model.Event.AGE_MAX, com.example.polina.meethere.model.Event.AGE_MIN,
-                com.example.polina.meethere.model.Event.BUDGET_MAX, com.example.polina.meethere.model.Event.BUDGET_MIN}, null, null, null);
+               Uri.parse(String.format("content://com.example.polina.meethere.data.data/category/?category=%s&offset=%s", id, 0))
+                ,  new String[]{Event.ID, Event.NAME,
+                Event.DESCRIPTION, Event.START,
+                Event.END, Event.TAGS,
+                Event.PLACE, Event.ADDRESS,
+                Event.AGE_MAX, Event.AGE_MIN,
+                Event.BUDGET_MAX, Event.BUDGET_MIN, Event.LAT, Event.LNG}, null, null, null);
     }
 
     @Override

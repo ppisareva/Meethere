@@ -3,6 +3,7 @@ package com.example.polina.meethere.fragments;
 import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,11 +15,12 @@ import android.widget.EditText;
 
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.model.App;
-import com.google.android.gms.maps.CameraUpdate;
+import com.example.polina.meethere.model.Event;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -26,21 +28,40 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 
-public class NewEventLocationFragment extends android.support.v4.app.Fragment {
+public class NewEventLocationFragment extends android.support.v4.app.Fragment implements OnMapReadyCallback {
 
     MapView mapView;
     GoogleMap map;
-    EditText adress;
+    EditText adressView;
     App application;
     Collection<Double> pin;
+    String address = "";
+    Double lat;
+    Double lng;
 
-    public static NewEventLocationFragment newInstance() {
+
+    public static NewEventLocationFragment newInstance(String a, Double latitude, Double longtitude) {
         NewEventLocationFragment fragment = new NewEventLocationFragment();
+        Bundle b = new Bundle();
+        b.putString(Event.ADDRESS, a);
+        b.putDouble(Event.LAT, latitude);
+        b.putDouble(Event.LNG, longtitude);
+        fragment.setArguments(b);
         return fragment;
     }
 
     public NewEventLocationFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(getArguments()!=null){
+            address = getArguments().getString(Event.ADDRESS);
+            lat = getArguments().getDouble(Event.LAT);
+            lng = getArguments().getDouble(Event.LNG);
+        }
     }
 
     View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
@@ -61,50 +82,19 @@ public class NewEventLocationFragment extends android.support.v4.app.Fragment {
         setHasOptionsMenu(true);
         application = (App) getActivity().getApplication();
         mapView = (MapView) v.findViewById(R.id.map_view);
-        adress = (EditText) v.findViewById(R.id.add_adress);
-        adress.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        adress.setOnFocusChangeListener(onFocusChangeListener);
+        adressView = (EditText) v.findViewById(R.id.add_adress);
+        adressView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        adressView.setOnFocusChangeListener(onFocusChangeListener);
+        if(address!=null){
+            adressView.setText(address);
+        }
 
         mapView.onCreate(savedInstanceState);
 
         // Gets to GoogleMap from the MapView and does initialization stuff
-        map = mapView.getMap();
-        Location location = application.getCurrentLocation();
-        if (location != null && map!=null ) {
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 15));
-            map.getUiSettings().setMyLocationButtonEnabled(false);
-            map.setMyLocationEnabled(true);
+        mapView.getMapAsync(this);
 
 
-            // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
-            try {
-                MapsInitializer.initialize(this.getActivity());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            // Updates the location and zoom of the MapView
-
-            map.animateCamera(CameraUpdateFactory.zoomTo(15), 500, null);
-            MarkerOptions markerOptions = new MarkerOptions()
-                    .position(new LatLng(location.getLatitude(), location.getLongitude()));
-            map.addMarker(markerOptions);
-
-            map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                @Override
-                public void onMapClick(LatLng latLng) {
-                    map.clear();
-                    map.addMarker(new MarkerOptions()
-                            .position(latLng));
-                    adress.setText(latLng.latitude + ", " + latLng.longitude);
-                    pin = new ArrayList<Double>();
-
-                    pin.add(latLng.longitude);
-                    pin.add(latLng.latitude);
-
-                }
-            });
-        }
 
         return v;
     }
@@ -140,11 +130,54 @@ public class NewEventLocationFragment extends android.support.v4.app.Fragment {
     }
 
     public String getAddress (){
-        return adress.getText().toString();
+        return adressView.getText().toString();
     }
 
     public Collection<Double> getLocation(){
         return pin;
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        Location location = application.getCurrentLocation();
+        map = googleMap;
+        if ( map!=null ) {
+            MarkerOptions markerOptions = new MarkerOptions();
+
+            if(location!=null) {
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 15));
+                markerOptions.position(new LatLng(location.getLatitude(), location.getLongitude()));
+            }
+            // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
+            try {
+                MapsInitializer.initialize(this.getActivity());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            // Updates the location and zoom of the MapView
+            map.getUiSettings().setMyLocationButtonEnabled(true);
+            map.setMyLocationEnabled(true);
+            map.animateCamera(CameraUpdateFactory.zoomTo(15), 500, null);
+
+            if(lat!=0&&lng!=0){
+                markerOptions.position(new LatLng(lat,lng));
+            }
+            map.addMarker(markerOptions);
+
+            map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(LatLng latLng) {
+                    map.clear();
+                    map.addMarker(new MarkerOptions()
+                            .position(latLng));
+                    adressView.setText(latLng.latitude + ", " + latLng.longitude);
+                    pin = new ArrayList<Double>();
+
+                    pin.add(latLng.longitude);
+                    pin.add(latLng.latitude);
+
+                }
+            });
+        }
+    }
 }

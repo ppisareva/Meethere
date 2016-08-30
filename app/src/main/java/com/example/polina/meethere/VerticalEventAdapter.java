@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
 import com.example.polina.meethere.adapters.Category;
 import com.example.polina.meethere.activities.ListOfEventsActivity;
 
@@ -26,6 +27,15 @@ public class VerticalEventAdapter extends RecyclerView.Adapter<VerticalEventAdap
     List<Category> categoryList;
     Activity context;
     final Map<Integer, HorizontalEventAdapter> adapters = new HashMap();
+    boolean flag = true;
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
 
     public VerticalEventAdapter(List<Category> categoryList, Activity context) {
         this.categoryList = categoryList;
@@ -42,7 +52,7 @@ public class VerticalEventAdapter extends RecyclerView.Adapter<VerticalEventAdap
 
     private CursorRecyclerAdapter getAdapter(int categoryId) {
         if (!adapters.containsKey(categoryId))
-            adapters.put(categoryId, new HorizontalEventAdapter(context));
+            adapters.put(categoryId, new HorizontalEventAdapter(context, categoryId));
         return adapters.get(categoryId);
     }
     @Override
@@ -65,9 +75,12 @@ public class VerticalEventAdapter extends RecyclerView.Adapter<VerticalEventAdap
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         RecyclerView recyclerView;
-        Button button;
+        RecyclerViewHeader header;
+
         TextView textView;
         private int category;
+
+
 
         public void setCategory (int itemPosition) {
             this.category = itemPosition;
@@ -75,10 +88,12 @@ public class VerticalEventAdapter extends RecyclerView.Adapter<VerticalEventAdap
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            button = (Button) itemView.findViewById(R.id.list_learn_more);
-            button.setOnClickListener(this);
             recyclerView = (RecyclerView) itemView.findViewById(R.id.horizontal_list);
+
+
+
             textView = (TextView) itemView.findViewById(R.id.list_category);
+            textView.setOnClickListener(this);
         }
 
         @Override

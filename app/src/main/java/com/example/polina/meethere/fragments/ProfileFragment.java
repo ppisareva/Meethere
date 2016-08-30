@@ -126,7 +126,6 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
     public void onFollowers(){
 
     }
-
     public void onFollowings(){
 
     }

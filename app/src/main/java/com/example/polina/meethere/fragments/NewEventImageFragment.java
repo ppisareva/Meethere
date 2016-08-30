@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.model.App;
+import com.example.polina.meethere.model.Event;
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -30,10 +32,16 @@ public class NewEventImageFragment extends android.support.v4.app.Fragment {
     private static int RESULT_LOAD_IMAGE = 109;
     private ImageView imageView;
     private ImageButton imageButton;
+    String id;
+    Boolean isUpdate = false;
 
-    public static NewEventImageFragment newInstance() {
+    public static final String IMG_PATTERN = "https://s3-us-west-1.amazonaws.com/meethere/%s.jpg";
+
+    public static NewEventImageFragment newInstance(String id) {
         NewEventImageFragment fragment = new NewEventImageFragment();
-
+        Bundle b = new Bundle();
+        b.putString(Event.ID, id);
+        fragment.setArguments(b);
         return fragment;
     }
 
@@ -41,6 +49,13 @@ public class NewEventImageFragment extends android.support.v4.app.Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(getArguments()!=null){
+            id = getArguments().getString(Event.ID);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,6 +65,10 @@ public class NewEventImageFragment extends android.support.v4.app.Fragment {
 
         View v = inflater.inflate(R.layout.fragment_new_event_image, container, false);
         imageView = (ImageView) v.findViewById(R.id.event_image);
+        if(id!=null){
+            String url = String.format(IMG_PATTERN, id);
+            imageView.setImageURI(Uri.parse(url));
+        }
         imageButton = (ImageButton)v.findViewById(R.id.image_button);
 
         return v;
@@ -79,6 +98,7 @@ public class NewEventImageFragment extends android.support.v4.app.Fragment {
             Uri uri = data.getData();
             imageView.setImageBitmap(((App)getActivity().getApplication()).decodeUri(uri));
             imageButton.setAlpha(.5f);
+            isUpdate = true;
 
 
         }
@@ -86,7 +106,11 @@ public class NewEventImageFragment extends android.support.v4.app.Fragment {
 
 
     public  Bitmap getBitMap(){
-        return  ((BitmapDrawable)(imageView).getDrawable()).getBitmap();
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
+        if(isUpdate) {
+            return bitmapDrawable.getBitmap();
+        }
+        return  null;
     }
 
 

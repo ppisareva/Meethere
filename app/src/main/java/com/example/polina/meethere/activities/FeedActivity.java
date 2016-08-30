@@ -23,6 +23,13 @@ public class FeedActivity extends AppCompatActivity implements LoaderManager.Loa
     FeedAdapter feedAdapter;
     Bundle arg;
 
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
 
     boolean flag = true;
 
@@ -48,8 +55,8 @@ public class FeedActivity extends AppCompatActivity implements LoaderManager.Loa
                 int totalItemCount = mRecyclerViewHelper.getItemCount();
                 int firstVisibleItem = mRecyclerViewHelper.findFirstVisibleItemPosition();
                 if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 1) {
-                    if (flag) {
-                        flag = false;
+                    if (isFlag()) {
+                        setFlag(false);
                         arg.putInt(Utils.OFFSET, feedAdapter.getItemCount());
                         getSupportLoaderManager().restartLoader(FEED_LOADER, arg, FeedActivity.this);
                     }
@@ -77,7 +84,7 @@ public class FeedActivity extends AppCompatActivity implements LoaderManager.Loa
         System.err.println("onLoaderFinished: " + loader + "  || " + data);
         System.err.println("onLoaderFinished COUNT:: " + data.getCount());
         if (feedAdapter.getItemCount() < data.getCount())
-            flag = true;
+            setFlag(true);
         feedAdapter.swapCursor(data);
     }
 

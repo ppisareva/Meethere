@@ -38,7 +38,7 @@
         android:layout_marginTop="40dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:text="@string/budget"
             android:layout_weight="1"
@@ -70,6 +70,7 @@
             android:layout_height="25dp"
             android:id="@+id/spinner_budget_to"
             android:layout_weight="1" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -83,7 +84,7 @@
         android:layout_alignParentStart="true">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:text="@string/age"
             android:layout_weight="1"
@@ -113,8 +114,10 @@
         <Spinner
             android:layout_width="50dp"
             android:layout_height="25dp"
+
             android:id="@+id/spinner_age_to"
             android:layout_weight="1" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -200,6 +203,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="24dp"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="10dp"
+        android:layout_alignParentStart="false"
+        android:visibility="invisible" />
 
 </RelativeLayout>

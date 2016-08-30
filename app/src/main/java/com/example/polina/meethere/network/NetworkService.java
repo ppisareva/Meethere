@@ -9,11 +9,9 @@ import android.support.v4.content.LocalBroadcastManager;
 import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.model.App;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.net.URL;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -30,11 +28,12 @@ public class NetworkService extends IntentService {
     private static final String ACTION_BAZ = "com.example.polina.meethere.network.action.BAZ";
 
     // TODO: Rename parameters
-    private static final String EXTRA_PARAM1 = "com.example.polina.meethere.network.extra.PARAM1";
-    private static final String EXTRA_PARAM2 = "com.example.polina.meethere.network.extra.PARAM2";
+    private static final String DATA = "com.example.polina.meethere.network.extra.PARAM1";
+    private static final String IMAGE = "com.example.polina.meethere.network.extra.PARAM2";
     public static final String STATUS = "status";
-    public static final String ID = "auto_id_0";
+    public static final String ID = "id";
     private static final String CATEGORY = "category";
+    public static final String ACTION_UPDATE_EVENT = "com.example.polina.meethere.network.action.UPDATE" ;
 
     /**
      * Starts this service to perform action Foo with the given parameters. If
@@ -49,8 +48,24 @@ public class NetworkService extends IntentService {
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] byteArray = stream.toByteArray();
         intent.setAction(ACTION_CREATE_EVENT);
-        intent.putExtra(EXTRA_PARAM1, data);
-        intent.putExtra(EXTRA_PARAM2, byteArray);
+        intent.putExtra(DATA, data);
+        intent.putExtra(IMAGE, byteArray);
+        context.startService(intent);
+    }
+
+    public static void startActionUpdateEvent(Context context, String data, Bitmap imageBitmap, String id) {
+        Intent intent = new Intent(context, NetworkService.class);
+        if(imageBitmap!=null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            intent.putExtra(IMAGE, byteArray);
+        }
+        intent.putExtra(ID, id);
+        intent.setAction(ACTION_UPDATE_EVENT);
+        intent.putExtra(DATA, data);
+
+
         context.startService(intent);
     }
 
@@ -71,8 +86,8 @@ public class NetworkService extends IntentService {
     public static void startActionBaz(Context context, String param1, String param2) {
         Intent intent = new Intent(context, NetworkService.class);
         intent.setAction(ACTION_BAZ);
-        intent.putExtra(EXTRA_PARAM1, param1);
-        intent.putExtra(EXTRA_PARAM2, param2);
+        intent.putExtra(DATA, param1);
+        intent.putExtra(IMAGE, param2);
         context.startService(intent);
     }
 
@@ -86,9 +101,15 @@ public class NetworkService extends IntentService {
             final String action = intent.getAction();
             switch (action){
                 case ACTION_CREATE_EVENT:
-                    final String param1 = intent.getStringExtra(EXTRA_PARAM1);
-                    final byte [] param2 = intent.getByteArrayExtra(EXTRA_PARAM2);
+                    final String param1 = intent.getStringExtra(DATA);
+                    final byte [] param2 = intent.getByteArrayExtra(IMAGE);
                     handleActionCreateEvent(param1, param2);
+                    break;
+                case ACTION_UPDATE_EVENT:
+                    final String d = intent.getStringExtra(DATA);
+                    final byte [] i = intent.getByteArrayExtra(IMAGE);
+                    final String id = intent.getStringExtra(ID);
+                    handleActionUpdateEvent(d,i,id );
                     break;
                 case ACTION_LOAD_EVENTS:
                     final int category = intent.getIntExtra(CATEGORY,0);
@@ -124,10 +145,22 @@ public class NetworkService extends IntentService {
         LocalBroadcastManager.getInstance(getBaseContext()).sendBroadcast(intent);
     }
 
+    private void handleActionUpdateEvent(String data, byte [] imageByteArray, String idEvent) {
+        ServerApi serverApi = ((App) getApplication()).getServerApi();
+        JSONObject o = serverApi.updateEvent(data, idEvent);
+        if(imageByteArray!=null) {
+            serverApi.uploadImage(idEvent, imageByteArray, Utils.EVENT);
+        }
+
+        Intent intent = new Intent(ACTION_UPDATE_EVENT);
+        intent.putExtra(STATUS, true);
+        LocalBroadcastManager.getInstance(getBaseContext()).sendBroadcast(intent);
+    }
+
 
     private void handleActionLoadEventsByCategory(int category) {
         ServerApi serverApi = ((App) getApplication()).getServerApi();
-        JSONObject o = serverApi.loadEventsByCategory(category);
+        JSONObject o = serverApi.loadEventsByCategory(category+"","" );
         Intent intent = new Intent(ACTION_LOAD_EVENTS);
         intent.putExtra(STATUS, o != null);
         LocalBroadcastManager.getInstance(getBaseContext()).sendBroadcast(intent);

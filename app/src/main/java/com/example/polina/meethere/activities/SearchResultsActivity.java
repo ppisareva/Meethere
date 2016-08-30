@@ -39,16 +39,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
     }
 
-    public void onDistance(View v) {
-        fragmentEvents.onDistance();
 
-
-    }
-
-    public void onPrice(View v) {
-        fragmentEvents.onPrice();
-
-    }
 
     public void onFilter(View v) {
         startActivity(new Intent(this, SearchFiltersActivity.class));

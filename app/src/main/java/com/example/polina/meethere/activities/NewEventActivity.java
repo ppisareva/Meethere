@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,28 +14,41 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.polina.meethere.R;
+import com.example.polina.meethere.Utils;
+import com.example.polina.meethere.adapters.CommentAdapter;
 import com.example.polina.meethere.fragments.NewEventAdditionFragment;
 import com.example.polina.meethere.fragments.NewEventCategoryChooseFragment;
 import com.example.polina.meethere.fragments.NewEventDescriptionFragment;
 import com.example.polina.meethere.fragments.NewEventImageFragment;
 import com.example.polina.meethere.fragments.NewEventLocationFragment;
 import com.example.polina.meethere.fragments.NewEventTimePickerFragment;
+import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.Event;
+import com.example.polina.meethere.model.UserProfile;
 import com.example.polina.meethere.network.NetworkService;
+import com.example.polina.meethere.network.ServerApi;
 import com.pixelcan.inkpageindicator.InkPageIndicator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class NewEventActivity extends AppCompatActivity {
     NewEventDescriptionFragment newEventDescriprionFragment;
@@ -61,6 +75,18 @@ public class NewEventActivity extends AppCompatActivity {
     private static final int END_DATE = 200;
     private static final int END_TIME = 232;
 
+    String description;
+    String name;
+    String id;
+    String timeStart;
+    String timeEnd;
+    int budgetMin;
+    int budgetMax;
+    String address;
+    Double lat;
+    Double lng;
+    int category[];
+
 
 
     @Override
@@ -68,7 +94,22 @@ public class NewEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_event);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Intent intent = getIntent();
+        if(intent!=null){
+            name = intent.getStringExtra(Event.NAME);
+            description = intent.getStringExtra(Event.DESCRIPTION);
+            category = intent.getIntArrayExtra(Event.TAGS);
+            timeStart = intent.getStringExtra(Event.START);
+            timeEnd = intent.getStringExtra(Event.END);
+            id= intent.getStringExtra(Event.ID);
+            address = intent.getStringExtra(Event.PLACE);
+            lat = intent.getDoubleExtra(Event.LAT, 0);
+            lng = intent.getDoubleExtra(Event.LNG, 0);
+            budgetMin = intent.getIntExtra(Event.BUDGET_MIN, 0);
+            budgetMax = intent.getIntExtra(Event.BUDGET_MAX, 0);
 
+
+        }
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
 
@@ -93,24 +134,22 @@ public class NewEventActivity extends AppCompatActivity {
             System.out.println(position);
             switch (position){
                 case FRAGMENT_TIME:
-                    newEventTimePickerFragment = NewEventTimePickerFragment.newInstance();
-
+                    newEventTimePickerFragment = NewEventTimePickerFragment.newInstance(timeStart, timeEnd);
                     return newEventTimePickerFragment;
                 case  FRAGMENT_CATEGORY:
-                    newEventCategoryChooseFragment = NewEventCategoryChooseFragment.newInstance();
+                    newEventCategoryChooseFragment = NewEventCategoryChooseFragment.newInstance(category);
                     return newEventCategoryChooseFragment;
                 case FRAGMENT_DESCTIPTION:
-                    newEventDescriprionFragment = NewEventDescriptionFragment.newInstance();
+                    newEventDescriprionFragment = NewEventDescriptionFragment.newInstance(name,description);
                     return newEventDescriprionFragment;
                 case FRAGMENT_PHOTO:
-                    newEventImageFragment = NewEventImageFragment.newInstance();
-
+                    newEventImageFragment = NewEventImageFragment.newInstance(id);
                     return newEventImageFragment;
                 case FRAGMENT_LOCATION:
-                    locationFragment = NewEventLocationFragment.newInstance();
+                    locationFragment = NewEventLocationFragment.newInstance(address, lat, lng);
                     return locationFragment;
                 case FRAGMENT_ADITION:
-                    additionFragment = NewEventAdditionFragment.newInstance();
+                    additionFragment = NewEventAdditionFragment.newInstance(budgetMin, budgetMax);
                     return additionFragment;
             }
             return null;
@@ -241,8 +280,14 @@ public class NewEventActivity extends AppCompatActivity {
                     jsonObject.put(Event.PLACE, new JSONArray(locationFragment.getLocation()));
                 }
                 jsonObject.put(Event.ADDRESS,locationFragment.getAddress() );
-                jsonObject.put(Event.AGE_MAX,additionFragment.getMaxAge() );
-                jsonObject.put(Event.AGE_MIN, additionFragment.getMinAge());
+                if(additionFragment.getMaxAge()!=-1){
+                    jsonObject.put(Event.AGE_MAX,additionFragment.getMaxAge() );
+                }
+
+                if( additionFragment.getMinAge()!=-1){
+                    jsonObject.put(Event.AGE_MIN, additionFragment.getMinAge());
+                }
+
                 jsonObject.put(Event.BUDGET_MAX, additionFragment.getMaxBudget());
                 jsonObject.put(Event.BUDGET_MIN,additionFragment.getMinBudget() );
 
@@ -251,8 +296,16 @@ public class NewEventActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            LocalBroadcastManager.getInstance(this).registerReceiver(createEventReceiver, new IntentFilter(NetworkService.ACTION_CREATE_EVENT));
-            NetworkService.startActionCreateNewEvent(this, jsonObject.toString(),newEventImageFragment.getBitMap());
+            if(this.id!=null){
+                LocalBroadcastManager.getInstance(this).registerReceiver(createUpdateReceiver, new IntentFilter(NetworkService.ACTION_UPDATE_EVENT));
+                NetworkService.startActionUpdateEvent(this, jsonObject.toString(),newEventImageFragment.getBitMap(), this.id);
+
+            } else {
+                LocalBroadcastManager.getInstance(this).registerReceiver(createEventReceiver, new IntentFilter(NetworkService.ACTION_CREATE_EVENT));
+                NetworkService.startActionCreateNewEvent(this, jsonObject.toString(),newEventImageFragment.getBitMap());
+            }
+
+
         }
 
         if (id == android.R.id.home) {
@@ -270,8 +323,22 @@ public class NewEventActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(createEventReceiver);
+
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(createUpdateReceiver);
     }
 
+    private BroadcastReceiver createUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean status = intent.getBooleanExtra(NetworkService.STATUS, false);
+            if (status) {
+                Toast.makeText(context, "Event has been updared!", Toast.LENGTH_LONG).show();
+                NewEventActivity.this.finish();
+            } else {
+                Toast.makeText(context, "Can not create event. Try again", Toast.LENGTH_LONG).show();
+            }
+        }
+    };
     private BroadcastReceiver createEventReceiver = new BroadcastReceiver() {
 
         @Override

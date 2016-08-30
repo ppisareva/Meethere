@@ -17,10 +17,14 @@ import android.widget.TextView;
 
 import com.example.polina.meethere.MyEventsAdapter;
 import com.example.polina.meethere.R;
+import com.example.polina.meethere.RecyclerViewPositionHelper;
 import com.example.polina.meethere.Utils;
+import com.example.polina.meethere.fragments.ListOfEventSearchFragment;
+import com.example.polina.meethere.model.Event;
 
 public class ListOfEventsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>  {
 
+    private static final int STEP = 10;
     MyEventsAdapter myEventsAdapter;
     boolean highPrice = false;
     boolean lowPrice = false;
@@ -34,22 +38,30 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
     public static final int BY_LOW_PRICE = 203000990;
     public static final int BY_HIGH_PRICE = 2090933430;
 
+    public Boolean isFlag() {
+        return flag;
+    }
 
+    public void setFlag(Boolean flag) {
+        this.flag = flag;
+    }
 
-
+    Boolean flag = true;
+    int offset = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_events);
-        int category = getIntent().getIntExtra(Utils.CATEGORY, -1);
+        final int category = getIntent().getIntExtra(Utils.CATEGORY, -1);
 
-        distance =(TextView)findViewById(R.id.distance_filter);
-        price = (TextView)findViewById(R.id.price_filter);
-        imageView = (ImageView)findViewById(R.id.image_price);
+//        distance =(TextView)findViewById(R.id.distance_filter);
+//        price = (TextView)findViewById(R.id.price_filter);
+//        imageView = (ImageView)findViewById(R.id.image_price);
         System.out.println(" category # " + category);
         Bundle arg = new Bundle();
         arg.putString(Utils.CATEGORY, category+"");
+        arg.putString(Utils.OFFSET, offset+"");
 
         getSupportLoaderManager().initLoader(CATEGORY, arg, this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -57,43 +69,64 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         myEventsAdapter = new MyEventsAdapter(this);
         recyclerView.setAdapter(myEventsAdapter);
-    }
-
-
-    public void onPrice(View v) {
-        distance.setTextColor(getResources().getColor(R.color.white));
-        price.setTextColor(getResources().getColor(R.color.filter));
-
-        if (highPrice || lowPrice) {
-            if (highPrice) {
-                imageView.setImageResource(R.drawable.ic_price_down_24dp);
-                lowPrice = true;
-                highPrice = false;
-
-                getSupportLoaderManager().initLoader(BY_HIGH_PRICE, null, this);
-            } else {
-
-                if (lowPrice) {
-                    imageView.setImageResource(R.drawable.ic_price_up_24dp);
-                    lowPrice = false;
-                    highPrice = true;
-                    getSupportLoaderManager().initLoader(BY_LOW_PRICE, null, this);
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                RecyclerViewPositionHelper mRecyclerViewHelper = RecyclerViewPositionHelper.createHelper(recyclerView);
+                int visibleItemCount = recyclerView.getChildCount();
+                int totalItemCount = mRecyclerViewHelper.getItemCount();
+                int firstVisibleItem = mRecyclerViewHelper.findFirstVisibleItemPosition();
+                System.err.println("first visible id" + firstVisibleItem + "visibleItemCount " + visibleItemCount + "totalItemCount" + totalItemCount);
+                if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 1) {
+                    if(isFlag()) {
+                        setFlag(false);
+                        Bundle arg = new Bundle();
+                        offset+=STEP;
+                        arg.putString(Utils.CATEGORY, category+"");
+                        arg.putString(Utils.OFFSET, offset+"");
+                        getSupportLoaderManager().restartLoader(CATEGORY, arg, ListOfEventsActivity.this);
+                    }
                 }
             }
-        } else {
-
-            lowPrice = true;
-            imageView.setImageResource(R.drawable.ic_price_down_24dp);
-            getSupportLoaderManager().initLoader(BY_HIGH_PRICE, null, this);
-
-        }
+        });
     }
 
-    public void onFilter (View v){
-        startActivity( new Intent(this, SearchFiltersActivity.class));
 
-    }
-
+//    public void onPrice(View v) {
+//        distance.setTextColor(getResources().getColor(R.color.white));
+//        price.setTextColor(getResources().getColor(R.color.filter));
+//
+//        if (highPrice || lowPrice) {
+//            if (highPrice) {
+//                imageView.setImageResource(R.drawable.ic_price_down_24dp);
+//                lowPrice = true;
+//                highPrice = false;
+//
+//                getSupportLoaderManager().initLoader(BY_HIGH_PRICE, null, this);
+//            } else {
+//
+//                if (lowPrice) {
+//                    imageView.setImageResource(R.drawable.ic_price_up_24dp);
+//                    lowPrice = false;
+//                    highPrice = true;
+//                    getSupportLoaderManager().initLoader(BY_LOW_PRICE, null, this);
+//                }
+//            }
+//        } else {
+//
+//            lowPrice = true;
+//            imageView.setImageResource(R.drawable.ic_price_down_24dp);
+//            getSupportLoaderManager().initLoader(BY_HIGH_PRICE, null, this);
+//
+//        }
+//    }
+//
+//    public void onFilter (View v){
+//        startActivity( new Intent(this, SearchFiltersActivity.class));
+//
+//    }
+//
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -107,19 +140,20 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String arr[] =  new String[]{com.example.polina.meethere.model.Event.ID, com.example.polina.meethere.model.Event.NAME,
-                com.example.polina.meethere.model.Event.DESCRIPTION, com.example.polina.meethere.model.Event.START,
-                com.example.polina.meethere.model.Event.END, com.example.polina.meethere.model.Event.TAGS,
-                com.example.polina.meethere.model.Event.PLACE, com.example.polina.meethere.model.Event.ADDRESS,
-                com.example.polina.meethere.model.Event.AGE_MAX, com.example.polina.meethere.model.Event.AGE_MIN,
-                com.example.polina.meethere.model.Event.BUDGET_MAX, com.example.polina.meethere.model.Event.BUDGET_MIN};
+        String arr[] =  new String[]{Event.ID, Event.NAME,
+               Event.DESCRIPTION, Event.START,
+                Event.END, Event.TAGS,
+                Event.PLACE, Event.ADDRESS,
+                Event.AGE_MAX, Event.AGE_MIN,
+                Event.BUDGET_MAX, Event.BUDGET_MIN, Event.LAT, Event.LNG};
         String category = args.getString(Utils.CATEGORY);
+        String offset = args.getString(Utils.OFFSET);
         Uri uri = null;
 
 
         switch (id){
             case CATEGORY:
-                uri =   Uri.parse("content://com.example.polina.meethere.data.data/category/" + category);
+                uri =   Uri.parse(String.format("content://com.example.polina.meethere.data.data/category/?category=%s&offset=%s",  category, offset));
                 break;
 //            case BY_LOW_PRICE:
 //                uri =  Uri.parse("content://com.example.polina.meethere.data.data/low_price_search/" + search);
@@ -134,17 +168,18 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if(data==null){
-
+        if(myEventsAdapter.getItemCount() < data.getCount()) {
+            setFlag(true);
         }
-       myEventsAdapter.swapCursor(data);
-
+        myEventsAdapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
     }
+
+
 
 
 }

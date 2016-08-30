@@ -19,6 +19,7 @@ import com.example.polina.meethere.RecyclerViewPositionHelper;
 import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.fragments.MyEventsFragment;
 import com.example.polina.meethere.model.App;
+import com.example.polina.meethere.model.Event;
 import com.example.polina.meethere.model.UserProfile;
 import com.example.polina.meethere.network.ServerApi;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -141,12 +142,12 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String arr[] = new String[]{com.example.polina.meethere.model.Event.ID, com.example.polina.meethere.model.Event.NAME,
-                com.example.polina.meethere.model.Event.DESCRIPTION, com.example.polina.meethere.model.Event.START,
-                com.example.polina.meethere.model.Event.END, com.example.polina.meethere.model.Event.TAGS,
-                com.example.polina.meethere.model.Event.PLACE, com.example.polina.meethere.model.Event.ADDRESS,
-                com.example.polina.meethere.model.Event.AGE_MAX, com.example.polina.meethere.model.Event.AGE_MIN,
-                com.example.polina.meethere.model.Event.BUDGET_MAX, com.example.polina.meethere.model.Event.BUDGET_MIN};
+        String arr[] =  new String[]{Event.ID, Event.NAME,
+                Event.DESCRIPTION, Event.START,
+                Event.END, Event.TAGS,
+                Event.PLACE, Event.ADDRESS,
+                Event.AGE_MAX, Event.AGE_MIN,
+                Event.BUDGET_MAX, Event.BUDGET_MIN, Event.LAT, Event.LNG};
        String userId = args.getString(Utils.USER_ID);
         String o = ""+args.getInt(Utils.OFFSET, 0);
 

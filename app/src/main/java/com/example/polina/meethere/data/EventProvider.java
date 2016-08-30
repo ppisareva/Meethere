@@ -37,7 +37,14 @@ public class EventProvider extends android.content.ContentProvider {
     private static final int SEARCH_BY_HIGH = 5;
     private static final int SEARCH_BY_DISTANCE = 2;
     private List<Object[]> feedData = new ArrayList<>();
+    private List<Object[]> eventsData = new ArrayList<>();
+    private List<Object[]> eventsMy = new ArrayList<>();
+    private List<Object[]> eventsPast = new ArrayList<>();
+    private List<Object[]> eventsFuture = new ArrayList<>();
 
+    public static final int PAST_EVENTS = 4343430;
+    public static final int FUTURE_EVENTS = 4343431;
+    public static final int CREATED_BY_ME_EVENTS = 4343432;
 
     private static final UriMatcher URI_MATCHER;
 
@@ -49,15 +56,15 @@ public class EventProvider extends android.content.ContentProvider {
     static {
         URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 
-        URI_MATCHER.addURI(AUTHORITY,  "category/#",  CATEGORY_ID);
+        URI_MATCHER.addURI(AUTHORITY,  "category",  CATEGORY_ID);
         URI_MATCHER.addURI(AUTHORITY, "distance_search", SEARCH_BY_DISTANCE);
         URI_MATCHER.addURI(AUTHORITY, "feed", FEED);
         URI_MATCHER.addURI(AUTHORITY, "friends_search/*", SEARCH_FREINDS);
-        URI_MATCHER.addURI(AUTHORITY, "high_price_search/*",  SEARCH_BY_HIGH);
-        URI_MATCHER.addURI(AUTHORITY, "low_price_search/*", SEARCH_LOW_PRICE);
-        URI_MATCHER.addURI(AUTHORITY, "myevents/*", MY_EVENTS);
-        URI_MATCHER.addURI(AUTHORITY, "userevents/*", USER_EVENTS);
-        URI_MATCHER.addURI(AUTHORITY, "words_search/*", SEARCH);
+        URI_MATCHER.addURI(AUTHORITY, "high_price_search",  SEARCH_BY_HIGH);
+        URI_MATCHER.addURI(AUTHORITY, "low_price_search", SEARCH_LOW_PRICE);
+        URI_MATCHER.addURI(AUTHORITY, "myevents", MY_EVENTS);
+        URI_MATCHER.addURI(AUTHORITY, "userevents", USER_EVENTS);
+        URI_MATCHER.addURI(AUTHORITY, "words_search", SEARCH);
 
     }
 
@@ -79,61 +86,85 @@ public class EventProvider extends android.content.ContentProvider {
         List<Event> events = null;
         ServerApi serverApi = ((App) getContext().getApplicationContext()).getServerApi();
         String search = "";
+        JSONObject jsonObject = null;
+        String offset ="";
 
-        switch (URI_MATCHER.match(uri)) {
+
+        switch (URI_MATCHER.match(uri)) {  /// done
             case CATEGORY_ID:
-                String par = uri.getLastPathSegment();
-                int categoryId = Integer.parseInt(par);
-                JSONObject o = serverApi.loadEventsByCategory(categoryId);
-                events = Utils.parseEventList(o);
+                offset = uri.getQueryParameter("offset");
+               String categoryId = uri.getQueryParameter("category");
+                jsonObject = serverApi.loadEventsByCategory(categoryId, offset);
                 break;
-            case MY_EVENTS:
-                String timeStamp =uri.getLastPathSegment();
+            case MY_EVENTS: //// done
+                offset = uri.getQueryParameter("offset");
+                String timeStamp = uri.getQueryParameter("id");
                 SharedPreferences sharedPreferences = getContext().getSharedPreferences("pref", getContext().MODE_PRIVATE);
                 int id = sharedPreferences.getInt(UserProfile.USER_ID, -1);
-                JSONObject h = serverApi.loadMyEvents(Integer.parseInt(timeStamp), id);
-                events = Utils.parseEventList(h);
+                jsonObject= serverApi.loadMyEvents(timeStamp, id, offset);
+                events = Utils.parseEventList(jsonObject);
+
+                    switch (Integer.parseInt(timeStamp)){
+                        case PAST_EVENTS:
+                          return getEventCursor(eventsPast, offset, events);
+
+                        case FUTURE_EVENTS:
+                           return getEventCursor(eventsFuture, offset, events);
+
+                        case CREATED_BY_ME_EVENTS:
+                          return getEventCursor(eventsMy, offset, events);
+
+                    }
+
+            case SEARCH: //// done
+                offset = uri.getQueryParameter("offset");
+                search = uri.getQueryParameter("search");
+                jsonObject = serverApi.loadEventsByWords(search, offset);
+
                 break;
-            case SEARCH:
-               search =uri.getLastPathSegment();
-                JSONObject d = serverApi.loadEventsByWords(search, 0);
-                events = Utils.parseEventList(d);
+            case SEARCH_BY_HIGH: ///// done
+                offset = uri.getQueryParameter("offset");
+                search = uri.getQueryParameter("search");
+                jsonObject = serverApi.loadEventsByHighPrice(search, offset);
+
                 break;
-            case SEARCH_BY_HIGH:
-               String high =uri.getLastPathSegment();
-                JSONObject f = serverApi.loadEventsByHighPrice(high, 0);
-                events = Utils.parseEventList(f);
+            case SEARCH_LOW_PRICE: /////done
+                offset = uri.getQueryParameter("offset");
+                search = uri.getQueryParameter("search");
+                jsonObject = serverApi.loadEventsByLowPrice(search, offset);
+
                 break;
-            case SEARCH_LOW_PRICE:
-                String low =uri.getLastPathSegment();
-                JSONObject k = serverApi.loadEventsByLowPrice(low, 0);
-                events = Utils.parseEventList(k);
-                break;
-            case SEARCH_BY_DISTANCE:
+            case SEARCH_BY_DISTANCE: ///// done
                 String lon = uri.getQueryParameter("lon");
-               String lat = uri.getQueryParameter("lat");
-              String  s = uri.getQueryParameter("search");
-                JSONObject g = serverApi.loadEventsByDistance(lon,lat, s, 0);
-                events = Utils.parseEventList(g);
+                String lat = uri.getQueryParameter("lat");
+                if(uri.getQueryParameter("search")==null)
+                {
+                    jsonObject = serverApi.loadEventsByDistance(lon, lat);
+                } else {
+                    search = uri.getQueryParameter("search");
+                    offset = uri.getQueryParameter("offset");
+
+                    jsonObject = serverApi.loadEventsByDistance(lon, lat, search, offset);
+                }
                 break;
-            case USER_EVENTS:
-                String userId =uri.getLastPathSegment();
-                JSONObject hd = serverApi.loadUserEvents(userId);
-                events = Utils.parseEventList(hd);
+            case USER_EVENTS: //// done
+                offset = uri.getQueryParameter("offset");
+                String userId =uri.getQueryParameter("user_id");
+                jsonObject = serverApi.loadUserEvents(userId, offset);
                 break;
             case SEARCH_FREINDS:
                 String  name = uri.getLastPathSegment();
                 JSONObject w = serverApi.searchFriends(name);
                List <UserProfile> userlist = Utils.parseUsersProfile(w) ;
-              MatrixCursor cursor = new MatrixCursor(new String[]{"_id", User.FIRST_NAME,User.LAST_NAME, User.IMAGE});
+               MatrixCursor c = new MatrixCursor(new String[]{"_id", User.FIRST_NAME, User.LAST_NAME, User.IMAGE});
                 for (UserProfile user : userlist ) {
-                    cursor.addRow(new Object[]{user.getId(), user.getFirstName(), user.getLastName(), user.getMiniProfileUrl()});
+                    c.addRow(new Object[]{user.getId(), user.getFirstName(), user.getLastName(), user.getMiniProfileUrl()});
                 }
-                return cursor;
+                return c;
             case FEED:
-                String offset = uri.getQueryParameter("offset");
-                JSONObject hh = serverApi.loadFeed(offset);
-                List<Feed> feed = Feed.parseFeed(hh);
+                offset = uri.getQueryParameter("offset");
+                jsonObject = serverApi.loadFeed(offset);
+                List<Feed> feed = Feed.parseFeed(jsonObject);
                 MatrixCursor feedCursor = new MatrixCursor(new String[]{"_id", User.LAST_NAME,User.FIRST_NAME, User.IMAGE, User.ID, Feed.TYPE, Feed.TIME,
                         com.example.polina.meethere.adapters.Event.START, com.example.polina.meethere.adapters.Event.BUDGET,
                         com.example.polina.meethere.adapters.Event.ID, com.example.polina.meethere.adapters.Event.NAME, com.example.polina.meethere.adapters.Event.DESCRIPTION});
@@ -153,14 +184,41 @@ public class EventProvider extends android.content.ContentProvider {
 
         }
 
-        MatrixCursor cursor = new MatrixCursor(new String[]{"_id", Event.NAME, Event.DESCRIPTION, Event.START,
-                Event.END, Event.TAGS, Event.PLACE, Event.ADDRESS, Event.AGE_MAX, Event.AGE_MIN, Event.BUDGET_MAX, Event.BUDGET_MIN});
 
 
+
+       MatrixCursor  cursor = getEventCursor();
+                events = Utils.parseEventList(jsonObject);
+        if("0".equals(offset)) {
+            eventsData.clear();
+        }
+            if(events==null) return null;
+            for (Event event : events) {
+                eventsData.add(new Object[]{event.getId(), event.getName(), event.getDescription(), event.getStart(), event.getEnd(),
+                        event.getTag(), event.getPlace(),  event.getAddress(), event.getAgeMax(), event.getAgeMin(), event.getBudgetMax(), event.getBudgetMin(), event.getLat(), event.getLng()});
+            }
+        for (Object[] row : eventsData) {
+            cursor.addRow(row);
+        }
+        return cursor;
+    }
+
+    private MatrixCursor getEventCursor(){
+        return  new MatrixCursor(new String[]{"_id", Event.NAME, Event.DESCRIPTION, Event.START,
+                Event.END, Event.TAGS, Event.PLACE, Event.ADDRESS, Event.AGE_MAX, Event.AGE_MIN, Event.BUDGET_MAX, Event.BUDGET_MIN, Event.LAT, Event.LNG});
+    }
+
+    private MatrixCursor getEventCursor(List<Object[]> list, String offset, List<Event> events){
+        MatrixCursor  cursor = getEventCursor();
+        if ("0".equals(offset))
+            list.clear();
         if(events==null) return null;
         for (Event event : events) {
-            cursor.addRow(new Object[]{event.getId(), event.getName(), event.getDescription(), event.getStart(), event.getEnd(),
-                    event.getTag(), event.getPlace(), event.getAddress(), event.getAgeMax(), event.getAgeMin(), event.getBudgetMax(), event.getBudgetMin()});
+            list.add(new Object[]{event.getId(), event.getName(), event.getDescription(), event.getStart(), event.getEnd(),
+                    event.getTag(), event.getPlace(), event.getAddress(), event.getAgeMax(), event.getAgeMin(), event.getBudgetMax(), event.getBudgetMin(), event.getLat(), event.getLng()});
+        }
+        for (Object[] row : list) {
+            cursor.addRow(row);
         }
         return cursor;
     }

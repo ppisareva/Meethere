@@ -24,6 +24,7 @@ import com.example.polina.meethere.R;
 import com.example.polina.meethere.RecyclerViewPositionHelper;
 import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.model.App;
+import com.example.polina.meethere.model.Event;
 
 /**
  * Created by polina on 28.06.16.
@@ -37,8 +38,20 @@ public class ListOfEventSearchFragment extends Fragment implements LoaderManager
     public static final int SEARCH_BY_LOW_PRICE = 203990;
     public static final int SEARCH_BY_HIGH_PRICE = 2033430;
     public static final int SEARCH_BY_DISTANCE = 20999430;
-    private final int STEP = 10;
-    private int offset = STEP;
+    int loaderWorking= 0;
+    int offset = 0;
+    private int STEP =10;
+
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
+
+    boolean flag = true;
 
 
 
@@ -68,7 +81,9 @@ public class ListOfEventSearchFragment extends Fragment implements LoaderManager
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.activity_list_of_events, container, false);
         distance = (TextView)v. findViewById(R.id.distance_filter);
+        distance.setOnClickListener(onDistance);
         price = (TextView) v.findViewById(R.id.price_filter);
+        price.setOnClickListener(onPrice);
         imageView = (ImageView)v. findViewById(R.id.image_price);
         l=(LinearLayout) v.findViewById(R.id.no_result);
         RecyclerView recyclerView = (RecyclerView)v. findViewById(R.id.events_list);
@@ -85,11 +100,19 @@ public class ListOfEventSearchFragment extends Fragment implements LoaderManager
                 int firstVisibleItem = mRecyclerViewHelper.findFirstVisibleItemPosition();
                 System.err.println("first visible id" + firstVisibleItem + "visibleItemCount " + visibleItemCount + "totalItemCount" + totalItemCount);
                 if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 1) {
+                    if(isFlag()) {
+                        setFlag(false);
+                        Bundle arg = new Bundle();
+                        arg.putString(Utils.SEARCH, search);
+                        offset+=STEP;
+                        arg.putInt(Utils.OFFSET, offset);
 
-                    Bundle arg = new Bundle();
-                    arg.putString(Utils.SEARCH, search);
-                    arg.putInt(Utils.OFFSET, offset);
-                    getActivity().getSupportLoaderManager().initLoader(SEARCH_LOUDER, arg, ListOfEventSearchFragment.this);
+                        if(loaderWorking==0)return;
+                        getActivity().getSupportLoaderManager().restartLoader(loaderWorking, arg, ListOfEventSearchFragment.this);
+
+
+
+                    }
                     }
 
             }
@@ -110,6 +133,7 @@ public class ListOfEventSearchFragment extends Fragment implements LoaderManager
            search = getArguments().getString(Utils.SEARCH);
             Bundle arg = new Bundle();
             arg.putString(Utils.SEARCH, search);
+
             arg.putInt(Utils.OFFSET, offset);
            getActivity().getSupportLoaderManager().initLoader(SEARCH_LOUDER, arg, this);
 
@@ -128,8 +152,9 @@ public class ListOfEventSearchFragment extends Fragment implements LoaderManager
 
     }
 
-
-    public  void onDistance() {
+View.OnClickListener onDistance = new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
         distance.setTextColor(getResources().getColor(R.color.filter));
         price.setTextColor(getResources().getColor(R.color.white));
         imageView.setImageResource(R.drawable.ic_price);
@@ -140,74 +165,77 @@ public class ListOfEventSearchFragment extends Fragment implements LoaderManager
         arg.putDouble(Utils.LON,location.getLongitude());
         arg.putDouble(Utils.LAT,location.getLatitude());
         arg.putString(Utils.SEARCH, search);
-        offset = STEP;
+        offset = 0;
         arg.putInt(Utils.OFFSET, offset);
-        getActivity().getSupportLoaderManager().initLoader(SEARCH_BY_DISTANCE,arg , this);
-
+        getActivity().getSupportLoaderManager().initLoader(SEARCH_BY_DISTANCE,arg , ListOfEventSearchFragment.this);
     }
+};
 
-    public void onPrice() {
-        distance.setTextColor(getResources().getColor(R.color.white));
-        price.setTextColor(getResources().getColor(R.color.filter));
-        Bundle arg = new Bundle();
-        arg.putString(Utils.SEARCH, search);
-        offset = STEP;
-        arg.putInt(Utils.OFFSET, offset);
-        if (highPrice || lowPrice) {
-            if (highPrice) {
-                imageView.setImageResource(R.drawable.ic_price_down_24dp);
-                lowPrice = true;
-                highPrice = false;
+    View.OnClickListener onPrice = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            distance.setTextColor(getResources().getColor(R.color.white));
+            price.setTextColor(getResources().getColor(R.color.filter));
+            Bundle arg = new Bundle();
+            arg.putString(Utils.SEARCH, search);
+            offset = 0;
+            arg.putInt(Utils.OFFSET, offset);
+            if (highPrice || lowPrice) {
+                if (highPrice) {
+                    imageView.setImageResource(R.drawable.ic_price_down_24dp);
+                    lowPrice = true;
+                    highPrice = false;
+                    getActivity().getSupportLoaderManager().initLoader(SEARCH_BY_HIGH_PRICE, arg, ListOfEventSearchFragment.this);
+                } else {
 
-               getActivity().getSupportLoaderManager().initLoader(SEARCH_BY_HIGH_PRICE, arg, this);
+                    if (lowPrice) {
+                        imageView.setImageResource(R.drawable.ic_price_up_24dp);
+                        lowPrice = false;
+                        highPrice = true;
+                        getActivity().getSupportLoaderManager().initLoader(SEARCH_BY_LOW_PRICE, arg, ListOfEventSearchFragment.this);
+                    }
+                }
             } else {
 
-                if (lowPrice) {
-                    imageView.setImageResource(R.drawable.ic_price_up_24dp);
-                    lowPrice = false;
-                    highPrice = true;
-                    getActivity().getSupportLoaderManager().initLoader(SEARCH_BY_LOW_PRICE, arg, this);
-                }
-            }
-        } else {
+                lowPrice = true;
+                imageView.setImageResource(R.drawable.ic_price_down_24dp);
+                getActivity().getSupportLoaderManager().initLoader(SEARCH_BY_HIGH_PRICE, arg, ListOfEventSearchFragment.this);
 
-            lowPrice = true;
-            imageView.setImageResource(R.drawable.ic_price_down_24dp);
-            getActivity().getSupportLoaderManager().initLoader(SEARCH_BY_HIGH_PRICE, arg, this);
+            }
 
         }
-    }
+    };
 
 
 
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String arr[] =  new String[]{com.example.polina.meethere.model.Event.ID, com.example.polina.meethere.model.Event.NAME,
-                com.example.polina.meethere.model.Event.DESCRIPTION, com.example.polina.meethere.model.Event.START,
-                com.example.polina.meethere.model.Event.END, com.example.polina.meethere.model.Event.TAGS,
-                com.example.polina.meethere.model.Event.PLACE, com.example.polina.meethere.model.Event.ADDRESS,
-                com.example.polina.meethere.model.Event.AGE_MAX, com.example.polina.meethere.model.Event.AGE_MIN,
-                com.example.polina.meethere.model.Event.BUDGET_MAX, com.example.polina.meethere.model.Event.BUDGET_MIN};
+        String arr[] =  new String[]{Event.ID, Event.NAME,
+                Event.DESCRIPTION, Event.START,
+                Event.END, Event.TAGS,
+                Event.PLACE, Event.ADDRESS,
+                Event.AGE_MAX, Event.AGE_MIN,
+                Event.BUDGET_MAX, Event.BUDGET_MIN, Event.LAT, Event.LNG};
         String search = args.getString(Utils.SEARCH, "");
-        int offset = args.getInt(Utils.OFFSET, STEP);
+       String offset = ""+args.getInt(Utils.OFFSET, 0);
          Uri uri = null;
 
 
         switch (id){
             case SEARCH_LOUDER:
-                     uri =   Uri.parse("content://com.example.polina.meethere.data.data/words_search/" + search);
+                     uri =   Uri.parse(String.format("content://com.example.polina.meethere.data.data/words_search/?offset=%s&search=%s" , offset, search));
                 break;
             case SEARCH_BY_LOW_PRICE:
-                  uri =  Uri.parse("content://com.example.polina.meethere.data.data/low_price_search/" + search);
+                  uri =  Uri.parse(String.format("content://com.example.polina.meethere.data.data/low_price_search/?search=%s&offset=%s" ,search,offset));
                 break;
             case SEARCH_BY_HIGH_PRICE:
-                    uri=    Uri.parse("content://com.example.polina.meethere.data.data/high_price_search/" + search);
+                    uri=    Uri.parse(String.format("content://com.example.polina.meethere.data.data/high_price_search/?search=%s&offset=%s" , search, offset));
                 break;
             case SEARCH_BY_DISTANCE:
                 String lon = String.valueOf(args.getDouble(Utils.LON));
                 String lat = String.valueOf(args.getDouble(Utils.LAT));
-                uri =   Uri.parse(String.format("content://com.example.polina.meethere.data.data/distance_search/?lon=%s&lat=%s&search=%s", lon, lat, search));
+                uri =   Uri.parse(String.format("content://com.example.polina.meethere.data.data/distance_search/?lon=%s&lat=%s&search=%s&offset=%s", lon, lat, search, offset));
 
         }
         return new CursorLoader(getActivity(), uri,arr, null, null, null);
@@ -215,15 +243,15 @@ public class ListOfEventSearchFragment extends Fragment implements LoaderManager
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if(data !=null&&data.getCount()!=0) {
+        if(myEventsAdapter.getItemCount() < data.getCount()) {
             l.setVisibility(View.GONE);
-
-            myEventsAdapter.swapCursor(data);
-
-
+            setFlag(true);
         } else {
+            if(myEventsAdapter.getItemCount()==0)
             l.setVisibility(View.VISIBLE);
         }
+        myEventsAdapter.swapCursor(data);
+        loaderWorking = loader.getId();
 
     }
 

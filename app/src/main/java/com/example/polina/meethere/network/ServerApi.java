@@ -52,7 +52,9 @@ public class ServerApi {
     public static final String FOLLOW = "/follow";
     private static final int POPULAR_EVENTS = 445445;
     private static final String FEED = "feed/";
+
     private static final String OFFSET = "?limit=10&offset=";
+    private static final String OFFSET_ = "&limit=10&offset=";
 
 
     public final int FRAGMENT_PAST_EVENTS = 4343430;
@@ -163,29 +165,29 @@ public class ServerApi {
         return new String(buffer);
     }
 
-    public JSONObject loadEventsByCategory(int category) {
-        HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+category );
-        if(category==POPULAR_EVENTS){
-           connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+POPULAR);
+    public JSONObject loadEventsByCategory(String category, String offset) {
+        HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+category + OFFSET + offset );
+        if(Integer.parseInt(category)==POPULAR_EVENTS){
+           connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+POPULAR + OFFSET + offset);
         }
 
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return connector.response();
     }
 
-    public JSONObject loadMyEvents(int timeStamp, int id) {
+    public JSONObject loadMyEvents(String timeStamp, int id, String offset) {
         if(id==-1) return null;
         String host = "";
 
-        switch (timeStamp){
+        switch (Integer.parseInt(timeStamp)){
             case FRAGMENT_PAST_EVENTS:
-               host = (HOST + USER + id+ EVENTS_PAST);
+               host = (HOST + USER + id+ EVENTS_PAST +"/" + OFFSET +offset );
                 break;
             case FRAGMENT_FUTURE_EVENTS:
-                host =(HOST + USER +id+ EVENTS_FUTURE);
+                host =(HOST + USER +id+ EVENTS_FUTURE +"/" + OFFSET +offset );
                 break;
             case FRAGMENT_CREATED_BY_ME_EVENTS:
-                host =(HOST + EVENTS_MY+id);
+                host =(HOST + EVENTS_MY+id + OFFSET_ +offset );
                 break;
         }
         HttpConnector connector = new HttpConnector(host);
@@ -214,21 +216,21 @@ public class ServerApi {
         return connector.response();
     }
 
-    public JSONObject loadEventsByWords(String search, int offset) {
-        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search + "?offset="+offset);
+    public JSONObject loadEventsByWords(String search, String offset) {
+        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search + OFFSET_+offset);
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return connector.response();
     }
 
-    public JSONObject loadEventsByHighPrice(String search, int offset) {
-        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search+SORT_HIGH_PRICE + "?offset="+offset);
+    public JSONObject loadEventsByHighPrice(String search, String offset) {
+        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search+SORT_HIGH_PRICE + OFFSET_+offset);
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return connector.response();
     }
 
 
-    public JSONObject loadEventsByLowPrice(String search, int offset) {
-        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search +SORT_LOW_PRICE + "?offset="+offset);
+    public JSONObject loadEventsByLowPrice(String search, String offset) {
+        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search +SORT_LOW_PRICE + OFFSET_+offset);
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return connector.response();
     }
@@ -261,8 +263,8 @@ public class ServerApi {
         return comments;
     }
 
-    public JSONObject loadEventsByDistance(String longitude, String latitude, String search, int offset) {
-        HttpConnector connector = new HttpConnector(HOST + SEARCH_LON+ longitude +LAT+latitude + SEARCH_WORDS +search+ "?offset="+offset) ;
+    public JSONObject loadEventsByDistance(String longitude, String latitude, String search, String offset) {
+        HttpConnector connector = new HttpConnector(HOST + SEARCH_LON+ longitude +LAT+latitude + SEARCH_WORDS +search+OFFSET_+offset) ;
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return connector.response();
 
@@ -274,8 +276,8 @@ public class ServerApi {
         return connector.response();
     }
 
-    public JSONObject loadUserEvents(String userId) {
-        HttpConnector connector = new HttpConnector(HOST + EVENTS_MY+userId);
+    public JSONObject loadUserEvents(String userId, String offset) {
+        HttpConnector connector = new HttpConnector(HOST + EVENTS_MY+userId + OFFSET_ + offset);
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return connector.response();
     }
@@ -314,10 +316,22 @@ public class ServerApi {
         return connector.response();
     }
 
+    public JSONObject updateEvent( String data, String id) {
+        HttpConnector connector = new HttpConnector(HOST + EVENT + id +"/");
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        connector.patchData(data);
+        return connector.response();
+    }
     public void deleteComment(String eventId, String commentId) {
         HttpConnector connector = new HttpConnector(HOST + String.format(COMMENT_EDIT, eventId, commentId));
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         connector.deleteData();
         connector.response();
+    }
+
+    public JSONObject loadEventsByDistance(String lon, String lat) {
+        HttpConnector connector = new HttpConnector(HOST + SEARCH_LON+ lon +LAT+lat + "&limit=1000&offset=0");
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return  connector.response();
     }
 }

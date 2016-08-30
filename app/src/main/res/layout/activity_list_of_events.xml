@@ -12,6 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:visibility="visible"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:id="@+id/filters_layout"
@@ -25,7 +26,6 @@
             android:id="@+id/distance_filter"
             android:layout_gravity="center"
             android:clickable="true"
-            android:onClick="onDistance"
             android:textColor="@android:color/white"
             android:gravity="center_vertical|center_horizontal"
             android:textSize="18dp" />
@@ -39,7 +39,6 @@
             android:layout_toEndOf="@+id/advanced_search"
             android:layout_weight="1"
             android:clickable="true"
-            android:onClick="onPrice"
             android:gravity="center_horizontal">
 
             <TextView

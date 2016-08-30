@@ -1,5 +1,6 @@
 package com.example.polina.meethere;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.polina.meethere.activities.EventActivity;
+import com.example.polina.meethere.model.Event;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,6 +32,10 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
     private static final int START = 3;
     private static final int PLACE = 6;
     private static final int ADDRESS = 7;
+    private static final int CHANGE_EVENT_REQUEST = 7;
+
+
+
 
 
     public static final String IMG_PATTERN = "https://s3-us-west-1.amazonaws.com/meethere/%s.jpg";
@@ -55,27 +61,33 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
 
 
         holder.name.setText(cursor.getString(NAME));
-//
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-//        Date dateStart = null;
-//        try {
-//            dateStart = simpleDateFormat.parse(cursor.getString(START));
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//
-//        simpleDateFormat = new SimpleDateFormat("EEE, MM dd kk:mm");
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss");
+        Date dateStart = null;
+        try {
+            dateStart = simpleDateFormat.parse(cursor.getString(START));
+            if(dateStart==null){
+                simpleDateFormat = new SimpleDateFormat("[\"yyyy-MM-dd'T'kk:mm:ss\"]");
+                dateStart = simpleDateFormat.parse(cursor.getString(START));
+
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        simpleDateFormat = new SimpleDateFormat("EEE, MM dd kk:mm");
 
 
 
 
-//        holder.time.setText(simpleDateFormat.format(dateStart));
+        holder.time.setText(simpleDateFormat.format(dateStart));
 
         holder.setID(cursor.getString(ID));
+        holder.setUserName(cursor.getString(NAME));
         String url = String.format(IMG_PATTERN, cursor.getString(ID));
         holder.image.setImageURI(Uri.parse(url));
     }
-
 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -90,6 +102,15 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
         private TextView time;
         private RelativeLayout cardView;
         String id;
+        String userName;
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
 
         public void setID(String id) {
             this.id = id;
@@ -106,8 +127,6 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
             rating = (TextView) itemView.findViewById(R.id.address_myevent);
             myEvent = (TextView)itemView.findViewById(R.id.my_event);
             budget = (TextView) itemView.findViewById(R.id.my_event_budget);
-
-
         }
 
 
@@ -116,7 +135,8 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
             System.out.println(id);
             Intent intent = new Intent(context, EventActivity.class);
             intent.putExtra(Utils.EVENT_ID, id);
-            context.startActivity(intent);
+            intent.putExtra(Utils.EVENT_NAME, getUserName());
+            ((Activity) context).startActivityForResult(intent, CHANGE_EVENT_REQUEST);
         }
     }
 }

@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -35,8 +36,10 @@ import com.example.polina.meethere.R;
 import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.adapters.CommentAdapter;
 import com.example.polina.meethere.data.Comment;
+import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.Event;
-import com.example.polina.meethere.model.User;
+import com.example.polina.meethere.model.UserProfile;
+import com.example.polina.meethere.network.NetworkService;
 import com.example.polina.meethere.network.ServerApi;
 import com.example.polina.meethere.views.EndlessRecyclerViewScrollListener;
 
@@ -64,27 +67,45 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
     ServerApi serverApi;
     Double lat;
     Double lng;
+    int id_user;
+    Toolbar toolbar;
+    CollapsingToolbarLayout collapseToolbar;
+
     Event event;
 
     public static final String IMG_PATTERN = "https://s3-us-west-1.amazonaws.com/meethere/%s.jpg";
     public static final String BC_FILTER = "broadcast.filter.event.";
+    private ImageView edit;
+    private BroadcastReceiver createUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean status = intent.getBooleanExtra(NetworkService.STATUS, false);
+            if (status) {
+                new LoadEvent().execute(id);
+                collapseToolbar.setTitle("Xui");
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.event_layout_container);
         id = getIntent().getStringExtra(Utils.EVENT_ID);
         serverApi = app().getServerApi();
         View header = getLayoutInflater().inflate(R.layout.event_header, null);
         description = (TextView) header.findViewById(R.id.descriprion_my_event);
         image = (ImageView) findViewById(R.id.image_my_event);
+        edit = (ImageView) header.findViewById(R.id.edit_event);
         join = (CheckBox) header.findViewById(R.id.join_event);
         time = (TextView) header.findViewById(R.id.time_my_event);
         budget = (TextView) header.findViewById(R.id.my_event_budget);
         address = (TextView) header.findViewById(R.id.address_myevent);
         quantity = (TextView) header.findViewById(R.id.people_quantity_my_event);
         comment = (EditText) header.findViewById(R.id.make_comments);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        collapseToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getIntent().getStringExtra(Utils.EVENT_NAME));
@@ -99,8 +120,9 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         image.setImageURI(Uri.parse(url));
         new LoadEvent().execute(id);
         initComments(header);
-
+        LocalBroadcastManager.getInstance(this).registerReceiver(createUpdateReceiver, new IntentFilter(NetworkService.ACTION_UPDATE_EVENT));
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter(BC_FILTER + id));
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(NetworkService.ACTION_UPDATE_EVENT));
     }
 
     @Override
@@ -228,6 +250,29 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         }
 
 
+//    private class LoadJoiners extends AsyncTask<String, Void, JSONObject>{
+//
+//        @Override
+//        protected JSONObject doInBackground(String... params) {
+//            String id = params[0];
+//
+//            JSONObject jsonObject = serverApi.loadJoiners(id);
+//
+//            return jsonObject;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(JSONObject jsonObject) {
+//            System.out.println(jsonObject + " ------------------========================");
+//            List<User> users = Utils.parseUsersList(jsonObject);
+//            System.out.println(users.toArray().toString());
+//            quantity.setText(users.size()+"");
+//
+//
+//        }
+//    }
+
+
 
     private class LoadEvent extends AsyncTask<String, Void, JSONObject> {
         protected JSONObject doInBackground(String... args) {
@@ -242,7 +287,9 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
 
         protected void onPostExecute(JSONObject result) {
             try {
-                event = Utils.parseEvent(result);
+                System.out.println(result);
+                final Event event = Utils.parseEvent(result);
+
                 description.setText(event.getDescription());
                 join.setChecked(event.getJoin());
                 quantity.setText(event.getAttendances()+"");
@@ -250,11 +297,45 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
                 Date dateStart = simpleDateFormat.parse(event.getStart());
                 Date dateEnd = simpleDateFormat.parse(event.getEnd());
                 simpleDateFormat = new SimpleDateFormat("EEE, MMM dd kk:mm");
+                id_user =  ((App) getApplication()).pref().getInt(UserProfile.USER_ID, -1);
+                if(id_user==event.getUserId()){
+                    join.setVisibility(View.GONE);
+                    edit.setVisibility(View.VISIBLE);
+                    edit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(EventActivity.this, NewEventActivity.class);
+                            intent.putExtra(Event.NAME, event.getName());
+                            intent.putExtra(Event.DESCRIPTION, event.getDescription());
+
+                          int arr[] = new int[event.getTag().size()];
+
+                                for (int i = 0; i < event.getTag().size(); i++) {
+                                    arr[i] = event.getTag().get(i);
+                                }
+
+                            intent.putExtra(Event.TAGS, arr);
+                            intent.putExtra(Event.START, event.getStart());
+                            intent.putExtra(Event.END, event.getEnd());
+                            intent.putExtra(Event.ID, event.getId());
+
+                            intent.putExtra(Event.PLACE, event.getAddress()!=null?event.getAddress():"");
+                            intent.putExtra(Event.LAT, event.getPlace()!=null?event.getPlace().get(0):0);
+                            intent.putExtra(Event.LNG, event.getPlace()!=null?event.getPlace().get(1):0);
+                            intent.putExtra(Event.BUDGET_MIN, event.getBudgetMin());
+                            intent.putExtra(Event.BUDGET_MAX, event.getBudgetMax());
 
 
+                            startActivity(intent);
+                        }
+                    });
+                }
+                if(dateStart.getDay()==dateStart.getDay()){
+                    time.setText(simpleDateFormat.format(dateStart) + " - " + simpleDateFormat.format(dateEnd));
+                } else {
+                    time.setText(simpleDateFormat.format(dateStart) + " - " + simpleDateFormat.format(dateEnd));
+                }
 
-
-                time.setText(simpleDateFormat.format(dateStart) + " - " + simpleDateFormat.format(dateEnd));
                 if(event.getBudgetMax() == event.getBudgetMin()){
                     budget.setText("" + event.getBudgetMin());
                 } else {

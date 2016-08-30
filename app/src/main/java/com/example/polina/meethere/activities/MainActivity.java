@@ -4,9 +4,9 @@ import android.app.DatePickerDialog;
 import android.app.SearchManager;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -14,12 +14,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -32,15 +31,17 @@ import com.example.polina.meethere.fragments.MyEventsListsFragment;
 import com.example.polina.meethere.fragments.NewEventFragment;
 import com.example.polina.meethere.fragments.ProfileFragment;
 import com.example.polina.meethere.fragments.SearchResultsFragment;
+import com.example.polina.meethere.model.UserProfile;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.login.LoginManager;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MainActivity extends AbstractMeethereActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -65,6 +66,7 @@ public class MainActivity extends AbstractMeethereActivity
 
     private FindEventFragment findEventFragment;
     private String FEED = "feed";
+    Set<String> category;
 
 
 
@@ -74,7 +76,9 @@ public class MainActivity extends AbstractMeethereActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         categoryFragment = CategoryFragment.newInstance();
-        feedFragment = FeedFragment.newInstance();
+        SharedPreferences sharedPreferences = getSharedPreferences("pref", MODE_PRIVATE);
+        category =  sharedPreferences.getStringSet(UserProfile.CATEGORY, new HashSet<String>());
+        feedFragment = FeedFragment.newInstance(category);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, feedFragment, FEED).addToBackStack(null).commit();
         myEventsListsFragment = MyEventsListsFragment.newInstance();
         newEventFragment = NewEventFragment.newInstance();
@@ -426,7 +430,7 @@ public class MainActivity extends AbstractMeethereActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, categoryFragment)
                     .addToBackStack(null).commit();
         } else if (id == R.id.nav_news) {
-            feedFragment = FeedFragment.newInstance();
+            feedFragment = FeedFragment.newInstance(category);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, feedFragment)
                     .addToBackStack(null).commit();
 
@@ -438,6 +442,15 @@ public class MainActivity extends AbstractMeethereActivity
         return true;
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ((keyCode == KeyEvent.KEYCODE_BACK))
+        {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
 
 

@@ -3,6 +3,7 @@ package com.example.polina.meethere.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,21 +15,21 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.example.polina.meethere.R;
+import com.example.polina.meethere.model.Event;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link NewEventDescriptionFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link NewEventDescriptionFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class NewEventDescriptionFragment extends android.support.v4.app.Fragment{
     EditText name;
     EditText description;
+    Bundle b;
 
-    public static NewEventDescriptionFragment newInstance() {
+
+    public static NewEventDescriptionFragment newInstance(String name, String description) {
         NewEventDescriptionFragment fragment = new NewEventDescriptionFragment();
+        Bundle bundle =  new Bundle();
+        bundle.putString(Event.NAME, name);
+        bundle.putString(Event.DESCRIPTION, description);
+        fragment.setArguments(bundle);
 
         return fragment;
     }
@@ -49,14 +50,26 @@ public class NewEventDescriptionFragment extends android.support.v4.app.Fragment
     };
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        b = getArguments();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_new_event_description, container, false);
         setHasOptionsMenu(true);
         name = (EditText)v.findViewById(R.id.edit_name);
+
         name.setOnFocusChangeListener(onFocusChangeListener);
         description =(EditText) v.findViewById(R.id.edit_description);
+        if(b!=null) {
+            name.setText(b.getString(Event.NAME));
+            description.setText(b.getString(Event.DESCRIPTION));
+        }
+
         name.setImeOptions(EditorInfo.IME_ACTION_DONE);
         description.setImeOptions(EditorInfo.IME_ACTION_DONE);
         description.setOnFocusChangeListener(onFocusChangeListener);

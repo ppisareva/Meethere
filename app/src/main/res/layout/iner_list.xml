@@ -30,21 +30,10 @@
             android:contextClickable="true"
             android:layout_gravity="center_vertical"
             android:textSize="18dp"
+            android:clickable="true"
+            android:onClick="onMore"
             android:layout_marginLeft="16dp" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/more"
-            android:onClick="onMore"
-            android:id="@+id/list_learn_more"
-            android:background="@android:color/transparent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:textSize="13dp"
-            android:textColor="@color/blue"
-            android:textStyle="italic"
-            android:layout_gravity="center_vertical" />
     </LinearLayout>
 
 </RelativeLayout>

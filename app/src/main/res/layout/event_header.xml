@@ -4,17 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/app_bar_main"
+
     android:padding="16dp"
     tools:context=".activities.EventActivity">
+
+    <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+    <!--tools:showIn="@layout/app_bar_main"-->
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/time_my_event"
-        android:textSize="12sp"
+        android:text="sdcsdcscsc"
+        android:textSize="17dp"
         />
 
     <CheckBox
@@ -26,15 +29,29 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_event"
+        android:src="@drawable/ic_mode_edit_black_24dp"
+        android:clickable="true"
+
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:id="@+id/address_myevent"
-        android:drawableRight="@android:drawable/ic_dialog_map"
+        android:drawableRight="@drawable/ic_pin_drop_black_24dp"
         android:onClick="onMap"
         android:layout_below="@+id/time_my_event"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="30dp"
+        android:text="kjkljljkl"
+        android:textSize="18dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,12 +68,12 @@
         android:clickable="true"
         android:onClick="onJoiners"
         android:id="@+id/people_quantity_my_event"
-        android:drawableLeft="@drawable/people"
+        android:drawableRight="@drawable/people"
         android:drawablePadding="5dp"
+        android:gravity="center_vertical"
         android:layout_alignTop="@+id/my_event_budget"
-        android:layout_alignRight="@+id/join_event"
-        android:layout_alignEnd="@+id/join_event"
-        android:gravity="center_vertical" />
+        android:layout_alignRight="@+id/descriprion_my_event"
+        android:layout_alignEnd="@+id/descriprion_my_event" />
 
     <TextView
         android:layout_width="match_parent"

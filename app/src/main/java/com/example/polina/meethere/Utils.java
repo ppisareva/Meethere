@@ -13,6 +13,7 @@ import com.example.polina.meethere.model.Event;
 import com.example.polina.meethere.model.User;
 import com.example.polina.meethere.model.UserProfile;
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -246,14 +247,19 @@ public class Utils {
             event.setName(eventJSON.optString(Event.NAME));
             event.setDescription(eventJSON.optString(Event.DESCRIPTION));
             event.setStart(eventJSON.optString(Event.START));
+        JSONObject author = eventJSON.optJSONObject(Event.CREATED_BY);
+        if(author!=null){
+            event.setUserId(author.optInt(Event.ID_USER));
+        }
+
             event.setEnd(eventJSON.optString(Event.END));
             event.setJoin(eventJSON.optBoolean(Event.JOINED));
             event.setAttendances(eventJSON.optInt(Event.ATTENDANCES));
             List<Double> l = new ArrayList<>();
             if(eventJSON.optJSONArray(Event.PLACE)!=null) {
                 try {
-                    l.add(eventJSON.optJSONArray(Event.PLACE).getDouble(0));
                     l.add(eventJSON.optJSONArray(Event.PLACE).getDouble(1));
+                    l.add(eventJSON.optJSONArray(Event.PLACE).getDouble(0));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

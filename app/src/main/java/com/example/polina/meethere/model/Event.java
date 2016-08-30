@@ -7,10 +7,13 @@ import java.util.List;
 /**
  * Created by polina on 24.05.16.
  */
-public class Event  {
+public class Event {
 
 
     public static final String ID = "id";
+    public static final String ID_USER = "user_id";
+    public static final String CREATED_BY = "created_by";
+
     public static final String NAME = "name";
     public static final String DESCRIPTION =  "description";
     public static final String  START="start";
@@ -30,6 +33,7 @@ public class Event  {
 
 
     String id;
+    int userId;
     String name;
     String description;
     String start;
@@ -37,6 +41,8 @@ public class Event  {
     List<Double> place;
     String address;
     int ageMin;
+    Double lat;
+    Double lng;
     int ageMax;
     int budgetMin;
     int budgetMax;
@@ -44,6 +50,22 @@ public class Event  {
     Boolean join;
     int attendances;
     User createdBy;
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public void setLng(Double lng) {
+        this.lng = lng;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public int getAttendances() {
         return attendances;
@@ -107,6 +129,16 @@ public class Event  {
 
     public void setPlace(List<Double> place) {
         this.place = place;
+        lat = place.get(0);
+        lng = place.get(1);
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public Double getLng() {
+        return lng;
     }
 
     public String getAddress() {

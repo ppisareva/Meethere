@@ -19,11 +19,50 @@
     <string name="promo_3">Не знаєш, як провести час?</string>
     <string name="telefone">Мобільний телефон</string>
 
+    <string name="one_week">недiля</string>
+    <string name="two_weeks">недели</string>
+    <string name="five_weeks">недель</string>
     <string name="notification_invite">%1$s запрошує до %2$s</string>
     <string name="notification_joined">%1$s щойно приєднався до %2$s</string>
     <string name="notification_create_event">%1$s створив подію %2$s</string>
     <string name="notification_follow">%1$s почав фоловити вас</string>
     <string name="notification_comment">%1$s відкоментував %2$s</string>
     <string name="remove_this_comment">Геть цей коментар!</string>
+    <string-array name="category">
+
+
+
+        <item>Авто мото</item>
+        <item>Встреча с друзьями</item>
+        <item>Вечеринки</item>
+        <item>Для одиноких</item>
+        <item>Духовность</item>
+        <item>Еда и напитки</item>
+        <item>Животные</item>
+        <item>Здоровье</item>
+        <item>Игры</item>
+        <item>Искусство и культура</item>
+        <item>Карьера и бизнес</item>
+        <item>Кино</item>
+        <item>Книги</item>
+        <item>Мода и красота</item>
+        <item>Музыка</item>
+        <item>На природе</item>
+        <item>Образование и развитие</item>
+        <item>Общение</item>
+        <item>Паранормальное явление</item>
+        <item>Поддержка</item>
+        <item>Политика</item>
+        <item>Родители и семья</item>
+        <item>Сообщества</item>
+        <item>Спорт и отдых</item>
+        <item>Стиль жизни</item>
+        <item>Технологии</item>
+        <item>Фантастика и Фэнтези</item>
+        <item>Фитнес</item>
+        <item>Фотография</item>
+        <item>Хобби</item>
+        <item>Другое</item>
+    </string-array>
 
 </resources>

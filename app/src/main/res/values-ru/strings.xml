@@ -44,6 +44,11 @@
     <string name="free">Бесплатно</string>
     <string name="see_on_map">Посмотреть на карте</string>
     <string name="action_map">Место</string>
+    <string name="one_week">неделя</string>
+    <string name="two_weeks">недели</string>
+    <string name="five_weeks">недель</string>
+
+
 
     <string name="action_settings">Настройки</string>
     <string name="profile">Мой профиль</string>
@@ -64,6 +69,7 @@
     <string name="sort_by">Сортировать по</string>
     <string name="ok">Выбрать</string>
     <string-array name="category">
+
 
 
         <item>Авто мото</item>

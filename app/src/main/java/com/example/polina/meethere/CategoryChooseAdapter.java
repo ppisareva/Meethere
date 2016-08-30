@@ -1,5 +1,6 @@
 package com.example.polina.meethere;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,8 +32,9 @@ public class CategoryChooseAdapter extends RecyclerView.Adapter<CategoryChooseAd
         }
     };;
 
-    public CategoryChooseAdapter(List<String> list) {
+    public CategoryChooseAdapter(List<String> list, Set<Integer> checked) {
         this.list = list;
+        this.checked = checked;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.polina.meethere;
 /**
  * Created by polina on 04.06.16.
  */
+import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.DataSetObserver;
@@ -74,7 +75,7 @@ public abstract class CursorRecyclerAdapter<VH
             throw new IllegalStateException("this should only be called when the cursor is valid");
         }
         if (!mCursor.moveToPosition(i)) {
-            throw new IllegalStateException("couldn't move cursor to position " + i);
+         return;
         }
         onBindViewHolderCursor(holder, mCursor);
     }
@@ -260,6 +261,8 @@ public abstract class CursorRecyclerAdapter<VH
     protected void onContentChanged() {
 
     }
+
+
 
     private class ChangeObserver extends ContentObserver {
         public ChangeObserver() {
