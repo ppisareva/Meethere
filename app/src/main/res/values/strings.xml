@@ -219,6 +219,10 @@
     <string name="first_name">Имя</string>
     <string name="last_name">Фамилия</string>
     <string name="remove_this_comment">Delete this comment?</string>
+    <string name="joned_event">присоедениться к встрече</string>
+    <string name="edit_event">изменить событие</string>
+    <string name="invite_friends">пригласить друзей</string>
+    <string name="leave_event">покинуть встречу</string>
     <string-array name="category">
 
 

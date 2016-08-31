@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -25,29 +26,36 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.polina.meethere.FollowersDialigAdapter;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.adapters.CommentAdapter;
 import com.example.polina.meethere.data.Comment;
 import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.Event;
+import com.example.polina.meethere.model.User;
 import com.example.polina.meethere.model.UserProfile;
 import com.example.polina.meethere.network.NetworkService;
 import com.example.polina.meethere.network.ServerApi;
 import com.example.polina.meethere.views.EndlessRecyclerViewScrollListener;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -70,12 +78,15 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
     int id_user;
     Toolbar toolbar;
     CollapsingToolbarLayout collapseToolbar;
+    LinearLayout inviteFriends;
+    List<User> users = new ArrayList<>();
+
 
     Event event;
 
     public static final String IMG_PATTERN = "https://s3-us-west-1.amazonaws.com/meethere/%s.jpg";
     public static final String BC_FILTER = "broadcast.filter.event.";
-    private ImageView edit;
+    private LinearLayout edit;
     private BroadcastReceiver createUpdateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -90,14 +101,14 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.event_layout_container);
         id = getIntent().getStringExtra(Utils.EVENT_ID);
         serverApi = app().getServerApi();
         View header = getLayoutInflater().inflate(R.layout.event_header, null);
         description = (TextView) header.findViewById(R.id.descriprion_my_event);
         image = (ImageView) findViewById(R.id.image_my_event);
-        edit = (ImageView) header.findViewById(R.id.edit_event);
+        inviteFriends = (LinearLayout) header.findViewById(R.id.layout_invite_friends);
+        edit = (LinearLayout) header.findViewById(R.id.layout_edit_event);
         join = (CheckBox) header.findViewById(R.id.join_event);
         time = (TextView) header.findViewById(R.id.time_my_event);
         budget = (TextView) header.findViewById(R.id.my_event_budget);
@@ -116,14 +127,57 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
                new JoinEvent().execute(isChecked);
             }
         });
+        inviteFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(EventActivity.this);
+                dialog.setTitle(getString(R.string.invite_friends));
+                ArrayAdapter<User> adapter = new FollowersDialigAdapter(EventActivity.this,  users, id );
+                dialog.setAdapter(adapter, null);
+
+
+                dialog.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // getting listview from alert box
+
+
+
+
+                        Toast.makeText(getApplicationContext(),"Selected digit:",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+// add negative button
+                dialog.setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // cancel code here
+                            }
+                        });
+                AlertDialog alert1 = dialog.create();
+                alert1.show();
+
+            }
+        });
         String url = String.format(IMG_PATTERN, id);
         image.setImageURI(Uri.parse(url));
         new LoadEvent().execute(id);
+        new LoadUsers().execute();
+
         initComments(header);
         LocalBroadcastManager.getInstance(this).registerReceiver(createUpdateReceiver, new IntentFilter(NetworkService.ACTION_UPDATE_EVENT));
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter(BC_FILTER + id));
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(NetworkService.ACTION_UPDATE_EVENT));
+
+
+// dialog
+
     }
+
+
 
     @Override
     protected void onDestroy() {
@@ -233,21 +287,29 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
 
     }
 
-    private class JoinEvent extends AsyncTask<Boolean, Void, Void> {
-        protected Void doInBackground(Boolean... args) {
+    private class JoinEvent extends AsyncTask<Boolean, Void, Boolean> {
+        protected Boolean doInBackground(Boolean... args) {
             Boolean join = args[0];
             JSONObject jsonObject = new JSONObject();
             if (join) {
                 jsonObject = serverApi.joinEvent(id);
+                return true;
             } else {
                 jsonObject = serverApi.unjoinEvent(id);
+                return false;
             }
-            System.out.println(jsonObject);
-
-
-            return null;
         }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            if(aBoolean)
+            {
+                join.setText(R.string.leave_event);
+            } else {
+                join.setText(R.string.joned_event);
+            }
         }
+    }
 
 
 //    private class LoadJoiners extends AsyncTask<String, Void, JSONObject>{
@@ -292,6 +354,9 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
 
                 description.setText(event.getDescription());
                 join.setChecked(event.getJoin());
+                if(event.getJoin()==true){
+                    join.setText(R.string.leave_event);
+                }
                 quantity.setText(event.getAttendances()+"");
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                 Date dateStart = simpleDateFormat.parse(event.getStart());
@@ -331,7 +396,8 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
                     });
                 }
                 if(dateStart.getDay()==dateStart.getDay()){
-                    time.setText(simpleDateFormat.format(dateStart) + " - " + simpleDateFormat.format(dateEnd));
+                    SimpleDateFormat minuts = new SimpleDateFormat("HH:mm");
+                    time.setText(simpleDateFormat.format(dateStart) + " - " + minuts.format(dateEnd));
                 } else {
                     time.setText(simpleDateFormat.format(dateStart) + " - " + simpleDateFormat.format(dateEnd));
                 }
@@ -438,4 +504,35 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
             commentAdapter.notifyItemInserted(1);
         }
     };
+
+    class LoadUsers extends AsyncTask<Void, Void, JSONObject>{
+
+        @Override
+        protected JSONObject doInBackground(Void... params) {
+            App app = (App) getApplication();
+
+             return app.getServerApi().loadFollowing(app.getUserProfile().getId());
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            if(jsonObject!=null){
+                JSONArray arr= null;
+                try {
+                     arr = jsonObject.getJSONArray("results");
+
+                for(int i =0; i<arr.length(); i++){
+                    User user = User.parseUser( arr.getJSONObject(i));
+                    users.add(user);
+                }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+
+        }
+    }
 }

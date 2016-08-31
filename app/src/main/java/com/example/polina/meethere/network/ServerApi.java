@@ -39,6 +39,7 @@ public class ServerApi {
     public static final String SORT_LOW_PRICE = "&sort_by=+budget_min";
     public static final String SORT_HIGH_PRICE = "&sort_by=-budget_max";
 
+
     public static final String EVENTS_BY_CATEGORY = "find-event/tags/all/";
     public static final String USER = "user/";
     public static final String PROFILE = "/profile/";
@@ -50,11 +51,14 @@ public class ServerApi {
     public static final String EVENTS_FUTURE = "/events/future";
     public static final String EVENTS_MY = "find-event?created_by=";
     public static final String FOLLOW = "/follow";
+    public static final String FOLLOWERS = "/followers";
+    public static final String FOLLOWINGS = "/followings";
     private static final int POPULAR_EVENTS = 445445;
     private static final String FEED = "feed/";
 
     private static final String OFFSET = "?limit=10&offset=";
     private static final String OFFSET_ = "&limit=10&offset=";
+    private static final String INVITE ="/invite/" ;
 
 
     public final int FRAGMENT_PAST_EVENTS = 4343430;
@@ -332,6 +336,19 @@ public class ServerApi {
     public JSONObject loadEventsByDistance(String lon, String lat) {
         HttpConnector connector = new HttpConnector(HOST + SEARCH_LON+ lon +LAT+lat + "&limit=1000&offset=0");
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return  connector.response();
+    }
+
+    public JSONObject loadFollowing(int id) {
+        HttpConnector connector = new HttpConnector(HOST + USER + id +FOLLOWINGS );
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return  connector.response();
+    }
+
+    public JSONObject sendInvite(String eventId, String user) {
+        HttpConnector connector = new HttpConnector(HOST + EVENT + eventId +INVITE+user );
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        connector.postData();
         return  connector.response();
     }
 }

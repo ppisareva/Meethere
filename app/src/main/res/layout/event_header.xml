@@ -16,31 +16,89 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/time_my_event"
-        android:text="sdcsdcscsc"
+        android:text="Sanday, jun 24 12 00 - 16 00"
         android:textSize="17dp"
         />
 
     <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
         android:id="@+id/join_event"
+        android:text="@string/joned_event"
         android:button="@drawable/chack_box_join"
         android:checked="false"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:background="@color/backgroung"
+        android:layout_below="@+id/descriprion_my_event"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:textSize="19dp" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/edit_event"
-        android:src="@drawable/ic_mode_edit_black_24dp"
+
+
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:id="@+id/layout_edit_event"
         android:clickable="true"
-
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:visibility="gone"
-        />
+        android:background="@color/backgroung"
+        android:layout_below="@+id/descriprion_my_event"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp">
 
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="19dp"
+            android:id="@+id/edit_event"
+            android:src="@drawable/ic_mode_edit_black_24dp"
+
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_event"
+            android:textSize="19dp"
+            android:layout_gravity="center"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+
+        android:id="@+id/layout_invite_friends"
+        android:clickable="true"
+        android:background="@android:color/holo_green_light"
+        android:layout_marginTop="60dp"
+        android:layout_below="@+id/descriprion_my_event"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="19dp"
+            android:id="@+id/edit_event"
+            android:src="@drawable/people"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/invite_friends"
+            android:layout_gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="19dp" />
+    </LinearLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,10 +106,12 @@
         android:id="@+id/address_myevent"
         android:drawableRight="@drawable/ic_pin_drop_black_24dp"
         android:onClick="onMap"
-        android:layout_below="@+id/time_my_event"
-        android:layout_marginTop="30dp"
         android:text="kjkljljkl"
-        android:textSize="18dp" />
+        android:textSize="18dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/people_quantity_my_event"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -59,7 +119,10 @@
         android:id="@+id/my_event_budget"
         android:textColor="#2cb11a"
         android:layout_below="@+id/address_myevent"
-        android:layout_marginTop="12dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:text=";SDKC;LSdjCL;S" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -71,24 +134,29 @@
         android:drawableRight="@drawable/people"
         android:drawablePadding="5dp"
         android:gravity="center_vertical"
-        android:layout_alignTop="@+id/my_event_budget"
-        android:layout_alignRight="@+id/descriprion_my_event"
-        android:layout_alignEnd="@+id/descriprion_my_event" />
+        android:layout_alignBaseline="@+id/time_my_event"
+        android:layout_alignBottom="@+id/time_my_event"
+        android:layout_alignRight="@+id/address_myevent"
+        android:layout_alignEnd="@+id/address_myevent" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/people_quantity_my_event"
-        android:id="@+id/descriprion_my_event" />
+        android:id="@+id/descriprion_my_event"
+        android:layout_below="@+id/my_event_budget"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:text="&apos;ldk;alskdl;akd;ks;ldklsdkA;LD" />
 
     <EditText
         android:id="@+id/make_comments"
         android:hint="@string/make_comment"
-        android:layout_below="@id/descriprion_my_event"
-        android:layout_toLeftOf="@+id/comment"
         android:imeOptions="actionSend"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:layout_below="@+id/descriprion_my_event"/>
 
     <ImageButton
         android:id="@+id/comment"
