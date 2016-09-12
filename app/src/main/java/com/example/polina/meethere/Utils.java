@@ -50,6 +50,7 @@ public class Utils {
     public static final java.lang.String OFFSET = "offset";
     public static final int PROFILE = 1;
     public static final int EVENT = 0;
+    public static final int POPULAR = 445445;
 
     static {
         INPUT_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));

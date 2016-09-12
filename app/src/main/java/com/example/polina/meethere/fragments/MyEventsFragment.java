@@ -124,10 +124,8 @@ public class MyEventsFragment extends android.support.v4.app.Fragment implements
                uri
                 ,    new String[]{Event.ID, Event.NAME,
                 Event.DESCRIPTION, Event.START,
-                Event.END, Event.TAGS,
-                Event.PLACE, Event.ADDRESS,
-                Event.AGE_MAX, Event.AGE_MIN,
-                Event.BUDGET_MAX, Event.BUDGET_MIN, Event.LAT, Event.LNG}, null, null, null);
+                 Event.TAGS,
+                Event.JOINED, Event.BUDGET_MIN, Event.LAT, Event.LNG}, null, null, null);
 
 
     }

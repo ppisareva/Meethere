@@ -115,14 +115,6 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
             int idCategory = Integer.parseInt(c);
             categoryList.add(new Category(idCategory, arr[idCategory]));
         }
-//        categoryList.add(new Category(1, "Фитнес"));
-//        categoryList.add(new Category(2, "Еда и напитки"));
-//        categoryList.add(new Category(3, "Духовность"));
-//        categoryList.add(new Category(4, "С друзьями"));
-//        categoryList.add(new Category(5, "На природе"));
-//        categoryList.add(new Category(6, "Книги"));
-//        categoryList.add(new Category(7, "Политика"));
-
         return categoryList;
     }
 
@@ -140,13 +132,11 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(getActivity(),
-               Uri.parse(String.format("content://com.example.polina.meethere.data.data/category/?category=%s&offset=%s", id, 0))
+               Uri.parse(String.format("content://com.example.polina.meethere.data.data/category_feed/?category=%s", id))
                 ,  new String[]{Event.ID, Event.NAME,
                 Event.DESCRIPTION, Event.START,
-                Event.END, Event.TAGS,
-                Event.PLACE, Event.ADDRESS,
-                Event.AGE_MAX, Event.AGE_MIN,
-                Event.BUDGET_MAX, Event.BUDGET_MIN, Event.LAT, Event.LNG}, null, null, null);
+                Event.TAGS,
+                Event.JOINED,Event.BUDGET_MIN, Event.LAT, Event.LNG}, null, null, null);
     }
 
     @Override
@@ -157,6 +147,6 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
+        verticalEventAdapter.updateCursor(loader.getId(), null);
     }
 }

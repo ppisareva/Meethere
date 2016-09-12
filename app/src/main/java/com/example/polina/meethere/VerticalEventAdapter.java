@@ -51,8 +51,10 @@ public class VerticalEventAdapter extends RecyclerView.Adapter<VerticalEventAdap
     }
 
     private CursorRecyclerAdapter getAdapter(int categoryId) {
-        if (!adapters.containsKey(categoryId))
+        if (!adapters.containsKey(categoryId)) {
+            System.err.println("::: " + categoryId + " this: " + this + " adapters: " + adapters);
             adapters.put(categoryId, new HorizontalEventAdapter(context, categoryId));
+        }
         return adapters.get(categoryId);
     }
     @Override
@@ -88,7 +90,7 @@ public class VerticalEventAdapter extends RecyclerView.Adapter<VerticalEventAdap
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            recyclerView = (RecyclerView) itemView.findViewById(R.id.horizontal_list);
+          recyclerView = (RecyclerView) itemView.findViewById(R.id.horizontal_list);
 
 
 

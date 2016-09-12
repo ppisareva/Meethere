@@ -22,9 +22,8 @@ import com.example.polina.meethere.activities.ListOfEventsActivity;
  */
 public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.ViewHolder> {
 
-    private static final int ID = 0;
-    private static final int NAME = 1;
-    private static final int DESCRIPTION = 2;
+    private static final int ID = 1;
+    private static final int NAME = 2;
     private Activity context;
     private static final int FOOTER_VIEW = 3223;
    int category;

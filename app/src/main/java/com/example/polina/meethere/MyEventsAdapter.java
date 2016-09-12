@@ -30,8 +30,6 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
     Context context;
     private static final int NAME = 1;
     private static final int START = 3;
-    private static final int PLACE = 6;
-    private static final int ADDRESS = 7;
     private static final int CHANGE_EVENT_REQUEST = 7;
 
 
@@ -81,7 +79,7 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
 
 
 
-        holder.time.setText(simpleDateFormat.format(dateStart));
+       holder.time.setText(simpleDateFormat.format(dateStart));
 
         holder.setID(cursor.getString(ID));
         holder.setUserName(cursor.getString(NAME));

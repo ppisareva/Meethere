@@ -144,10 +144,8 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String arr[] =  new String[]{Event.ID, Event.NAME,
                 Event.DESCRIPTION, Event.START,
-                Event.END, Event.TAGS,
-                Event.PLACE, Event.ADDRESS,
-                Event.AGE_MAX, Event.AGE_MIN,
-                Event.BUDGET_MAX, Event.BUDGET_MIN, Event.LAT, Event.LNG};
+                 Event.TAGS,
+                Event.JOINED,  Event.BUDGET_MIN, Event.LAT, Event.LNG};
        String userId = args.getString(Utils.USER_ID);
         String o = ""+args.getInt(Utils.OFFSET, 0);
 

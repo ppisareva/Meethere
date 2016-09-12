@@ -5,11 +5,16 @@ import android.content.SharedPreferences;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.location.Location;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 
 import com.example.polina.meethere.Utils;
+import com.example.polina.meethere.fragments.FeedFragment;
 import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.Event;
 import com.example.polina.meethere.model.Feed;
@@ -19,8 +24,11 @@ import com.example.polina.meethere.network.ServerApi;
 
 import org.json.JSONObject;
 
+import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by polina on 03.06.16.
@@ -28,16 +36,20 @@ import java.util.List;
 public class EventProvider extends android.content.ContentProvider {
 
     public static final String AUTHORITY = "com.example.polina.meethere.data.data";
+    private static final long REFRESH_TIMEOUT = 10000;
 
-    private static final int MY_EVENTS = 7;
-    private static final int USER_EVENTS = 8;
+    EventsSQLiteHelper database;
+
+    private static final int MY_EVENTS = 8;
+    private static final int USER_EVENTS = 9;
     private static final int CATEGORY_ID = 1;
-    private static final int SEARCH = 9;
-    private static final int SEARCH_LOW_PRICE = 6;
-    private static final int SEARCH_BY_HIGH = 5;
-    private static final int SEARCH_BY_DISTANCE = 2;
+    private static final int SEARCH = 10;
+    private static final int SEARCH_LOW_PRICE = 7;
+    private static final int SEARCH_BY_HIGH = 6;
+    private static final int SEARCH_BY_DISTANCE = 3;
     private List<Object[]> feedData = new ArrayList<>();
     private List<Object[]> eventsData = new ArrayList<>();
+
     private List<Object[]> eventsMy = new ArrayList<>();
     private List<Object[]> eventsPast = new ArrayList<>();
     private List<Object[]> eventsFuture = new ArrayList<>();
@@ -48,15 +60,19 @@ public class EventProvider extends android.content.ContentProvider {
 
     private static final UriMatcher URI_MATCHER;
 
-    private static final int SEARCH_FREINDS = 4 ;
+    private static final int SEARCH_FREINDS = 5;
 
-    private static final int FEED = 3;
+    private static final int FEED = 4;
+    private SQLiteDatabase db;
+
+    private static final int CATEGORY_FEED =2 ;
 
     // prepare the UriMatcher
     static {
         URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 
         URI_MATCHER.addURI(AUTHORITY,  "category",  CATEGORY_ID);
+        URI_MATCHER.addURI(AUTHORITY,  "category_feed",  CATEGORY_FEED);
         URI_MATCHER.addURI(AUTHORITY, "distance_search", SEARCH_BY_DISTANCE);
         URI_MATCHER.addURI(AUTHORITY, "feed", FEED);
         URI_MATCHER.addURI(AUTHORITY, "friends_search/*", SEARCH_FREINDS);
@@ -68,34 +84,64 @@ public class EventProvider extends android.content.ContentProvider {
 
     }
 
+    private Map<String, Long> LAST_UPDATE = new HashMap<>();
     @Override
     public boolean onCreate() {
-
+         database = new EventsSQLiteHelper(getContext());
         return false;
     }
 
     @Nullable
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-
         return list(uri);
-
     }
 
-    private Cursor list(Uri uri){
+    private Cursor list( Uri uri){
         List<Event> events = null;
         ServerApi serverApi = ((App) getContext().getApplicationContext()).getServerApi();
         String search = "";
         JSONObject jsonObject = null;
         String offset ="";
+        String categoryId = "";
 
 
+
+
+
+        Uri previousUri = uri;
         switch (URI_MATCHER.match(uri)) {  /// done
+            case CATEGORY_FEED:
+                categoryId = uri.getQueryParameter("category");
+                if(categoryId.equals(Utils.POPULAR+"")){
+                    jsonObject = serverApi.loadEventsByCategory(categoryId, offset);
+                    MatrixCursor  cursor =  new MatrixCursor(new String[]{"_id",  Event.ID, Event.NAME, Event.DESCRIPTION, Event.START,
+                            Event.TAGS, Event.JOINED,  Event.BUDGET_MIN, Event.LAT, Event.LNG});
+                    events = Utils.parseEventList(jsonObject);
+                        eventsData.clear();
+                    if(events==null) return null;
+                    for (Event event : events) {
+                        eventsData.add(new Object[]{event.getId(), event.getName(), event.getDescription(), event.getStart(),
+                                event.getTag(), event.getJoin(),  event.getBudgetMin(), event.getLat(), event.getLng()});
+                    }
+                    for (Object[] row : eventsData) {
+                        cursor.addRow(row);
+                    }
+                    return cursor;
+                }
+                if (!LAST_UPDATE.containsKey(categoryId) || LAST_UPDATE.get(categoryId) + REFRESH_TIMEOUT < System.currentTimeMillis())
+                    new LoadEvents().execute(categoryId, uri.toString());
+                Cursor cursor = database.getCursor(categoryId);
+                cursor.setNotificationUri(getContext().getContentResolver(), previousUri);
+                return  cursor;
+
             case CATEGORY_ID:
+                categoryId = uri.getQueryParameter("category");
                 offset = uri.getQueryParameter("offset");
-               String categoryId = uri.getQueryParameter("category");
                 jsonObject = serverApi.loadEventsByCategory(categoryId, offset);
                 break;
+
+
             case MY_EVENTS: //// done
                 offset = uri.getQueryParameter("offset");
                 String timeStamp = uri.getQueryParameter("id");
@@ -194,8 +240,8 @@ public class EventProvider extends android.content.ContentProvider {
         }
             if(events==null) return null;
             for (Event event : events) {
-                eventsData.add(new Object[]{event.getId(), event.getName(), event.getDescription(), event.getStart(), event.getEnd(),
-                        event.getTag(), event.getPlace(),  event.getAddress(), event.getAgeMax(), event.getAgeMin(), event.getBudgetMax(), event.getBudgetMin(), event.getLat(), event.getLng()});
+                eventsData.add(new Object[]{event.getId(), event.getName(), event.getDescription(), event.getStart(),
+                        event.getTag(), event.getJoin(),  event.getBudgetMin(), event.getLat(), event.getLng()});
             }
         for (Object[] row : eventsData) {
             cursor.addRow(row);
@@ -205,7 +251,7 @@ public class EventProvider extends android.content.ContentProvider {
 
     private MatrixCursor getEventCursor(){
         return  new MatrixCursor(new String[]{"_id", Event.NAME, Event.DESCRIPTION, Event.START,
-                Event.END, Event.TAGS, Event.PLACE, Event.ADDRESS, Event.AGE_MAX, Event.AGE_MIN, Event.BUDGET_MAX, Event.BUDGET_MIN, Event.LAT, Event.LNG});
+               Event.TAGS, Event.JOINED,  Event.BUDGET_MIN, Event.LAT, Event.LNG});
     }
 
     private MatrixCursor getEventCursor(List<Object[]> list, String offset, List<Event> events){
@@ -214,8 +260,8 @@ public class EventProvider extends android.content.ContentProvider {
             list.clear();
         if(events==null) return null;
         for (Event event : events) {
-            list.add(new Object[]{event.getId(), event.getName(), event.getDescription(), event.getStart(), event.getEnd(),
-                    event.getTag(), event.getPlace(), event.getAddress(), event.getAgeMax(), event.getAgeMin(), event.getBudgetMax(), event.getBudgetMin(), event.getLat(), event.getLng()});
+            list.add(new Object[]{event.getId(), event.getName(), event.getDescription(), event.getStart(),
+                    event.getTag(), event.getJoin(), event.getBudgetMin(), event.getLat(), event.getLng()});
         }
         for (Object[] row : list) {
             cursor.addRow(row);
@@ -234,16 +280,83 @@ public class EventProvider extends android.content.ContentProvider {
     @Nullable
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        return null;
+      db=database.getWritableDatabase();
+
+        int uriType = URI_MATCHER.match(uri);
+
+        long id = 0;
+        switch (uriType) {
+            case CATEGORY_FEED:
+                id = db.insert(EventsSQLiteHelper.TABLE_EVENTS, null, values);
+                System.out.println(id);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
+        return Uri.parse(AUTHORITY + "/" + id);
+
     }
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
+        int uriType = URI_MATCHER.match(uri);
+        db=database.getWritableDatabase();
+        int rowsDeleted = 0;
+        switch (uriType) {
+            case CATEGORY_FEED:
+                        rowsDeleted = db.delete(EventsSQLiteHelper.TABLE_EVENTS, selection,
+                        selectionArgs);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
+        return rowsDeleted;
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         return 0;
     }
+
+    class LoadEvents extends AsyncTask<String,Void, Void >{
+
+        @Override
+        protected Void doInBackground(String... params) {
+            ServerApi serverApi = ((App) getContext().getApplicationContext()).getServerApi();
+
+            String categoryId = params[0];
+            Uri uri = Uri.parse(params[1]);
+
+            System.err.println("LoadEvents:: " + uri);
+            JSONObject  jsonObject = serverApi.loadEventsByCategory(categoryId, "0");
+            List<Event> events = Utils.parseEventList(jsonObject);
+
+
+            if(events==null) return null;
+            getContext().getContentResolver().delete(uri, EventsSQLiteHelper.COLUMN_TAGS +" = ?" , new String[]{categoryId});
+            ContentValues[] cvs = new ContentValues[events.size()];
+            for (int i = 0; i < events.size(); i++) {
+                Event event = events.get(i);
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(EventsSQLiteHelper.COLUMN_ID, event.getId());
+                contentValues.put(EventsSQLiteHelper.COLUMN_NAME, event.getName());
+                contentValues.put(EventsSQLiteHelper.COLUMN_DESCRIPTION, event.getDescription());
+                contentValues.put(EventsSQLiteHelper.COLUMN_START, event.getStart());
+                contentValues.put(EventsSQLiteHelper.COLUMN_TAGS, categoryId);
+                contentValues.put(EventsSQLiteHelper.COLUMN_JOIND, event.getJoin());
+                contentValues.put(EventsSQLiteHelper.COLUMN_BUDGET_MIN, event.getBudgetMin());
+                contentValues.put(EventsSQLiteHelper.COLUMN_LAT, event.getLat());
+                contentValues.put(EventsSQLiteHelper.COLUMN_LNG, event.getLng());
+                cvs[i]=contentValues;
+            }
+            System.out.println(getContext().getContentResolver().bulkInsert(uri, cvs));
+            LAST_UPDATE.put(categoryId, System.currentTimeMillis());
+            getContext().getContentResolver().notifyChange(uri, null);
+            return null;
+        }
+
+    }
+
+
 }
+

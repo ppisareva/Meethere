@@ -25,6 +25,7 @@ import com.example.polina.meethere.model.UserProfile;
 
 import org.apmem.tools.layouts.FlowLayout;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
@@ -206,15 +207,21 @@ public class MyInformationActivity extends AppCompatActivity {
     }
 
     class RefreshMyInfo extends AsyncTask<JSONObject, Void, JSONObject>{
+        App app = (App)getApplication();
         @Override
         protected void onPostExecute(JSONObject jsonObject) {
             System.out.println(jsonObject);
-          finish();
+            try {
+                app.saveUserProfile(jsonObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            finish();
         }
 
         @Override
         protected JSONObject doInBackground(JSONObject... params) {
-            App app = (App)getApplication();
+
           return   (app.getServerApi().updateProfile(params[0], String.valueOf(app.getUserProfile().getId())) );
         }
     }
