@@ -91,8 +91,11 @@ public class MyInformationActivity extends AppCompatActivity {
         gender = (CheckBox) findViewById(R.id.gender);
         gender.setChecked(userProfile.isGender());
         for(String i: userProfile.getCategory()){
-           categoryList.add(Integer.getInteger(i));
-           addView(Integer.parseInt(i));
+            // remove
+            if(!i.equals("null")) {
+                categoryList.add(Integer.valueOf(i));
+                addView(Integer.parseInt(i));
+            }
         }
 
 
@@ -133,6 +136,9 @@ public class MyInformationActivity extends AppCompatActivity {
     View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+         int category = (Integer)  v.getTag();
+            categoryList.remove(category);
+
             flowLayout.removeView(v);
         }
     };
@@ -142,6 +148,7 @@ public class MyInformationActivity extends AppCompatActivity {
         textView.setBackground(getResources().getDrawable(R.drawable.preferences));
         textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_cencel, 0);
         textView.setClickable(true);
+        textView.setTag(id);
 
         textView.setOnClickListener(listener);
         textView.setText((getResources().getStringArray(R.array.category))[id]);

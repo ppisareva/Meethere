@@ -25,7 +25,6 @@
             android:src="@drawable/river"
             android:id="@+id/profile_image"
             android:layout_marginRight="10dp"
-            android:onClick="onChangeProfileImage"
             android:clickable="true"/>
 
         <LinearLayout

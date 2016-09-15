@@ -171,11 +171,6 @@ public class MainActivity extends AbstractMeethereActivity
 
     }
 
-    public void onPreferences (View v){
-        Intent intent = new Intent(this, MyPreferencesActivity.class);
-        startActivity(intent);
-
-    }
 
 
 

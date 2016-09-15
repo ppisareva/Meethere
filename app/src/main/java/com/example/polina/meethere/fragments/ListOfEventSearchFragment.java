@@ -213,10 +213,9 @@ View.OnClickListener onDistance = new View.OnClickListener() {
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String arr[] =  new String[]{Event.ID, Event.NAME,
                 Event.DESCRIPTION, Event.START,
-                Event.END, Event.TAGS,
-                Event.PLACE, Event.ADDRESS,
-                Event.AGE_MAX, Event.AGE_MIN,
-                Event.BUDGET_MAX, Event.BUDGET_MIN, Event.LAT, Event.LNG};
+                 Event.TAGS,
+                Event.JOINED, Event.ADDRESS,
+               Event.BUDGET_MIN, Event.LAT, Event.LNG};
         String search = args.getString(Utils.SEARCH, "");
        String offset = ""+args.getInt(Utils.OFFSET, 0);
          Uri uri = null;

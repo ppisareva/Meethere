@@ -46,7 +46,6 @@ public class App extends Application {
         userProfile = UserProfile.init(pref());
         if (userProfile != null)
             serverApi.setAuthToken(userProfile.getAccessToken());
-
     }
 
     public ServerApi getServerApi() {
@@ -55,6 +54,11 @@ public class App extends Application {
 
     public UserProfile getUserProfile() {
         return userProfile;
+    }
+
+    public void utdateUserProfileIfExist(JSONObject o){
+
+
     }
 
     public void saveUserProfile(JSONObject o) throws JSONException {

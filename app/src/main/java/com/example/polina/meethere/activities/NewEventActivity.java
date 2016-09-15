@@ -269,6 +269,8 @@ public class NewEventActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id==R.id.action_new_create){
+            additionFragment.progressBarOn();
+
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put(Event.NAME, newEventDescriprionFragment.getName());
@@ -335,6 +337,7 @@ public class NewEventActivity extends AppCompatActivity {
                 Toast.makeText(context, "Event has been updared!", Toast.LENGTH_LONG).show();
                 NewEventActivity.this.finish();
             } else {
+                additionFragment.progressOff();
                 Toast.makeText(context, "Can not create event. Try again", Toast.LENGTH_LONG).show();
             }
         }
@@ -348,6 +351,7 @@ public class NewEventActivity extends AppCompatActivity {
                 Toast.makeText(context, "New event has been created!", Toast.LENGTH_LONG).show();
                 NewEventActivity.this.finish();
             } else {
+                additionFragment.progressOff();
                 Toast.makeText(context, "Can not create event. Try again", Toast.LENGTH_LONG).show();
             }
         }

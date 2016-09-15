@@ -370,6 +370,11 @@
 
     </LinearLayout>
 
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp">
+
     <org.apmem.tools.layouts.FlowLayout
         android:gravity="fill"
         android:padding="5dp"
@@ -378,9 +383,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="40dp">
 
     </org.apmem.tools.layouts.FlowLayout>
+    </ScrollView>
 
 
 </LinearLayout>

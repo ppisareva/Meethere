@@ -113,6 +113,13 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
 
     }
 
+    public void onFollowers(View v){
+
+    }
+    public void onFollowings (View v){
+
+    }
+
     private class Follow extends AsyncTask<Boolean, Void, Void> {
         protected Void doInBackground(Boolean... args) {
             Boolean follow = args[0];
@@ -145,7 +152,7 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
         String arr[] =  new String[]{Event.ID, Event.NAME,
                 Event.DESCRIPTION, Event.START,
                  Event.TAGS,
-                Event.JOINED,  Event.BUDGET_MIN, Event.LAT, Event.LNG};
+                Event.JOINED, Event.ADDRESS, Event.BUDGET_MIN, Event.LAT, Event.LNG};
        String userId = args.getString(Utils.USER_ID);
         String o = ""+args.getInt(Utils.OFFSET, 0);
 

@@ -148,7 +148,7 @@ public class NewEventLocationFragment extends android.support.v4.app.Fragment im
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 15));
                 markerOptions.position(new LatLng(location.getLatitude(), location.getLongitude()));
             }
-            // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
+           //  Needs to call MapsInitializer before doing any CameraUpdateFactory calls
             try {
                 MapsInitializer.initialize(this.getActivity());
             } catch (Exception e) {
@@ -159,10 +159,10 @@ public class NewEventLocationFragment extends android.support.v4.app.Fragment im
             map.setMyLocationEnabled(true);
             map.animateCamera(CameraUpdateFactory.zoomTo(15), 500, null);
 
-            if(lat!=0&&lng!=0){
-                markerOptions.position(new LatLng(lat,lng));
-            }
-            map.addMarker(markerOptions);
+//            if(lat!=0&&lng!=0){
+//                markerOptions.position(new LatLng(lat,lng));
+//            }
+//            map.addMarker(markerOptions);
 
             map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                 @Override

@@ -56,7 +56,6 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
            category = new HashSet<>(getArguments().getStringArrayList(Utils.CATEGORY));
-
         }
     }
 
@@ -112,8 +111,11 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
 
         categoryList.add(new Category(445445, "Популярное"));
         for(String c: category){
-            int idCategory = Integer.parseInt(c);
-            categoryList.add(new Category(idCategory, arr[idCategory]));
+            // remove
+            if(!c.equals("null")) {
+                int idCategory = Integer.parseInt(c);
+                categoryList.add(new Category(idCategory, arr[idCategory]));
+            }
         }
         return categoryList;
     }
@@ -136,7 +138,7 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
                 ,  new String[]{Event.ID, Event.NAME,
                 Event.DESCRIPTION, Event.START,
                 Event.TAGS,
-                Event.JOINED,Event.BUDGET_MIN, Event.LAT, Event.LNG}, null, null, null);
+                Event.JOINED, Event.ADDRESS, Event.BUDGET_MIN, Event.LAT, Event.LNG}, null, null, null);
     }
 
     @Override

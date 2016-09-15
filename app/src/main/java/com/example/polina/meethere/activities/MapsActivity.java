@@ -37,8 +37,8 @@ public class MapsActivity extends AbstractMeethereActivity implements OnMapReady
     private static final int ID = 0;
     private static final int NAME = 1;
     private static final int START = 3;
-    private static final int LAT= 7;
-    private static final int LNG = 8;
+    private static final int LAT= 8;
+    private static final int LNG = 9;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +101,7 @@ public class MapsActivity extends AbstractMeethereActivity implements OnMapReady
                 Event.DESCRIPTION, Event.START,
            Event.TAGS,
 
-                Event.JOINED, Event.BUDGET_MIN, Event.LAT, Event.LNG};
+                Event.JOINED, Event.ADDRESS, Event.BUDGET_MIN, Event.LAT, Event.LNG};
 
         String lon = String.valueOf(args.getDouble(Utils.LON));
         String lat = String.valueOf(args.getDouble(Utils.LAT));

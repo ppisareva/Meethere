@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.example.polina.meethere.R;
@@ -34,6 +35,7 @@ public class NewEventAdditionFragment extends android.support.v4.app.Fragment {
     Spinner spinnerBudgetTo;
     int min;
     int max;
+    ProgressBar progressBar;
 
 
     public static NewEventAdditionFragment newInstance(int min, int max) {
@@ -63,6 +65,8 @@ public class NewEventAdditionFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_new_event_adition, container, false);
+        progressBar = (ProgressBar) v.findViewById(R.id.avloadingIndicatorView);
+
         setHasOptionsMenu(true);
         spinnerAgeFrom = (Spinner) v.findViewById(R.id.spinner_age_from);
         spinnerAgeTo = (Spinner) v.findViewById(R.id.spinner_age_to);
@@ -107,6 +111,16 @@ public class NewEventAdditionFragment extends android.support.v4.app.Fragment {
         return v;
     }
 
+    public void progressBarOn(){
+        if(progressBar==null) return;
+        progressBar.setVisibility(View.VISIBLE);
+
+    }
+
+    public void progressOff(){
+        if(progressBar==null) return;
+        progressBar.setVisibility(View.GONE);
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

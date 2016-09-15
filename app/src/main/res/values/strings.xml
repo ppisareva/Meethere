@@ -223,8 +223,8 @@
     <string name="edit_event">изменить событие</string>
     <string name="invite_friends">пригласить друзей</string>
     <string name="leave_event">покинуть встречу</string>
+    <string name="edit_profile">Изменить профаил</string>
     <string-array name="category">
-
 
 
         <item>Авто мото</item>

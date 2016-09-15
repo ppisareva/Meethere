@@ -116,13 +116,13 @@ public class EventProvider extends android.content.ContentProvider {
                 if(categoryId.equals(Utils.POPULAR+"")){
                     jsonObject = serverApi.loadEventsByCategory(categoryId, offset);
                     MatrixCursor  cursor =  new MatrixCursor(new String[]{"_id",  Event.ID, Event.NAME, Event.DESCRIPTION, Event.START,
-                            Event.TAGS, Event.JOINED,  Event.BUDGET_MIN, Event.LAT, Event.LNG});
+                            Event.TAGS, Event.JOINED, Event.ADDRESS,  Event.BUDGET_MIN, Event.LAT, Event.LNG});
                     events = Utils.parseEventList(jsonObject);
                         eventsData.clear();
                     if(events==null) return null;
                     for (Event event : events) {
-                        eventsData.add(new Object[]{event.getId(), event.getName(), event.getDescription(), event.getStart(),
-                                event.getTag(), event.getJoin(),  event.getBudgetMin(), event.getLat(), event.getLng()});
+                        eventsData.add(new Object[]{event.getId(), event.getId(), event.getName(), event.getDescription(), event.getStart(),
+                                event.getTag(), event.getJoin(),  event.getAddress(), event.getBudgetMin(), event.getLat(), event.getLng()});
                     }
                     for (Object[] row : eventsData) {
                         cursor.addRow(row);
@@ -241,7 +241,7 @@ public class EventProvider extends android.content.ContentProvider {
             if(events==null) return null;
             for (Event event : events) {
                 eventsData.add(new Object[]{event.getId(), event.getName(), event.getDescription(), event.getStart(),
-                        event.getTag(), event.getJoin(),  event.getBudgetMin(), event.getLat(), event.getLng()});
+                        event.getTag(), event.getJoin(), event.getAddress(), event.getBudgetMin(), event.getLat(), event.getLng()});
             }
         for (Object[] row : eventsData) {
             cursor.addRow(row);
@@ -251,7 +251,7 @@ public class EventProvider extends android.content.ContentProvider {
 
     private MatrixCursor getEventCursor(){
         return  new MatrixCursor(new String[]{"_id", Event.NAME, Event.DESCRIPTION, Event.START,
-               Event.TAGS, Event.JOINED,  Event.BUDGET_MIN, Event.LAT, Event.LNG});
+               Event.TAGS, Event.JOINED, Event.ADDRESS, Event.BUDGET_MIN, Event.LAT, Event.LNG});
     }
 
     private MatrixCursor getEventCursor(List<Object[]> list, String offset, List<Event> events){
@@ -261,7 +261,7 @@ public class EventProvider extends android.content.ContentProvider {
         if(events==null) return null;
         for (Event event : events) {
             list.add(new Object[]{event.getId(), event.getName(), event.getDescription(), event.getStart(),
-                    event.getTag(), event.getJoin(), event.getBudgetMin(), event.getLat(), event.getLng()});
+                    event.getTag(), event.getJoin(), event.getAddress(), event.getBudgetMin(), event.getLat(), event.getLng()});
         }
         for (Object[] row : list) {
             cursor.addRow(row);

@@ -32,7 +32,7 @@
             <TextView
                 android:layout_width="140dp"
                 android:layout_height="18dp"
-                android:text="Рыбалка на Десне"
+                android:text="ppppppppppppppppppppppppppppppp"
                 android:id="@+id/event_name"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="7dp"
@@ -48,6 +48,15 @@
                 android:textColor="#2277e5"
                 android:layout_margin="7dp"
                 android:layout_below="@+id/event_name"/>
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:id="@+id/check_join"
+                android:src="@drawable/ic_check_black_24dp"
+                android:layout_alignBottom="@+id/event_time"
+                android:layout_alignRight="@+id/event_name"
+                android:layout_alignEnd="@+id/event_name" />
 
         </RelativeLayout>
 

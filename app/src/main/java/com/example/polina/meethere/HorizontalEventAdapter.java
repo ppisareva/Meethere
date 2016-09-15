@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +25,9 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
 
     private static final int ID = 1;
     private static final int NAME = 2;
+    private static final int JOINED = 6;
+    private static final int START = 4;
+
     private Activity context;
     private static final int FOOTER_VIEW = 3223;
    int category;
@@ -102,6 +106,10 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
             if (h instanceof ViewHolder) {
                 ViewHolder  holder = (ViewHolder) h;
                 holder.text.setText(cursor.getString(NAME));
+                holder.time.setText(cursor.getString(START));
+                boolean checked = Boolean.parseBoolean(cursor.getString(JOINED));
+                holder.joined.setVisibility(View.GONE);
+                if(checked) holder.joined.setVisibility(View.VISIBLE);
                 holder.setItemPosition(cursor.getPosition());
                 String id = cursor.getString(ID);
                 String url = String.format(IMG_PATTERN, id);
@@ -135,6 +143,8 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
 
         private ImageView image;
         private TextView text;
+        private TextView time;
+       private ImageView joined;
         int itemPosition;
 
         public void setItemPosition(int itemPosition) {
@@ -160,6 +170,9 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
             image = (ImageView) itemView.findViewById(R.id.event_image);
             image.setOnClickListener(this);
             text =(TextView)itemView.findViewById(R.id.event_name);
+            time = (TextView)itemView.findViewById(R.id.event_time);
+           joined = (ImageView) itemView.findViewById(R.id.check_join);
+
         }
     }
 

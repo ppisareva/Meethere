@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.polina.meethere.R;
+import com.example.polina.meethere.model.UserProfile;
 import com.example.polina.meethere.views.FadeView;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -171,11 +172,22 @@ public class LoginActivity extends AbstractMeethereActivity {
             }
             try {
                 app().saveUserProfile(jsonObject);
+                if(!jsonObject.has(UserProfile.CATEGORY)){
+                   gotoChooseCategory();
+                } else {
+                    goToMain();
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
+                goToMain();
             }
-            goToMain();
+
         }
+    }
+
+    private void gotoChooseCategory() {
+        startActivity(new Intent(LoginActivity.this, ChooseCategoryActivity.class));
+        finish();
     }
 
     @Override

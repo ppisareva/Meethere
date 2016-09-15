@@ -30,6 +30,8 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
     Context context;
     private static final int NAME = 1;
     private static final int START = 3;
+    private static final int JOINED = 5;
+
     private static final int CHANGE_EVENT_REQUEST = 7;
 
 
@@ -80,7 +82,9 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
 
 
        holder.time.setText(simpleDateFormat.format(dateStart));
-
+        boolean checked = Boolean.parseBoolean(cursor.getString(JOINED));
+        holder.imageJoin.setVisibility(View.GONE);
+        if(checked) holder.imageJoin.setVisibility(View.VISIBLE);
         holder.setID(cursor.getString(ID));
         holder.setUserName(cursor.getString(NAME));
         String url = String.format(IMG_PATTERN, cursor.getString(ID));
@@ -92,11 +96,11 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
 
 
         private ImageView image;
-        private CheckBox imageJoin;
+       private ImageView imageJoin;
         private TextView name;
-        private TextView rating;
-        private TextView myEvent;
-        private TextView budget;
+//        private TextView rating;
+//        private TextView myEvent;
+//        private TextView budget;
         private TextView time;
         private RelativeLayout cardView;
         String id;
@@ -121,10 +125,10 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
             cardView = (RelativeLayout) itemView.findViewById(R.id.card);
             cardView.setOnClickListener(this);
             time = (TextView) itemView.findViewById(R.id.time_my_event);
-            imageJoin = (CheckBox) itemView.findViewById(R.id.join_event);
-            rating = (TextView) itemView.findViewById(R.id.address_myevent);
-            myEvent = (TextView)itemView.findViewById(R.id.my_event);
-            budget = (TextView) itemView.findViewById(R.id.my_event_budget);
+            imageJoin = (ImageView) itemView.findViewById(R.id.check_join);
+//            rating = (TextView) itemView.findViewById(R.id.address_myevent);
+//            myEvent = (TextView)itemView.findViewById(R.id.my_event);
+//            budget = (TextView) itemView.findViewById(R.id.my_event_budget);
         }
 
 
