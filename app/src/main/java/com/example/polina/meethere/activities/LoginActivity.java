@@ -172,7 +172,7 @@ public class LoginActivity extends AbstractMeethereActivity {
             }
             try {
                 app().saveUserProfile(jsonObject);
-                if(!jsonObject.has(UserProfile.CATEGORY)){
+                if(!jsonObject.has(UserProfile.CATEGORY)||jsonObject.get(UserProfile.CATEGORY)==null){
                    gotoChooseCategory();
                 } else {
                     goToMain();

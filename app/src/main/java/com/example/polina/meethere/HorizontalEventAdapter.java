@@ -106,7 +106,7 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
             if (h instanceof ViewHolder) {
                 ViewHolder  holder = (ViewHolder) h;
                 holder.text.setText(cursor.getString(NAME));
-                holder.time.setText(cursor.getString(START));
+                holder.time.setText(Utils.parseData(cursor.getString(START)));
                 boolean checked = Boolean.parseBoolean(cursor.getString(JOINED));
                 holder.joined.setVisibility(View.GONE);
                 if(checked) holder.joined.setVisibility(View.VISIBLE);

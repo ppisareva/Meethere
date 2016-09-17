@@ -27,6 +27,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -61,6 +62,25 @@ public class Utils {
         Calendar c = Calendar.getInstance();
 
         return dateFormat.format(c.getTime());
+
+    }
+    public static String parseData(String time) {
+        SimpleDateFormat simpleDateFormat =  new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Date date = new Date();
+
+        try {
+            date = simpleDateFormat.parse(time);
+            if(date==null) {
+                simpleDateFormat = new SimpleDateFormat("[\"yyyy-MM-dd'T'kk:mm:ss\"]");
+                date = simpleDateFormat.parse(time);
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        simpleDateFormat = new SimpleDateFormat("EEE, MM dd kk:mm");
+
+        return simpleDateFormat.format(date);
 
     }
 
@@ -290,6 +310,8 @@ public class Utils {
 
 
     }
+
+
 
 
 }

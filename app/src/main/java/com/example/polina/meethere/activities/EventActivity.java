@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.LoaderManager;
@@ -33,6 +34,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +42,7 @@ import com.example.polina.meethere.FollowersDialigAdapter;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.adapters.CommentAdapter;
+import com.example.polina.meethere.data.CalendarContentResolver;
 import com.example.polina.meethere.data.Comment;
 import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.Event;
@@ -56,6 +59,7 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -65,6 +69,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
     ImageView image;
     String id;
     CheckBox join;
+    Boolean isJoined = false;
     TextView time;
     TextView budget;
     TextView address;
@@ -80,6 +85,8 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
     CollapsingToolbarLayout collapseToolbar;
     LinearLayout inviteFriends;
     List<User> users = new ArrayList<>();
+    CalendarContentResolver calenderReselver;
+    ProgressBar progressBar;
 
 
     Event event;
@@ -97,13 +104,48 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
             }
         }
     };
+    private DialogInterface.OnClickListener dialogClickListener =  new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which){
+                case DialogInterface.BUTTON_POSITIVE:
+                   if(event!=null) {
+                       calenderReselver = new CalendarContentResolver(EventActivity.this);
+
+                    if(calenderReselver.isInCalendar(event.getStart(),event.getName())){
+                        Toast.makeText(EventActivity.this, getString(R.string.events_allready_created), Toast.LENGTH_LONG).show();
+                    } else {
+                        calenderReselver.addEventToCalendar(event);
+                    }
+                   }
+                    break;
+
+                case DialogInterface.BUTTON_NEGATIVE:
+                    //No button clicked
+                    break;
+            }
+        }
+    };
+
+    public void progressBarOn(){
+        if(progressBar==null) return;
+        progressBar.setVisibility(View.VISIBLE);
+
+    }
+
+    public void progressOff(){
+        if(progressBar==null) return;
+        progressBar.setVisibility(View.GONE);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_layout_container);
         id = getIntent().getStringExtra(Utils.EVENT_ID);
+        progressBarOn();
         serverApi = app().getServerApi();
+        progressBar = (ProgressBar) findViewById(R.id.avloadingIndicatorView);
         View header = getLayoutInflater().inflate(R.layout.event_header, null);
         description = (TextView) header.findViewById(R.id.descriprion_my_event);
         image = (ImageView) findViewById(R.id.image_my_event);
@@ -124,6 +166,10 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 System.out.println(isChecked + " join event");
+                if(isChecked) join.setText(R.string.leave_event);
+                else join.setText(R.string.joned_event);
+
+
                new JoinEvent().execute(isChecked);
             }
         });
@@ -304,9 +350,15 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         protected void onPostExecute(Boolean aBoolean) {
             if(aBoolean)
             {
-                join.setText(R.string.leave_event);
+                if(!isJoined) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(EventActivity.this);
+                    builder.setMessage("Добавить в календарь?").setPositiveButton("Да", dialogClickListener)
+                            .setNegativeButton("Нет", dialogClickListener).show();
+                }
+
             } else {
-                join.setText(R.string.joned_event);
+                isJoined=false;
+
             }
         }
     }
@@ -350,9 +402,10 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         protected void onPostExecute(JSONObject result) {
             try {
                 System.out.println(result);
-                final Event event = Utils.parseEvent(result);
+                event = Utils.parseEvent(result);
 
                 description.setText(event.getDescription());
+                isJoined = event.getJoin();
                 join.setChecked(event.getJoin());
                 if(event.getJoin()==true){
                     join.setText(R.string.leave_event);
@@ -420,6 +473,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+            progressOff();
         }
     }
 

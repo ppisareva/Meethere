@@ -57,31 +57,8 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
 
     @Override
     public void onBindViewHolderCursor(ViewHolder holder, Cursor cursor) {
-
-
-
         holder.name.setText(cursor.getString(NAME));
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss");
-        Date dateStart = null;
-        try {
-            dateStart = simpleDateFormat.parse(cursor.getString(START));
-            if(dateStart==null){
-                simpleDateFormat = new SimpleDateFormat("[\"yyyy-MM-dd'T'kk:mm:ss\"]");
-                dateStart = simpleDateFormat.parse(cursor.getString(START));
-
-            }
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        simpleDateFormat = new SimpleDateFormat("EEE, MM dd kk:mm");
-
-
-
-
-       holder.time.setText(simpleDateFormat.format(dateStart));
+        holder.time.setText(Utils.parseData(cursor.getColumnName(START)));
         boolean checked = Boolean.parseBoolean(cursor.getString(JOINED));
         holder.imageJoin.setVisibility(View.GONE);
         if(checked) holder.imageJoin.setVisibility(View.VISIBLE);
