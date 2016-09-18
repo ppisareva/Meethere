@@ -129,7 +129,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
-                || NotificationPreferenceFragment.DataSyncPreferenceFragment.class.getName().equals(fragmentName)
+                || DataSyncPreferenceFragment.class.getName().equals(fragmentName)
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName);
     }
 
@@ -187,6 +187,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("attends_list"));
             bindPreferenceSummaryToValue(findPreference("send_mass_list"));
         }
+    }
 
 
         /**
@@ -210,7 +211,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
 
         }
-    }
+
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {

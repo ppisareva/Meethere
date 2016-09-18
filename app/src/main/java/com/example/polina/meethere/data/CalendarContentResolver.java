@@ -28,8 +28,6 @@ public class CalendarContentResolver {
                     "title",
                     "dtstart", "dtend"};
 
-
-
     public static final Uri CALENDAR_URI = Uri.parse("content://com.android.calendar/events");
    public static final Uri REMINDERS_URI = Uri.parse("content://com.android.calendar/reminders");
 

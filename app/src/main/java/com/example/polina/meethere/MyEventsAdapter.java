@@ -58,7 +58,7 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
     @Override
     public void onBindViewHolderCursor(ViewHolder holder, Cursor cursor) {
         holder.name.setText(cursor.getString(NAME));
-        holder.time.setText(Utils.parseData(cursor.getColumnName(START)));
+        holder.time.setText(Utils.parseData(cursor.getString(START)));
         boolean checked = Boolean.parseBoolean(cursor.getString(JOINED));
         holder.imageJoin.setVisibility(View.GONE);
         if(checked) holder.imageJoin.setVisibility(View.VISIBLE);

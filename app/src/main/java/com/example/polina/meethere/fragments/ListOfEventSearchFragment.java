@@ -41,7 +41,9 @@ public class ListOfEventSearchFragment extends Fragment implements LoaderManager
     int loaderWorking= 0;
     int offset = 0;
     private int STEP =10;
-
+    Boolean loaderDistance =false;
+    Boolean loaderHighPrice = false;
+    Boolean loaderLowPrice = false;
 
     public boolean isFlag() {
         return flag;
@@ -135,6 +137,7 @@ public class ListOfEventSearchFragment extends Fragment implements LoaderManager
             arg.putString(Utils.SEARCH, search);
 
             arg.putInt(Utils.OFFSET, offset);
+
            getActivity().getSupportLoaderManager().initLoader(SEARCH_LOUDER, arg, this);
 
         }
@@ -167,7 +170,12 @@ View.OnClickListener onDistance = new View.OnClickListener() {
         arg.putString(Utils.SEARCH, search);
         offset = 0;
         arg.putInt(Utils.OFFSET, offset);
-        getActivity().getSupportLoaderManager().initLoader(SEARCH_BY_DISTANCE,arg , ListOfEventSearchFragment.this);
+        if(loaderDistance){
+            getActivity().getSupportLoaderManager().restartLoader(SEARCH_BY_DISTANCE,arg , ListOfEventSearchFragment.this);
+        } else {
+            getActivity().getSupportLoaderManager().initLoader(SEARCH_BY_DISTANCE, arg, ListOfEventSearchFragment.this);
+            loaderDistance = true;
+        }
     }
 };
 
@@ -185,21 +193,36 @@ View.OnClickListener onDistance = new View.OnClickListener() {
                     imageView.setImageResource(R.drawable.ic_price_down_24dp);
                     lowPrice = true;
                     highPrice = false;
-                    getActivity().getSupportLoaderManager().initLoader(SEARCH_BY_HIGH_PRICE, arg, ListOfEventSearchFragment.this);
+                    if(loaderHighPrice) {
+                        getActivity().getSupportLoaderManager().restartLoader(SEARCH_BY_HIGH_PRICE, arg, ListOfEventSearchFragment.this);
+                    } else {
+                        getActivity().getSupportLoaderManager().initLoader(SEARCH_BY_HIGH_PRICE, arg, ListOfEventSearchFragment.this);
+                        loaderHighPrice = true;
+                    }
                 } else {
 
                     if (lowPrice) {
                         imageView.setImageResource(R.drawable.ic_price_up_24dp);
                         lowPrice = false;
                         highPrice = true;
-                        getActivity().getSupportLoaderManager().initLoader(SEARCH_BY_LOW_PRICE, arg, ListOfEventSearchFragment.this);
+                        if(loaderLowPrice) {
+                            getActivity().getSupportLoaderManager().restartLoader(SEARCH_BY_LOW_PRICE, arg, ListOfEventSearchFragment.this);
+                        } else {
+                            getActivity().getSupportLoaderManager().initLoader(SEARCH_BY_LOW_PRICE, arg, ListOfEventSearchFragment.this);
+                            loaderLowPrice = true;
+                        }
                     }
                 }
             } else {
 
                 lowPrice = true;
                 imageView.setImageResource(R.drawable.ic_price_down_24dp);
-                getActivity().getSupportLoaderManager().initLoader(SEARCH_BY_HIGH_PRICE, arg, ListOfEventSearchFragment.this);
+                if(loaderHighPrice) {
+                    getActivity().getSupportLoaderManager().restartLoader(SEARCH_BY_HIGH_PRICE, arg, ListOfEventSearchFragment.this);
+                } else {
+                    getActivity().getSupportLoaderManager().initLoader(SEARCH_BY_HIGH_PRICE, arg, ListOfEventSearchFragment.this);
+                    loaderHighPrice = true;
+                }
 
             }
 

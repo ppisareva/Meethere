@@ -351,4 +351,24 @@ public class ServerApi {
         connector.postData();
         return  connector.response();
     }
+//// TODO: 18.09.16
+    public JSONObject loadEventsByHighPriceAndCategory(String categoryId, String offset) {
+        HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+categoryId + OFFSET + offset );
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return  connector.response();
+    }
+
+    // TODO: 18.09.16
+    public JSONObject loadEventsByLowPriceAndCategory(String categoryId, String offset) {
+        HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+categoryId + OFFSET + offset );
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return  connector.response();
+    }
+
+    // TODO: 18.09.16
+    public JSONObject loadEventsByDistanceAndCategory(String lon, String lat, String categoryId, String offset) {
+        HttpConnector connector = new HttpConnector(HOST + SEARCH_LON+ lon +LAT+lat + "&limit=1000&offset=0");
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return  connector.response();
+    }
 }

@@ -40,16 +40,22 @@ public class EventProvider extends android.content.ContentProvider {
 
     EventsSQLiteHelper database;
 
-    private static final int MY_EVENTS = 8;
-    private static final int USER_EVENTS = 9;
+    private static final int MY_EVENTS = 11;
+    private static final int USER_EVENTS = 12;
     private static final int CATEGORY_ID = 1;
-    private static final int SEARCH = 10;
-    private static final int SEARCH_LOW_PRICE = 7;
-    private static final int SEARCH_BY_HIGH = 6;
-    private static final int SEARCH_BY_DISTANCE = 3;
+    private static final int SEARCH = 13;
+    private static final int SEARCH_LOW_PRICE = 10;
+    private static final int CATEGORY_LOW_PRICE = 9;
+    private static final int SEARCH_BY_HIGH = 8;
+    private static final int CATEGORY_BY_HIGH = 7;
+    private static final int SEARCH_BY_DISTANCE = 4;
+    private static final int CATEGORY_BY_DISTANCE = 3;
+    private static final int CATEGORY_FEED =2 ;
+    private static final int SEARCH_FREINDS = 6;
+    private static final int FEED = 5;
+
     private List<Object[]> feedData = new ArrayList<>();
     private List<Object[]> eventsData = new ArrayList<>();
-
     private List<Object[]> eventsMy = new ArrayList<>();
     private List<Object[]> eventsPast = new ArrayList<>();
     private List<Object[]> eventsFuture = new ArrayList<>();
@@ -59,13 +65,8 @@ public class EventProvider extends android.content.ContentProvider {
     public static final int CREATED_BY_ME_EVENTS = 4343432;
 
     private static final UriMatcher URI_MATCHER;
-
-    private static final int SEARCH_FREINDS = 5;
-
-    private static final int FEED = 4;
     private SQLiteDatabase db;
 
-    private static final int CATEGORY_FEED =2 ;
 
     // prepare the UriMatcher
     static {
@@ -73,10 +74,13 @@ public class EventProvider extends android.content.ContentProvider {
 
         URI_MATCHER.addURI(AUTHORITY,  "category",  CATEGORY_ID);
         URI_MATCHER.addURI(AUTHORITY,  "category_feed",  CATEGORY_FEED);
+        URI_MATCHER.addURI(AUTHORITY, "distance_category", CATEGORY_BY_DISTANCE);
         URI_MATCHER.addURI(AUTHORITY, "distance_search", SEARCH_BY_DISTANCE);
         URI_MATCHER.addURI(AUTHORITY, "feed", FEED);
         URI_MATCHER.addURI(AUTHORITY, "friends_search/*", SEARCH_FREINDS);
+        URI_MATCHER.addURI(AUTHORITY, "high_price_category",  CATEGORY_BY_HIGH);
         URI_MATCHER.addURI(AUTHORITY, "high_price_search",  SEARCH_BY_HIGH);
+        URI_MATCHER.addURI(AUTHORITY, "low_price_category", CATEGORY_LOW_PRICE);
         URI_MATCHER.addURI(AUTHORITY, "low_price_search", SEARCH_LOW_PRICE);
         URI_MATCHER.addURI(AUTHORITY, "myevents", MY_EVENTS);
         URI_MATCHER.addURI(AUTHORITY, "userevents", USER_EVENTS);
@@ -104,6 +108,8 @@ public class EventProvider extends android.content.ContentProvider {
         JSONObject jsonObject = null;
         String offset ="";
         String categoryId = "";
+        String lon ="";
+        String lat = "";
 
 
 
@@ -174,24 +180,42 @@ public class EventProvider extends android.content.ContentProvider {
                 jsonObject = serverApi.loadEventsByHighPrice(search, offset);
 
                 break;
+            case CATEGORY_BY_HIGH: ///// //done
+                offset = uri.getQueryParameter("offset");
+                categoryId = uri.getQueryParameter("category");
+                jsonObject = serverApi.loadEventsByHighPriceAndCategory(categoryId, offset);
+
+                break;
             case SEARCH_LOW_PRICE: /////done
                 offset = uri.getQueryParameter("offset");
                 search = uri.getQueryParameter("search");
                 jsonObject = serverApi.loadEventsByLowPrice(search, offset);
 
                 break;
+            case CATEGORY_LOW_PRICE: ///////done
+                offset = uri.getQueryParameter("offset");
+                categoryId = uri.getQueryParameter("category");
+                jsonObject = serverApi.loadEventsByLowPriceAndCategory(categoryId, offset);
+
+                break;
             case SEARCH_BY_DISTANCE: ///// done
-                String lon = uri.getQueryParameter("lon");
-                String lat = uri.getQueryParameter("lat");
+                lon = uri.getQueryParameter("lon");
+                lat = uri.getQueryParameter("lat");
                 if(uri.getQueryParameter("search")==null)
                 {
                     jsonObject = serverApi.loadEventsByDistance(lon, lat);
                 } else {
                     search = uri.getQueryParameter("search");
                     offset = uri.getQueryParameter("offset");
-
                     jsonObject = serverApi.loadEventsByDistance(lon, lat, search, offset);
                 }
+                break;
+            case CATEGORY_BY_DISTANCE: ///// done
+                lon = uri.getQueryParameter("lon");
+                lat = uri.getQueryParameter("lat");
+                categoryId = uri.getQueryParameter("category");
+                offset = uri.getQueryParameter("offset");
+                jsonObject = serverApi.loadEventsByDistanceAndCategory(lon, lat, categoryId, offset);
                 break;
             case USER_EVENTS: //// done
                 offset = uri.getQueryParameter("offset");
