@@ -210,7 +210,7 @@ public class EventProvider extends android.content.ContentProvider {
                     jsonObject = serverApi.loadEventsByDistance(lon, lat, search, offset);
                 }
                 break;
-            case CATEGORY_BY_DISTANCE: ///// done
+            case CATEGORY_BY_DISTANCE: ///// todo
                 lon = uri.getQueryParameter("lon");
                 lat = uri.getQueryParameter("lat");
                 categoryId = uri.getQueryParameter("category");

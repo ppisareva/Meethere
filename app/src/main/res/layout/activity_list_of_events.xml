@@ -65,7 +65,7 @@
             android:layout_height="match_parent"
             android:text="@string/filter"
             android:clickable="true"
-            android:onClick="onFilter"
+            android:onClick="onFilterPress"
             android:id="@+id/filter"
             android:layout_weight="1"
             android:layout_gravity="center"

@@ -261,5 +261,6 @@
     </string-array>
     <string name="title_activity_test_calendar">TestCalendar</string>
     <string name="events_allready_created">Встреча уже в календаре</string>
+    <string name="friends_invited">Приглашения отосланны</string>
 
 </resources>

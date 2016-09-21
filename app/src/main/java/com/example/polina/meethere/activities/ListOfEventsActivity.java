@@ -58,9 +58,7 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
 
 
 
-    public void setFlag(Boolean flag) {
-        this.flag = flag;
-    }
+
     Boolean flag = true;
     int offset = 0;
 
@@ -79,7 +77,7 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
         System.out.println(" category # " + category);
         Bundle arg = new Bundle();
         arg.putString(Utils.CATEGORY, category+"");
-        arg.putInt(Utils.OFFSET, offset);
+        arg.putString(Utils.OFFSET, offset+"");
 
         getSupportLoaderManager().initLoader(CATEGORY, arg, this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -113,6 +111,8 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
         });
     }
 
+    public void onFilterPress(View v){}
+
 
     View.OnClickListener onDistance= new View.OnClickListener() {
         @Override
@@ -129,7 +129,7 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
             arg.putDouble(Utils.LAT,location.getLatitude());
             arg.putString(Utils.CATEGORY, category+"");
 
-            arg.putInt(Utils.OFFSET, offset);
+            arg.putString(Utils.OFFSET, offset+"");
             if(loaderDistance){
                getSupportLoaderManager().restartLoader(BY_DISTANCE,arg ,ListOfEventsActivity.this);
             } else {
@@ -147,7 +147,7 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
             Bundle arg = new Bundle();
             arg.putString(Utils.CATEGORY,category+"");
             offset = 0;
-            arg.putInt(Utils.OFFSET, offset);
+            arg.putString(Utils.OFFSET, offset+"");
             if (highPrice || lowPrice) {
                 if (highPrice) {
                     imageView.setImageResource(R.drawable.ic_price_down_24dp);
@@ -208,7 +208,7 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
                 Event.JOINED, Event.ADDRESS,
                Event.BUDGET_MIN, Event.LAT, Event.LNG};
         String category = args.getString(Utils.CATEGORY);
-        String offset = ""+args.getInt(Utils.OFFSET, 0);
+        String offset = args.getString(Utils.OFFSET);
         Uri uri = null;
 
 

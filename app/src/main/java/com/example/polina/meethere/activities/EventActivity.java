@@ -178,6 +178,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
             public void onClick(View v) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(EventActivity.this);
                 dialog.setTitle(getString(R.string.invite_friends));
+                dialog.setTitle(getString(R.string.invite_friends));
                 ArrayAdapter<User> adapter = new FollowersDialigAdapter(EventActivity.this,  users, id );
                 dialog.setAdapter(adapter, null);
 
@@ -190,7 +191,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
 
 
 
-                        Toast.makeText(getApplicationContext(),"Selected digit:",
+                        Toast.makeText(getApplicationContext(),getString(R.string.friends_invited),
                                 Toast.LENGTH_SHORT).show();
                     }
                 });

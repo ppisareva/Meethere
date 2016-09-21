@@ -36,8 +36,10 @@ public class ServerApi {
     public static final String SEARCH_WORDS = "&q=";
     public static final String SEARCH_LON = "search?lon=";
     public static final String LAT = "&lat=";
-    public static final String SORT_LOW_PRICE = "&sort_by=+budget_min";
-    public static final String SORT_HIGH_PRICE = "&sort_by=-budget_max";
+    public static final String SORT_LOW_PRICE = "sort_by=+budget_min";
+    public static final String SORT_UP = "sorted_by=budget_min";
+    public static final String SORT_DOWN = "sorted_by=-budget_min";
+    public static final String SORT_HIGH_PRICE = "sort_by=-budget_max";
 
 
     public static final String EVENTS_BY_CATEGORY = "find-event/tags/all/";
@@ -227,14 +229,14 @@ public class ServerApi {
     }
 
     public JSONObject loadEventsByHighPrice(String search, String offset) {
-        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search+SORT_HIGH_PRICE + OFFSET_+offset);
+        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search+ "&"+SORT_HIGH_PRICE + OFFSET_+offset);
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return connector.response();
     }
 
 
     public JSONObject loadEventsByLowPrice(String search, String offset) {
-        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search +SORT_LOW_PRICE + OFFSET_+offset);
+        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search + "&"+SORT_LOW_PRICE + OFFSET_+offset);
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return connector.response();
     }
@@ -351,16 +353,18 @@ public class ServerApi {
         connector.postData();
         return  connector.response();
     }
-//// TODO: 18.09.16
+
+    //DONE
+
     public JSONObject loadEventsByHighPriceAndCategory(String categoryId, String offset) {
-        HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+categoryId + OFFSET + offset );
+        HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+categoryId + "?"+SORT_DOWN + OFFSET_+ offset );
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return  connector.response();
     }
 
-    // TODO: 18.09.16
+    // DONE
     public JSONObject loadEventsByLowPriceAndCategory(String categoryId, String offset) {
-        HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+categoryId + OFFSET + offset );
+        HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+categoryId +"?"+SORT_UP+ OFFSET_ + offset );
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return  connector.response();
     }
