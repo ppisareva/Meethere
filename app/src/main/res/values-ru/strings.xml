@@ -34,7 +34,7 @@
     <string name="begining">Начало</string>
     <string name="choose_category">Выберите категорию</string>
     <string name="load_photo">Загрузить фото</string>
-    <string name="enter_location">Введите адресс</string>
+    <string name="enter_location">Введите адресс или поставте точку на карте</string>
     <string name="aditional">Дополнитеные параметры</string>
     <string name="from">от...</string>
     <string name="quantity">Количество людей</string>
@@ -122,7 +122,7 @@
     <string name="pref_title_adding">Добавление участников в ваши события</string>
 
 
-    <string name="pref_default_display_name">John Smith</string>
+    <string name="pref_default_display_name">Паша Мороз</string>
 
     <string name="pref_title_email">Email</string>
     <string name="pref_title_phone">Телефоны</string>
@@ -155,4 +155,138 @@
     <string name="notification_comment">%1$s откоментировал %2$s</string>
     <string name="remove_this_comment">Удалить коментарий?</string>
 
+
+        <string name="app_name">Meethere</string>
+        <string name="facebook_app_id" translatable="false">463560493836897</string>
+        <string name="facebook_button" translatable="false">connect_with_facebook</string>
+        <string name="email">Введите имеил</string>
+        <string name="password" translatable="false">Введите пароль</string>
+        <string name="confirm_password">Подтвердте пароль</string>
+        <string name="log_in_with_email">Вход через имеил</string>
+        <string name="sign_up">Зарегестрироваться</string>
+        <string name="title_activity_main">MainActivity</string>
+
+        <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+        <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+
+        <string name="title_activity_maps">Location</string>
+        <string name="hello_blank_fragment">Hello blank fragment</string>
+        <string name="title_activity_my_places">MyPlacesActivity</string>
+
+
+        <string-array name="category_images">
+
+
+            <item>@drawable/avto_moto</item>
+            <item>@drawable/ic_social</item>
+            <item>@drawable/ic_party</item>
+            <item>@drawable/for_single</item>
+            <item>@drawable/spiritual</item>
+            <item>@drawable/food</item>
+            <item>@drawable/ic_animal</item>
+            <item>@drawable/ic_helth</item>
+            <item>@drawable/games</item>
+            <item>@drawable/culture</item>
+            <item>@drawable/business</item>
+            <item>@drawable/cinema</item>
+            <item>@drawable/books</item>
+            <item>@drawable/biuty</item>
+            <item>@drawable/music</item>
+            <item>@drawable/outdoor</item>
+            <item>@drawable/development</item>
+            <item>@drawable/communication</item>
+            <item>@drawable/paranormal</item>
+            <item>@drawable/support</item>
+            <item>@drawable/politic</item>
+            <item>@drawable/family</item>
+            <item>@drawable/comunity</item>
+            <item>@drawable/sport</item>
+            <item>@drawable/ic_lifestyle</item>
+            <item>@drawable/tech</item>
+            <item>@drawable/ic_fantacy</item>
+            <item>@drawable/ic_fitness</item>
+            <item>@drawable/phto</item>
+            <item>@drawable/ic_hobby</item>
+            <item>@drawable/ic_other</item>
+
+        </string-array>
+
+        <string name="title_activity_list">ListActivity</string>
+        <string name="ololo" translatable="false">ololo</string>
+        <string name="title_activity_settings">Настройки</string>
+
+        <!-- Strings related to Settings -->
+
+        <!-- Example General settings -->
+        <string-array name="pref_example_list_values">
+            <item>3</item>
+            <item>2</item>
+            <item>1</item>
+            <item>0</item>
+            <item>-1</item>
+        </string-array>
+
+        <!-- Example settings for Data & Sync -->
+        <string name="pref_header_notification_in_facebook" translatable="false">Оповещания в Facebook</string>
+
+        <string name="pref_title_sync_frequency">Sync frequency</string>
+        <string-array name="pref_sync_frequency_titles">
+            <item>15 минут</item>
+            <item>30 минут</item>
+            <item>1 час</item>
+            <item>3 часа</item>
+            <item>6 часов</item>
+
+            <item>Ниогда</item>
+        </string-array>
+        <string-array name="pref_sync_frequency_values">
+            <item>15</item>
+            <item>30</item>
+            <item>60</item>
+            <item>180</item>
+            <item>360</item>
+            <item>-1</item>
+        </string-array>
+
+        <string name="pref_title_vibrate">Vibrate</string>
+        <string name="start_age" translatable="false">15</string>
+        <string name="end_age" translatable="false">45</string>
+        <string name="start_budget" translatable="false">0</string>
+        <string name="end_budget" translatable="false">2000</string>
+
+        <string name="error_auth">Что то пошло не так.. :(</string>
+        <string name="end_radius" translatable="false">10000</string>
+
+        <string name="promo_1">Не с кем поиграть в футбол?</string>
+        <string name="promo_2">Не с кем пойти на рыбалку?</string>
+        <string name="promo_3">Не знаешь как провести время?</string>
+        <string name="start_radius" translatable="false">0</string>
+        <string name="make_comment">Откоментировать</string>
+        <string name="events">События</string>
+        <string name="people">Друзья</string>
+        <string name="no_results">Результат не найден</string>
+        <string name="followers">Подписчики</string>
+        <string name="followings">Отслеживаю</string>
+        <string name="follow">Подписаться</string>
+        <string name="unfollow">Отписаться</string>
+        <string name="set_birthday">Задать дату рождения</string>
+        <string name="set_email">Задать эл.почту</string>
+        <string name="set_location">Задать адресс</string>
+        <string name="set_phone">Задать телефон</string>
+        <string name="add">Добавить</string>
+        <string name="news">Мои новости</string>
+        <string name="first_name">Имя</string>
+        <string name="last_name">Фамилия</string>
+        <string name="joned_event">присоедениться к встрече</string>
+        <string name="edit_event">изменить событие</string>
+        <string name="invite_friends">пригласить друзей</string>
+        <string name="leave_event">покинуть встречу</string>
+        <string name="edit_profile">Изменить профаил</string>
+
+        <string name="events_allready_created">Встреча уже в календаре</string>
+        <string name="friends_invited">Приглашения отосланны</string>
+        <string name="hrn">ГРН</string>
+        <string name="created_event">создал новое событие</string>
+        <string name="invite">пригласил вас на встречу</string>
+        <string name="join">присоединолся к вашей встрече</string>
 </resources>

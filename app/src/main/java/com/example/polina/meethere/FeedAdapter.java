@@ -1,14 +1,18 @@
 package com.example.polina.meethere;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.internal.Utility;
 
 /**
  * Created by polina on 27.07.16.
@@ -27,35 +31,54 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder > 
     private static final int EVENT_ID = 9;
     private static final int EVENT_NAME = 10;
     private static final int EVENT_DESCRIPTION = 11;
+    Context context;
 
 
 
-    public FeedAdapter() {
+    public FeedAdapter(Context context) {
         super(null);
+        this.context=context;
     }
 
     @Override
     public void onBindViewHolderCursor(ViewHolder holder, Cursor cursor) {
+
         String uri = String.format(IMG_PATTERN, cursor.getString(EVENT_ID));
         holder.eventImage.setImageURI(Uri.parse(uri));
+       // holder.eventImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
         holder.userPhoto.setImageURI(Uri.parse(cursor.getString(IMAGE)));
         holder.userName.setText( cursor.getString(FIRST_NAME) + " " + cursor.getString(LAST_NAME));
-        holder.action.setText(cursor.getString(TYPE));
-        holder.actionTime.setText(cursor.getString(TIME));
-        holder.eventTime.setText(cursor.getString(EVENT_START));
-        holder.eventBudget.setText(cursor.getString(EVENT_BUDGET));
+        switch (cursor.getString(TYPE)){
+            case Utils.CREATE_EVENT:
+                holder.action.setText(context.getString(R.string.created_event));
+                break;
+            case Utils.INVITE:
+                holder.action.setText(context.getString(R.string.invite));
+                break;
+            case Utils.JOIN:
+                holder.action.setText(context.getString(R.string.join));
+                break;
+        }
+
+        String time = Utils.parseData(cursor.getString(TIME));
+        holder.actionTime.setText(time);
+         time = Utils.parseData(cursor.getString(EVENT_START));
+        holder.eventTime.setText(time);
+
+        holder.eventBudget.setText(cursor.getString(EVENT_BUDGET)+  " "+context.getString(R.string.hrn));
         holder.eventName.setText(cursor.getString(EVENT_NAME));
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.feed_follow, parent, false);
+                .inflate(R.layout.feed_layout, parent, false);
         FeedAdapter.ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
+        CardView layout;
         SimpleDraweeView userPhoto;
         TextView userName;
         TextView actionTime;
@@ -77,6 +100,7 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder > 
 
         public ViewHolder(View itemView) {
             super(itemView);
+            layout = (CardView) itemView.findViewById(R.id.feed);
             userPhoto = (SimpleDraweeView) itemView.findViewById(R.id.profile_image);
             userName = (TextView) itemView.findViewById(R.id.user_name);
             actionTime = (TextView) itemView.findViewById(R.id.action_time);

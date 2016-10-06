@@ -300,6 +300,7 @@ public class NewEventActivity extends AppCompatActivity {
             }
             if(this.id!=null){
                 LocalBroadcastManager.getInstance(this).registerReceiver(createUpdateReceiver, new IntentFilter(NetworkService.ACTION_UPDATE_EVENT));
+
                 NetworkService.startActionUpdateEvent(this, jsonObject.toString(),newEventImageFragment.getBitMap(), this.id);
 
             } else {
@@ -338,7 +339,7 @@ public class NewEventActivity extends AppCompatActivity {
                 NewEventActivity.this.finish();
             } else {
                 additionFragment.progressOff();
-                Toast.makeText(context, "Can not create event. Try again", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Can not create event. Description and location must be fill up", Toast.LENGTH_LONG).show();
             }
         }
     };

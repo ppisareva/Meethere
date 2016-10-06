@@ -152,7 +152,7 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
         String arr[] =  new String[]{Event.ID, Event.NAME,
                 Event.DESCRIPTION, Event.START,
                  Event.TAGS,
-                Event.JOINED, Event.ADDRESS, Event.BUDGET_MIN, Event.LAT, Event.LNG};
+                Event.JOINED, Event.ADDRESS, Event.BUDGET_MIN, Event.LAT, Event.LNG, Event.ATTENDANCES};
        String userId = args.getString(Utils.USER_ID);
         String o = ""+args.getInt(Utils.OFFSET, 0);
 

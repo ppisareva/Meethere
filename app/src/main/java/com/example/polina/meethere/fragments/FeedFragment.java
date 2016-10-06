@@ -138,7 +138,7 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
                 ,  new String[]{Event.ID, Event.NAME,
                 Event.DESCRIPTION, Event.START,
                 Event.TAGS,
-                Event.JOINED, Event.ADDRESS, Event.BUDGET_MIN, Event.LAT, Event.LNG}, null, null, null);
+                Event.JOINED, Event.ADDRESS, Event.BUDGET_MIN, Event.LAT, Event.LNG, Event.ATTENDANCES}, null, null, null);
     }
 
     @Override

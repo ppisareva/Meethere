@@ -1,5 +1,6 @@
 package com.example.polina.meethere.model;
 
+import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.adapters.*;
 import com.example.polina.meethere.adapters.Event;
 
@@ -69,7 +70,10 @@ public class Feed {
                 for (int i = 0; i < arr.length(); i++) {
 
                     JSONObject feedJSON = arr.getJSONObject(i);
-                    list.add(parseJSON(feedJSON));
+                    if(!feedJSON.getString(TYPE).equals(Utils.FOLLOW)) {
+                        list.add(parseJSON(feedJSON));
+                    }
+
                 }
 
 

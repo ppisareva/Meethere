@@ -130,7 +130,7 @@
     <string name="do_not_matter">Does not metter</string>
     <string name="e_mail">Email</string>
     <string name="end">End</string>
-    <string name="enter_location">Enter Address</string>
+    <string name="enter_location">Enter Address or pin on map</string>
     <string name="enter_preferences">Add Preferences</string>
     <string name="error_auth">Something goes wrong.. :(</string>
     <string name="end_radius" translatable="false">10000</string>
@@ -194,73 +194,77 @@
     <string name="use">Apply</string>
     <string name="week">weeks</string>
     <string name="make_comment">Make an Comment</string>
-    <string name="events">События</string>
-    <string name="people">Друзья</string>
-    <string name="no_results">Результат не найден</string>
-    <string name="followers">Подписчики</string>
-    <string name="followings">Отслеживаю</string>
-    <string name="follow">Подписаться</string>
-    <string name="one_week">неделя</string>
-    <string name="two_weeks">недели</string>
-    <string name="five_weeks">недель</string>
+    <string name="events">Events</string>
+    <string name="people">Friends</string>
+    <string name="no_results">Result not found</string>
+    <string name="followers">Followers</string>
+    <string name="followings">Followings</string>
+    <string name="follow">Follow</string>
+    <string name="one_week">week</string>
+    <string name="two_weeks">weeks</string>
+    <string name="five_weeks">weeks</string>
 
     <string name="notification_invite">%1$s invites you to %2$s</string>
     <string name="notification_joined">%1$s just joined  to %2$s</string>
     <string name="notification_create_event">%1$s created event %2$s</string>
     <string name="notification_follow">%1$s started following you</string>
     <string name="notification_comment">%1$s commented %2$s</string>
-    <string name="unfollow">Отписаться</string>
-    <string name="set_birthday">Задать дату рождения</string>
-    <string name="set_email">Задать эл.почту</string>
-    <string name="set_location">Задать адресс</string>
-    <string name="set_phone">Задать телефон</string>
-    <string name="add">Добавить</string>
-    <string name="news">Мои новости</string>
-    <string name="first_name">Имя</string>
-    <string name="last_name">Фамилия</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="set_birthday">set birthday</string>
+    <string name="set_email">set email</string>
+    <string name="set_location">set location</string>
+    <string name="set_phone">set phone</string>
+    <string name="add">Add</string>
+    <string name="news">My news</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
     <string name="remove_this_comment">Delete this comment?</string>
-    <string name="joned_event">присоедениться к встрече</string>
-    <string name="edit_event">изменить событие</string>
-    <string name="invite_friends">пригласить друзей</string>
-    <string name="leave_event">покинуть встречу</string>
-    <string name="edit_profile">Изменить профаил</string>
+    <string name="joned_event">Join event</string>
+    <string name="edit_event">Edit event</string>
+    <string name="invite_friends">Invite friends</string>
+    <string name="leave_event">Leave event</string>
+    <string name="edit_profile">Edit profile</string>
     <string-array name="category">
 
 
-        <item>Авто мото</item>
-        <item>Встреча с друзьями</item>
-        <item>Вечеринки</item>
-        <item>Для одиноких</item>
-        <item>Духовность</item>
-        <item>Еда и напитки</item>
-        <item>Животные</item>
-        <item>Здоровье</item>
-        <item>Игры</item>
-        <item>Искусство и культура</item>
-        <item>Карьера и бизнес</item>
-        <item>Кино</item>
-        <item>Книги</item>
-        <item>Мода и красота</item>
-        <item>Музыка</item>
-        <item>На природе</item>
-        <item>Образование и развитие</item>
-        <item>Общение</item>
-        <item>Паранормальное явление</item>
-        <item>Поддержка</item>
-        <item>Политика</item>
-        <item>Родители и семья</item>
-        <item>Сообщества</item>
-        <item>Спорт и отдых</item>
-        <item>Стиль жизни</item>
-        <item>Технологии</item>
-        <item>Фантастика и Фэнтези</item>
-        <item>Фитнес</item>
-        <item>Фотография</item>
-        <item>Хобби</item>
-        <item>Другое</item>
+        <item>Avto/moto</item>
+        <item>Friends</item>
+        <item>Party</item>
+        <item>Single</item>
+        <item>Spiritual</item>
+        <item>Food and Drinks</item>
+        <item>Animals</item>
+        <item>Wellness</item>
+        <item>Play</item>
+        <item>Art</item>
+        <item>Business</item>
+        <item>Movie</item>
+        <item>Book</item>
+        <item>Fashion and Beauty</item>
+        <item>Music</item>
+        <item>Outdoor</item>
+        <item>Education and Development</item>
+        <item>Social</item>
+        <item>Paranormal</item>
+        <item>Support</item>
+        <item>Politics</item>
+        <item>Family</item>
+        <item>Community</item>
+        <item>Sport and entertainment</item>
+        <item>Lifestyle</item>
+        <item>Technology</item>
+        <item>Science fiction and fantasy</item>
+        <item>Fitness</item>
+        <item>Photography</item>
+        <item>Hobby</item>
+        <item>Other</item>
     </string-array>
     <string name="title_activity_test_calendar">TestCalendar</string>
-    <string name="events_allready_created">Встреча уже в календаре</string>
-    <string name="friends_invited">Приглашения отосланны</string>
+    <string name="events_allready_created">Event is already in calendar</string>
+    <string name="friends_invited">Invitations send</string>
+    <string name="hrn">UAH</string>
+    <string name="created_event">create new event</string>
+    <string name="invite">invite you to join</string>
+    <string name="join">joined to your meeting</string>
 
 </resources>

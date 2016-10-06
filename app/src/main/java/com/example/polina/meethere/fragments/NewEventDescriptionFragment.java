@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.model.Event;
@@ -45,6 +47,18 @@ public class NewEventDescriptionFragment extends android.support.v4.app.Fragment
             if (!hasFocus) {
                 InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                TextView view = (TextView) v;
+                String text = view.getText().toString();
+                if (text.matches("")) {
+                    view.setHint("Должно быть заполненно");
+                    view.setHintTextColor(getResources().getColor(R.color.red));
+                    view.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_asterisk, 0);
+                    return;
+                } else {
+                    view.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                }
+
+
             }
         }
     };

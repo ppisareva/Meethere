@@ -8,46 +8,23 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="7dp"
         card_view:cardCornerRadius="10dp"
-        card_view:cardBackgroundColor="#e4e4e4"
-        android:layout_marginTop="6dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp">
+        card_view:cardBackgroundColor="#e4e4e4">
+
         <RelativeLayout
             android:layout_width="wrap_content"
+            android:layout_margin="7dp"
             android:layout_height="match_parent">
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:layout_width="140dp"
-                android:layout_height="140dp"
-                android:id="@+id/event_image"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="9dp"
-                android:scaleType="centerCrop"
-                android:layout_marginTop="10dp"
-                fresco:placeholderImage="@drawable/cappuccino"
-                />
-
             <TextView
                 android:layout_width="140dp"
-                android:layout_height="18dp"
-                android:text="ppppppppppppppppppppppppppppppp"
                 android:id="@+id/event_name"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="7dp"
+                android:text="Концерт Макса Кор на ВДНХ"
                 android:layout_below="@+id/event_image"
-                android:layout_marginTop="7dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="12dp"
-                android:text="12.09.2016, 18:00"
-                android:id="@+id/event_time"
-                android:textSize="9dp"
-                android:textColor="#2277e5"
-                android:layout_margin="7dp"
-                android:layout_below="@+id/event_name"/>
+                android:layout_marginTop="4dp"
+                android:layout_height="wrap_content" />
 
             <ImageView
                 android:layout_width="15dp"
@@ -58,9 +35,54 @@
                 android:layout_alignRight="@+id/event_name"
                 android:layout_alignEnd="@+id/event_name" />
 
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:id="@+id/event_image"
+                android:scaleType="centerCrop"
+                fresco:placeholderImage="@drawable/cappuccino"
+                android:layout_below="@+id/event_budget"
+                android:layout_alignLeft="@+id/event_budget"
+                android:layout_alignStart="@+id/event_budget"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/event_budget"
+                android:text="Бесплатно"
+                android:gravity="bottom"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                card_view:textColor="@android:color/holo_green_light" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/ic_people_20"
+                android:gravity="bottom"
+                android:text="45 "
+                android:layout_above="@+id/event_image"
+                android:layout_alignRight="@+id/event_image"
+                android:layout_alignEnd="@+id/event_image"
+                android:textColor="@android:color/holo_purple"
+                android:id="@+id/event_attendence" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/event_time"
+                android:text="12. 12. 12"
+                android:textSize="12dp"
+                android:textColor="#2277e5"
+                android:layout_below="@+id/event_name"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp" />
+
         </RelativeLayout>
 
 
-
-</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
 </LinearLayout>

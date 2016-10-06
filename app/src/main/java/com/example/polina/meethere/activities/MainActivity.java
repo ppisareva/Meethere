@@ -24,6 +24,7 @@ import android.widget.TimePicker;
 
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.Utils;
+import com.example.polina.meethere.data.EventsSQLiteHelper;
 import com.example.polina.meethere.fragments.CategoryFragment;
 import com.example.polina.meethere.fragments.FeedFragment;
 import com.example.polina.meethere.fragments.FindEventFragment;
@@ -52,9 +53,7 @@ public class MainActivity extends AbstractMeethereActivity
     private static final int START_DATE = 20202;
     public static final String NEW_EVENT = "new event";
     public static final String SEARCH = "search event";
-
     private static final int START_TIME = 202122;
-
     private static final int END_DATE = 20002;
     private static final int END_TIME = 2000232;
     private CategoryFragment categoryFragment;

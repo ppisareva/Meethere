@@ -27,6 +27,8 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
     private static final int NAME = 2;
     private static final int JOINED = 6;
     private static final int START = 4;
+    private static final int BUDGET = 8;
+    private static final int ATTENDENCE = 11;
 
     private Activity context;
     private static final int FOOTER_VIEW = 3223;
@@ -74,13 +76,6 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
 
 
 
-
-
-//
-//                            Intent intent = new Intent(context, ListOfEventsActivity.class);
-//                            intent.putExtra(Utils.CATEGORY, category);
-//                            context.startActivity(intent);
-
     public class FooterViewHolder extends RecyclerView.ViewHolder {
 
 
@@ -108,6 +103,9 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
                 holder.text.setText(cursor.getString(NAME));
                 holder.time.setText(Utils.parseData(cursor.getString(START)));
                 boolean checked = Boolean.parseBoolean(cursor.getString(JOINED));
+
+                holder.budget.setText((cursor.getInt(BUDGET)==0?"Бесплатно": (cursor.getInt(BUDGET))+" грн"));
+                holder.attendance.setText(cursor.getInt(ATTENDENCE)+"");
                 holder.joined.setVisibility(View.GONE);
                 if(checked) holder.joined.setVisibility(View.VISIBLE);
                 holder.setItemPosition(cursor.getPosition());
@@ -145,6 +143,8 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
         private TextView text;
         private TextView time;
        private ImageView joined;
+       private TextView budget;
+       private TextView attendance;
         int itemPosition;
 
         public void setItemPosition(int itemPosition) {
@@ -171,7 +171,10 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
             image.setOnClickListener(this);
             text =(TextView)itemView.findViewById(R.id.event_name);
             time = (TextView)itemView.findViewById(R.id.event_time);
+            budget = (TextView)itemView.findViewById(R.id.event_budget);
+            attendance = (TextView)itemView.findViewById(R.id.event_attendence);
            joined = (ImageView) itemView.findViewById(R.id.check_join);
+
 
         }
     }

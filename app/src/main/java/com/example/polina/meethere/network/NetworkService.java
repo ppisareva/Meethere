@@ -45,11 +45,13 @@ public class NetworkService extends IntentService {
     public static void startActionCreateNewEvent(Context context, String data, Bitmap imageBitmap) {
         Intent intent = new Intent(context, NetworkService.class);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
+        if(imageBitmap!=null) {
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            intent.putExtra(IMAGE, byteArray);
+        }
         intent.setAction(ACTION_CREATE_EVENT);
         intent.putExtra(DATA, data);
-        intent.putExtra(IMAGE, byteArray);
         context.startService(intent);
     }
 

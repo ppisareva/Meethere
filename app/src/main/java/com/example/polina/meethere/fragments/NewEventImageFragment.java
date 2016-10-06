@@ -107,10 +107,11 @@ public class NewEventImageFragment extends android.support.v4.app.Fragment {
 
     public  Bitmap getBitMap(){
         BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
+
         if(isUpdate) {
             return bitmapDrawable.getBitmap();
         }
-        return  null;
+        return null;
     }
 
 

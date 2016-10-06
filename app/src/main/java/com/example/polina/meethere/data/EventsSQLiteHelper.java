@@ -18,13 +18,15 @@ public class EventsSQLiteHelper extends SQLiteOpenHelper {
     public static final String  COLUMN_START="start";
     public static final String  COLUMN_JOIND   =  "joined";
     public static final String   COLUMN_BUDGET_MIN=     "budget_min";
+    public static final String   COLUMN_ADDRESS=     "address";
 
     public static final String   COLUMN_TAGS =     "tags";
     public static final String COLUMN_LAT = "lat";
     public static final String COLUMN_LNG = "lng";
+    public static final String ATTENDANCE = "attendance";
 
     private static final String DATABASE_NAME = "events.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     // Database creation SQL statement
     private static final String DATABASE_CREATE = "create table IF NOT EXISTS "
@@ -37,11 +39,11 @@ public class EventsSQLiteHelper extends SQLiteOpenHelper {
 
             + COLUMN_TAGS + "  ,"
             + COLUMN_JOIND + "  ,"
-
-
+            + COLUMN_ADDRESS  + "  ,"
             + COLUMN_BUDGET_MIN  + "  ,"
             + COLUMN_LAT  + "  ,"
-            + COLUMN_LNG
+            + COLUMN_LNG  + "  ,"
+            + ATTENDANCE
             + ");";
 
     public EventsSQLiteHelper(Context context) {
@@ -50,6 +52,10 @@ public class EventsSQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL(DATABASE_CREATE);
+    }
+
+    public void deleteDB (SQLiteDatabase db) {
         db.execSQL(DATABASE_CREATE);
     }
 

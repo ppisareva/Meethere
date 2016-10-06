@@ -83,7 +83,7 @@ public class NewEventAdditionFragment extends android.support.v4.app.Fragment {
 
         List<String> listBudget = new ArrayList<>();
         listBudget.add("");
-        for (int i = 10; i <= 2000; ) {
+        for (int i = 0; i <= 2000; ) {
             listBudget.add((i+""));
             i=i+10;
         }

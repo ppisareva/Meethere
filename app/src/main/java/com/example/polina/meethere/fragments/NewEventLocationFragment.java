@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.model.App;
@@ -83,6 +84,7 @@ public class NewEventLocationFragment extends android.support.v4.app.Fragment im
         application = (App) getActivity().getApplication();
         mapView = (MapView) v.findViewById(R.id.map_view);
         adressView = (EditText) v.findViewById(R.id.add_adress);
+//        adressView.setOnFocusChangeListener(onFocusChangeListener);
         adressView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         adressView.setOnFocusChangeListener(onFocusChangeListener);
         if(address!=null){
@@ -130,12 +132,18 @@ public class NewEventLocationFragment extends android.support.v4.app.Fragment im
     }
 
     public String getAddress (){
+        String text = adressView.getText().toString();
+        if (text.matches("")) {
+            return address;
+        }
         return adressView.getText().toString();
     }
 
     public Collection<Double> getLocation(){
         return pin;
     }
+
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -159,10 +167,7 @@ public class NewEventLocationFragment extends android.support.v4.app.Fragment im
             map.setMyLocationEnabled(true);
             map.animateCamera(CameraUpdateFactory.zoomTo(15), 500, null);
 
-//            if(lat!=0&&lng!=0){
-//                markerOptions.position(new LatLng(lat,lng));
-//            }
-//            map.addMarker(markerOptions);
+
 
             map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                 @Override
@@ -170,7 +175,8 @@ public class NewEventLocationFragment extends android.support.v4.app.Fragment im
                     map.clear();
                     map.addMarker(new MarkerOptions()
                             .position(latLng));
-                    adressView.setText(latLng.latitude + ", " + latLng.longitude);
+                    address = latLng.latitude + ", " + latLng.longitude;
+                    adressView.setHint("ввыедены координаты");
                     pin = new ArrayList<Double>();
 
                     pin.add(latLng.longitude);

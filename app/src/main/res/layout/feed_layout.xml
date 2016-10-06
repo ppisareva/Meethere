@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/feed"
+    android:layout_height="wrap_content"
+    android:layout_margin="7dp"
+    >
+<RelativeLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_margin="7dp"
+    android:layout_height="wrap_content">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        fresco:placeholderImage="@drawable/carrot"
+        android:id="@+id/profile_image" />
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Полина Слюсарчук"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/profile_image"
+        android:layout_toEndOf="@+id/profile_image"
+        android:layout_marginLeft="7dp"
+        android:textSize="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12/07 13:47"
+        android:id="@+id/action_time"
+
+        android:layout_below="@+id/user_name"
+        android:layout_alignLeft="@+id/user_name"
+        android:layout_alignStart="@+id/user_name"
+        android:layout_marginTop="4dp"
+        android:textSize="9dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="собераеться пойти"
+        android:id="@+id/action"
+        android:layout_below="@+id/action_time"
+        android:layout_alignLeft="@+id/action_time"
+        android:layout_alignStart="@+id/action_time"
+        android:layout_marginTop="5dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Рыбалка на Десне"
+        android:id="@+id/event_name"
+        android:layout_below="@+id/profile_image"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="7dp"
+        android:textSize="17dp" />
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:layout_width="match_parent"
+        android:id="@+id/event_image"
+        android:scaleType="matrix"
+        fresco:placeholderImage="@drawable/cappuccino"
+        android:layout_below="@+id/event_name"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="7dp"
+        android:layout_height="250dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12.09.2016, 18:00"
+        android:id="@+id/event_time"
+        android:textSize="14dp"
+        android:textColor="#2277e5"
+        android:layout_below="@+id/event_image"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="7dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="БЕСПЛАТНО"
+        android:id="@+id/event_budget"
+        android:textSize="14dp"
+        android:textColor="@android:color/holo_green_dark"
+        android:layout_alignBottom="@+id/event_time"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>
+</android.support.v7.widget.CardView>

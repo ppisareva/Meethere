@@ -99,7 +99,7 @@ public class MapsActivity extends AbstractMeethereActivity implements OnMapReady
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String arr[] =  new String[]{Event.ID, Event.NAME,
                 Event.DESCRIPTION, Event.START, Event.TAGS,
-                Event.JOINED, Event.ADDRESS, Event.BUDGET_MIN, Event.LAT, Event.LNG};
+                Event.JOINED, Event.ADDRESS, Event.BUDGET_MIN, Event.LAT, Event.LNG, Event.ATTENDANCES};
 
         String lon = String.valueOf(args.getDouble(Utils.LON));
         String lat = String.valueOf(args.getDouble(Utils.LAT));

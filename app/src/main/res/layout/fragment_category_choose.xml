@@ -22,4 +22,16 @@
         android:layout_marginBottom="16dp"
         android:textSize="20dp" />
 
+    <TextView
+        android:text="хотябы одну"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_asterisk_gray"
+        android:layout_above="@+id/category_choose"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textView4"
+        android:layout_marginBottom="6dp"
+        android:textSize="10dp" />
+
 </RelativeLayout>

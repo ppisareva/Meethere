@@ -206,7 +206,7 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
                Event.DESCRIPTION, Event.START,
                Event.TAGS,
                 Event.JOINED, Event.ADDRESS,
-               Event.BUDGET_MIN, Event.LAT, Event.LNG};
+               Event.BUDGET_MIN, Event.LAT, Event.LNG, Event.ATTENDANCES};
         String category = args.getString(Utils.CATEGORY);
         String offset = args.getString(Utils.OFFSET);
         Uri uri = null;

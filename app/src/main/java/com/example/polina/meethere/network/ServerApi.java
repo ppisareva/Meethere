@@ -36,6 +36,7 @@ public class ServerApi {
     public static final String SEARCH_WORDS = "&q=";
     public static final String SEARCH_LON = "search?lon=";
     public static final String LAT = "&lat=";
+    public static final String LOG = "lon=";
     public static final String SORT_LOW_PRICE = "sort_by=+budget_min";
     public static final String SORT_UP = "sorted_by=budget_min";
     public static final String SORT_DOWN = "sorted_by=-budget_min";
@@ -369,9 +370,9 @@ public class ServerApi {
         return  connector.response();
     }
 
-    // TODO: 18.09.16
+    // DANE
     public JSONObject loadEventsByDistanceAndCategory(String lon, String lat, String categoryId, String offset) {
-        HttpConnector connector = new HttpConnector(HOST + SEARCH_LON+ lon +LAT+lat + "&limit=1000&offset=0");
+        HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+categoryId +"?"+LOG+ lon +LAT+lat +  OFFSET_ + offset);
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return  connector.response();
     }

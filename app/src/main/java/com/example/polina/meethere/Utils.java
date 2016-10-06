@@ -52,6 +52,11 @@ public class Utils {
     public static final int PROFILE = 1;
     public static final int EVENT = 0;
     public static final int POPULAR = 445445;
+    public static final String FOLLOW = "FOLLOW";
+    public static final String CREATE_EVENT = "CREATE_EVENT";
+    public static final String JOIN = "JOIN";
+    public static final String INVITE = "INVITE";
+
 
     static {
         INPUT_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -78,7 +83,7 @@ public class Utils {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        simpleDateFormat = new SimpleDateFormat("EEE, MM dd kk:mm");
+        simpleDateFormat = new SimpleDateFormat("EE, dd MMM kk:mm");
 
         return simpleDateFormat.format(date);
 

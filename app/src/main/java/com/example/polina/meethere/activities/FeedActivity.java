@@ -39,7 +39,7 @@ public class FeedActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.feed_list);
-        feedAdapter = new FeedAdapter();
+        feedAdapter = new FeedAdapter(getApplicationContext());
         recyclerView.setAdapter(feedAdapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

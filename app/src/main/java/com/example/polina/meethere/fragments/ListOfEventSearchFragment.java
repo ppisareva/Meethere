@@ -238,7 +238,7 @@ View.OnClickListener onDistance = new View.OnClickListener() {
                 Event.DESCRIPTION, Event.START,
                  Event.TAGS,
                 Event.JOINED, Event.ADDRESS,
-               Event.BUDGET_MIN, Event.LAT, Event.LNG};
+               Event.BUDGET_MIN, Event.LAT, Event.LNG, Event.ATTENDANCES};
         String search = args.getString(Utils.SEARCH, "");
        String offset = ""+args.getInt(Utils.OFFSET, 0);
          Uri uri = null;

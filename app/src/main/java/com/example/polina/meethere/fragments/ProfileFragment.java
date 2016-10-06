@@ -116,7 +116,8 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
         @Override
         protected void onPostExecute(JSONObject jsonObject) {
             try {
-                ((App)getActivity().getApplication()).saveUserProfile(jsonObject);
+                if(jsonObject!=null)
+                    ((App)getActivity().getApplication()).saveUserProfile(jsonObject);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
