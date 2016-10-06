@@ -204,6 +204,7 @@ public class EventProvider extends android.content.ContentProvider {
                 lat = uri.getQueryParameter("lat");
                 if(uri.getQueryParameter("search")==null)
                 {
+                    eventsData.clear();
                     jsonObject = serverApi.loadEventsByDistance(lon, lat);
                 } else {
                     search = uri.getQueryParameter("search");

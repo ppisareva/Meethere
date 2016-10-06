@@ -16,7 +16,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/time_my_event"
-        android:text="Sanday, jun 24 12 00 - 16 00"
         android:textSize="17dp"
         />
 
@@ -106,7 +105,6 @@
         android:id="@+id/address_myevent"
         android:drawableRight="@drawable/ic_pin_drop_black_24dp"
         android:onClick="onMap"
-        android:text="kjkljljkl"
         android:textSize="18dp"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/people_quantity_my_event"
@@ -121,8 +119,7 @@
         android:layout_below="@+id/address_myevent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
-        android:text=";SDKC;LSdjCL;S" />
+        android:layout_marginTop="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -146,8 +143,7 @@
         android:layout_below="@+id/my_event_budget"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
-        android:text="&apos;ldk;alskdl;akd;ks;ldklsdkA;LD" />
+        android:layout_marginTop="10dp" />
 
     <EditText
         android:id="@+id/make_comments"

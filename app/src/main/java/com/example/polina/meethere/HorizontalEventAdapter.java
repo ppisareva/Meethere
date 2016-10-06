@@ -2,6 +2,7 @@ package com.example.polina.meethere;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
@@ -67,6 +68,7 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
     @Override
     public int getItemViewType(int position) {
         if (position == getCursor().getCount()) {
+
             // This is where we'll add footer.
             return FOOTER_VIEW;
         }
@@ -82,6 +84,13 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
 
         public FooterViewHolder(View itemView) {
             super(itemView);
+            ImageView image = ((ImageView)  itemView.findViewById(R.id.footer));
+            TypedArray im = context.getResources().obtainTypedArray(R.array.category_images);
+            if(category==Utils.POPULAR){
+                image.setImageResource(R.drawable.ic_star);
+            } else {
+                image.setImageResource(im.getResourceId(category, R.drawable.ic_android));
+            }
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

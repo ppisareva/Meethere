@@ -5,6 +5,6 @@
 
 
     <item android:id="@+id/action_forward" android:title="@string/new_event"
-        android:icon="@drawable/ic_arrow_forward_white_24dp"
+        android:icon="@drawable/ic_arrow_forward_white_36dp"
         android:orderInCategory="100" app:showAsAction="always" />
 </menu>

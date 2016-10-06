@@ -181,16 +181,10 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
                 dialog.setTitle(getString(R.string.invite_friends));
                 ArrayAdapter<User> adapter = new FollowersDialigAdapter(EventActivity.this,  users, id );
                 dialog.setAdapter(adapter, null);
-
-
                 dialog.setPositiveButton("OK",new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // getting listview from alert box
-
-
-
-
                         Toast.makeText(getApplicationContext(),getString(R.string.friends_invited),
                                 Toast.LENGTH_SHORT).show();
                     }
@@ -466,7 +460,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
                     address.setClickable(true);
                     lat = event.getPlace().get(1);
                     lng = event.getPlace().get(0);
-                    address.setText(R.string.see_on_map);
+                    address.setText(event.getAddress());
                 } else {
                     address.setCompoundDrawables(null, null, null, null);
                     address.setText(event.getAddress());
