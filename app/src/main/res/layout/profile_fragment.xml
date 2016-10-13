@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/side_nav_bar"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:layout_height="220dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/followers"
+            android:clickable="true"
+            android:onClick="onFollowers"
+            android:layout_alignBottom="@+id/profile_image"
+            android:layout_alignLeft="@+id/followers"
+            android:layout_alignStart="@+id/followers"
+            android:id="@+id/textView7"
+            android:layout_alignTop="@+id/textView32" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="@string/followings"
+            android:clickable="true"
+            android:onClick="onFollowings"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignLeft="@+id/followings"
+            android:layout_alignStart="@+id/followings"
+            android:id="@+id/textView32" />
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:clickable="true"
+            android:onClick="onFollowers"
+            android:id="@+id/followers"
+            android:layout_above="@+id/textView7"
+            android:layout_toLeftOf="@+id/profile_image"
+            android:layout_toStartOf="@+id/profile_image"
+            android:layout_marginRight="25dp"
+            android:gravity="center_horizontal"
+            android:textSize="16dp" />
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:clickable="true"
+            android:onClick="onFollowings"
+            android:id="@+id/followings"
+            android:layout_above="@+id/textView32"
+            android:layout_toRightOf="@+id/profile_image"
+            android:layout_toEndOf="@+id/profile_image"
+            android:layout_marginLeft="25dp"
+            android:gravity="center_horizontal"
+            android:textSize="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="Mountain View, CA, USA"
+            android:id="@+id/location"
+            android:layout_marginBottom="28dp"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Полина Слюсарчук"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="17sp"
+            android:layout_above="@+id/location"
+            android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:layout_height="wrap_content"
+            android:id="@+id/imageEdit"
+            android:clickable="true"
+            android:src="@drawable/ic_exit_to_app_white_24dp"
+            android:onClick="onLogOut"
+            android:layout_width="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="4dp" />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:src="@drawable/river"
+            android:id="@+id/profile_image"
+            android:clickable="true"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignTop="@+id/imageEdit"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp" />
+
+
+    </RelativeLayout>
+
+
+    <GridView
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent"
+        android:id="@+id/profile_menu"
+        android:numColumns="2"
+        android:fadingEdgeLength="0px"
+        android:horizontalSpacing="0dp"
+        android:verticalSpacing="0dp"
+        android:listSelector="@null"
+        android:layout_weight="1" />
+
+
+</LinearLayout>

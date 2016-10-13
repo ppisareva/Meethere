@@ -77,6 +77,7 @@ public class NewEventDescriptionFragment extends android.support.v4.app.Fragment
         setHasOptionsMenu(true);
         name = (EditText)v.findViewById(R.id.edit_name);
 
+
         name.setOnFocusChangeListener(onFocusChangeListener);
         description =(EditText) v.findViewById(R.id.edit_description);
         if(b!=null) {

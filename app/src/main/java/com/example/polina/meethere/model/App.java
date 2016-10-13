@@ -10,6 +10,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
+import android.support.multidex.MultiDexApplication;
 
 import com.example.polina.meethere.network.ServerApi;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -32,7 +33,7 @@ import java.util.Set;
 /**
  * Created by ko3a4ok on 5/7/16.
  */
-public class App extends Application {
+public class App extends MultiDexApplication {
 
     private ServerApi serverApi = new ServerApi();
     private UserProfile userProfile = null;

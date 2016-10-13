@@ -21,6 +21,8 @@
             <TextView
                 android:layout_width="140dp"
                 android:id="@+id/event_name"
+                android:maxLines="2"
+                android:minLines="1"
                 android:text="Концерт Макса Кор на ВДНХ"
                 android:layout_below="@+id/event_image"
                 android:layout_marginTop="4dp"

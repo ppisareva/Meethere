@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.polina.meethere.FeedAdapter;
@@ -38,6 +39,7 @@ public class FeedActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.feed_list);
         feedAdapter = new FeedAdapter(getApplicationContext());
         recyclerView.setAdapter(feedAdapter);
@@ -91,5 +93,13 @@ public class FeedActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
