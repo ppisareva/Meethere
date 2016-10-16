@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <Button xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content" >
+    <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="New Button"
         android:background="@drawable/round_button"
         android:id="@+id/button_category"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-    android:textColor="#ffffff"
-    android:textStyle="bold" />
+        android:textSize="17dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp" />
+    <TextView
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/gray"
+        android:layout_marginTop="15dp" />
+</LinearLayout>
+

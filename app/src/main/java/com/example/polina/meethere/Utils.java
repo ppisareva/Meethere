@@ -104,6 +104,15 @@ public class Utils {
         return dateFormat.format(c.getTime());
     }
 
+    public static int categoryImage(Context context,int category){
+
+        TypedArray im = context.getResources().obtainTypedArray(R.array.category_images);
+        if(category==POPULAR){
+            return R.drawable.ic_star;
+        } else {
+            return im.getResourceId(category, R.drawable.ic_android);
+        }
+    }
 
     public static List<SimpleItem> getAllCategory(Context context) {
         List<SimpleItem> allCategory = new ArrayList<>();

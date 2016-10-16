@@ -78,6 +78,8 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
 
 
 
+
+
     public class FooterViewHolder extends RecyclerView.ViewHolder {
 
 
@@ -85,12 +87,7 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
         public FooterViewHolder(View itemView) {
             super(itemView);
             ImageView image = ((ImageView)  itemView.findViewById(R.id.footer));
-            TypedArray im = context.getResources().obtainTypedArray(R.array.category_images);
-            if(category==Utils.POPULAR){
-                image.setImageResource(R.drawable.ic_star);
-            } else {
-                image.setImageResource(im.getResourceId(category, R.drawable.ic_android));
-            }
+         //   image.setImageResource(Utils.categoryImage(context, category));
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

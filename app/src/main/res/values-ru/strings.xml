@@ -63,7 +63,7 @@
     <string name="add_name">Название</string>
     <string name="budget">Бюджет</string>
     <string name="new_event">Создать</string>
-    <string name="more">ЕЩЕ</string>
+    <string name="more">больше</string>
     <string name="start">от...</string>
     <string name="to">...до</string>
     <string name="sort_by">Сортировать по</string>

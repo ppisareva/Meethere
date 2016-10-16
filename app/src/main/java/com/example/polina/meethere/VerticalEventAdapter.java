@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
@@ -61,6 +62,7 @@ public class VerticalEventAdapter extends RecyclerView.Adapter<VerticalEventAdap
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Category category = categoryList.get(position);
         holder.textView.setText(category.getName());
+        holder.imageCategory.setImageResource(Utils.categoryImage(context, category.getId() ));
         holder.setCategory(category.getId());
         System.err.println("EVENT LIST: " + category.getName());
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
@@ -80,6 +82,7 @@ public class VerticalEventAdapter extends RecyclerView.Adapter<VerticalEventAdap
         RecyclerViewHeader header;
 
         TextView textView;
+        ImageView imageCategory;
         private int category;
 
 
@@ -95,6 +98,8 @@ public class VerticalEventAdapter extends RecyclerView.Adapter<VerticalEventAdap
 
 
             textView = (TextView) itemView.findViewById(R.id.list_category);
+            imageCategory = (ImageView) itemView.findViewById(R.id.category_image);
+
             textView.setOnClickListener(this);
         }
 

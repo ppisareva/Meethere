@@ -3,7 +3,7 @@
 
     <group android:checkableBehavior="single">
         <item android:id="@+id/nav_profile" android:icon="@drawable/ic_account_box_black_24dp"
-            android:title="@string/profile" />
+            android:title="@string/profile"  />
         <item android:id="@+id/nav_my_places" android:icon="@drawable/ic_collections_black_24dp"
             android:title="@string/places" />
         <item android:id="@+id/nav_new_event" android:icon="@drawable/ic_add_to_photos_black_24dp"

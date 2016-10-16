@@ -76,6 +76,7 @@ public class MainActivity extends AbstractMeethereActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        if(mContent==null) return;
         getSupportFragmentManager().putFragment(outState, "mContent", mContent);
     }
 
@@ -98,13 +99,6 @@ public class MainActivity extends AbstractMeethereActivity
         }
 
 
-
-//        categoryFragment = CategoryFragment.newInstance();
-//        myEventsListsFragment = MyEventsListsFragment.newInstance();
-//        newEventFragment = NewEventFragment.newInstance();
-//        findEventFragment = FindEventFragment.newInstance();
-//        searchResultsFragment = SearchResultsFragment.newInstance();
-//        profileFragment = ProfileFragment.newInstance();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);

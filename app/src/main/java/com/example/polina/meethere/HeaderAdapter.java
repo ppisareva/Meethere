@@ -65,7 +65,7 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
         Button categoryButton;
         public ViewHolder(View itemView) {
             super(itemView);
-            categoryButton = (Button) itemView;
+            categoryButton = (Button) itemView.findViewById(R.id.button_category);
         }
     }
 }
