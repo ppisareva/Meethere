@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -52,8 +53,9 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
     @Override
     public MyEventsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.my_event, parent, false);
+                .inflate(R.layout.event_view, parent, false);
         MyEventsAdapter.ViewHolder vh = new ViewHolder(v);
+    //    vh.image.setColorFilter(0x77ffffff & parent.getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.DARKEN);
         return vh;
     }
 
@@ -62,7 +64,8 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
     @Override
     public void onBindViewHolderCursor(ViewHolder holder, Cursor cursor) {
         holder.name.setText(cursor.getString(NAME));
-        holder.time.setText(Utils.parseData(cursor.getString(START)));
+        holder.time.setText(Utils.parseDataTime(cursor.getString(START)));
+        holder.date.setText(Utils.parseDataDate(cursor.getString(START)));
         boolean checked = Boolean.parseBoolean(cursor.getString(JOINED));
 
         holder.budget.setText(cursor.getInt(BUDGET)==0?"Бесплатно":(cursor.getInt(BUDGET)+ " грн"));
@@ -73,6 +76,10 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
         holder.setUserName(cursor.getString(NAME));
         String url = String.format(IMG_PATTERN, cursor.getString(ID));
         holder.image.setImageURI(Uri.parse(url));
+//        PorterDuff.Mode[] values = PorterDuff.Mode.values();
+//        holder.image.setColorFilter(0x7700ff00, values[cursor.getPosition()%values.length]);
+//        System.err.println(values[cursor.getPosition()%values.length] + " || " + cursor.getString(NAME) + " " + Utils.parseData(cursor.getString(START)));
+
     }
 
 
@@ -82,7 +89,7 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
         private ImageView image;
         private ImageView imageJoin;
         private TextView name;
-        private TextView address;
+        private TextView date;
         private TextView people;
         private TextView budget;
         private TextView time;
@@ -110,7 +117,7 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
             cardView.setOnClickListener(this);
             time = (TextView) itemView.findViewById(R.id.time_my_event);
             imageJoin = (ImageView) itemView.findViewById(R.id.check_join);
-          // address = (TextView) itemView.findViewById(R.id.address_myevent);
+          date = (TextView) itemView.findViewById(R.id.date);
            budget = (TextView) itemView.findViewById(R.id.budget_myevent);
            people = (TextView) itemView.findViewById(R.id.myevent_people);
 

@@ -83,7 +83,47 @@ public class Utils {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        simpleDateFormat = new SimpleDateFormat("EE, dd MMM kk:mm");
+        simpleDateFormat = new SimpleDateFormat("EEEE, dd MMM kk:mm");
+
+        return simpleDateFormat.format(date);
+
+    }
+
+    public static String parseDataTime(String time) {
+        SimpleDateFormat simpleDateFormat =  new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Date date = new Date();
+
+        try {
+            date = simpleDateFormat.parse(time);
+            if(date==null) {
+                simpleDateFormat = new SimpleDateFormat("[\"yyyy-MM-dd'T'kk:mm:ss\"]");
+                date = simpleDateFormat.parse(time);
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        simpleDateFormat = new SimpleDateFormat("EEEE, kk:mm");
+
+        return simpleDateFormat.format(date);
+
+    }
+
+    public static String parseDataDate(String time) {
+        SimpleDateFormat simpleDateFormat =  new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Date date = new Date();
+
+        try {
+            date = simpleDateFormat.parse(time);
+            if(date==null) {
+                simpleDateFormat = new SimpleDateFormat("[\"yyyy-MM-dd'T'kk:mm:ss\"]");
+                date = simpleDateFormat.parse(time);
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        simpleDateFormat = new SimpleDateFormat("dd MMM");
 
         return simpleDateFormat.format(date);
 

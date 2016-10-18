@@ -9,5 +9,7 @@
     <color name="blue">#3B5998</color>
     <color name="gray">#b4b4b4</color>
     <color name="filter">#ff5e00</color>
+    <color name="black">#000000</color>
+    <color name="green_transperent">#b9000000</color>>
 
 </resources>

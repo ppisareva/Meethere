@@ -17,6 +17,13 @@
         <item name="android:textSize">12dp</item>
     </style>
 
+    <style name="Card" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="android:textColor">#d7ffffff</item>
+        <item name="android:textSize">12dp</item>
+    </style>
+
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

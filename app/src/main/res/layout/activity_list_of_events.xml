@@ -16,8 +16,7 @@
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:id="@+id/filters_layout"
-        android:layout_marginBottom="15dp"
-        android:background="#861738f8">
+        android:background="@color/colorPrimaryDark">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
