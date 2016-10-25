@@ -30,4 +30,12 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
     </com.google.android.gms.maps.MapView>
+    <ProgressBar
+        android:layout_centerInParent="true"
+        android:id="@+id/progress"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:visibility="invisible"
+
+        />
 </RelativeLayout>

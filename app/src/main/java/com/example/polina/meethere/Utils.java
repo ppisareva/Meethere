@@ -8,6 +8,7 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import com.example.polina.meethere.activities.ListOfEventsActivity;
 import com.example.polina.meethere.adapters.SimpleItem;
 import com.example.polina.meethere.model.Event;
 import com.example.polina.meethere.model.User;
@@ -54,7 +55,7 @@ public class Utils {
     public static final int POPULAR = 445445;
     public static final String FOLLOW = "FOLLOW";
     public static final String CREATE_EVENT = "CREATE_EVENT";
-    public static final String JOIN = "JOIN";
+    public static final String JOIN = "JOINED";
     public static final String INVITE = "INVITE";
 
 
@@ -366,6 +367,10 @@ public class Utils {
     }
 
 
+    public static String categoryTitle(Context context, int category) {
+        TypedArray im = context.getResources().obtainTypedArray(R.array.category);
 
+            return im.getString(category);
 
+    }
 }

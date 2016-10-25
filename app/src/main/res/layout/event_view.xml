@@ -17,8 +17,7 @@
     <com.facebook.drawee.view.SimpleDraweeView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srcCompat="@drawable/carrot"
-
+        android:src="@drawable/ic_no_photo"
         android:id="@+id/image_my_event"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/textView19"

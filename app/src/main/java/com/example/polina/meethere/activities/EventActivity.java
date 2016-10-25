@@ -26,6 +26,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -52,6 +53,13 @@ import com.example.polina.meethere.model.UserProfile;
 import com.example.polina.meethere.network.NetworkService;
 import com.example.polina.meethere.network.ServerApi;
 import com.example.polina.meethere.views.EndlessRecyclerViewScrollListener;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -76,6 +84,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
     TextView address;
     TextView    quantity;
     EditText comment;
+    MapView mapView;
     RecyclerView recyclerView;
     CommentAdapter commentAdapter;
     ServerApi serverApi;
@@ -147,13 +156,16 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         progressBarOn();
         serverApi = app().getServerApi();
         progressBar = (ProgressBar) findViewById(R.id.avloadingIndicatorView);
-        View header = getLayoutInflater().inflate(R.layout.event_header, null);
+        View header = getLayoutInflater().inflate(R.layout.event_activity, null);
         description = (TextView) header.findViewById(R.id.descriprion_my_event);
         image = (ImageView) findViewById(R.id.image_my_event);
         inviteFriends = (LinearLayout) header.findViewById(R.id.layout_invite_friends);
         edit = (LinearLayout) header.findViewById(R.id.layout_edit_event);
         join = (CheckBox) header.findViewById(R.id.join_event);
         time = (TextView) header.findViewById(R.id.time_my_event);
+        mapView = (MapView) header.findViewById(R.id.eventMap);
+
+        mapView.onCreate(savedInstanceState);
         budget = (TextView) header.findViewById(R.id.my_event_budget);
         address = (TextView) header.findViewById(R.id.address_myevent);
         quantity = (TextView) header.findViewById(R.id.people_quantity_my_event);
@@ -225,6 +237,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
     protected void onDestroy() {
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+        mapView.onDestroy();
     }
 
     private void initComments(View header) {
@@ -458,14 +471,28 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
                 }
 
                 if(event.getPlace()!=null){
-                    address.setClickable(true);
-                    lat = event.getPlace().get(1);
-                    lng = event.getPlace().get(0);
-                    address.setText(event.getAddress());
-                } else {
-                    address.setCompoundDrawables(null, null, null, null);
-                    address.setText(event.getAddress());
+
+                    lat = event.getPlace().get(0);
+                    lng = event.getPlace().get(1);
+                    mapView.getMapAsync(new OnMapReadyCallback() {
+                        @Override
+                        public void onMapReady(GoogleMap googleMap) {
+                            LatLng pin = new LatLng(lat, lng);
+
+                            googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+                            googleMap.setMyLocationEnabled(true);
+                            googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 500, null);
+
+                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pin, 15));
+                            googleMap.addMarker(new MarkerOptions()
+                                    .position(pin).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin))
+                                    .title(event.getName()));
+                        }
+                    });
+
                 }
+
+                address.setText(event.getAddress());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -584,5 +611,25 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
 
 
         }
+    }
+
+    @Override
+    public void onResume() {
+        mapView.onResume();
+        super.onResume();
+    }
+
+
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mapView.onSaveInstanceState(outState);
     }
 }

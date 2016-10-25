@@ -38,6 +38,7 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
        String category = categories.get(position);
         holder.categoryButton.setText(category);
         holder.categoryButton.setTag(position);
+        holder.categoryButton.setOnClickListener(this);
 
 
     }

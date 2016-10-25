@@ -22,6 +22,7 @@ import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.Event;
 import com.example.polina.meethere.model.UserProfile;
 import com.example.polina.meethere.network.ServerApi;
+import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.json.JSONObject;
@@ -195,6 +196,8 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
             name.setText(userProfile.getName());
             location.setText(userProfile.getLocation());
             image.setImageURI(Uri.parse(userProfile.getMiniProfileUrl()));
+            RoundingParams roundingParams = RoundingParams.asCircle();
+            image.getHierarchy().setRoundingParams(roundingParams);
             followers.setText(userProfile.getFollowers()+"");
             followings.setText(userProfile.getFollowings()+"");
             follow = userProfile.isFollow();

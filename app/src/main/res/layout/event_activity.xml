@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_access_time_black_24dp"
+        android:id="@+id/imageView"
+        android:layout_margin="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/time_my_event"
+        android:textSize="17dp"
+        android:text="24, 30, 1990"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/imageView"
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_margin="10dp" />
+
+    <TextView
+        android:text="Среда  18 30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/time_my_event"
+        android:layout_alignStart="@+id/time_my_event"
+        android:id="@+id/date_my_event" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="10"
+        android:clickable="true"
+        android:onClick="onJoiners"
+        android:id="@+id/people_quantity_my_event"
+        android:drawableRight="@drawable/people"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:layout_alignBottom="@+id/imageView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="7dp"
+        android:layout_marginEnd="7dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_attach_money_black_24dp"
+        android:layout_below="@+id/date_my_event"
+        android:layout_alignLeft="@+id/imageView"
+        android:layout_alignStart="@+id/imageView"
+        android:layout_marginTop="20dp"
+        android:id="@+id/imageView3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/my_event_budget"
+        android:textColor="@color/colorPrimaryDark"
+
+
+        android:text="10 грн"
+        android:layout_alignTop="@+id/imageView3"
+        android:layout_alignLeft="@+id/date_my_event"
+        android:layout_alignStart="@+id/date_my_event" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_room_black_24dp"
+        android:layout_below="@+id/my_event_budget"
+        android:layout_marginTop="20dp"
+        android:id="@+id/imageView4"
+        android:layout_alignLeft="@+id/imageView3"
+        android:layout_alignStart="@+id/imageView3"
+        android:layout_alignRight="@+id/imageView3"
+        android:layout_alignEnd="@+id/imageView3" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:id="@+id/address_myevent"
+        android:text="пушкина 24 "
+        android:layout_alignTop="@+id/imageView4"
+        android:layout_alignLeft="@+id/my_event_budget"
+        android:layout_alignStart="@+id/my_event_budget" />
+
+    <com.google.android.gms.maps.MapView
+        android:layout_width="match_parent"
+        android:layout_below="@+id/address_myevent"
+        android:layout_alignLeft="@+id/imageView4"
+        android:layout_alignStart="@+id/imageView4"
+        android:layout_marginTop="10dp"
+        android:id="@+id/eventMap"
+        android:onClick="onMap"
+        android:clickable="true"
+        android:layout_marginRight="10dp"
+        android:layout_height="150dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+
+        android:id="@+id/layout_invite_friends"
+        android:clickable="true"
+        android:layout_below="@+id/descriprion_my_event"
+        android:layout_alignRight="@+id/descriprion_my_event"
+        android:layout_alignEnd="@+id/descriprion_my_event"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:id="@+id/edit_event"
+            android:src="@drawable/ic_people_black_24dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="center"
+            android:layout_width="17dp"
+            android:layout_height="17dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/invite_friends"
+            android:layout_gravity="center"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:id="@+id/join_event"
+        android:text="@string/joned_event"
+        android:button="@drawable/chack_box_join"
+        android:checked="false"
+        android:background="@color/white"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/layout_invite_friends"
+        android:layout_alignLeft="@+id/layout_invite_friends"
+        android:layout_alignStart="@+id/layout_invite_friends"
+        android:layout_marginRight="10dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_marginLeft="10dp" />
+
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:id="@+id/layout_edit_event"
+        android:clickable="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:visibility="gone"
+        android:layout_below="@+id/layout_invite_friends">
+
+        <ImageView
+            android:layout_height="19dp"
+            android:id="@+id/edit_event"
+            android:src="@drawable/ic_mode_edit_black_24dp"
+
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dp"
+            android:layout_width="17dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_event"
+            android:layout_gravity="center"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/make_comments"
+        android:hint="@string/make_comment"
+        android:imeOptions="actionSend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_invite_friends"
+        android:layout_alignLeft="@+id/join_event"
+        android:layout_alignStart="@+id/join_event"
+        android:layout_marginTop="75dp"
+        android:layout_marginRight="10dp" />
+
+    <ImageButton
+        android:id="@+id/comment"
+        android:enabled="false"
+        android:src="@android:drawable/ic_menu_send"
+        android:onClick="onSendComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_invite_friends"
+        android:layout_alignRight="@+id/layout_invite_friends"
+        android:layout_alignEnd="@+id/layout_invite_friends"
+        android:layout_marginTop="65dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_insert_comment_black_24dp"
+        android:layout_below="@+id/eventMap"
+        android:layout_alignLeft="@+id/eventMap"
+        android:layout_alignStart="@+id/eventMap"
+        android:layout_marginTop="11dp"
+        android:id="@+id/imageView5" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/descriprion_my_event"
+        android:text="хорошо живет на свете виипух "
+        android:layout_alignTop="@+id/imageView5"
+        android:layout_alignLeft="@+id/address_myevent"
+        android:layout_alignStart="@+id/address_myevent" />
+</RelativeLayout>

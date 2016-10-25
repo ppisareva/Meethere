@@ -20,6 +20,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -33,7 +34,6 @@ public class MapsActivity extends AbstractMeethereActivity implements OnMapReady
     LatLng pin;
     App app;
     MapFragment mapFragment;
-    ProgressBar progressBar;
     public static final int SEARCH_BY_DISTANCE = 20999430;
     List<Event> listOfEvents;
     LatLng eventLocation;
@@ -51,6 +51,7 @@ public class MapsActivity extends AbstractMeethereActivity implements OnMapReady
         app = (App) getApplication();
         Location location = app.getCurrentLocation();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
         pin = new LatLng(location.getLatitude(), location.getLongitude());
 
 
@@ -82,7 +83,7 @@ public class MapsActivity extends AbstractMeethereActivity implements OnMapReady
                 mMap.setMyLocationEnabled(true);
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 500, null);
                 if(eventLocation!=null) {
-                    mMap.addMarker(new MarkerOptions().position(eventLocation));
+                    mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin)).position(eventLocation));
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLocation, 15));
                 }
 
@@ -96,10 +97,10 @@ public class MapsActivity extends AbstractMeethereActivity implements OnMapReady
     public void onMapReady(GoogleMap googleMap) {
         for (Event e : listOfEvents) {
             mMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(e.getLat(), e.getLng()))
+                    .position(new LatLng(e.getLat(), e.getLng())).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin))
                     .title(e.getName()));
         }
-        progressBar.setVisibility(View.VISIBLE);
+
     }
 
     @Override

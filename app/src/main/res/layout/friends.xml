@@ -7,7 +7,7 @@
     <com.facebook.drawee.view.SimpleDraweeView
         android:layout_width="70dp"
         android:layout_height="75dp"
-        android:src="@drawable/image_add"
+        android:src="@drawable/ic_no_photo"
         android:id="@+id/friend_image"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"/>

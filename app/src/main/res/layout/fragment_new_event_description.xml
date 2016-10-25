@@ -1,6 +1,7 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.polina.meethere.fragments.NewEventDescriptionFragment">
 
 
@@ -17,13 +18,164 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:hint="@string/description"
         android:id="@+id/edit_description"
-        android:imeOptions="actionDone"
+        android:gravity="top"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/edit_name"
+        android:layout_weight="10" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/linearLayo"
+        android:layout_below="@+id/edit_description"
+        android:layout_weight="1"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/begining"
+            android:id="@+id/textView8"
+            android:layout_weight="1"
+            android:layout_marginLeft="16dp" />
+
+        <Button
+            android:layout_height="wrap_content"
+            android:text="ПН 12.04.16"
+            android:id="@+id/button_from"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:onClick="onStartDate"
+            android:layout_width="match_parent" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:id="@+id/button_from_time"
+            android:onClick="onStartTime"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/linearLayout_end"
+        android:background="@color/colorPrimary" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/linearLayout_end"
+        android:visibility="visible"
+        android:layout_below="@+id/linearLayo"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/edit_name"
-        android:gravity="top" />
+        android:layout_weight="1"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
 
-</RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/end"
+
+            android:id="@+id/end_day"
+            android:layout_weight="1"
+            android:layout_marginLeft="16dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ПН 12.04.16"
+            android:id="@+id/button_till"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:onClick="onAndDate" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:id="@+id/button_till_time"
+            android:onClick="onAndTime"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/linearLayout_end"
+        android:background="@color/colorPrimary" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/linearLayout8"
+        android:gravity="center_vertical"
+        android:layout_below="@+id/linearLayout_end"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_weight="1"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@string/budget"
+            android:layout_weight="1"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/from"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:id="@+id/spinner_budget_from"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/to"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:id="@+id/spinner_budget_to"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/linearLayout_end"
+        android:background="@color/colorPrimary" />
+
+
+</LinearLayout>
+

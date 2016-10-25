@@ -81,6 +81,7 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
 
         getSupportLoaderManager().initLoader(CATEGORY, arg, this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(Utils.categoryTitle(this, category));
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.events_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         myEventsAdapter = new MyEventsAdapter(this);

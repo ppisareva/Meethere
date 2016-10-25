@@ -119,7 +119,7 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
         }
         return categoryList;
     }
-
+ // todo
     public List<String> getCategory(){
         List<String > c = new ArrayList<>();
         c.add("Фитнес");

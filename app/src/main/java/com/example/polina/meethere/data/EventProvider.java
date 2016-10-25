@@ -136,8 +136,10 @@ public class EventProvider extends android.content.ContentProvider {
                     }
                     return cursor;
                 }
-                if (!LAST_UPDATE.containsKey(categoryId) || LAST_UPDATE.get(categoryId) + REFRESH_TIMEOUT < System.currentTimeMillis())
+                if (!LAST_UPDATE.containsKey(categoryId) || LAST_UPDATE.get(categoryId) + REFRESH_TIMEOUT < System.currentTimeMillis()) {
+                    LAST_UPDATE.put(categoryId, System.currentTimeMillis());
                     new LoadEvents().execute(categoryId, uri.toString());
+                }
                 Cursor cursor = database.getCursor(categoryId);
                 cursor.setNotificationUri(getContext().getContentResolver(), previousUri);
                 return  cursor;

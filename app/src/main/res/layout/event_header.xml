@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/time_my_event"
         android:textSize="17dp"
-        />
+        android:text="24, 30, 1990" />
 
     <CheckBox
         android:layout_width="match_parent"
@@ -109,7 +109,8 @@
         android:layout_marginTop="10dp"
         android:layout_below="@+id/people_quantity_my_event"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:text="пушкина 24 " />
 
     <TextView
         android:layout_width="wrap_content"
@@ -119,12 +120,13 @@
         android:layout_below="@+id/address_myevent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:text="10 грн" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:text="0"
+        android:text="10"
         android:clickable="true"
         android:onClick="onJoiners"
         android:id="@+id/people_quantity_my_event"
@@ -143,7 +145,8 @@
         android:layout_below="@+id/my_event_budget"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:text="хорошо живет на свете виипух " />
 
     <EditText
         android:id="@+id/make_comments"

@@ -83,7 +83,8 @@
         <activity android:name=".activities.MyInformationActivity" />
         <activity android:name=".activities.MyPreferencesActivity" />
         <activity android:name=".activities.ListOfEventsActivity" />
-        <activity android:name=".activities.NewEventActivity" />
+        <activity android:name=".activities.NewEventActivity"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".activities.SearchFiltersActivity" />
         <!-- <activity android:name=".fragments.ListOfEventSearchFragment" /> -->
 

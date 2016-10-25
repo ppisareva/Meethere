@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.polina.meethere.R;
@@ -45,6 +46,7 @@ public class NewEventLocationFragment extends android.support.v4.app.Fragment im
     String address = "";
     Double lat;
     Double lng;
+    ProgressBar progressBar;
 
 
     public static NewEventLocationFragment newInstance(String a, Double latitude, Double longtitude) {
@@ -71,6 +73,13 @@ public class NewEventLocationFragment extends android.support.v4.app.Fragment im
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.new_event, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
     View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
         @Override
         public void onFocusChange(View v, boolean hasFocus) {
@@ -88,6 +97,7 @@ public class NewEventLocationFragment extends android.support.v4.app.Fragment im
         View v = inflater.inflate(R.layout.fragment_new_event_location, container, false);
         setHasOptionsMenu(true);
         application = (App) getActivity().getApplication();
+        progressBar = (ProgressBar) v.findViewById(R.id.progress);
         mapView = (MapView) v.findViewById(R.id.map_view);
         adressView = (EditText) v.findViewById(R.id.add_adress);
 //        adressView.setOnFocusChangeListener(onFocusChangeListener);
@@ -131,11 +141,7 @@ public class NewEventLocationFragment extends android.support.v4.app.Fragment im
         mapView.onSaveInstanceState(outState);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        getActivity().getMenuInflater().inflate(R.menu.new_event_mid, menu);
-    }
+
 
     public String getAddress (){
         String text = adressView.getText().toString();
@@ -145,7 +151,16 @@ public class NewEventLocationFragment extends android.support.v4.app.Fragment im
         return text;
     }
 
+    public void progressBarOn(){
+        if(progressBar==null) return;
+        progressBar.setVisibility(View.VISIBLE);
 
+    }
+
+    public void progressOff(){
+        if(progressBar==null) return;
+        progressBar.setVisibility(View.GONE);
+    }
 
 
     public Collection<Double> getLocation(){
@@ -226,3 +241,4 @@ public class NewEventLocationFragment extends android.support.v4.app.Fragment im
         }
     }
 }
+

@@ -28,7 +28,7 @@
     <string name="price">Цена</string>
     <string name="filter">Фильтер</string>
     <string name="next">Далее</string>
-    <string name="description">Описание</string>
+    <string name="description">Введите описание</string>
     <string name="choose_time">Выберите время</string>
     <string name="end">Конец</string>
     <string name="begining">Начало</string>
@@ -60,7 +60,7 @@
     <string name="past_events">Прошедшие</string>
     <string name="future_events">Ближайшие</string>
     <string name="createt_by_my">Созданые</string>
-    <string name="add_name">Название</string>
+    <string name="add_name">Введите название</string>
     <string name="budget">Бюджет</string>
     <string name="new_event">Создать</string>
     <string name="more">больше</string>
@@ -277,7 +277,7 @@
         <string name="news">Мои новости</string>
         <string name="first_name">Имя</string>
         <string name="last_name">Фамилия</string>
-        <string name="joned_event">присоедениться к встрече</string>
+        <string name="joned_event">   присоедениться к встрече</string>
         <string name="edit_event">изменить событие</string>
         <string name="invite_friends">пригласить друзей</string>
         <string name="leave_event">покинуть встречу</string>

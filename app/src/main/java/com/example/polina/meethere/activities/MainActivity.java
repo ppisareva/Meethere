@@ -88,6 +88,7 @@ public class MainActivity extends AbstractMeethereActivity
         SharedPreferences sharedPreferences = getSharedPreferences("pref", MODE_PRIVATE);
         category =  sharedPreferences.getStringSet(UserProfile.CATEGORY, new HashSet<String>());
         feedFragment = FeedFragment.newInstance(category);
+        searchResultsFragment = SearchResultsFragment.newInstance();
 
         if (savedInstanceState != null) {
             //Restore the fragment's instance

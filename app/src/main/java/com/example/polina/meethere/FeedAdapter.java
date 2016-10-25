@@ -2,15 +2,21 @@ package com.example.polina.meethere;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.internal.Utility;
 
@@ -40,6 +46,13 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder > 
         this.context=context;
     }
 
+    private SpannableString changeTextSize(String text, int end){
+
+        SpannableString ss1=  new SpannableString(text);
+        ss1.setSpan(new RelativeSizeSpan(1.2f), 0,end,  Spannable.SPAN_EXCLUSIVE_EXCLUSIVE); // set size
+
+      return ss1;
+    }
     @Override
     public void onBindViewHolderCursor(ViewHolder holder, Cursor cursor) {
 
@@ -47,25 +60,31 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder > 
         holder.eventImage.setImageURI(Uri.parse(uri));
        // holder.eventImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
         holder.userPhoto.setImageURI(Uri.parse(cursor.getString(IMAGE)));
-        holder.userName.setText( cursor.getString(FIRST_NAME) + " " + cursor.getString(LAST_NAME));
+        RoundingParams roundingParams = RoundingParams.asCircle();
+        holder.userPhoto.getHierarchy().setRoundingParams(roundingParams);
+        SpannableString action = new SpannableString("");
+        String name =  cursor.getString(FIRST_NAME) + " " + cursor.getString(LAST_NAME)+ " ";
+
+
         switch (cursor.getString(TYPE)){
             case Utils.CREATE_EVENT:
-                holder.action.setText(context.getString(R.string.created_event));
+
+                action = changeTextSize(name+context.getString(R.string.created_event) , name.length() );
                 break;
             case Utils.INVITE:
-                holder.action.setText(context.getString(R.string.invite));
+                action = changeTextSize(name +context.getString(R.string.invite), name.length());
                 break;
             case Utils.JOIN:
-                holder.action.setText(context.getString(R.string.join));
+                action = changeTextSize(name +context.getString(R.string.join),name.length() );
                 break;
         }
-
+        holder.userName.setText( action);
         String time = Utils.parseData(cursor.getString(TIME));
         holder.actionTime.setText(time);
          time = Utils.parseData(cursor.getString(EVENT_START));
         holder.eventTime.setText(time);
 
-        holder.eventBudget.setText(cursor.getString(EVENT_BUDGET)+  " "+context.getString(R.string.hrn));
+        holder.eventBudget.setText(cursor.getString(EVENT_BUDGET));
         holder.eventName.setText(cursor.getString(EVENT_NAME));
     }
 

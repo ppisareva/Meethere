@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.polina.meethere.activities.EventActivity;
 import com.example.polina.meethere.activities.UserProfileActivity;
 import com.example.polina.meethere.model.App;
+import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 /**
@@ -49,6 +50,8 @@ public class MyFriendsAdapter extends CursorRecyclerAdapter<MyFriendsAdapter.Vie
         }
         holder.setID(cursor.getInt(ID)+"");
         holder.image.setImageURI(Uri.parse(cursor.getString(URL)));
+        RoundingParams roundingParams = RoundingParams.asCircle();
+        holder.image.getHierarchy().setRoundingParams(roundingParams);
     }
 
     @Override

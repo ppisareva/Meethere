@@ -55,18 +55,18 @@ public class NewEventActivity extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     TabLayout tabLayout;
-    NewEventTimePickerFragment newEventTimePickerFragment;
+   // NewEventTimePickerFragment newEventTimePickerFragment;
     NewEventImageFragment newEventImageFragment;
     NewEventLocationFragment locationFragment;
     NewEventCategoryChooseFragment newEventCategoryChooseFragment;
-    NewEventAdditionFragment additionFragment;
+ //   NewEventAdditionFragment additionFragment;
 
-    public final int FRAGMENT_TIME = 2;
+  //  public final int FRAGMENT_TIME = 2;
     public final int FRAGMENT_CATEGORY = 1;
     public final int FRAGMENT_DESCTIPTION = 0;
-    public final int FRAGMENT_PHOTO = 3;
-    public final int FRAGMENT_LOCATION = 4;
-    public final int FRAGMENT_ADITION = 5;
+    public final int FRAGMENT_PHOTO = 2;
+    public final int FRAGMENT_LOCATION = 3;
+  //  public final int FRAGMENT_ADITION = 5;
 
     private static final int START_DATE = 202;
 
@@ -94,6 +94,7 @@ public class NewEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_event);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
         Intent intent = getIntent();
         if(intent!=null){
             name = intent.getStringExtra(Event.NAME);
@@ -133,14 +134,14 @@ public class NewEventActivity extends AppCompatActivity {
         public android.support.v4.app.Fragment getItem(int position) {
             System.out.println(position);
             switch (position){
-                case FRAGMENT_TIME:
-                    newEventTimePickerFragment = NewEventTimePickerFragment.newInstance(timeStart, timeEnd);
-                    return newEventTimePickerFragment;
+//                case FRAGMENT_TIME:
+//                    newEventTimePickerFragment = NewEventTimePickerFragment.newInstance(timeStart, timeEnd);
+//                    return newEventTimePickerFragment;
                 case  FRAGMENT_CATEGORY:
                     newEventCategoryChooseFragment = NewEventCategoryChooseFragment.newInstance(category);
                     return newEventCategoryChooseFragment;
                 case FRAGMENT_DESCTIPTION:
-                    newEventDescriprionFragment = NewEventDescriptionFragment.newInstance(name,description);
+                    newEventDescriprionFragment = NewEventDescriptionFragment.newInstance(name,description, budgetMin, budgetMax, timeStart, timeEnd);
                     return newEventDescriprionFragment;
                 case FRAGMENT_PHOTO:
                     newEventImageFragment = NewEventImageFragment.newInstance(id);
@@ -148,9 +149,9 @@ public class NewEventActivity extends AppCompatActivity {
                 case FRAGMENT_LOCATION:
                     locationFragment = NewEventLocationFragment.newInstance(address, lat, lng);
                     return locationFragment;
-                case FRAGMENT_ADITION:
-                    additionFragment = NewEventAdditionFragment.newInstance(budgetMin, budgetMax);
-                    return additionFragment;
+//                case FRAGMENT_ADITION:
+//                    additionFragment = NewEventAdditionFragment.newInstance(budgetMin, budgetMax);
+//                    return additionFragment;
             }
             return null;
 
@@ -159,7 +160,7 @@ public class NewEventActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 6;
+            return 4;
         }
 
 
@@ -220,7 +221,7 @@ public class NewEventActivity extends AppCompatActivity {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             String st = String.format("%d-%02d-%02d", year, (monthOfYear + 1), dayOfMonth);
-            newEventTimePickerFragment.changeStartDate(st);
+            newEventDescriprionFragment.changeStartDate(st);
         }
     };
 
@@ -228,7 +229,7 @@ public class NewEventActivity extends AppCompatActivity {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             String st = String.format("%d-%02d-%02d", year, (monthOfYear + 1), dayOfMonth);
-            newEventTimePickerFragment.changeEndDate(st);
+            newEventDescriprionFragment.changeEndDate(st);
         }
     };
 
@@ -237,7 +238,7 @@ public class NewEventActivity extends AppCompatActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             String st = hourOfDay + ":" + minute;
             if(minute<10)  st = hourOfDay + ":" + "0"+minute;
-            newEventTimePickerFragment.changeTimeStart(st);
+            newEventDescriprionFragment.changeTimeStart(st);
         }
     };
 
@@ -246,7 +247,7 @@ public class NewEventActivity extends AppCompatActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             String st = hourOfDay + ":" + minute;
             if(minute<10)  st = hourOfDay + ":" + "0"+minute;
-            newEventTimePickerFragment.changeEndTime(st);
+            newEventDescriprionFragment.changeEndTime(st);
         }
     };
 
@@ -269,29 +270,29 @@ public class NewEventActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id==R.id.action_new_create){
-            additionFragment.progressBarOn();
+            locationFragment.progressBarOn();
 
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put(Event.NAME, newEventDescriprionFragment.getName());
                 jsonObject.put(Event.DESCRIPTION, newEventDescriprionFragment.getDescription());
                 jsonObject.put(Event.TAGS, new JSONArray(newEventCategoryChooseFragment.getTags()));
-                jsonObject.put(Event.START, newEventTimePickerFragment.getStartDateString());
-                jsonObject.put(Event.END, newEventTimePickerFragment.getEndDateString());
+                jsonObject.put(Event.START, newEventDescriprionFragment.getStartDateString());
+                jsonObject.put(Event.END, newEventDescriprionFragment.getEndDateString());
                 if (locationFragment.getLocation()!=null){
                     jsonObject.put(Event.PLACE, new JSONArray(locationFragment.getLocation()));
                 }
                 jsonObject.put(Event.ADDRESS,locationFragment.getAddress() );
-                if(additionFragment.getMaxAge()!=-1){
-                    jsonObject.put(Event.AGE_MAX,additionFragment.getMaxAge() );
-                }
+//                if(newEventDescriprionFragment.getMaxAge()!=-1){
+//                    jsonObject.put(Event.AGE_MAX,newEventDescriprionFragment.getMaxAge() );
+//                }
+//
+//                if( newEventDescriprionFragment.getMinAge()!=-1){
+//                    jsonObject.put(Event.AGE_MIN, newEventDescriprionFragment.getMinAge());
+//                }
 
-                if( additionFragment.getMinAge()!=-1){
-                    jsonObject.put(Event.AGE_MIN, additionFragment.getMinAge());
-                }
-
-                jsonObject.put(Event.BUDGET_MAX, additionFragment.getMaxBudget());
-                jsonObject.put(Event.BUDGET_MIN,additionFragment.getMinBudget() );
+                jsonObject.put(Event.BUDGET_MAX, newEventDescriprionFragment.getMaxBudget());
+                jsonObject.put(Event.BUDGET_MIN,newEventDescriprionFragment.getMinBudget() );
 
 
 
@@ -316,7 +317,7 @@ public class NewEventActivity extends AppCompatActivity {
         }
 
         if (id==R.id.action_forward){
-            if(!(mViewPager.getCurrentItem()==5))
+            if(!(mViewPager.getCurrentItem()==3))
                 mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
         }
         return super.onOptionsItemSelected(item);
@@ -338,7 +339,7 @@ public class NewEventActivity extends AppCompatActivity {
                 Toast.makeText(context, "Event has been updared!", Toast.LENGTH_LONG).show();
                 NewEventActivity.this.finish();
             } else {
-                additionFragment.progressOff();
+            locationFragment.progressOff();
                 Toast.makeText(context, "Can not create event. Description and location must be fill up", Toast.LENGTH_LONG).show();
             }
         }
@@ -352,7 +353,7 @@ public class NewEventActivity extends AppCompatActivity {
                 Toast.makeText(context, "New event has been created!", Toast.LENGTH_LONG).show();
                 NewEventActivity.this.finish();
             } else {
-                additionFragment.progressOff();
+              locationFragment.progressOff();
                 Toast.makeText(context, "Can not create event. Try again", Toast.LENGTH_LONG).show();
             }
         }

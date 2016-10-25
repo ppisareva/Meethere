@@ -31,6 +31,8 @@ public class SearchResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
         search = getIntent().getStringExtra(Utils.SEARCH);
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
         fragmentEvents = ListOfEventSearchFragment.newInstance(search);
         mSectionsPagerAdapter = new PagerAdapter(getSupportFragmentManager());
         tabLayout = (TabLayout) findViewById(R.id.tabs);

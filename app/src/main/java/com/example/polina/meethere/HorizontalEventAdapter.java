@@ -107,10 +107,10 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
             if (h instanceof ViewHolder) {
                 ViewHolder  holder = (ViewHolder) h;
                 holder.text.setText(cursor.getString(NAME));
-                holder.time.setText(Utils.parseData(cursor.getString(START)));
+                holder.date.setText(Utils.parseDataDate(cursor.getString(START)));
+                holder.time.setText(Utils.parseDataTime(cursor.getString(START)));
                 boolean checked = Boolean.parseBoolean(cursor.getString(JOINED));
-
-                holder.budget.setText((cursor.getInt(BUDGET)==0?"Бесплатно": (cursor.getInt(BUDGET))+" грн"));
+                holder.budget.setText((cursor.getInt(BUDGET)==0?context.getString(R.string.free): (cursor.getInt(BUDGET))+" "+context.getString(R.string.hrn)));
                 holder.attendance.setText(cursor.getInt(ATTENDENCE)+"");
                 holder.joined.setVisibility(View.GONE);
                 if(checked) holder.joined.setVisibility(View.VISIBLE);
@@ -148,6 +148,8 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
         private ImageView image;
         private TextView text;
         private TextView time;
+        private TextView date;
+
        private ImageView joined;
        private TextView budget;
        private TextView attendance;
@@ -177,6 +179,7 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
             image.setOnClickListener(this);
             text =(TextView)itemView.findViewById(R.id.event_name);
             time = (TextView)itemView.findViewById(R.id.event_time);
+            date = (TextView)itemView.findViewById(R.id.event_date);
             budget = (TextView)itemView.findViewById(R.id.event_budget);
             attendance = (TextView)itemView.findViewById(R.id.event_attendence);
            joined = (ImageView) itemView.findViewById(R.id.check_join);

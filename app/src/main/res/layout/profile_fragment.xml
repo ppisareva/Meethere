@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:background="@drawable/side_nav_bar"
         android:theme="@style/Profile"
-        android:layout_height="220dp">
+        android:layout_height="230dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -21,7 +21,9 @@
             android:layout_alignLeft="@+id/followings"
             android:layout_alignStart="@+id/followings"
             android:id="@+id/textView32"
-            android:textSize="16dp" />
+            android:textSize="14dp"
+            android:layout_alignRight="@+id/followings"
+            android:layout_alignEnd="@+id/followings" />
 
         <TextView
             android:layout_height="wrap_content"
@@ -29,7 +31,7 @@
             android:clickable="true"
             android:onClick="onFollowers"
 
-            android:textSize="19dp"
+            android:textSize="15dp"
             android:id="@+id/followers"
             android:layout_above="@+id/textView7"
             android:layout_toLeftOf="@+id/profile_image"
@@ -47,9 +49,8 @@
             android:id="@+id/followings"
             android:layout_above="@+id/textView32"
             android:layout_toRightOf="@+id/profile_image"
-            android:layout_toEndOf="@+id/profile_image"
             android:gravity="center_horizontal"
-            android:textSize="19dp"
+            android:textSize="15dp"
             android:layout_width="80dp" />
 
         <TextView
@@ -58,7 +59,7 @@
             android:layout_height="wrap_content"
             android:text="Полина Слюсарчук"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="23dp"
+            android:textSize="18dp"
             android:layout_above="@+id/location"
             android:layout_centerHorizontal="true" />
 
@@ -79,19 +80,20 @@
             android:layout_height="wrap_content"
             android:text="@string/followers"
             android:clickable="true"
-            android:textSize="16dp"
+            android:textSize="14dp"
             android:onClick="onFollowers"
             android:id="@+id/textView7"
             android:layout_alignBaseline="@+id/textView32"
             android:layout_alignBottom="@+id/textView32"
-            android:layout_alignRight="@+id/followers"
-            android:layout_alignEnd="@+id/followers" />
+            android:layout_toLeftOf="@+id/profile_image"
+            android:layout_alignLeft="@+id/followers"
+            android:layout_alignStart="@+id/followers" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mountain View, CA, USA"
-            android:textSize="17dp"
+            android:textSize="15dp"
             android:id="@+id/location"
             android:layout_marginBottom="17dp"
             android:layout_alignParentBottom="true"
@@ -99,13 +101,15 @@
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:src="@drawable/river"
+            android:src="@drawable/ic_no_photo"
             android:id="@+id/profile_image"
             android:clickable="true"
             android:layout_height="130dp"
             android:layout_width="130dp"
+
             android:layout_alignTop="@+id/imageEdit"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp" />
 
 
     </RelativeLayout>

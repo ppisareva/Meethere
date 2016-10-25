@@ -17,7 +17,7 @@
         app:dotDiameter="8dp"
         app:dotGap="8dp"
         app:pageIndicatorColor="@color/gray"
-        app:currentPageIndicatorColor="@color/blue"/>
+        app:currentPageIndicatorColor="@color/colorPrimaryDark"/>
 
     <FrameLayout
         android:layout_width="fill_parent"
