@@ -281,5 +281,13 @@
     <string name="created_event">create new event</string>
     <string name="invite">invite you to join</string>
     <string name="join">joined to your meeting</string>
+    <string name="submit">LOG IN</string>
+    <string name="back">BACK</string>
+    <string name="not_empty">must not be empty</string>
+    <string name="wrong_password">wrong password</string>
+    <string name="user_already_exist">user already exist</string>
+    <string name="filds_must_not_be_null">All filld must be fill up</string>
+    <string name="user_cannot_be_created">user cannot be created</string>
+    <string name="wrong_password_email">Wrong email or password</string>
 
 </resources>

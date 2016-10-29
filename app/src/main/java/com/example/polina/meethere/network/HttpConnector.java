@@ -70,8 +70,11 @@ public class HttpConnector {
 
 
     public void setData(String data) {
+        setData(data, "application/json");
+    }
+    public void setData(String data, String contentType) {
         System.err.println("DATA: " + data);
-        setHeader("Content-Type", "application/json");
+        setHeader("Content-Type", contentType);
         try {
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);

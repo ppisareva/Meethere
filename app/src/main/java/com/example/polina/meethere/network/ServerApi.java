@@ -27,7 +27,12 @@ import java.util.List;
  */
 public class ServerApi {
     public static final String HOST = "https://meethere-dev.herokuapp.com/";
-    public static final String AUTH = "myauth";
+
+    public static final String AUTH = "/auth/facebook";
+    public static final String LOGIN = "auth/email/login";
+    public static final String CHECKUSER = "/auth/email/check?email=";
+    public static final String SIGNUP = "auth/register";
+
     public static final String COMMENT = "/comment/";
     public static final String COMMENT_EDIT = "/event/%s/comment/%s/";
     public static final String EVENT = "event/";
@@ -375,5 +380,24 @@ public class ServerApi {
         HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+categoryId +"?"+LOG+ lon +LAT+lat +  OFFSET_ + offset);
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return  connector.response();
+    }
+
+    public JSONObject logIn (String email, String password){
+        HttpConnector connector = new HttpConnector(HOST + LOGIN);
+        String data = String.format("email=%s&password=%s", email, password);
+        connector.setData(data, "application/x-www-form-urlencoded");
+        return connector.response();
+    }
+
+    public JSONObject checkUser(String s) {
+        HttpConnector connector = new HttpConnector(HOST + CHECKUSER + s);
+        return connector.response();
+    }
+
+    public JSONObject signUp(String fn, String ln, String e, String p) {
+        HttpConnector connector = new HttpConnector(HOST + SIGNUP);
+        String data = String.format("first_name=%s&last_name=%s&email=%s&username=%s&password=%s", fn, ln, e, e, p);
+        connector.setData(data, "application/x-www-form-urlencoded");
+        return connector.response();
     }
 }

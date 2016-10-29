@@ -289,4 +289,12 @@
         <string name="created_event">создал новое событие</string>
         <string name="invite">пригласил вас на встречу</string>
         <string name="join">присоединолся к вашей встрече</string>
+    <string name="submit">войти</string>
+    <string name="back">НАЗАД</string>
+    <string name="not_empty">Должно быть заполненно</string>
+    <string name="wrong_password">не правельный пароль</string>
+    <string name="user_already_exist">такой пользователь уже существует</string>
+    <string name="filds_must_not_be_null">все поля должны быть заполненны</string>
+    <string name="user_cannot_be_created">пользователь не создан</string>
+    <string name="wrong_password_email">не правельный имеил или пароль</string>
 </resources>

@@ -73,7 +73,7 @@ public class NewEventDescriptionFragment extends android.support.v4.app.Fragment
                 TextView view = (TextView) v;
                 String text = view.getText().toString();
                 if (text.matches("")) {
-                    view.setHint("Должно быть заполненно");
+                    view.setHint(getString(R.string.not_empty));
                     view.setHintTextColor(getResources().getColor(R.color.red));
                     view.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_asterisk, 0);
                     return;

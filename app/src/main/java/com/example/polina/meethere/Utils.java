@@ -57,6 +57,12 @@ public class Utils {
     public static final String CREATE_EVENT = "CREATE_EVENT";
     public static final String JOIN = "JOINED";
     public static final String INVITE = "INVITE";
+    public static final String EMAIL = "email";
+    public static final String PASSWORD = "password";
+    public static final String FIRSTNAME = "first_name";
+    public static final String LASTNAME = "last_name";
+    public static final String USERNAME = "username";
+    public static final String REGISTERD ="registered" ;
 
 
     static {
@@ -373,4 +379,6 @@ public class Utils {
             return im.getString(category);
 
     }
+
+    
 }
