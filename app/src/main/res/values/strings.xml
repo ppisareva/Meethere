@@ -289,5 +289,14 @@
     <string name="filds_must_not_be_null">All filld must be fill up</string>
     <string name="user_cannot_be_created">user cannot be created</string>
     <string name="wrong_password_email">Wrong email or password</string>
+    <!-- Strings related to login -->
+    <string name="action_sign_in">Enter</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="re_password">Re-password</string>
+    <string name="login">Login</string>
+    <string name="error_repassword_not_match">Passwords aren\'t matched</string>
 
 </resources>

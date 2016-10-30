@@ -14,6 +14,7 @@ import com.example.polina.meethere.CategoryChooseAdapter;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.Event;
+import com.example.polina.meethere.model.UserProfile;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,7 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class ChooseCategoryActivity extends AppCompatActivity {
+public class ChooseCategoryActivity extends AbstractMeethereActivity {
     CategoryChooseAdapter adapter;
     App app ;
 
@@ -58,7 +59,7 @@ public class ChooseCategoryActivity extends AppCompatActivity {
 
             JSONObject jsonObject = new JSONObject();
             try {
-                jsonObject.put(Event.TAGS, new JSONArray(adapter.getTags()));
+                jsonObject.put(UserProfile.CATEGORY, new JSONArray(adapter.getTags()));
                 new Update().execute(jsonObject);
 
             }catch (Exception e){
@@ -85,8 +86,7 @@ public class ChooseCategoryActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Intent intent = new Intent(ChooseCategoryActivity.this, MainActivity.class);
-            startActivity(intent);
+            goToMain();
 
         }
     }

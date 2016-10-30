@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-
     package="com.example.polina.meethere">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -24,8 +23,12 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <application
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+    <application
         android:name=".model.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -39,7 +42,6 @@
         <activity
             android:name=".activities.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -54,6 +56,7 @@
         <activity android:name=".activities.SignUpActivity" />
         <activity
             android:name=".activities.MainActivity"
+            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -63,7 +66,6 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
-
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -83,8 +85,9 @@
         <activity android:name=".activities.MyInformationActivity" />
         <activity android:name=".activities.MyPreferencesActivity" />
         <activity android:name=".activities.ListOfEventsActivity" />
-        <activity android:name=".activities.NewEventActivity"
-            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".activities.NewEventActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activities.SearchFiltersActivity" />
         <!-- <activity android:name=".fragments.ListOfEventSearchFragment" /> -->
 
@@ -115,10 +118,20 @@
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <action android:name="android.intent.action.EDIT" />
+
             <category android:name="android.intent.category.APP_CALENDAR" />
+
             <data android:mimeType="vnd.android.cursor.item/event" />
         </intent-filter>
 
+        <activity
+            android:name=".activities.EnterCredentialsActivity"
+            android:label="@string/action_sign_in"
+            android:parentActivityName=".activities.LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.polina.meethere.activities.LoginActivity" />
+        </activity>
     </application>
 
 </manifest>

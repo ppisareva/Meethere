@@ -65,6 +65,17 @@
         <item>Другое</item>
     </string-array>
 
+    <!-- Strings related to login -->
+    <string name="action_sign_in">Увійти</string>
+    <string name="error_invalid_email">Email не валідний</string>
+    <string name="error_invalid_password">У когось занадто маленький пароль</string>
+    <string name="error_incorrect_password">Некоректний пароль</string>
+    <string name="error_field_required">Це поле дуже необхідне</string>
+    <string name="re_password">Пароль ще раз</string>
+    <string name="login">Увійти</string>
+    <string name="error_repassword_not_match">Паролі не однакові</string>
+
+
 
 
 </resources>

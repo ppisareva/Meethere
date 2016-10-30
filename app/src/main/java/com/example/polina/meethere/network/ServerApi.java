@@ -389,9 +389,12 @@ public class ServerApi {
         return connector.response();
     }
 
-    public JSONObject checkUser(String s) {
+    public boolean checkUser(String s) {
         HttpConnector connector = new HttpConnector(HOST + CHECKUSER + s);
-        return connector.response();
+        JSONObject o = connector.response();
+        if (o == null) return false;
+        return o.optBoolean("registered");
+
     }
 
     public JSONObject signUp(String fn, String ln, String e, String p) {

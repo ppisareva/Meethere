@@ -64,14 +64,16 @@ public class App extends MultiDexApplication {
 
     public void saveUserProfile(JSONObject o) throws JSONException {
         SharedPreferences.Editor editor = pref().edit();
-        editor.putInt(UserProfile.USER_ID, o.optInt(UserProfile.USER_ID));
+        if (o.has(UserProfile.TOKEN))
+            editor.putString(UserProfile.TOKEN, o.optString(UserProfile.TOKEN));
+        if (o.has("profile"))
+            o = o.optJSONObject("profile");
+        editor.putInt(UserProfile.USER_ID, o.has("_id") ? o.optInt("_id"): o.optInt(UserProfile.USER_ID));
         editor.putString(UserProfile.FIRST_NAME, o.optString(UserProfile.FIRST_NAME));
         editor.putString(UserProfile.LAST_NAME, o.optString(UserProfile.LAST_NAME));
         editor.putString(UserProfile.PROFILE_URL, o.optString(UserProfile.PROFILE_URL));
         editor.putString(UserProfile.MINI_PROFILE_URL, o.optString(UserProfile.MINI_PROFILE_URL));
         editor.putString(UserProfile.LOCATION, o.optString(UserProfile.LOCATION));
-        if (o.has(UserProfile.TOKEN))
-            editor.putString(UserProfile.TOKEN, o.optString(UserProfile.TOKEN));
         editor.putString(UserProfile.PHONE, o.optString(UserProfile.PHONE));
         editor.putString(UserProfile.EMAIL, o.optString(UserProfile.EMAIL));
         editor.putString(UserProfile.BIRTHDAY, o.optString(UserProfile.BIRTHDAY));

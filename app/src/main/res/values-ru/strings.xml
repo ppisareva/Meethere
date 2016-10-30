@@ -297,4 +297,16 @@
     <string name="filds_must_not_be_null">все поля должны быть заполненны</string>
     <string name="user_cannot_be_created">пользователь не создан</string>
     <string name="wrong_password_email">не правельный имеил или пароль</string>
+    <!-- Strings related to login -->
+    <string name="action_sign_in">Войти</string>
+    <string name="action_sign_in_short">Войти</string>
+    <string name="error_invalid_email">Email не валиден</string>
+    <string name="error_invalid_password">У когото очень маленький пароль</string>
+    <string name="error_incorrect_password">Некоректный пароль</string>
+    <string name="error_field_required">Это поле ну очень надо</string>
+    <string name="re_password">Пароль еще раз</string>
+    <string name="login">Войти</string>
+    <string name="error_repassword_not_match">Пароли не сходятся</string>
+
+
 </resources>

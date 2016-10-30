@@ -17,18 +17,14 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.activities.FeedActivity;
-import com.example.polina.meethere.activities.MainActivity;
 import com.example.polina.meethere.activities.MyEventsActivity;
 import com.example.polina.meethere.activities.MyInformationActivity;
 import com.example.polina.meethere.activities.SettingsActivity;
-import com.example.polina.meethere.adapters.SimpleItem;
 import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.UserProfile;
 import com.example.polina.meethere.network.ServerApi;
