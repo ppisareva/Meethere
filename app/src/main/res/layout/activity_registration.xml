@@ -76,4 +76,15 @@
         android:textColor="@color/white_transperent"
         android:layout_marginBottom="10dp" />
 
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_centerInParent="true"
+        android:id="@+id/avloadingIndicatorView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:visibility="invisible"
+
+        />
+
 </RelativeLayout>

@@ -27,18 +27,21 @@ import com.example.polina.meethere.model.Event;
 public class ListOfEventsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>  {
 
 
+
     MyEventsAdapter myEventsAdapter;
     boolean highPrice = false;
     boolean lowPrice = false;
 
     TextView distance;
     TextView price;
+    TextView time;
     ImageView imageView;
     int loaderWorking= 0;
     private int STEP =10;
     Boolean loaderDistance =false;
     Boolean loaderHighPrice = false;
     Boolean loaderLowPrice = false;
+    Boolean loaderDate = false;
     App app;
 
     public boolean isFlag() {
@@ -52,6 +55,7 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
 
     public static final int CATEGORY = 20330;
     public static final int BY_LOW_PRICE = 203000990;
+    private static final int CATEGORY_TIME_FUTURE = 556;
     public static final int BY_HIGH_PRICE = 2090933430;
     public static final int BY_DISTANCE = 209994385;
      int category;
@@ -70,6 +74,7 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
         category = getIntent().getIntExtra(Utils.CATEGORY, -1);
 
         distance =(TextView)findViewById(R.id.distance_filter);
+        time = (TextView) findViewById(R.id.time_sort);
         distance.setOnClickListener(onDistance);
         price = (TextView)findViewById(R.id.price_filter);
         price.setOnClickListener(onPrice);
@@ -112,13 +117,32 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
         });
     }
 
-    public void onFilterPress(View v){}
+    public void onDatePress(View v){
+        time.setTextColor(getResources().getColor(R.color.filter));
+        distance.setTextColor(getResources().getColor(R.color.white));
+        price.setTextColor(getResources().getColor(R.color.white));
+        imageView.setImageResource(R.drawable.ic_price);
+        offset = 0;
+        Bundle arg = new Bundle();
+        arg.putString(Utils.CATEGORY, category+"");
+        arg.putString(Utils.OFFSET, offset+"");
+        if(loaderDate){
+            getSupportLoaderManager().restartLoader(CATEGORY_TIME_FUTURE,arg ,ListOfEventsActivity.this);
+        } else {
+            getSupportLoaderManager().restartLoader(CATEGORY_TIME_FUTURE,arg ,ListOfEventsActivity.this);
+            loaderDate = true;
+        }
+
+
+
+    }
 
 
     View.OnClickListener onDistance= new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             distance.setTextColor(getResources().getColor(R.color.filter));
+            time.setTextColor(getResources().getColor(R.color.white));
             price.setTextColor(getResources().getColor(R.color.white));
             imageView.setImageResource(R.drawable.ic_price);
             highPrice = false;
@@ -144,6 +168,7 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
         @Override
         public void onClick(View v) {
             distance.setTextColor(getResources().getColor(R.color.white));
+            time.setTextColor(getResources().getColor(R.color.white));
             price.setTextColor(getResources().getColor(R.color.filter));
             Bundle arg = new Bundle();
             arg.putString(Utils.CATEGORY,category+"");
@@ -216,6 +241,9 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
         switch (id){
             case CATEGORY:
                 uri =   Uri.parse(String.format("content://com.example.polina.meethere.data.data/category/?category=%s&offset=%s",  category, offset));
+                break;
+            case CATEGORY_TIME_FUTURE:
+                uri =   Uri.parse(String.format("content://com.example.polina.meethere.data.data/category_time/?category=%s&offset=%s",  category, offset));
                 break;
             case BY_LOW_PRICE:
                 uri =  Uri.parse(String.format("content://com.example.polina.meethere.data.data/low_price_category/?category=%s&offset=%s" ,  category, offset));

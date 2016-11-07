@@ -17,8 +17,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,18 +39,22 @@ public class ServerApi {
     public static final String COMMENT_EDIT = "/event/%s/comment/%s/";
     public static final String EVENT = "event/";
     public static final String MANAGE = "/manage";
-    public static final String SEARCH = "search/?q=";
+    public static final String SEARCH = "search?q=";
+    public static final String SEARCHFUTURE = "search/future?q=";
     public static final String SEARCH_WORDS = "&q=";
-    public static final String SEARCH_LON = "search?lon=";
+    public static final String SEARCH_LON = "search/future?lon=";
+    public static final String SORT_BY_TIME = "&sort_by=created_at&only_future=1";
     public static final String LAT = "&lat=";
     public static final String LOG = "lon=";
     public static final String SORT_LOW_PRICE = "sort_by=+budget_min";
     public static final String SORT_UP = "sorted_by=budget_min";
     public static final String SORT_DOWN = "sorted_by=-budget_min";
+    public static final String SORT_TIME = "sorted_by=created_at";
     public static final String SORT_HIGH_PRICE = "sort_by=-budget_max";
 
 
     public static final String EVENTS_BY_CATEGORY = "find-event/tags/all/";
+    public static final String EVENTS_BY_FUTURE_CATEGORY = "find-event/tags/future/";
     public static final String USER = "user/";
     public static final String PROFILE = "/profile/";
     public static final String PRO = "profile/";
@@ -67,6 +73,8 @@ public class ServerApi {
     private static final String OFFSET = "?limit=10&offset=";
     private static final String OFFSET_ = "&limit=10&offset=";
     private static final String INVITE ="/invite/" ;
+    private static final String GENERAL_SETTINGS = "/settings/notifications";
+    private static final String PRIVACY_SETTINGS = "/settings/privacy";
 
 
     public final int FRAGMENT_PAST_EVENTS = 4343430;
@@ -178,7 +186,7 @@ public class ServerApi {
     }
 
     public JSONObject loadEventsByCategory(String category, String offset) {
-        HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+category + OFFSET + offset );
+        HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_FUTURE_CATEGORY+category + OFFSET + offset );
         if(Integer.parseInt(category)==POPULAR_EVENTS){
            connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+POPULAR + OFFSET + offset);
         }
@@ -229,20 +237,35 @@ public class ServerApi {
     }
 
     public JSONObject loadEventsByWords(String search, String offset) {
-        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search + OFFSET_+offset);
+        HttpConnector connector = null;
+        try {
+            connector = new HttpConnector(HOST + SEARCHFUTURE+ URLEncoder.encode(search, "UTF-8") + OFFSET_+offset);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return connector.response();
     }
 
     public JSONObject loadEventsByHighPrice(String search, String offset) {
-        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search+ "&"+SORT_HIGH_PRICE + OFFSET_+offset);
+        HttpConnector connector = null;
+        try {
+            connector = new HttpConnector(HOST + SEARCHFUTURE+ URLEncoder.encode(search, "UTF-8")+ OFFSET_+offset);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return connector.response();
     }
 
 
     public JSONObject loadEventsByLowPrice(String search, String offset) {
-        HttpConnector connector = new HttpConnector(HOST + SEARCH+ search + "&"+SORT_LOW_PRICE + OFFSET_+offset);
+        HttpConnector connector = null;
+        try {
+            connector = new HttpConnector(HOST + SEARCHFUTURE+ URLEncoder.encode(search, "UTF-8")  + OFFSET_+offset);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return connector.response();
     }
@@ -276,7 +299,12 @@ public class ServerApi {
     }
 
     public JSONObject loadEventsByDistance(String longitude, String latitude, String search, String offset) {
-        HttpConnector connector = new HttpConnector(HOST + SEARCH_LON+ longitude +LAT+latitude + SEARCH_WORDS +search+OFFSET_+offset) ;
+        HttpConnector connector = null;
+        try {
+            connector = new HttpConnector(HOST + SEARCHFUTURE + URLEncoder.encode(search, "UTF-8")+  longitude +LAT+latitude +OFFSET_+offset);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return connector.response();
 
@@ -363,21 +391,21 @@ public class ServerApi {
     //DONE
 
     public JSONObject loadEventsByHighPriceAndCategory(String categoryId, String offset) {
-        HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+categoryId + "?"+SORT_DOWN + OFFSET_+ offset );
+        HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_FUTURE_CATEGORY+categoryId + "?"+SORT_DOWN + OFFSET_+ offset );
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return  connector.response();
     }
 
     // DONE
     public JSONObject loadEventsByLowPriceAndCategory(String categoryId, String offset) {
-        HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+categoryId +"?"+SORT_UP+ OFFSET_ + offset );
+        HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_FUTURE_CATEGORY+categoryId +"?"+SORT_UP+ OFFSET_ + offset );
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return  connector.response();
     }
 
     // DANE
     public JSONObject loadEventsByDistanceAndCategory(String lon, String lat, String categoryId, String offset) {
-        HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+categoryId +"?"+LOG+ lon +LAT+lat +  OFFSET_ + offset);
+        HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_FUTURE_CATEGORY+categoryId +"?"+LOG+ lon +LAT+lat +  OFFSET_ + offset);
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return  connector.response();
     }
@@ -402,5 +430,37 @@ public class ServerApi {
         String data = String.format("first_name=%s&last_name=%s&email=%s&username=%s&password=%s", fn, ln, e, e, p);
         connector.setData(data, "application/x-www-form-urlencoded");
         return connector.response();
+    }
+
+    public JSONObject loadEventsByTimeCategory(String categoryId, String offset) {
+        HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_FUTURE_CATEGORY+categoryId + "?"+SORT_TIME + OFFSET_+ offset);
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return  connector.response();
+    }
+
+    //todo
+    public JSONObject loadEventsByWordsAndTime(String search, String offset) {
+        HttpConnector connector = null;
+        try {
+            connector = new HttpConnector(HOST + SEARCHFUTURE+ URLEncoder.encode(search, "UTF-8")+ OFFSET_+ offset);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return  connector.response();
+    }
+
+    public JSONObject generalSettings(JSONObject json) {
+        HttpConnector connector = new HttpConnector(HOST + GENERAL_SETTINGS);
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        connector.patchData(json.toString());
+        return  connector.response();
+    }
+
+    public JSONObject privacySettings(JSONObject param) {
+        HttpConnector connector = new HttpConnector(HOST + GENERAL_SETTINGS);
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        connector.patchData(param.toString());
+        return  connector.response();
     }
 }

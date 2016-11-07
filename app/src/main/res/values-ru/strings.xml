@@ -26,7 +26,7 @@
     <string name="exit">Выход</string>
     <string name="location">Местоположение</string>
     <string name="price">Цена</string>
-    <string name="filter">Фильтер</string>
+    <string name="filter">Фильтр</string>
     <string name="next">Далее</string>
     <string name="description">Введите описание</string>
     <string name="choose_time">Выберите время</string>
@@ -135,11 +135,10 @@
 
 
     <string-array name="pref_notification_list_titles">
-        <item>Автор события со мной</item>
-        <item>Учасники события со мной</item>
+        <item>Никто</item>
         <item>Друзья</item>
         <item>Все в сети</item>
-        <item>Никто</item>
+
     </string-array>
     <string name="age">Возраст</string>
     <string name="pin">место на карте</string>
@@ -283,6 +282,8 @@
         <string name="leave_event">покинуть встречу</string>
         <string name="edit_profile">Изменить профаил</string>
 
+    <string name="req_permission">Доступ не дан </string>
+    <string name="deny_permission">В доступе отказанно</string>
         <string name="events_allready_created">Встреча уже в календаре</string>
         <string name="friends_invited">Приглашения отосланны</string>
         <string name="hrn">ГРН</string>
@@ -307,6 +308,9 @@
     <string name="re_password">Пароль еще раз</string>
     <string name="login">Войти</string>
     <string name="error_repassword_not_match">Пароли не сходятся</string>
+    <string name="date">Дата</string>
+    <string name="pref_title_messages">Комментарии к событиям</string>
+    <string name="pref_title_followers">Подписчики</string>
 
 
 </resources>

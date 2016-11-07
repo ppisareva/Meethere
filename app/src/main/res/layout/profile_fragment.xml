@@ -106,7 +106,6 @@
             android:clickable="true"
             android:layout_height="130dp"
             android:layout_width="130dp"
-
             android:layout_alignTop="@+id/imageEdit"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp" />

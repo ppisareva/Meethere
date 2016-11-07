@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -80,6 +81,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
     CheckBox join;
     Boolean isJoined = false;
     TextView time;
+    TextView date;
     TextView budget;
     TextView address;
     TextView    quantity;
@@ -109,8 +111,10 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         public void onReceive(Context context, Intent intent) {
             boolean status = intent.getBooleanExtra(NetworkService.STATUS, false);
             if (status) {
+                String url = String.format(IMG_PATTERN, id);
+                image.setImageURI(Uri.parse(url));
                 new LoadEvent().execute(id);
-                collapseToolbar.setTitle("Xui");
+
             }
         }
     };
@@ -163,6 +167,8 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         edit = (LinearLayout) header.findViewById(R.id.layout_edit_event);
         join = (CheckBox) header.findViewById(R.id.join_event);
         time = (TextView) header.findViewById(R.id.time_my_event);
+        date = (TextView) header.findViewById(R.id.date_my_event);
+
         mapView = (MapView) header.findViewById(R.id.eventMap);
 
         mapView.onCreate(savedInstanceState);
@@ -171,6 +177,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         quantity = (TextView) header.findViewById(R.id.people_quantity_my_event);
         comment = (EditText) header.findViewById(R.id.make_comments);
         collapseToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar);
+        collapseToolbar.setCollapsedTitleTextColor(Color.WHITE);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -181,8 +188,6 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
                 System.out.println(isChecked + " join event");
                 if(isChecked) join.setText(R.string.leave_event);
                 else join.setText(R.string.joned_event);
-
-
                new JoinEvent().execute(isChecked);
             }
         });
@@ -412,18 +417,17 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
             try {
                 System.out.println(result);
                 event = Utils.parseEvent(result);
+                collapseToolbar.setTitle(event.getName());
 
                 description.setText(event.getDescription());
                 isJoined = event.getJoin();
+
+
                 join.setChecked(event.getJoin());
                 if(event.getJoin()==true){
                     join.setText(R.string.leave_event);
                 }
                 quantity.setText(event.getAttendances()+"");
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                Date dateStart = simpleDateFormat.parse(event.getStart());
-                Date dateEnd = simpleDateFormat.parse(event.getEnd());
-                simpleDateFormat = new SimpleDateFormat("EEE, MMM dd kk:mm");
                 id_user =  ((App) getApplication()).pref().getInt(UserProfile.USER_ID, -1);
                 if(id_user==event.getUserId()){
                     join.setVisibility(View.GONE);
@@ -457,12 +461,11 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
                         }
                     });
                 }
-                if(dateStart.getDay()==dateStart.getDay()){
-                    SimpleDateFormat minuts = new SimpleDateFormat("HH:mm");
-                    time.setText(simpleDateFormat.format(dateStart) + " - " + minuts.format(dateEnd));
-                } else {
-                    time.setText(simpleDateFormat.format(dateStart) + " - " + simpleDateFormat.format(dateEnd));
-                }
+              time.setText(Utils.parseDataDate(event.getStart()));
+                String eventEndTime = Utils.parseDataTime(event.getEnd());
+
+                date.setText(Utils.parseDataTime(event.getStart()) + " - " + eventEndTime.substring(eventEndTime.length()-5, eventEndTime.length()));
+
 
                 if(event.getBudgetMax() == event.getBudgetMin()){
                     budget.setText("" + event.getBudgetMin());
@@ -493,7 +496,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
                 }
 
                 address.setText(event.getAddress());
-            } catch (ParseException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             progressOff();

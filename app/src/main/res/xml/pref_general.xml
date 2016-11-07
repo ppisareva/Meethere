@@ -1,24 +1,24 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <SwitchPreference
-        android:key="switch_coming_event"
-        android:title="@string/pref_title_coming_event"
+        android:key="messages"
+        android:title="@string/pref_title_messages"
 
         android:defaultValue="true" />
 
     <SwitchPreference
-        android:key="switch_close_event"
+        android:key="upcoming_events"
+        android:title="@string/pref_title_coming_event"
+
+        android:defaultValue="true" />
+    <SwitchPreference
+        android:key="near_events"
         android:title="@string/pref_title_close_event"
 
         android:defaultValue="true" />
     <SwitchPreference
-        android:key="switch_interesting_event"
+        android:key="recommended_events"
         android:title="@string/pref_title_interesting_event"
-
-        android:defaultValue="true" />
-    <SwitchPreference
-        android:key="switch_adding"
-        android:title="@string/pref_title_adding"
         android:defaultValue="true" />
 
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->

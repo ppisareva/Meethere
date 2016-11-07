@@ -26,7 +26,7 @@ public class EventsSQLiteHelper extends SQLiteOpenHelper {
     public static final String ATTENDANCE = "attendance";
 
     private static final String DATABASE_NAME = "events.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     // Database creation SQL statement
     private static final String DATABASE_CREATE = "create table IF NOT EXISTS "

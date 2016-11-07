@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.Event;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -30,7 +31,7 @@ public class NewEventImageFragment extends android.support.v4.app.Fragment {
 
 
     private static int RESULT_LOAD_IMAGE = 109;
-    private ImageView imageView;
+    private SimpleDraweeView imageView;
     private ImageButton imageButton;
     String id;
     Boolean isUpdate = false;
@@ -64,7 +65,7 @@ public class NewEventImageFragment extends android.support.v4.app.Fragment {
         setHasOptionsMenu(true);
 
         View v = inflater.inflate(R.layout.fragment_new_event_image, container, false);
-        imageView = (ImageView) v.findViewById(R.id.event_image);
+        imageView = (SimpleDraweeView) v.findViewById(R.id.event_image);
         if(id!=null){
             String url = String.format(IMG_PATTERN, id);
             imageView.setImageURI(Uri.parse(url));
@@ -85,16 +86,14 @@ public class NewEventImageFragment extends android.support.v4.app.Fragment {
     public void loadImage() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, RESULT_LOAD_IMAGE);
-
-
-
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.err.println("INTENT DATA: " + data + " |||" + data.getExtras());
+
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == getActivity().RESULT_OK && data != null) {
+            System.err.println("INTENT DATA: " + data + " |||" + data.getExtras());
             Uri uri = data.getData();
             imageView.setImageBitmap(((App)getActivity().getApplication()).decodeUri(uri));
             imageButton.setAlpha(.5f);
@@ -106,9 +105,9 @@ public class NewEventImageFragment extends android.support.v4.app.Fragment {
 
 
     public  Bitmap getBitMap(){
-        BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
 
         if(isUpdate) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
             return bitmapDrawable.getBitmap();
         }
         return null;

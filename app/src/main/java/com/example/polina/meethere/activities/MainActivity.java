@@ -63,7 +63,9 @@ public class MainActivity extends AbstractMeethereActivity
     private ProfileFragment profileFragment;
     private FeedFragment feedFragment;
     SearchResultsFragment searchResultsFragment;
+    SimpleDraweeView profileImage;
 
+    public static final String IMG_PATTERN = "https://s3-us-west-1.amazonaws.com/meethere/%s.jpg";
 
     private FindEventFragment findEventFragment;
     private String FEED = "feed";
@@ -77,7 +79,10 @@ public class MainActivity extends AbstractMeethereActivity
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if(mContent==null) return;
-        getSupportFragmentManager().putFragment(outState, "mContent", mContent);
+        if (mContent.isAdded()){
+            getSupportFragmentManager().putFragment(outState, "mFragment", mContent);
+        }
+
     }
 
     @Override
@@ -96,7 +101,7 @@ public class MainActivity extends AbstractMeethereActivity
 
         } else {
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, feedFragment, FEED).addToBackStack(null).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, feedFragment, FEED).commit();
         }
 
 
@@ -116,7 +121,7 @@ public class MainActivity extends AbstractMeethereActivity
         System.out.println(" TTTTTTTTTTTTTTTTTTTTTTTTTTTTTToken" + refreshedToken);
     }
 
-    private void initUserInfo() {
+    public void initUserInfo() {
         NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
         View root = nv.getHeaderView(0);
         FirebaseCrash.log("Main Activity: user_id=" + app().getUserProfile().getId());
@@ -127,11 +132,11 @@ public class MainActivity extends AbstractMeethereActivity
             public void onClick(View v) {
                 profileFragment = ProfileFragment.newInstance();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, profileFragment)
-                        .addToBackStack(null).commit();
+                        .commit();
                 drawer.closeDrawer(GravityCompat.START);
             }
         });
-        SimpleDraweeView profileImage = (SimpleDraweeView)root.findViewById(R.id.profile_image);
+        profileImage = (SimpleDraweeView)root.findViewById(R.id.profile_image);
         profileImage.setImageURI(Uri.parse(app().getUserProfile().getProfileUrl()));
         RoundingParams roundingParams = RoundingParams.asCircle();
         profileImage.getHierarchy().setRoundingParams(roundingParams);
@@ -358,7 +363,7 @@ public class MainActivity extends AbstractMeethereActivity
                 @Override
                 public boolean onMenuItemActionExpand(MenuItem item) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, searchResultsFragment)
-                            .addToBackStack(null).commit();
+                            .commit();
                     return true;
                 }
 
@@ -424,24 +429,24 @@ public class MainActivity extends AbstractMeethereActivity
             profileFragment  = ProfileFragment.newInstance();
             mContent = profileFragment;
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, profileFragment)
-                    .addToBackStack(null).commit();
+                    .commit();
         } else if (id == R.id.nav_my_places) {
             myEventsListsFragment = MyEventsListsFragment.newInstance();
             mContent = myEventsListsFragment;
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, myEventsListsFragment)
-                    .addToBackStack(null).commit();
+                 .commit();
         } else if (id == R.id.nav_new_event) {
             startActivity(new Intent(this, NewEventActivity.class));
         } else if (id == R.id.nav_category) {
             categoryFragment = CategoryFragment.newInstance();
             mContent = categoryFragment;
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, categoryFragment)
-                    .addToBackStack(null).commit();
+                    .commit();
         } else if (id == R.id.nav_news) {
             feedFragment = FeedFragment.newInstance(category);
             mContent = feedFragment;
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, feedFragment)
-                    .addToBackStack(null).commit();
+                    .commit();
 
         } else if (id == R.id.nav_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);

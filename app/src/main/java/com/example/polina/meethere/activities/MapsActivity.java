@@ -1,16 +1,22 @@
 package com.example.polina.meethere.activities;
 
+import android.Manifest;
 import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.Utils;
@@ -30,6 +36,7 @@ import java.util.List;
 
 public class MapsActivity extends AbstractMeethereActivity implements OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor> {
 
+    private static final int MY_PERMISSIONS_REQUEST = 1;
     private GoogleMap mMap;
     LatLng pin;
     App app;
@@ -50,14 +57,26 @@ public class MapsActivity extends AbstractMeethereActivity implements OnMapReady
 
         app = (App) getApplication();
         Location location = app.getCurrentLocation();
+        if (location == null) {
+            Toast.makeText(this, "eable GEO location", Toast.LENGTH_LONG).show();
+            askPermission();
+        }
+
+            loadMap(location);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
+
+
+    }
+
+
+
+    private void loadMap(Location location) {
+        if(location==null) return;
         pin = new LatLng(location.getLatitude(), location.getLongitude());
-
-
-
-        if(getIntent().hasExtra(Event.LAT)){
-            eventLocation  = new LatLng( getIntent().getDoubleExtra(Event.LNG, 0), getIntent().getDoubleExtra(Event.LAT, 0));
+        if (getIntent().hasExtra(Event.LAT)) {
+            eventLocation = new LatLng(getIntent().getDoubleExtra(Event.LNG, 0), getIntent().getDoubleExtra(Event.LAT, 0));
         } else {
             Bundle bundle = new Bundle();
             bundle.putDouble(Utils.LON, location.getLongitude());
@@ -72,14 +91,13 @@ public class MapsActivity extends AbstractMeethereActivity implements OnMapReady
         fragmentTransaction.commit();
 
 
-
-
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 mMap = googleMap;
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pin, 15));
                 mMap.getUiSettings().setMyLocationButtonEnabled(false);
+
                 mMap.setMyLocationEnabled(true);
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 500, null);
                 if(eventLocation!=null) {
@@ -89,16 +107,59 @@ public class MapsActivity extends AbstractMeethereActivity implements OnMapReady
 
             }
         });
-
-
     }
+
+    private void askPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            requestPermission();
+
+
+        } else {
+
+            ActivityCompat.requestPermissions(MapsActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSIONS_REQUEST);
+        }
+    }
+
+
+    private void requestPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)) {
+            Toast.makeText(MapsActivity.this, getString(R.string.req_permission), Toast.LENGTH_SHORT)
+                    .show();
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST);
+
+        } else {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        if (requestCode == MY_PERMISSIONS_REQUEST) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+               loadMap(app.getCurrentLocation());
+            } else {
+                Toast.makeText(MapsActivity.this, getString(R.string.deny_permission), Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }
+        return;
+    }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         for (Event e : listOfEvents) {
             mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(e.getLat(), e.getLng())).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin))
-                    .title(e.getName()));
+                    .title(e.getName()).snippet(Utils.parseData(e.getStart())));
         }
 
     }

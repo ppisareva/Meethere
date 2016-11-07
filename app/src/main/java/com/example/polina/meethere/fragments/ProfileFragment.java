@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.activities.FeedActivity;
+import com.example.polina.meethere.activities.MainActivity;
 import com.example.polina.meethere.activities.MyEventsActivity;
 import com.example.polina.meethere.activities.MyInformationActivity;
 import com.example.polina.meethere.activities.SettingsActivity;
@@ -46,6 +47,8 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
     TextView followings;
     SimpleDraweeView profileImage;
     ServerApi serverApi;
+    int id;
+    public static final String IMG_PATTERN = "https://s3-us-west-1.amazonaws.com/meethere/%s.jpg";
 
     public static ProfileFragment newInstance() {
         ProfileFragment fragment = new ProfileFragment();
@@ -73,14 +76,15 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
         ((TextView)v.findViewById(R.id.user_name)).setText(up.getName());
         ((TextView)v.findViewById(R.id.location)).setText(up.getLocation());
         profileImage = (SimpleDraweeView) v.findViewById(R.id.profile_image);
-//        profileImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                startActivityForResult(intent, RESULT_LOAD_IMAGE);
-//            }
-//        });
+
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+              Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, RESULT_LOAD_IMAGE);
+            }
+        });
 
         GridView gridview = (GridView) v.findViewById(R.id.profile_menu);
         gridview.setAdapter(new ImageAdapter(getActivity()));
@@ -109,10 +113,10 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
         ((TextView)v.findViewById(R.id.followings)).setText(up.getFollowings()+"");
         serverApi = ((App) getActivity().getApplication()).getServerApi();
         SharedPreferences sharedPreferences = ((App)getActivity().getApplication()).pref();
-        int id = sharedPreferences.getInt(UserProfile.USER_ID, -1);
+        id = sharedPreferences.getInt(UserProfile.USER_ID, -1);
 
         new LoadUser().execute(id);
-        SimpleDraweeView profileImage = (SimpleDraweeView)v.findViewById(R.id.profile_image);
+
         profileImage.setImageURI(Uri.parse(up.getProfileUrl()));
         RoundingParams roundingParams = RoundingParams.asCircle();
         profileImage.getHierarchy().setRoundingParams(roundingParams);
@@ -121,14 +125,17 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
 
 
 
+
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.err.println("INTENT DATA: " + data + " |||" + data.getExtras());
         if (requestCode == RESULT_LOAD_IMAGE && resultCode ==getActivity().RESULT_OK && data != null) {
+            System.err.println("INTENT DATA: " + data + " |||" + data.getExtras());
             Uri uri = data.getData();
             Bitmap bitmap = ((App)getActivity().getApplication()).decodeUri(uri);
-            profileImage.setImageBitmap(bitmap);
+            profileImage.setImageURI(uri);
             new RefreshMyInfo().execute(bitmap);
 
 
@@ -146,8 +153,14 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
             byte[] byteArray = stream.toByteArray();
             ServerApi serverApi = ((App)getActivity(). getApplication()).getServerApi();
             serverApi.uploadImage("", byteArray, Utils.PROFILE);
-
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
+           new LoadUser().execute(id);
+
         }
     }
 
@@ -163,6 +176,7 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
             try {
                 if(jsonObject!=null)
                     ((App)getActivity().getApplication()).saveUserProfile(jsonObject);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

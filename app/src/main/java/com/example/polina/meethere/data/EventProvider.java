@@ -40,19 +40,21 @@ public class EventProvider extends android.content.ContentProvider {
 
     EventsSQLiteHelper database;
 
-    private static final int MY_EVENTS = 11;
-    private static final int USER_EVENTS = 12;
+    private static final int MY_EVENTS = 12;
+    private static final int USER_EVENTS = 13;
     private static final int CATEGORY_ID = 1;
-    private static final int SEARCH = 13;
-    private static final int SEARCH_LOW_PRICE = 10;
-    private static final int CATEGORY_LOW_PRICE = 9;
-    private static final int SEARCH_BY_HIGH = 8;
-    private static final int CATEGORY_BY_HIGH = 7;
-    private static final int SEARCH_BY_DISTANCE = 4;
-    private static final int CATEGORY_BY_DISTANCE = 3;
+    private static final int CATEGORY_TIME_FUTURE= 3;
+    private static final int SEARCH = 14;
+    private static final int SEARCH_BY_TIME = 15;
+    private static final int SEARCH_LOW_PRICE = 11;
+    private static final int CATEGORY_LOW_PRICE = 10;
+    private static final int SEARCH_BY_HIGH = 9;
+    private static final int CATEGORY_BY_HIGH = 8;
+    private static final int SEARCH_BY_DISTANCE = 5;
+    private static final int CATEGORY_BY_DISTANCE = 4;
     private static final int CATEGORY_FEED =2 ;
-    private static final int SEARCH_FREINDS = 6;
-    private static final int FEED = 5;
+    private static final int SEARCH_FREINDS = 7;
+    private static final int FEED = 6;
 
     private List<Object[]> feedData = new ArrayList<>();
     private List<Object[]> eventsData = new ArrayList<>();
@@ -74,6 +76,7 @@ public class EventProvider extends android.content.ContentProvider {
 
         URI_MATCHER.addURI(AUTHORITY,  "category",  CATEGORY_ID);
         URI_MATCHER.addURI(AUTHORITY,  "category_feed",  CATEGORY_FEED);
+        URI_MATCHER.addURI(AUTHORITY,  "category_time",  CATEGORY_TIME_FUTURE);
         URI_MATCHER.addURI(AUTHORITY, "distance_category", CATEGORY_BY_DISTANCE);
         URI_MATCHER.addURI(AUTHORITY, "distance_search", SEARCH_BY_DISTANCE);
         URI_MATCHER.addURI(AUTHORITY, "feed", FEED);
@@ -85,6 +88,7 @@ public class EventProvider extends android.content.ContentProvider {
         URI_MATCHER.addURI(AUTHORITY, "myevents", MY_EVENTS);
         URI_MATCHER.addURI(AUTHORITY, "userevents", USER_EVENTS);
         URI_MATCHER.addURI(AUTHORITY, "words_search", SEARCH);
+        URI_MATCHER.addURI(AUTHORITY, "words_search_time", SEARCH_BY_TIME);
 
     }
 
@@ -147,7 +151,13 @@ public class EventProvider extends android.content.ContentProvider {
             case CATEGORY_ID:
                 categoryId = uri.getQueryParameter("category");
                 offset = uri.getQueryParameter("offset");
-                jsonObject = serverApi.loadEventsByCategory(categoryId, offset);
+                jsonObject = serverApi.loadEventsByTimeCategory(categoryId, offset);
+                break;
+
+            case CATEGORY_TIME_FUTURE:
+                offset = uri.getQueryParameter("offset");
+                categoryId = uri.getQueryParameter("category");
+                jsonObject = serverApi.loadEventsByTimeCategory(categoryId, offset);
                 break;
 
 
@@ -175,33 +185,33 @@ public class EventProvider extends android.content.ContentProvider {
                 offset = uri.getQueryParameter("offset");
                 search = uri.getQueryParameter("search");
                 jsonObject = serverApi.loadEventsByWords(search, offset);
-
                 break;
-            case SEARCH_BY_HIGH: ///// done
+            case SEARCH_BY_TIME: //// todo
+                offset = uri.getQueryParameter("offset");
+                search = uri.getQueryParameter("search");
+                jsonObject = serverApi.loadEventsByWordsAndTime(search, offset);
+                break;
+            case SEARCH_BY_HIGH: ///// todo
                 offset = uri.getQueryParameter("offset");
                 search = uri.getQueryParameter("search");
                 jsonObject = serverApi.loadEventsByHighPrice(search, offset);
-
                 break;
-            case CATEGORY_BY_HIGH: ///// //done
+            case CATEGORY_BY_HIGH:
                 offset = uri.getQueryParameter("offset");
                 categoryId = uri.getQueryParameter("category");
                 jsonObject = serverApi.loadEventsByHighPriceAndCategory(categoryId, offset);
-
                 break;
-            case SEARCH_LOW_PRICE: /////done
+            case SEARCH_LOW_PRICE: // todo
                 offset = uri.getQueryParameter("offset");
                 search = uri.getQueryParameter("search");
                 jsonObject = serverApi.loadEventsByLowPrice(search, offset);
-
                 break;
             case CATEGORY_LOW_PRICE: ///////done
                 offset = uri.getQueryParameter("offset");
                 categoryId = uri.getQueryParameter("category");
                 jsonObject = serverApi.loadEventsByLowPriceAndCategory(categoryId, offset);
-
                 break;
-            case SEARCH_BY_DISTANCE: ///// done
+            case SEARCH_BY_DISTANCE: ///// todo
                 lon = uri.getQueryParameter("lon");
                 lat = uri.getQueryParameter("lat");
                 if(uri.getQueryParameter("search")==null)
@@ -357,7 +367,7 @@ public class EventProvider extends android.content.ContentProvider {
             Uri uri = Uri.parse(params[1]);
 
             System.err.println("LoadEvents:: " + uri);
-            JSONObject  jsonObject = serverApi.loadEventsByCategory(categoryId, "0");
+            JSONObject  jsonObject = serverApi.loadEventsByTimeCategory(categoryId, "0");
             List<Event> events = Utils.parseEventList(jsonObject);
 
 

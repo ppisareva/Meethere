@@ -28,63 +28,71 @@
 
 
         <ListPreference
-        android:key="email_list"
+        android:key="email"
         android:title="@string/pref_title_email"
-        android:defaultValue="-1"
+        android:defaultValue="2"
         android:entries="@array/pref_notification_list_titles"
         android:entryValues="@array/pref_example_list_values"
         android:negativeButtonText="@string/ok"
         />
 
         <ListPreference
-            android:key="phone_list"
+            android:key="phone"
             android:title="@string/pref_title_phone"
-            android:defaultValue="-1"
+            android:defaultValue="2"
             android:entries="@array/pref_notification_list_titles"
             android:entryValues="@array/pref_example_list_values"
             android:negativeButtonText="@string/ok"/>
 
 
 
-        <ListPreference
-            android:key="private_info_list"
-            android:title="@string/pref_title_private_information"
-            android:defaultValue="-1"
-            android:entries="@array/pref_notification_list_titles"
-            android:entryValues="@array/pref_example_list_values"
-            android:negativeButtonText="@string/ok"/>
+
 
         <ListPreference
-            android:key="preferences_list"
+            android:key="categories"
             android:title="@string/pref_title_preferences"
-            android:defaultValue="-1"
+            android:defaultValue="2"
             android:entries="@array/pref_notification_list_titles"
             android:entryValues="@array/pref_example_list_values"
             android:negativeButtonText="@string/ok"/>
         <ListPreference
-            android:key="attends_list"
-            android:title="@string/pref_title_attends"
-            android:defaultValue="-1"
+            android:key="follow"
+            android:title="@string/pref_title_followers"
+            android:defaultValue="2"
             android:entries="@array/pref_notification_list_titles"
             android:entryValues="@array/pref_example_list_values"
             android:negativeButtonText="@string/ok" />
+        <ListPreference
+            android:key="events"
+            android:title="@string/pref_title_attends"
+            android:defaultValue="2"
+            android:entries="@array/pref_notification_list_titles"
+            android:entryValues="@array/pref_example_list_values"
+            android:negativeButtonText="@string/ok" />
+        <ListPreference
+            android:key="private_info"
+            android:title="@string/pref_title_private_information"
+            android:defaultValue="2"
+            android:entries="@array/pref_notification_list_titles"
+            android:entryValues="@array/pref_example_list_values"
+            android:negativeButtonText="@string/ok"/>
 
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="@string/pref_how_can_see_title"
-        android:key="pref_key_">
+    <!--<PreferenceCategory-->
+        <!--android:title="@string/pref_how_can_see_title"-->
+        <!--android:key="pref_key_">-->
 
-    <ListPreference
-        android:key="send_mass_list"
-        android:title="@string/pref_title_send_mass"
-        android:defaultValue="-1"
-        android:entries="@array/pref_notification_list_titles"
-        android:entryValues="@array/pref_example_list_values"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null" />
-    </PreferenceCategory>
+    <!--<ListPreference-->
+        <!--android:key="send_mass_list"-->
+        <!--android:title="@string/pref_title_send_mass"-->
+        <!--android:defaultValue="2"-->
+        <!--android:entries="@array/pref_notification_list_titles"-->
+        <!--android:entryValues="@array/pref_example_list_values"-->
+        <!--android:negativeButtonText="@null"-->
+        <!--android:positiveButtonText="@null" />-->
+    <!--</PreferenceCategory>-->
 
 
 

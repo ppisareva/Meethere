@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -14,10 +15,17 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
+import android.preference.SwitchPreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.polina.meethere.R;
+import com.example.polina.meethere.Utils;
+import com.example.polina.meethere.model.App;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -33,10 +41,13 @@ import java.util.List;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
+    static App app;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        app = (App)getApplication();
 
     }
 
@@ -63,6 +74,20 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 // the preference's 'entries' list.
                 ListPreference listPreference = (ListPreference) preference;
                 int index = listPreference.findIndexOfValue(stringValue);
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put(listPreference.getKey(), index);
+                    jsonObject.put(Utils.USER_ID, app.getUserProfile().getId());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                new AsyncTask<JSONObject, Void, JSONObject>() {
+                    @Override
+                    protected JSONObject doInBackground(JSONObject... params) {
+                        return app.getServerApi().privacySettings(params[0]);
+                    }
+                }.execute(jsonObject);
 
                 // Set the summary to reflect the new value.
                 preference.setSummary(
@@ -70,32 +95,26 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                                 ? listPreference.getEntries()[index]
                                 : null);
 
-            } else if (preference instanceof RingtonePreference) {
-                // For ringtone preferences, look up the correct display value
-                // using RingtoneManager.
-                if (TextUtils.isEmpty(stringValue)) {
-                    // Empty values correspond to 'silent' (no ringtone).
-                    preference.setSummary(R.string.pref_ringtone_silent);
 
-                } else {
-                    Ringtone ringtone = RingtoneManager.getRingtone(
-                            preference.getContext(), Uri.parse(stringValue));
-
-                    if (ringtone == null) {
-                        // Clear the summary if there was a lookup error.
-                        preference.setSummary(null);
-                    } else {
-                        // Set the summary to reflect the new ringtone display
-                        // name.
-                        String name = ringtone.getTitle(preference.getContext());
-                        preference.setSummary(name);
+            } else if (preference instanceof SwitchPreference) {
+                SwitchPreference swichPreference = (SwitchPreference) preference;
+                boolean isOn = ((Boolean) value).booleanValue();
+                String prefValue = swichPreference.getKey();
+                new AsyncTask<Object, Void, JSONObject>() {
+                    @Override
+                    protected JSONObject doInBackground(Object... params) {
+                        String kay = (String)params[0];
+                        Boolean value = (Boolean) params[1];
+                        JSONObject jsonObject = new JSONObject();
+                        try {
+                            jsonObject.put(kay, value);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                       return app.getServerApi().generalSettings(jsonObject);
                     }
-                }
+                }.execute(prefValue, isOn);
 
-            } else {
-                // For all other preferences, set the summary to the value's
-                // simple string representation.
-                preference.setSummary(stringValue);
             }
             return true;
         }
@@ -121,6 +140,18 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         .getDefaultSharedPreferences(preference.getContext())
                         .getString(preference.getKey(), ""));
     }
+
+    private static void bindPreferenceSummaryToValueBoolean(Preference preference) {
+        // Set the listener to watch for value changes.
+        preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
+
+        // Trigger the listener immediately with the preference's
+        // current value.
+        sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
+                PreferenceManager
+                        .getDefaultSharedPreferences(preference.getContext())
+                        .getBoolean(preference.getKey(), true));
+    }
 //
 //    /**
 //     * This method stops fragment injection in malicious applications.
@@ -129,7 +160,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
-                || DataSyncPreferenceFragment.class.getName().equals(fragmentName)
+              //  || DataSyncPreferenceFragment.class.getName().equals(fragmentName)
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName);
     }
 
@@ -145,12 +176,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
 
+
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-//            bindPreferenceSummaryToValue(findPreference("example_text"));
-//            bindPreferenceSummaryToValue(findPreference("example_list"));
+            bindPreferenceSummaryToValueBoolean(findPreference("messages"));
+            bindPreferenceSummaryToValueBoolean(findPreference("upcoming_events"));
+            bindPreferenceSummaryToValueBoolean(findPreference("near_events"));
+            bindPreferenceSummaryToValueBoolean(findPreference("recommended_events"));
         }
 
         @Override
@@ -180,12 +214,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("email_list"));
-            bindPreferenceSummaryToValue(findPreference("phone_list"));
-            bindPreferenceSummaryToValue(findPreference("private_info_list"));
-            bindPreferenceSummaryToValue(findPreference("preferences_list"));
-            bindPreferenceSummaryToValue(findPreference("attends_list"));
-            bindPreferenceSummaryToValue(findPreference("send_mass_list"));
+            bindPreferenceSummaryToValue(findPreference("email"));
+            bindPreferenceSummaryToValue(findPreference("phone"));
+            bindPreferenceSummaryToValue(findPreference("categories"));
+            bindPreferenceSummaryToValue(findPreference("follow"));
+            bindPreferenceSummaryToValue(findPreference("events"));
+            bindPreferenceSummaryToValue(findPreference("private_info"));
         }
     }
 
@@ -194,23 +228,23 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
          * This fragment shows data and sync preferences only. It is used when the
          * activity is showing a two-pane settings UI.
          */
-        @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-        public static class DataSyncPreferenceFragment extends PreferenceFragment {
-            @Override
-            public void onCreate(Bundle savedInstanceState) {
-                super.onCreate(savedInstanceState);
-                addPreferencesFromResource(R.xml.pref_data_sync);
-                setHasOptionsMenu(true);
-
-                // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-                // to their values. When their values change, their summaries are
-                // updated to reflect the new value, per the Android Design
-                // guidelines.
-
-            }
-
-
-        }
+//        @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+//        public static class DataSyncPreferenceFragment extends PreferenceFragment {
+//            @Override
+//            public void onCreate(Bundle savedInstanceState) {
+//                super.onCreate(savedInstanceState);
+//                addPreferencesFromResource(R.xml.pref_data_sync);
+//                setHasOptionsMenu(true);
+//
+//                // Bind the summaries of EditText/List/Dialog/Ringtone preferences
+//                // to their values. When their values change, their summaries are
+//                // updated to reflect the new value, per the Android Design
+//                // guidelines.
+//
+//            }
+//
+//
+//        }
 
 
         @Override

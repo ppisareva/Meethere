@@ -78,11 +78,11 @@
 
     <!-- Example General settings -->
     <string-array name="pref_example_list_values">
-        <item>3</item>
-        <item>2</item>
-        <item>1</item>
+
         <item>0</item>
-        <item>-1</item>
+        <item>1</item>
+        <item>2</item>
+
     </string-array>
 
     <!-- Example settings for Data & Sync -->
@@ -289,6 +289,8 @@
     <string name="filds_must_not_be_null">All filld must be fill up</string>
     <string name="user_cannot_be_created">user cannot be created</string>
     <string name="wrong_password_email">Wrong email or password</string>
+    <string name="req_permission">Permission Not Granted</string>
+    <string name="deny_permission">Permission Denied</string>
     <!-- Strings related to login -->
     <string name="action_sign_in">Enter</string>
     <string name="error_invalid_email">This email address is invalid</string>
@@ -298,5 +300,7 @@
     <string name="re_password">Re-password</string>
     <string name="login">Login</string>
     <string name="error_repassword_not_match">Passwords aren\'t matched</string>
-
+    <string name="date">Date</string>
+    <string name="pref_title_messages">Comments to events</string>
+    <string name="pref_title_followers">Followers</string>
 </resources>

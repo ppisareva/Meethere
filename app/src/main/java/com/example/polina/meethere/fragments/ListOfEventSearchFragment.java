@@ -23,6 +23,7 @@ import com.example.polina.meethere.MyEventsAdapter;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.RecyclerViewPositionHelper;
 import com.example.polina.meethere.Utils;
+import com.example.polina.meethere.activities.ListOfEventsActivity;
 import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.Event;
 
@@ -38,12 +39,14 @@ public class ListOfEventSearchFragment extends Fragment implements LoaderManager
     public static final int SEARCH_BY_LOW_PRICE = 203990;
     public static final int SEARCH_BY_HIGH_PRICE = 2033430;
     public static final int SEARCH_BY_DISTANCE = 20999430;
+    private static final int SEARCH_BY_TIME_FUTURE = 5536;
     int loaderWorking= 0;
     int offset = 0;
     private int STEP =10;
     Boolean loaderDistance =false;
     Boolean loaderHighPrice = false;
     Boolean loaderLowPrice = false;
+    Boolean loaderDate = false;
 
     public boolean isFlag() {
         return flag;
@@ -62,6 +65,7 @@ public class ListOfEventSearchFragment extends Fragment implements LoaderManager
     ImageView imageView;
     String search;
     App app;
+    TextView time;
     LinearLayout l;
 
     public static ListOfEventSearchFragment newInstance(String search) {
@@ -86,6 +90,8 @@ public class ListOfEventSearchFragment extends Fragment implements LoaderManager
         distance.setOnClickListener(onDistance);
         price = (TextView) v.findViewById(R.id.price_filter);
         price.setOnClickListener(onPrice);
+        time = (TextView) v.findViewById(R.id.time_sort);
+        time.setOnClickListener(onTime);
         imageView = (ImageView)v. findViewById(R.id.image_price);
         l=(LinearLayout) v.findViewById(R.id.no_result);
         RecyclerView recyclerView = (RecyclerView)v. findViewById(R.id.events_list);
@@ -155,11 +161,33 @@ public class ListOfEventSearchFragment extends Fragment implements LoaderManager
 
     }
 
+    View.OnClickListener onTime = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            time.setTextColor(getResources().getColor(R.color.filter));
+            distance.setTextColor(getResources().getColor(R.color.white));
+            price.setTextColor(getResources().getColor(R.color.white));
+            imageView.setImageResource(R.drawable.ic_price);
+            offset = 0;
+            Bundle arg = new Bundle();
+            arg.putString(Utils.SEARCH, search);
+            arg.putInt(Utils.OFFSET, offset);
+            if(loaderDate){
+                getActivity().getSupportLoaderManager().restartLoader(SEARCH_BY_TIME_FUTURE,arg ,ListOfEventSearchFragment.this);
+            } else {
+                getActivity().getSupportLoaderManager().restartLoader(SEARCH_BY_TIME_FUTURE,arg ,ListOfEventSearchFragment.this);
+                loaderDate = true;
+            }
+
+        }
+    };
+
 View.OnClickListener onDistance = new View.OnClickListener() {
     @Override
     public void onClick(View v) {
         distance.setTextColor(getResources().getColor(R.color.filter));
         price.setTextColor(getResources().getColor(R.color.white));
+        time.setTextColor(getResources().getColor(R.color.white));
         imageView.setImageResource(R.drawable.ic_price);
         highPrice = false;
         lowPrice = false;
@@ -184,6 +212,7 @@ View.OnClickListener onDistance = new View.OnClickListener() {
         public void onClick(View v) {
             distance.setTextColor(getResources().getColor(R.color.white));
             price.setTextColor(getResources().getColor(R.color.filter));
+            time.setTextColor(getResources().getColor(R.color.white));
             Bundle arg = new Bundle();
             arg.putString(Utils.SEARCH, search);
             offset = 0;
@@ -245,6 +274,9 @@ View.OnClickListener onDistance = new View.OnClickListener() {
 
 
         switch (id){
+            case SEARCH_BY_TIME_FUTURE:
+                uri =   Uri.parse(String.format("content://com.example.polina.meethere.data.data/words_search_time/?search=%s&offset=%s",  search, offset));
+                break;
             case SEARCH_LOUDER:
                      uri =   Uri.parse(String.format("content://com.example.polina.meethere.data.data/words_search/?offset=%s&search=%s" , offset, search));
                 break;
