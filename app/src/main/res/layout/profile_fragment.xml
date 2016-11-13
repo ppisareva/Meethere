@@ -10,48 +10,6 @@
         android:theme="@style/Profile"
         android:layout_height="230dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="@string/followings"
-            android:clickable="true"
-
-            android:onClick="onFollowings"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignLeft="@+id/followings"
-            android:layout_alignStart="@+id/followings"
-            android:id="@+id/textView32"
-            android:textSize="14dp"
-            android:layout_alignRight="@+id/followings"
-            android:layout_alignEnd="@+id/followings" />
-
-        <TextView
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:clickable="true"
-            android:onClick="onFollowers"
-
-            android:textSize="15dp"
-            android:id="@+id/followers"
-            android:layout_above="@+id/textView7"
-            android:layout_toLeftOf="@+id/profile_image"
-            android:layout_toStartOf="@+id/profile_image"
-            android:layout_marginRight="0dp"
-            android:gravity="center_horizontal"
-            android:layout_alignTop="@+id/followings"
-            android:layout_width="80dp" />
-
-        <TextView
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:clickable="true"
-            android:onClick="onFollowings"
-            android:id="@+id/followings"
-            android:layout_above="@+id/textView32"
-            android:layout_toRightOf="@+id/profile_image"
-            android:gravity="center_horizontal"
-            android:textSize="15dp"
-            android:layout_width="80dp" />
 
         <TextView
             android:id="@+id/user_name"
@@ -78,20 +36,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/followers"
-            android:clickable="true"
-            android:textSize="14dp"
-            android:onClick="onFollowers"
-            android:id="@+id/textView7"
-            android:layout_alignBaseline="@+id/textView32"
-            android:layout_alignBottom="@+id/textView32"
-            android:layout_toLeftOf="@+id/profile_image"
-            android:layout_alignLeft="@+id/followers"
-            android:layout_alignStart="@+id/followers" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="Mountain View, CA, USA"
             android:textSize="15dp"
             android:id="@+id/location"
@@ -109,6 +53,69 @@
             android:layout_alignTop="@+id/imageEdit"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:id="@+id/on_followers"
+            android:onClick="onFollowers"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/profile_image"
+            android:layout_toStartOf="@+id/profile_image">
+
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="15dp"
+            android:id="@+id/followers"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/followers"
+            android:textSize="14dp"
+            android:layout_alignStart="@+id/followers"
+            android:gravity="center_horizontal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:onClick="onFollowings"
+            android:gravity="center_horizontal"
+            android:layout_alignBottom="@+id/on_followers"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="6dp"
+            android:layout_toRightOf="@+id/profile_image"
+            android:layout_toEndOf="@+id/profile_image"
+            android:id="@+id/on_followings">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/followings"
+                android:gravity="center_horizontal"
+                android:textSize="15dp"
+                android:layout_width="match_parent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="@string/followings"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView32"
+                android:textSize="14dp"
+                android:gravity="center_horizontal" />
+        </LinearLayout>
 
 
     </RelativeLayout>

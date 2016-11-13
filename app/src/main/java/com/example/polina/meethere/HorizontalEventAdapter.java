@@ -169,7 +169,7 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
             intent.putExtra(Utils.EVENT_ID,id);
             intent.putExtra(Utils.EVENT_NAME, cursor.getString(NAME));
 
-            context.startActivity(intent);
+            context.startActivityForResult(intent, 10101);
         }
 
 

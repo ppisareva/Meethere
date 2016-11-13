@@ -381,6 +381,12 @@ public class ServerApi {
         return  connector.response();
     }
 
+    public JSONObject loadFollowers(int id) {
+        HttpConnector connector = new HttpConnector(HOST + USER + id +FOLLOWERS );
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return  connector.response();
+    }
+
     public JSONObject sendInvite(String eventId, String user) {
         HttpConnector connector = new HttpConnector(HOST + EVENT + eventId +INVITE+user );
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
@@ -438,7 +444,7 @@ public class ServerApi {
         return  connector.response();
     }
 
-    //todo
+    //done
     public JSONObject loadEventsByWordsAndTime(String search, String offset) {
         HttpConnector connector = null;
         try {

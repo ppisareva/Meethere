@@ -13,6 +13,7 @@ import com.example.polina.meethere.adapters.SimpleItem;
 import com.example.polina.meethere.model.Event;
 import com.example.polina.meethere.model.User;
 import com.example.polina.meethere.model.UserProfile;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 
 import org.json.JSONArray;
@@ -63,6 +64,9 @@ public class Utils {
     public static final String LASTNAME = "last_name";
     public static final String USERNAME = "username";
     public static final String REGISTERD ="registered" ;
+    public static final String EVENT_START = "event_start";
+    public static final String BUDGET =  "budget";
+    public static final String CURSOR_POSITION = "cursor";
 
 
     static {
@@ -380,5 +384,23 @@ public class Utils {
 
     }
 
-    
+
+    public static String parsBirthDay(String birthday) {
+       SimpleDateFormat comeFromServer = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+
+        Date date = new Date();
+        try {
+
+            date = comeFromServer.parse(birthday);
+            comeFromServer =  new SimpleDateFormat("MM/dd/yyyy");
+            return comeFromServer.format(date);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "";
+        }
+
+
+    }
 }

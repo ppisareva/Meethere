@@ -67,6 +67,11 @@ public class MyEventsFragment extends android.support.v4.app.Fragment implements
         initLoader();
     }
 
+    public MyEventsAdapter getAdapter(){
+        return adapter;
+    }
+
+
     private void initLoader() {
         if (getArguments() != null) {
             tag = getArguments().getInt(Utils.TIME_TAG);
@@ -100,13 +105,8 @@ public class MyEventsFragment extends android.support.v4.app.Fragment implements
                         offset+=STEP;
                         arg.putInt(Utils.OFFSET, offset);
                         getActivity().getSupportLoaderManager().restartLoader(tag, arg, MyEventsFragment.this);
-
-
-
                     }
                 }
-
-
             }
         });
         return v;
@@ -121,23 +121,15 @@ public class MyEventsFragment extends android.support.v4.app.Fragment implements
 
 
         return new CursorLoader(getActivity(),
-               uri
-                ,    new String[]{Event.ID, Event.NAME,
-                Event.DESCRIPTION, Event.START,
-                 Event.TAGS,
-                Event.JOINED, Event.ADDRESS, Event.BUDGET_MIN, Event.LAT, Event.LNG, Event.ATTENDANCES}, null, null, null);
-
-
+               uri,new String[]{Event.ID, Event.NAME,Event.DESCRIPTION, Event.START,
+                 Event.TAGS,Event.JOINED, Event.ADDRESS, Event.BUDGET_MIN, Event.LAT, Event.LNG, Event.ATTENDANCES}, null, null, null);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if(adapter.getItemCount() < data.getCount()) {
-
             setFlag(true);
         }
-
-
         adapter.swapCursor(data);
     }
 
@@ -155,19 +147,6 @@ public class MyEventsFragment extends android.support.v4.app.Fragment implements
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CHANGE_EVENT_REQUEST) {
-            // Make sure the request was successful
-            if (resultCode ==  getActivity().RESULT_OK) {
 
-                data.getStringExtra(Event.NAME);
-                data.getStringExtra(Event.ADDRESS);
-                data.getStringExtra(Event.START);
-
-
-            }
-        }
-    }
 
 }

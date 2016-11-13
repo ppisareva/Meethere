@@ -274,7 +274,10 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        System.err.println("!! + + + !!!!!!!!  ! ! ! ! ! ! ! ! !======================");
+        super.onActivityResult(requestCode, resultCode, data);
 
-
-
+    }
 }

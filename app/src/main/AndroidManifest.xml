@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
@@ -56,7 +55,6 @@
         <activity android:name=".activities.SignUpActivity" />
         <activity
             android:name=".activities.MainActivity"
-            
             android:theme="@style/AppTheme.NoActionBar" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -110,7 +108,8 @@
             android:authorities="com.example.polina.meethere.data.data" />
 
         <activity android:name=".activities.MyEventsActivity" />
-        <activity android:name=".activities.SearchResultsActivity"
+        <activity
+            android:name=".activities.SearchResultsActivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".activities.UserProfileActivity" />
         <activity android:name=".activities.FeedActivity" />
@@ -133,6 +132,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.polina.meethere.activities.LoginActivity" />
         </activity>
+        <activity android:name=".activities.UserInfo" />
+        <activity android:name=".activities.FollowList"></activity>
     </application>
 
 </manifest>

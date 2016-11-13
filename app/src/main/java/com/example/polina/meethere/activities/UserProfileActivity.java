@@ -1,8 +1,11 @@
 package com.example.polina.meethere.activities;
 
+import android.content.Intent;
 import android.database.Cursor;
+import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.preference.PreferenceActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -10,9 +13,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
 import com.example.polina.meethere.MyEventsAdapter;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.RecyclerViewPositionHelper;
@@ -20,6 +27,7 @@ import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.fragments.MyEventsFragment;
 import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.Event;
+import com.example.polina.meethere.model.User;
 import com.example.polina.meethere.model.UserProfile;
 import com.example.polina.meethere.network.ServerApi;
 import com.facebook.drawee.generic.RoundingParams;
@@ -32,6 +40,7 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
     public final int CREATED_BY_USER_EVENTS = 46776;
     String userId;
     App app;
+    RecyclerViewHeader header;
     ServerApi serverApi;
     TextView name;
     TextView location;
@@ -42,7 +51,10 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
     RecyclerView list;
     MyEventsAdapter adapter;
     Boolean follow;
+    Boolean firstLoad = true;
     TextView followView;
+    ImageView onMoreInfo;
+
 
     int offset = 0;
     private int STEP =10;
@@ -56,12 +68,30 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
     }
 
     boolean flag;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         list = (RecyclerView) findViewById(R.id.list_of_created_events);
+        header = (RecyclerViewHeader)findViewById(R.id.profile_header);
+//        list.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                header.onInterceptTouchEvent(event);
+//                return false;
+//            }
+//        });
         list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         adapter = new MyEventsAdapter(this);
         list.setAdapter(adapter);
@@ -100,6 +130,14 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
         followers = (TextView) findViewById(R.id.followers);
         followings = (TextView) findViewById(R.id.followings);
         followView = (TextView) findViewById(R.id.follow);
+
+        header.attachTo(list);
+        header.findViewById(R.id.follow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Follow().execute(follow);
+            }
+        });
         new LoadUserInfo().execute(userId);
         Bundle bundle = new Bundle();
         bundle.putString(Utils.USER_ID, userId);
@@ -108,10 +146,12 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
 
     }
 
-    public void onFollow(View v){
-        new Follow().execute(follow);
 
 
+    public void onMoreInfo(View v){
+        Intent intent = new Intent(this, UserInfo.class);
+        intent.putExtra(User.ID, userId);
+        startActivity(intent);
     }
 
     public void onFollowers(View v){
@@ -168,7 +208,13 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if(adapter.getItemCount() < data.getCount()) {
             setFlag(true);
-        }        adapter.swapCursor(data);
+        }
+        if(firstLoad&&data==null){
+          findViewById(R.id.private_information).setVisibility(View.VISIBLE);
+        } else {
+            adapter.swapCursor(data);
+            firstLoad = false;
+        }
     }
 
     @Override
@@ -193,6 +239,7 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
         protected void onPostExecute(JSONObject jsonObject) {
 
             userProfile = UserProfile.parseUserProfile(jsonObject);
+            getSupportActionBar().setTitle(userProfile.getName());
             name.setText(userProfile.getName());
             location.setText(userProfile.getLocation());
             image.setImageURI(Uri.parse(userProfile.getMiniProfileUrl()));

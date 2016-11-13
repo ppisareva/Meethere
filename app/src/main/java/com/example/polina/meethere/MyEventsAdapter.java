@@ -22,6 +22,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by polina on 18.03.16.
  */
@@ -82,6 +84,17 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
 
     }
 
+   public void onActivityResult(int requestCode, int resultCode, Intent data){
+       if (requestCode == CHANGE_EVENT_REQUEST) {
+           // Make sure the request was successful
+           if (resultCode ==  RESULT_OK) {
+               data.getStringExtra(Event.NAME);
+               data.getStringExtra(Event.ADDRESS);
+               data.getStringExtra(Event.START);
+           }
+       }
+   }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -132,5 +145,7 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
             intent.putExtra(Utils.EVENT_NAME, getUserName());
             ((Activity) context).startActivityForResult(intent, CHANGE_EVENT_REQUEST);
         }
+
+
     }
 }

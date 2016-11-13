@@ -1,5 +1,6 @@
 package com.example.polina.meethere.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -8,13 +9,13 @@ import com.example.polina.meethere.R;
 import com.example.polina.meethere.fragments.MyEventsListsFragment;
 
 public class MyEventsActivity extends AppCompatActivity {
-
+    MyEventsListsFragment myEventsListsFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_events);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-       MyEventsListsFragment myEventsListsFragment = MyEventsListsFragment.newInstance();
+       myEventsListsFragment = MyEventsListsFragment.newInstance();
         getSupportFragmentManager().beginTransaction().add(R.id.fragment, myEventsListsFragment)
                 .addToBackStack(null).commit();
     }
@@ -27,4 +28,5 @@ public class MyEventsActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

@@ -311,6 +311,7 @@
     <string name="date">Дата</string>
     <string name="pref_title_messages">Комментарии к событиям</string>
     <string name="pref_title_followers">Подписчики</string>
+    <string name="privat_info">Пользователь скрыл информацию о ивентах</string>
 
 
 </resources>

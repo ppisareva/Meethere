@@ -224,14 +224,14 @@ public class MainActivity extends AbstractMeethereActivity
         startActivity( new Intent(this, SearchFiltersActivity.class));
 
     }
-
-    public void onFollowers(View v){
-        profileFragment.onFollowers();
-    }
-
-    public void onFollowings(View v){
-        profileFragment.onFollowings();
-    }
+//
+//    public void onFollowers(View v){
+//        profileFragment.onFollowers();
+//    }
+//
+//    public void onFollowings(View v){
+//        profileFragment.onFollowings();
+//    }
 
 
     public void chooseTimeDialog(Integer i) {
@@ -464,6 +464,12 @@ public class MainActivity extends AbstractMeethereActivity
             finish();
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        System.err.println("========================================");
+        myEventsListsFragment.getAdapter().onActivityResult(requestCode, resultCode, data);
     }
 
 

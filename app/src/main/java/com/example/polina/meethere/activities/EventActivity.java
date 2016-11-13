@@ -112,7 +112,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
             boolean status = intent.getBooleanExtra(NetworkService.STATUS, false);
             if (status) {
                 String url = String.format(IMG_PATTERN, id);
-                image.setImageURI(Uri.parse(url));
+                image.setImageResource(R.drawable.ic_star);
                 new LoadEvent().execute(id);
 
             }
@@ -520,9 +520,23 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
+            Intent intent = new Intent();
+            intent.putExtra(Event.NAME, event.getName());
+            intent.putExtra(Event.START, event.getStart());
+            intent.putExtra(Event.BUDGET_MIN, event.getBudgetMin());
+            setResult(RESULT_OK, intent);
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onBackPressed(){
+        Intent intent = new Intent();
+        intent.putExtra(Event.NAME, event.getName());
+        intent.putExtra(Event.START, event.getStart());
+        intent.putExtra(Event.BUDGET_MIN, event.getBudgetMin());
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
 

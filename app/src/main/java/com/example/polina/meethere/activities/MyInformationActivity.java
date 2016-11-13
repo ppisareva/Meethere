@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.polina.meethere.R;
+import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.UserProfile;
 
@@ -86,8 +87,7 @@ public class MyInformationActivity extends AppCompatActivity {
         name = (EditText) findViewById(R.id.first_name);
         name.setHint(userProfile.getFirstName());
         lastName = (EditText) findViewById(R.id.last_name);
-        lastName.setText(userProfile.getLastName());
-
+        lastName.setHint(userProfile.getLastName());
         gender = (CheckBox) findViewById(R.id.gender);
         gender.setChecked(userProfile.isGender());
         for(String i: userProfile.getCategory()){
@@ -100,12 +100,7 @@ public class MyInformationActivity extends AppCompatActivity {
 
 
         birthday = (TextView)findViewById(R.id.birthday);
-        try {
-            date = comeFromServer.parse(userProfile.getBirthday());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        birthday.setText(!userProfile.getBirthday().equals("null")?viewData.format(date):getString(R.string.set_birthday));
+        birthday.setText(Utils.parsBirthDay(userProfile.getBirthday()));
 
         spinnerCategory = (Spinner) findViewById(R.id.spinner_category);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -149,7 +144,6 @@ public class MyInformationActivity extends AppCompatActivity {
         textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_cencel, 0);
         textView.setClickable(true);
         textView.setTag(id);
-
         textView.setOnClickListener(listener);
         textView.setText((getResources().getStringArray(R.array.category))[id]);
         FlowLayout.LayoutParams params =  new FlowLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

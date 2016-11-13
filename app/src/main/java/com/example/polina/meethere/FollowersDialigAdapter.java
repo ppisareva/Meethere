@@ -40,10 +40,10 @@ public class FollowersDialigAdapter extends ArrayAdapter<User> {
         this.eventId = eventId;
     }
 
-    static class ViewHolder {
-        protected TextView name;
-        protected SimpleDraweeView image;
-        protected CheckBox checkBox;
+    public static class ViewHolder {
+        public TextView name;
+        public SimpleDraweeView image;
+        public CheckBox checkBox;
 
 
 
