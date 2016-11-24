@@ -100,6 +100,7 @@ public class MyInformationActivity extends AppCompatActivity {
 
 
         birthday = (TextView)findViewById(R.id.birthday);
+
         birthday.setText(Utils.parsBirthDay(userProfile.getBirthday()));
 
         spinnerCategory = (Spinner) findViewById(R.id.spinner_category);
@@ -212,6 +213,10 @@ public class MyInformationActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(JSONObject jsonObject) {
             System.out.println(jsonObject);
+            if(jsonObject==null) {
+                Toast.makeText(MyInformationActivity.this, getString(R.string.on_internet_connection), Toast.LENGTH_LONG).show();
+                finish();
+            }
             try {
                 app.saveUserProfile(jsonObject);
             } catch (JSONException e) {

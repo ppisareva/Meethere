@@ -23,6 +23,12 @@
         <item name="android:textSize">12dp</item>
     </style>
 
+    <style name="ActionBar" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="android:textColor">#d7ffffff</item>
+        <item name="android:textSize">17dp</item>
+    </style>
+
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

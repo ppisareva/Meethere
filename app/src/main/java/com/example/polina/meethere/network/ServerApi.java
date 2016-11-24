@@ -46,6 +46,7 @@ public class ServerApi {
     public static final String SORT_BY_TIME = "&sort_by=created_at&only_future=1";
     public static final String LAT = "&lat=";
     public static final String LOG = "lon=";
+    public static final String POPULAR_CATEGORY = "/tags/popular";
     public static final String SORT_LOW_PRICE = "sort_by=+budget_min";
     public static final String SORT_UP = "sorted_by=budget_min";
     public static final String SORT_DOWN = "sorted_by=-budget_min";
@@ -469,4 +470,11 @@ public class ServerApi {
         connector.patchData(param.toString());
         return  connector.response();
     }
+
+    public JSONObject loadPopularCategory() {
+        HttpConnector connector = new HttpConnector(HOST + POPULAR_CATEGORY);
+        connector.setHeader(AUTH_HEADER, "Token " + accessToken);
+        return  connector.response();
+    }
+
 }

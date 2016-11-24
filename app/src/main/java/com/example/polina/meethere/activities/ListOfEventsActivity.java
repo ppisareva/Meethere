@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.polina.meethere.MyEventsAdapter;
 import com.example.polina.meethere.R;
@@ -83,7 +84,6 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
         Bundle arg = new Bundle();
         arg.putString(Utils.CATEGORY, category+"");
         arg.putString(Utils.OFFSET, offset+"");
-
         getSupportLoaderManager().initLoader(CATEGORY, arg, this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(Utils.categoryTitle(this, category));
@@ -262,6 +262,13 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if(data==null){
+            Toast.makeText(ListOfEventsActivity.this, getString(R.string.on_internet_connection), Toast.LENGTH_LONG).show();
+            if(offset==0){
+                finish();
+            }
+                return;
+        }
         if(myEventsAdapter.getItemCount() < data.getCount()) {
             setFlag(true);
         }

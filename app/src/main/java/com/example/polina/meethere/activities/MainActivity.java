@@ -126,7 +126,7 @@ public class MainActivity extends AbstractMeethereActivity
         View root = nv.getHeaderView(0);
         FirebaseCrash.log("Main Activity: user_id=" + app().getUserProfile().getId());
         ((TextView)root.findViewById(R.id.user_name)).setText(app().getUserProfile().getName());
-        ((TextView)root.findViewById(R.id.location)).setText(app().getUserProfile().getLocation());
+        ((TextView)root.findViewById(R.id.location)).setText(!app().getUserProfile().getLocation().equals("null")? app().getUserProfile().getLocation():"");
         (root.findViewById(R.id.profile_open)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -359,20 +359,7 @@ public class MainActivity extends AbstractMeethereActivity
         if (searchItem != null) {
 
             searchView = (SearchView) searchItem.getActionView();
-            MenuItemCompat.setOnActionExpandListener(searchItem,new MenuItemCompat.OnActionExpandListener() {
-                @Override
-                public boolean onMenuItemActionExpand(MenuItem item) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, searchResultsFragment)
-                            .commit();
-                    return true;
-                }
 
-                @Override
-                public boolean onMenuItemActionCollapse(MenuItem item) {
-                 getSupportFragmentManager().popBackStack();
-                    return true;
-                }
-            });
         }
         if (searchView != null) {
 //          changeCloseButton(searchView);
@@ -469,7 +456,7 @@ public class MainActivity extends AbstractMeethereActivity
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         System.err.println("========================================");
-        myEventsListsFragment.getAdapter().onActivityResult(requestCode, resultCode, data);
+       // myEventsListsFragment.getAdapter().onActivityResult(requestCode, resultCode, data);
     }
 
 

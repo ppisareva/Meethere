@@ -324,7 +324,6 @@
             android:layout_height="wrap_content"
             android:button="@drawable/chack_box_gender"
             android:id="@+id/gender"
-            android:text="@string/male"
             android:layout_weight="1"
             android:checked="false" />
     </LinearLayout>

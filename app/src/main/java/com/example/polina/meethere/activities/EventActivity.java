@@ -75,6 +75,7 @@ import java.util.List;
 
 public class EventActivity extends AbstractMeethereActivity implements LoaderManager.LoaderCallbacks<List<Comment>> {
     private static final int DIALOG_REMOVE_COMMENT = 101011;
+
     TextView description;
     ImageView image;
     String id;
@@ -99,6 +100,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
     List<User> users = new ArrayList<>();
     CalendarContentResolver calenderReselver;
     ProgressBar progressBar;
+
 
 
     Event event;
@@ -177,7 +179,8 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         quantity = (TextView) header.findViewById(R.id.people_quantity_my_event);
         comment = (EditText) header.findViewById(R.id.make_comments);
         collapseToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar);
-        collapseToolbar.setCollapsedTitleTextColor(Color.WHITE);
+       // collapseToolbar.setCollapsedTitleTextColor(Color.WHITE);
+        collapseToolbar.setCollapsedTitleTextAppearance(R.style.ActionBar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -194,30 +197,12 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         inviteFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(EventActivity.this);
-                dialog.setTitle(getString(R.string.invite_friends));
-                dialog.setTitle(getString(R.string.invite_friends));
-                ArrayAdapter<User> adapter = new FollowersDialigAdapter(EventActivity.this,  users, id );
-                dialog.setAdapter(adapter, null);
-                dialog.setPositiveButton("OK",new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // getting listview from alert box
-                        Toast.makeText(getApplicationContext(),getString(R.string.friends_invited),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
 
-// add negative button
-                dialog.setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // cancel code here
-                            }
-                        });
-                AlertDialog alert1 = dialog.create();
-                alert1.show();
+                Intent intent = new Intent(EventActivity.this, UserListActivity.class );
+                intent.putExtra(UserProfile.USER_ID, ((App)getApplication()).getUserProfile().getId());
+                intent.putExtra(UserProfile.FOLLOW, UserListActivity.FRIENDS);
+                intent.putExtra(Event.ID, id);
+                startActivity(intent);
 
             }
         });
@@ -336,6 +321,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
 
     @Override
     public void onLoadFinished(Loader<List<Comment>> loader, List<Comment> data) {
+        if(data==null) return;
         commentAdapter.getComments().addAll(data);
         int size = commentAdapter.getItemCount();
         commentAdapter.notifyItemRangeInserted(size - data.size(), data.size());
@@ -405,17 +391,18 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
     private class LoadEvent extends AsyncTask<String, Void, JSONObject> {
         protected JSONObject doInBackground(String... args) {
            String id = args[0];
-
             JSONObject jsonObject = serverApi.loadEvent(id);
-
             return jsonObject;
-
         }
 
 
         protected void onPostExecute(JSONObject result) {
             try {
                 System.out.println(result);
+                if(result==null){
+                    Toast.makeText(EventActivity.this, getString(R.string.on_internet_connection), Toast.LENGTH_LONG).show();
+                    finish();
+                }
                 event = Utils.parseEvent(result);
                 collapseToolbar.setTitle(event.getName());
 

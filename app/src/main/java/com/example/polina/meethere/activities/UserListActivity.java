@@ -15,9 +15,11 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.polina.meethere.FollowersDialigAdapter;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.model.App;
+import com.example.polina.meethere.model.Event;
 import com.example.polina.meethere.model.User;
 import com.example.polina.meethere.model.UserProfile;
 import com.example.polina.meethere.network.ServerApi;
@@ -32,11 +34,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class FollowList extends AppCompatActivity {
+public class UserListActivity extends AppCompatActivity {
+    public static final int FRIENDS = 3;
     ListView listView;
     ServerApi serverApi;
     public static final int FOLLOWER = 0;
     public static final int FOLLOWING = 1;
+    String eventID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,9 +49,11 @@ public class FollowList extends AppCompatActivity {
         listView  = (ListView) findViewById(R.id.list_follow);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         Integer id  = getIntent().getIntExtra(UserProfile.USER_ID, -1);
         final Integer followTag = getIntent().getIntExtra(UserProfile.FOLLOW, -1);
+        if(followTag==FRIENDS){
+            eventID = getIntent().getStringExtra(Event.ID);
+        }
         getSupportActionBar().setTitle(followTag==FOLLOWER?getString(R.string.followers):getString(R.string.followings));
 
         new AsyncTask<Integer, Void, JSONObject>() {
@@ -57,17 +63,26 @@ public class FollowList extends AppCompatActivity {
                 if(followTag==FOLLOWING) {
                     jsonObject = serverApi.loadFollowing(params[0]);
                 }
-                if(followTag==FOLLOWER){
+                if(followTag==FOLLOWER||followTag==FRIENDS){
                     jsonObject = serverApi.loadFollowers(params[0]);
                 }
+
                 return jsonObject;
             }
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
                 ArrayList<User> users = parsUsers(jsonObject);
-                        FollowUserAdapter followUserAdapter = new FollowUserAdapter(FollowList.this, users);
-                        listView.setAdapter(followUserAdapter);
+                if(followTag==FRIENDS) {
+                    getSupportActionBar().setTitle(getString(R.string.invite_friends));
+                    ArrayAdapter<User> adapter = new FollowersDialigAdapter(UserListActivity.this,  users, eventID);
+                    listView.setAdapter(adapter);
+
+                } else {
+                    FollowUserAdapter followUserAdapter = new FollowUserAdapter(UserListActivity.this, users);
+                    listView.setAdapter(followUserAdapter);
+                }
+
             }
         }.execute(id);
 
@@ -113,6 +128,7 @@ public class FollowList extends AppCompatActivity {
         Set<Integer> positionsList = new HashSet<>();
 
 
+
         public FollowUserAdapter(Context context,  List<User> list) {
             super(context, R.layout.friends_list, list);
             this.context = context;
@@ -136,11 +152,11 @@ public class FollowList extends AppCompatActivity {
                 final ViewHolder viewHolder = new ViewHolder();
                 viewHolder.name = (TextView) view.findViewById(R.id.dialog_text);
                 viewHolder.image = (SimpleDraweeView) view.findViewById(R.id.dialog_image);
-                ((CheckBox) view.findViewById(R.id.dialog_checkbox)).setVisibility(View.GONE);
+
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(FollowList.this, UserProfileActivity.class);
+                        Intent intent = new Intent(UserListActivity.this, UserProfileActivity.class);
                         intent.putExtra(Utils.USER_ID, list.get(position).getId());
                         startActivity(intent);
                     }

@@ -227,7 +227,8 @@ public class NewEventLocationFragment extends android.support.v4.app.Fragment im
 //                String country = addresses.get(0).getCountryName();
 //                String postalCode = addresses.get(0).getPostalCode();
 //                String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
-                return address + ", " +city  ;// Here 1 represent max location result to returned, by documents it recommended 1 to 5
+
+                return (!address.equals("null")?address:"") + ", " +(!city.equals("null")?city:"")  ;// Here 1 represent max location result to returned, by documents it recommended 1 to 5
             } catch (IOException e) {
                 e.printStackTrace();
             }

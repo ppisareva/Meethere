@@ -64,6 +64,7 @@ public class Feed {
 
             List<Feed> list = new ArrayList<>();
             JSONArray arr = new JSONArray();
+        if(hh==null) return list;
             try {
                 arr = hh.getJSONArray(RESULTS);
 

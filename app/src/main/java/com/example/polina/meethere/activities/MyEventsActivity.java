@@ -15,6 +15,7 @@ public class MyEventsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_events);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.my_events));
        myEventsListsFragment = MyEventsListsFragment.newInstance();
         getSupportFragmentManager().beginTransaction().add(R.id.fragment, myEventsListsFragment)
                 .addToBackStack(null).commit();

@@ -40,6 +40,7 @@ public class Utils {
 
     private final static int WIDTH = 100;
     private final static int HEIGHT = 100;
+    public static final String FRIENDS = "friends";
     public static final String RESULTS = "results";
     public static final String CATEGORY = "category";
     public static final String EVENT_ID = "event_id";
@@ -301,9 +302,9 @@ public class Utils {
 
         List<UserProfile> list = new ArrayList<>();
         JSONArray arr = new JSONArray();
+        if(o==null) return list;
         try {
             arr = o.getJSONArray(RESULTS);
-
             for (int i = 0; i < arr.length(); i++) {
                 final JSONObject eventJSON = arr.getJSONObject(i);
                 list.add(UserProfile.parseUserProfile(eventJSON));
@@ -386,6 +387,7 @@ public class Utils {
 
 
     public static String parsBirthDay(String birthday) {
+        if(birthday==null)return "null" ;
        SimpleDateFormat comeFromServer = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
 

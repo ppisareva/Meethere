@@ -23,7 +23,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
 
- * to handle interaction events.
+ * to handle interaction eventsCategoryList.
  * Use the {@link NewEventAdditionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */

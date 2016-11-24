@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.polina.meethere.MyEventsAdapter;
 import com.example.polina.meethere.R;
@@ -127,6 +128,13 @@ public class MyEventsFragment extends android.support.v4.app.Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if(data==null){
+            Toast.makeText(getActivity(), getString(R.string.on_internet_connection), Toast.LENGTH_LONG).show();
+            if(offset==0){
+               // getActivity().getSupportFragmentManager().
+            }
+            return;
+        }
         if(adapter.getItemCount() < data.getCount()) {
             setFlag(true);
         }

@@ -14,7 +14,7 @@ import com.example.polina.meethere.R;
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * {@link BlankFragmen.OnFragmentInteractionListener} interface
- * to handle interaction events.
+ * to handle interaction eventsCategoryList.
  * Use the {@link BlankFragmen#newInstance} factory method to
  * create an instance of this fragment.
  */

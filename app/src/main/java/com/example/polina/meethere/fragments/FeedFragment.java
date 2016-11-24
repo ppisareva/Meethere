@@ -1,8 +1,8 @@
 package com.example.polina.meethere.fragments;
 
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
-import com.example.polina.meethere.RecyclerViewPositionHelper;
 import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.adapters.Category;
 import com.example.polina.meethere.HeaderAdapter;
@@ -23,7 +22,11 @@ import com.example.polina.meethere.R;
 import com.example.polina.meethere.VerticalEventAdapter;
 import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.Event;
-import com.example.polina.meethere.model.UserProfile;
+import com.example.polina.meethere.network.ServerApi;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -33,11 +36,14 @@ import java.util.Set;
 public class FeedFragment extends android.support.v4.app.Fragment implements LoaderManager.LoaderCallbacks<Cursor>  {
 
     VerticalEventAdapter verticalEventAdapter;
-    List <Category> events = new ArrayList<>();
+    List <Category> eventsCategoryList = new ArrayList<>();
     RecyclerView verticalList;
     RecyclerViewHeader header;
     RecyclerView  headerView;
     Set<String> category;
+    ServerApi serverApi;
+    public static final String ID = "id";
+    String arr[];
 
 
 
@@ -54,6 +60,8 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        serverApi = ((App)getActivity().getApplication()).getServerApi();
+         arr = getResources().getStringArray(R.array.category);
         if (getArguments() != null) {
            category = new HashSet<>(getArguments().getStringArrayList(Utils.CATEGORY));
         }
@@ -69,9 +77,9 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.fragment_feed, container, false);
-        events =getListEvents();
-        verticalEventAdapter = new VerticalEventAdapter(events, getActivity());
-        for (Category c : events)
+        eventsCategoryList = getListEvents();
+        verticalEventAdapter = new VerticalEventAdapter(eventsCategoryList, getActivity());
+        for (Category c : eventsCategoryList)
             getActivity().getSupportLoaderManager().initLoader(c.getId(), null, this);
         headerView = (RecyclerView) v.findViewById(R.id.category_list_header);
         verticalList = (RecyclerView) v.findViewById(R.id.vertical_list);
@@ -79,8 +87,24 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
 
         verticalList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         headerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        HeaderAdapter headerAdapter = new HeaderAdapter(getCategory());
-        headerView.setAdapter(headerAdapter);
+        new AsyncTask<Void, Void, JSONObject>() {
+            @Override
+            protected JSONObject doInBackground(Void... params) {
+                return serverApi.loadPopularCategory();
+            }
+
+            @Override
+            protected void onPostExecute(JSONObject jsonObject) {
+                List<Category> categories = new ArrayList<Category>();
+                List<Integer> response =  getCategory(jsonObject);
+                for (Integer c :response) {
+                    categories.add(new Category(c, arr[c]));
+                }
+                HeaderAdapter headerAdapter = new HeaderAdapter(categories);
+                headerView.setAdapter(headerAdapter);
+            }
+        }.execute();
+
         header.attachTo(verticalList);
         verticalList.setAdapter(verticalEventAdapter);
 //        verticalList.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -107,29 +131,38 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
     public List<Category> getListEvents(){
         List<Category> categoryList = new ArrayList<>();
 
-        String arr[] = getResources().getStringArray(R.array.category);
-
         categoryList.add(new Category(445445, "Популярное"));
         for(String c: category){
-            // remove
-            if(!c.equals("null")) {
                 int idCategory = Integer.parseInt(c);
                 categoryList.add(new Category(idCategory, arr[idCategory]));
-            }
         }
         return categoryList;
     }
- // todo
-    public List<String> getCategory(){
-        List<String > c = new ArrayList<>();
-        c.add("Фитнес");
-        c.add("Еда и Напитки");
-        c.add("Исскуство и Культура");
-        c.add("Танци");
-        c.add("Мода");
-        c.add("Больше");
-        return c;
-    }
+ //
+    public List<Integer> getCategory(JSONObject jsonObject){
+        List<Integer> c = new ArrayList<>();
+            JSONArray arr = new JSONArray();
+        if(jsonObject==null){
+            Set<String> set = ((App)getActivity().getApplication()).getUserProfile().getCategory();
+            for(String id :set){
+                c.add(Integer.parseInt(id));
+            }
+            return c;
+        }
+            try {
+                arr = jsonObject.getJSONArray(Utils.RESULTS);
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject category = arr.getJSONObject(i);
+                    c.add(category.getInt(ID));
+                }
+                return c;
+            } catch (JSONException e) {
+                e.printStackTrace();
+               return null;
+            }
+        }
+
+
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {

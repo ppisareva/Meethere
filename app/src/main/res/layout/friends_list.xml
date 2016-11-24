@@ -34,5 +34,6 @@
         android:checked="false"
         android:button="@drawable/chack_box_join"
         android:layout_gravity="center"
+        android:visibility="gone"
         android:layout_margin="5dp" />
 </LinearLayout>

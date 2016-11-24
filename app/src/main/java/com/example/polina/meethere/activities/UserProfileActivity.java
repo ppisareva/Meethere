@@ -54,6 +54,7 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
     Boolean firstLoad = true;
     TextView followView;
     ImageView onMoreInfo;
+    boolean chack;
 
 
     int offset = 0;
@@ -76,6 +77,7 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
         }
         return super.onOptionsItemSelected(item);
     }
+
 
 
     @Override
@@ -138,20 +140,19 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
                 new Follow().execute(follow);
             }
         });
+        header.findViewById(R.id.more_info).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserProfileActivity.this, UserInfo.class);
+                intent.putExtra(User.ID, userId);
+                startActivity(intent);
+            }
+        });
         new LoadUserInfo().execute(userId);
         Bundle bundle = new Bundle();
         bundle.putString(Utils.USER_ID, userId);
         bundle.putInt(Utils.OFFSET, offset);
         getSupportLoaderManager().initLoader(CREATED_BY_USER_EVENTS, bundle, this);
-
-    }
-
-
-
-    public void onMoreInfo(View v){
-        Intent intent = new Intent(this, UserInfo.class);
-        intent.putExtra(User.ID, userId);
-        startActivity(intent);
     }
 
     public void onFollowers(View v){
@@ -255,4 +256,6 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
 
         }
     }
+
+
 }

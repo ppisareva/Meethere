@@ -17,14 +17,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/time_my_event"
         android:textSize="17dp"
-        android:text="24, 30, 1990"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/imageView"
         android:layout_toEndOf="@+id/imageView"
         android:layout_margin="10dp" />
 
     <TextView
-        android:text="Среда  18 30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/time_my_event"
@@ -34,7 +32,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:text="10"
         android:clickable="true"
         android:onClick="onJoiners"
         android:id="@+id/people_quantity_my_event"
@@ -64,7 +61,6 @@
         android:textColor="@color/colorPrimaryDark"
 
 
-        android:text="10 грн"
         android:layout_alignTop="@+id/imageView3"
         android:layout_alignLeft="@+id/date_my_event"
         android:layout_alignStart="@+id/date_my_event" />
@@ -86,7 +82,6 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:id="@+id/address_myevent"
-        android:text="пушкина 24 "
         android:layout_alignTop="@+id/imageView4"
         android:layout_alignLeft="@+id/my_event_budget"
         android:layout_alignStart="@+id/my_event_budget" />
@@ -221,7 +216,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/descriprion_my_event"
-        android:text="хорошо живет на свете виипух "
         android:layout_alignTop="@+id/imageView5"
         android:layout_alignLeft="@+id/address_myevent"
         android:layout_alignStart="@+id/address_myevent" />

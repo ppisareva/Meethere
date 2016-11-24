@@ -276,7 +276,7 @@
     </string-array>
     <string name="title_activity_test_calendar">TestCalendar</string>
     <string name="events_allready_created">Event is already in calendar</string>
-    <string name="friends_invited">Invitations send</string>
+    <string name="friends_invited">Invitation send</string>
     <string name="hrn">UAH</string>
     <string name="created_event">create new event</string>
     <string name="invite">invite you to join</string>
@@ -304,4 +304,5 @@
     <string name="pref_title_messages">Comments to events</string>
     <string name="pref_title_followers">Followers</string>
     <string name="privat_info">Private information</string>
+    <string name="on_internet_connection">no internet connection</string>
 </resources>

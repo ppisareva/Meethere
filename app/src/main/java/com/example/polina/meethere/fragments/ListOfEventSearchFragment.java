@@ -297,6 +297,11 @@ View.OnClickListener onDistance = new View.OnClickListener() {
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if(data==null){
+            Toast.makeText(getActivity(), getString(R.string.on_internet_connection), Toast.LENGTH_LONG).show();
+            getActivity().finish();
+            return;
+        }
         if(myEventsAdapter.getItemCount() < data.getCount()) {
             l.setVisibility(View.GONE);
             setFlag(true);

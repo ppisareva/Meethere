@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:configChanges="orientation"
     android:layout_height="match_parent"
     tools:context="com.example.polina.meethere.activities.UserProfileActivity">
 
@@ -104,12 +106,11 @@
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:paddingTop="@dimen/nav_header_vertical_spacing"
-                android:src="@drawable/ic_no_photo"
+                fresco:placeholderImage="@drawable/user_male2"
                 android:id="@+id/profile_image"
                 android:clickable="true"
                 android:layout_height="130dp"
                 android:layout_width="130dp"
-
                 android:layout_alignTop="@+id/imageEdit"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp" />
@@ -131,7 +132,7 @@
                 android:orientation="horizontal"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:onClick="onMoreInfo"
+                android:id="@+id/more_info"
                 android:clickable="true"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
@@ -141,6 +142,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     app:srcCompat="@drawable/ic_info_24dp"
                     android:background="@android:color/transparent"
                    />

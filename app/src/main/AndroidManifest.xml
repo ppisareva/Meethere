@@ -133,7 +133,7 @@
                 android:value="com.example.polina.meethere.activities.LoginActivity" />
         </activity>
         <activity android:name=".activities.UserInfo" />
-        <activity android:name=".activities.FollowList"></activity>
+        <activity android:name=".activities.UserListActivity"></activity>
     </application>
 
 </manifest>

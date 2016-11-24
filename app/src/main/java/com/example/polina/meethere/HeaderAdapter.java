@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.example.polina.meethere.activities.CategoryListActivity;
 import com.example.polina.meethere.activities.ListOfEventsActivity;
+import com.example.polina.meethere.adapters.Category;
 
 import java.util.List;
 
@@ -17,9 +18,9 @@ import java.util.List;
  */
 public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder> implements View.OnClickListener {
 
-    List<String > categories;
+    List<Category> categories;
 
-    public HeaderAdapter(List<String> category) {
+    public HeaderAdapter(List<Category> category) {
         this.categories = category;
     }
 
@@ -35,9 +36,9 @@ public class HeaderAdapter extends RecyclerView.Adapter<HeaderAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-       String category = categories.get(position);
-        holder.categoryButton.setText(category);
-        holder.categoryButton.setTag(position);
+       Category category = categories.get(position);
+        holder.categoryButton.setText(category.getName());
+        holder.categoryButton.setTag(category.getId());
         holder.categoryButton.setOnClickListener(this);
 
 

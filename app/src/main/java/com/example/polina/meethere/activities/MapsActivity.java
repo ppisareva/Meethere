@@ -177,7 +177,12 @@ public class MapsActivity extends AbstractMeethereActivity implements OnMapReady
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        System.out.println(data.getCount());
+        if(data==null){
+            Toast.makeText(MapsActivity.this, getString(R.string.on_internet_connection), Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
         listOfEvents = new ArrayList();
         for (data.moveToFirst(); !data.isAfterLast(); data.moveToNext()) {
             Event event = new Event();

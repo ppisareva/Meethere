@@ -40,6 +40,7 @@ public class FeedActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.news));
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.feed_list);
         feedAdapter = new FeedAdapter(getApplicationContext());
         recyclerView.setAdapter(feedAdapter);

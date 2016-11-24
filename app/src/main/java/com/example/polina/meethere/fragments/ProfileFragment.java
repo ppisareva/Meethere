@@ -1,7 +1,6 @@
 package com.example.polina.meethere.fragments;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
@@ -10,50 +9,34 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.polina.meethere.FollowersDialigAdapter;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.Utils;
-import com.example.polina.meethere.activities.EventActivity;
 import com.example.polina.meethere.activities.FeedActivity;
-import com.example.polina.meethere.activities.FollowList;
-import com.example.polina.meethere.activities.MainActivity;
+import com.example.polina.meethere.activities.UserListActivity;
 import com.example.polina.meethere.activities.MyEventsActivity;
 import com.example.polina.meethere.activities.MyInformationActivity;
 import com.example.polina.meethere.activities.SettingsActivity;
-import com.example.polina.meethere.activities.UserProfileActivity;
 import com.example.polina.meethere.model.App;
-import com.example.polina.meethere.model.User;
 import com.example.polina.meethere.model.UserProfile;
 import com.example.polina.meethere.network.ServerApi;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class ProfileFragment extends android.support.v4.app.Fragment {
     private static final int RESULT_LOAD_IMAGE = 1;
@@ -94,15 +77,15 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
 
         View v = inflater.inflate(R.layout.profile_fragment, container, false);
         ((TextView)v.findViewById(R.id.user_name)).setText(up.getName());
-        ((TextView)v.findViewById(R.id.location)).setText(up.getLocation());
+        ((TextView)v.findViewById(R.id.location)).setText(!up.getLocation().equals("null")?up.getLocation():"");
         profileImage = (SimpleDraweeView) v.findViewById(R.id.profile_image);
         onFollower = (LinearLayout) v.findViewById(R.id.on_followers);
         onFollower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Intent intent = new Intent(getActivity(), FollowList.class);
+               Intent intent = new Intent(getActivity(), UserListActivity.class);
                 intent.putExtra(UserProfile.USER_ID, id);
-                intent.putExtra(UserProfile.FOLLOW, FollowList.FOLLOWER);
+                intent.putExtra(UserProfile.FOLLOW, UserListActivity.FOLLOWER);
                 startActivity(intent);
 
             }
@@ -111,9 +94,9 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
         onFollowing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), FollowList.class);
+                Intent intent = new Intent(getActivity(), UserListActivity.class);
                 intent.putExtra(UserProfile.USER_ID, id);
-                intent.putExtra(UserProfile.FOLLOW, FollowList.FOLLOWING);
+                intent.putExtra(UserProfile.FOLLOW, UserListActivity.FOLLOWING);
                 startActivity(intent);
             }
         });
@@ -155,9 +138,7 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
         serverApi = ((App) getActivity().getApplication()).getServerApi();
         SharedPreferences sharedPreferences = ((App)getActivity().getApplication()).pref();
         id = sharedPreferences.getInt(UserProfile.USER_ID, -1);
-
         new LoadUser().execute(id);
-
         profileImage.setImageURI(Uri.parse(up.getProfileUrl()));
         RoundingParams roundingParams = RoundingParams.asCircle();
         profileImage.getHierarchy().setRoundingParams(roundingParams);

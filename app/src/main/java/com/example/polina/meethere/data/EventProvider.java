@@ -186,12 +186,12 @@ public class EventProvider extends android.content.ContentProvider {
                 search = uri.getQueryParameter("search");
                 jsonObject = serverApi.loadEventsByWords(search, offset);
                 break;
-            case SEARCH_BY_TIME: //// todo
+            case SEARCH_BY_TIME: //
                 offset = uri.getQueryParameter("offset");
                 search = uri.getQueryParameter("search");
                 jsonObject = serverApi.loadEventsByWordsAndTime(search, offset);
                 break;
-            case SEARCH_BY_HIGH: ///// todo
+            case SEARCH_BY_HIGH: /////
                 offset = uri.getQueryParameter("offset");
                 search = uri.getQueryParameter("search");
                 jsonObject = serverApi.loadEventsByHighPrice(search, offset);
@@ -201,7 +201,7 @@ public class EventProvider extends android.content.ContentProvider {
                 categoryId = uri.getQueryParameter("category");
                 jsonObject = serverApi.loadEventsByHighPriceAndCategory(categoryId, offset);
                 break;
-            case SEARCH_LOW_PRICE: // todo
+            case SEARCH_LOW_PRICE:
                 offset = uri.getQueryParameter("offset");
                 search = uri.getQueryParameter("search");
                 jsonObject = serverApi.loadEventsByLowPrice(search, offset);
@@ -211,7 +211,7 @@ public class EventProvider extends android.content.ContentProvider {
                 categoryId = uri.getQueryParameter("category");
                 jsonObject = serverApi.loadEventsByLowPriceAndCategory(categoryId, offset);
                 break;
-            case SEARCH_BY_DISTANCE: ///// todo
+            case SEARCH_BY_DISTANCE: ////
                 lon = uri.getQueryParameter("lon");
                 lat = uri.getQueryParameter("lat");
                 if(uri.getQueryParameter("search")==null)
@@ -224,7 +224,7 @@ public class EventProvider extends android.content.ContentProvider {
                     jsonObject = serverApi.loadEventsByDistance(lon, lat, search, offset);
                 }
                 break;
-            case CATEGORY_BY_DISTANCE: ///// todo
+            case CATEGORY_BY_DISTANCE: /////
                 lon = uri.getQueryParameter("lon");
                 lat = uri.getQueryParameter("lat");
                 categoryId = uri.getQueryParameter("category");
