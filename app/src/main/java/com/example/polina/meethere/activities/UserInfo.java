@@ -130,7 +130,6 @@ public class UserInfo extends AppCompatActivity {
     private void addView(int id) {
         TextView textView = new TextView(this);
         textView.setBackground(getResources().getDrawable(R.drawable.preferences));
-        textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_cencel, 0);
         textView.setClickable(true);
         textView.setTag(id);
         textView.setText((getResources().getStringArray(R.array.category))[id]);

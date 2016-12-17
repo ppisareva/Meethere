@@ -16,10 +16,10 @@ import android.view.ViewGroup;
 
 import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
 import com.example.polina.meethere.Utils;
-import com.example.polina.meethere.adapters.Category;
-import com.example.polina.meethere.HeaderAdapter;
+import com.example.polina.meethere.model.Category;
+import com.example.polina.meethere.adapters.HeaderAdapter;
 import com.example.polina.meethere.R;
-import com.example.polina.meethere.VerticalEventAdapter;
+import com.example.polina.meethere.adapters.VerticalEventAdapter;
 import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.Event;
 import com.example.polina.meethere.network.ServerApi;
@@ -64,6 +64,7 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
          arr = getResources().getStringArray(R.array.category);
         if (getArguments() != null) {
            category = new HashSet<>(getArguments().getStringArrayList(Utils.CATEGORY));
+
         }
     }
 
@@ -133,8 +134,15 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
 
         categoryList.add(new Category(445445, "Популярное"));
         for(String c: category){
+
                 int idCategory = Integer.parseInt(c);
+            try {
                 categoryList.add(new Category(idCategory, arr[idCategory]));
+            } catch (Exception e){
+                e.printStackTrace();
+
+            }
+
         }
         return categoryList;
     }

@@ -99,7 +99,6 @@
             android:layout_alignBottom="@+id/on_followers"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="6dp"
             android:layout_toRightOf="@+id/profile_image"
             android:layout_toEndOf="@+id/profile_image"
             android:id="@+id/on_followings">

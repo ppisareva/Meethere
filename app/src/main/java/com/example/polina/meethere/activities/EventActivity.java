@@ -6,13 +6,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.CalendarContract;
-import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -27,26 +23,22 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.polina.meethere.FollowersDialigAdapter;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.adapters.CommentAdapter;
 import com.example.polina.meethere.data.CalendarContentResolver;
-import com.example.polina.meethere.data.Comment;
+import com.example.polina.meethere.model.Comment;
 import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.Event;
 import com.example.polina.meethere.model.User;
@@ -66,11 +58,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class EventActivity extends AbstractMeethereActivity implements LoaderManager.LoaderCallbacks<List<Comment>> {
@@ -236,7 +224,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         LinearLayoutManager lm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(lm);
         final int userId = app().getUserProfile().getId();
-        commentAdapter = new CommentAdapter(this, header, new AdapterView.OnItemLongClickListener() {
+        commentAdapter = new CommentAdapter(this, header,new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Comment c = commentAdapter.getComments().get(position);

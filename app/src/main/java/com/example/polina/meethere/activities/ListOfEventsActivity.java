@@ -17,11 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.polina.meethere.MyEventsAdapter;
+import com.example.polina.meethere.adapters.MyEventsAdapter;
 import com.example.polina.meethere.R;
-import com.example.polina.meethere.RecyclerViewPositionHelper;
+import com.example.polina.meethere.adapters.RecyclerViewPositionHelper;
 import com.example.polina.meethere.Utils;
-import com.example.polina.meethere.fragments.ListOfEventSearchFragment;
 import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.Event;
 
@@ -86,7 +85,12 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
         arg.putString(Utils.OFFSET, offset+"");
         getSupportLoaderManager().initLoader(CATEGORY, arg, this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(Utils.categoryTitle(this, category));
+        if(category!=Utils.POPULAR){
+            getSupportActionBar().setTitle(Utils.categoryTitle(this, category));
+        } else {
+            getSupportActionBar().setTitle(getString(R.string.popular));
+        }
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.events_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         myEventsAdapter = new MyEventsAdapter(this);

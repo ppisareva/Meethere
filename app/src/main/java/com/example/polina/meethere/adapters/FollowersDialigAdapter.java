@@ -1,4 +1,4 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.adapters;
 
 import android.content.Context;
 import android.net.Uri;
@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.polina.meethere.R;
 import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.User;
 import com.facebook.drawee.view.SimpleDraweeView;

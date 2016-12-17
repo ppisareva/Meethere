@@ -1,6 +1,7 @@
 package com.example.polina.meethere.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
@@ -11,7 +12,10 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.example.polina.meethere.R;
-import com.example.polina.meethere.data.Comment;
+import com.example.polina.meethere.Utils;
+import com.example.polina.meethere.activities.UserProfileActivity;
+import com.example.polina.meethere.model.Comment;
+import com.example.polina.meethere.model.App;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -46,6 +50,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_ITEM) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comment_item, null);
+
             ViewHolder viewHolder = new ItemViewHolder(view);
             return viewHolder;
         } else if (viewType == TYPE_HEADER) {
@@ -66,10 +71,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         if (position == 0) return;
         position--;
         h.itemView.setTag(position);
-        ItemViewHolder holder = (ItemViewHolder)h;
+        final ItemViewHolder holder = (ItemViewHolder)h;
         Comment c = comments.get(position);
+        holder.userId = c.getCreatedById();
         holder.createBy.setText(c.getCreatedBy());
         holder.text.setText(c.getText());
+        holder.setUserId(c.getCreatedById());
         holder.image.setImageURI(Uri.parse(c.getCreatedByUrl()));
         long now = System.currentTimeMillis();
         long t = Math.min(c.getCreatedAt(), now);
@@ -90,12 +97,20 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         return false;
     }
 
-    public class ItemViewHolder extends ViewHolder {
+
+
+    public class ItemViewHolder extends ViewHolder implements View.OnClickListener {
         public TextView text;
         public TextView createBy;
         public TextView createdAt;
         public SimpleDraweeView image;
         public View container;
+
+        public void setUserId(int userId) {
+            this.userId = userId;
+        }
+
+        public int userId;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -106,7 +121,17 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             image = (SimpleDraweeView) itemView.findViewById(R.id.profile_image);
             RoundingParams roundingParams = RoundingParams.asCircle();
             image.getHierarchy().setRoundingParams(roundingParams);
+            image.setOnClickListener(this);
 
+        }
+
+        @Override
+        public void onClick(View v) {
+            System.out.println(userId);
+            if(userId==((App)context.getApplicationContext()).getUserProfile().getId()) return;
+            Intent intent = new Intent(context, UserProfileActivity.class);
+            intent.putExtra(Utils.USER_ID, userId);
+            context.startActivity(intent);
         }
     }
 

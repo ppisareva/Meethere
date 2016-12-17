@@ -1,24 +1,24 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.polina.meethere.R;
+import com.example.polina.meethere.Utils;
+import com.example.polina.meethere.activities.EventActivity;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.internal.Utility;
 
 /**
  * Created by polina on 27.07.16.
@@ -83,6 +83,7 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder > 
         holder.actionTime.setText(time);
          time = Utils.parseData(cursor.getString(EVENT_START));
         holder.eventTime.setText(time);
+        holder.setEventId(cursor.getString(EVENT_ID));
 
         holder.eventBudget.setText(cursor.getString(EVENT_BUDGET));
         holder.eventName.setText(cursor.getString(EVENT_NAME));
@@ -96,7 +97,7 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder > 
         return vh;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CardView layout;
         SimpleDraweeView userPhoto;
         TextView userName;
@@ -107,13 +108,13 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder > 
         TextView eventTime;
         TextView eventBudget;
         int userId;
-        int eventId;
+        String eventId;
 
         public void setUserId(int userId) {
             this.userId = userId;
         }
 
-        public void setEventId(int eventId) {
+        public void setEventId(String eventId) {
             this.eventId = eventId;
         }
 
@@ -128,6 +129,14 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder > 
             eventName = (TextView) itemView.findViewById(R.id.event_name);
             eventTime = (TextView)itemView.findViewById(R.id.event_time);
             eventBudget = (TextView)itemView.findViewById(R.id.event_budget);
+            layout.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(context, EventActivity.class);
+            intent.putExtra(Utils.EVENT_ID, eventId);
+            context.startActivity(intent);
         }
     }
 

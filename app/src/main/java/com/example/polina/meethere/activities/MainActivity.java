@@ -64,12 +64,22 @@ public class MainActivity extends AbstractMeethereActivity
     private FeedFragment feedFragment;
     SearchResultsFragment searchResultsFragment;
     SimpleDraweeView profileImage;
+    public NavigationView navigationView;
 
     public static final String IMG_PATTERN = "https://s3-us-west-1.amazonaws.com/meethere/%s.jpg";
 
     private FindEventFragment findEventFragment;
     private String FEED = "feed";
     Set<String> category;
+
+    public Fragment getmContent() {
+        return mContent;
+    }
+
+    public void setmContent(Fragment mContent) {
+        this.mContent = mContent;
+    }
+
     private Fragment mContent;
 
 
@@ -114,7 +124,7 @@ public class MainActivity extends AbstractMeethereActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         initUserInfo();
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();

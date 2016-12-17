@@ -14,16 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.polina.meethere.MyEventsAdapter;
-import com.example.polina.meethere.MyFriendsAdapter;
+import com.example.polina.meethere.adapters.MyFriendsAdapter;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.Utils;
-import com.example.polina.meethere.model.Event;
 import com.example.polina.meethere.model.User;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 
 public class ListOfFriendsSearchFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{

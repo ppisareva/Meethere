@@ -10,11 +10,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.view.View;
 
-import com.example.polina.meethere.FeedAdapter;
+import com.example.polina.meethere.adapters.FeedAdapter;
 import com.example.polina.meethere.R;
-import com.example.polina.meethere.RecyclerViewPositionHelper;
+import com.example.polina.meethere.adapters.RecyclerViewPositionHelper;
 import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.model.Feed;
 import com.example.polina.meethere.model.User;
@@ -42,7 +41,7 @@ public class FeedActivity extends AppCompatActivity implements LoaderManager.Loa
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.news));
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.feed_list);
-        feedAdapter = new FeedAdapter(getApplicationContext());
+        feedAdapter = new FeedAdapter(this);
         recyclerView.setAdapter(feedAdapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

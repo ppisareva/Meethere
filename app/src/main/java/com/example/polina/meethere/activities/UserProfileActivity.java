@@ -2,10 +2,8 @@ package com.example.polina.meethere.activities;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.preference.PreferenceActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -14,17 +12,15 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
-import com.example.polina.meethere.MyEventsAdapter;
+import com.example.polina.meethere.adapters.MyEventsAdapter;
 import com.example.polina.meethere.R;
-import com.example.polina.meethere.RecyclerViewPositionHelper;
+import com.example.polina.meethere.adapters.RecyclerViewPositionHelper;
 import com.example.polina.meethere.Utils;
-import com.example.polina.meethere.fragments.MyEventsFragment;
 import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.Event;
 import com.example.polina.meethere.model.User;
@@ -123,7 +119,7 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
 
             }
         });
-        userId = getIntent().getStringExtra(Utils.USER_ID);
+        userId = getIntent().getIntExtra(Utils.USER_ID, 0) +"";
         app = (App)getApplication();
         serverApi = app.getServerApi();
         name = (TextView) findViewById(R.id.user_name);
@@ -210,12 +206,16 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
         if(adapter.getItemCount() < data.getCount()) {
             setFlag(true);
         }
-        if(firstLoad&&data==null){
+        if(firstLoad&&data.getCount()==0){
           findViewById(R.id.private_information).setVisibility(View.VISIBLE);
+            adapter.swapCursor(data);
+
+
         } else {
             adapter.swapCursor(data);
             firstLoad = false;
         }
+
     }
 
     @Override

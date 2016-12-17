@@ -1,10 +1,7 @@
 package com.example.polina.meethere.network;
 
-import android.content.SharedPreferences;
-
 import com.example.polina.meethere.Utils;
-import com.example.polina.meethere.data.Comment;
-import com.example.polina.meethere.fragments.ProfileFragment;
+import com.example.polina.meethere.model.Comment;
 import com.example.polina.meethere.model.App;
 
 import org.json.JSONArray;
@@ -399,6 +396,10 @@ public class ServerApi {
 
     public JSONObject loadEventsByHighPriceAndCategory(String categoryId, String offset) {
         HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_FUTURE_CATEGORY+categoryId + "?"+SORT_DOWN + OFFSET_+ offset );
+        if(Integer.parseInt(categoryId)==POPULAR_EVENTS){
+            connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+POPULAR + "?"+SORT_DOWN + OFFSET_+ offset);
+        }
+
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return  connector.response();
     }
@@ -406,6 +407,9 @@ public class ServerApi {
     // DONE
     public JSONObject loadEventsByLowPriceAndCategory(String categoryId, String offset) {
         HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_FUTURE_CATEGORY+categoryId +"?"+SORT_UP+ OFFSET_ + offset );
+        if(Integer.parseInt(categoryId)==POPULAR_EVENTS){
+            connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+POPULAR + "?"+SORT_UP+ OFFSET_ + offset );
+        }
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return  connector.response();
     }
@@ -413,6 +417,9 @@ public class ServerApi {
     // DANE
     public JSONObject loadEventsByDistanceAndCategory(String lon, String lat, String categoryId, String offset) {
         HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_FUTURE_CATEGORY+categoryId +"?"+LOG+ lon +LAT+lat +  OFFSET_ + offset);
+        if(Integer.parseInt(categoryId)==POPULAR_EVENTS){
+            connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+POPULAR + "?"+LOG+ lon +LAT+lat +  OFFSET_ + offset);
+        }
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return  connector.response();
     }
@@ -441,6 +448,10 @@ public class ServerApi {
 
     public JSONObject loadEventsByTimeCategory(String categoryId, String offset) {
         HttpConnector connector = new HttpConnector(HOST + EVENTS_BY_FUTURE_CATEGORY+categoryId + "?"+SORT_TIME + OFFSET_+ offset);
+        if(Integer.parseInt(categoryId)==POPULAR_EVENTS){
+            connector = new HttpConnector(HOST + EVENTS_BY_CATEGORY+POPULAR + OFFSET + offset);
+        }
+
         connector.setHeader(AUTH_HEADER, "Token " + accessToken);
         return  connector.response();
     }

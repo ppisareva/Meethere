@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.activities.FeedActivity;
+import com.example.polina.meethere.activities.MainActivity;
 import com.example.polina.meethere.activities.UserListActivity;
 import com.example.polina.meethere.activities.MyEventsActivity;
 import com.example.polina.meethere.activities.MyInformationActivity;
@@ -50,6 +51,7 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
     LinearLayout onFollowing;
     SimpleDraweeView profileImage;
     ServerApi serverApi;
+    App app;
     int id;
     public static final String IMG_PATTERN = "https://s3-us-west-1.amazonaws.com/meethere/%s.jpg";
 
@@ -74,7 +76,7 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         UserProfile up = ((App)getActivity().getApplication()).getUserProfile();
-
+        app = ((App)getActivity().getApplicationContext());
         View v = inflater.inflate(R.layout.profile_fragment, container, false);
         ((TextView)v.findViewById(R.id.user_name)).setText(up.getName());
         ((TextView)v.findViewById(R.id.location)).setText(!up.getLocation().equals("null")?up.getLocation():"");
@@ -117,7 +119,11 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
                                     int position, long id) {
                 switch (position){
                     case MY_EVENT:
-                        startActivity(new Intent(getContext(), MyEventsActivity.class));
+                        MyEventsListsFragment  myEventsListsFragment = MyEventsListsFragment.newInstance();
+                        ((MainActivity)getActivity()).setmContent(myEventsListsFragment);
+                        ((MainActivity)getActivity()).navigationView.getMenu().getItem(1).setChecked(true);
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, myEventsListsFragment)
+                                .commit();
                         break;
                     case MY_NEWS:
                         startActivity(new Intent(getContext(), FeedActivity.class));
@@ -197,7 +203,7 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
         protected void onPostExecute(JSONObject jsonObject) {
             try {
                 if(jsonObject!=null)
-                    ((App)getActivity().getApplication()).saveUserProfile(jsonObject);
+                    app.saveUserProfile(jsonObject);
 
             } catch (JSONException e) {
                 e.printStackTrace();

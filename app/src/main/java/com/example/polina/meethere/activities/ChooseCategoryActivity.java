@@ -1,8 +1,6 @@
 package com.example.polina.meethere.activities;
 
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,10 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.polina.meethere.CategoryChooseAdapter;
+import com.example.polina.meethere.adapters.CategoryChooseAdapter;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.model.App;
-import com.example.polina.meethere.model.Event;
 import com.example.polina.meethere.model.UserProfile;
 
 import org.json.JSONArray;

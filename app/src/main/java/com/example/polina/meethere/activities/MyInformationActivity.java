@@ -146,7 +146,12 @@ public class MyInformationActivity extends AppCompatActivity {
         textView.setClickable(true);
         textView.setTag(id);
         textView.setOnClickListener(listener);
-        textView.setText((getResources().getStringArray(R.array.category))[id]);
+        try{
+            textView.setText((getResources().getStringArray(R.array.category))[id]);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
         FlowLayout.LayoutParams params =  new FlowLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(5, 5, 5, 5);
 

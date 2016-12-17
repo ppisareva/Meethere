@@ -1,7 +1,6 @@
 package com.example.polina.meethere.fragments;
 
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,9 +9,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.example.polina.meethere.CategoryChooseAdapter;
+import com.example.polina.meethere.adapters.CategoryChooseAdapter;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.model.Event;
 

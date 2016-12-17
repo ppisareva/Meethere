@@ -1,7 +1,5 @@
 package com.example.polina.meethere.fragments;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,9 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.polina.meethere.MyEventsAdapter;
+import com.example.polina.meethere.adapters.MyEventsAdapter;
 import com.example.polina.meethere.R;
-import com.example.polina.meethere.RecyclerViewPositionHelper;
+import com.example.polina.meethere.adapters.RecyclerViewPositionHelper;
 import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.model.Event;
 

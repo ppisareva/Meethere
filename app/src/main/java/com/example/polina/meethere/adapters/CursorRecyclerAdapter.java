@@ -1,9 +1,8 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.adapters;
 
 /**
  * Created by polina on 04.06.16.
  */
-import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.DataSetObserver;

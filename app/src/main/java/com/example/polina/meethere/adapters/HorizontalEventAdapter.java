@@ -1,23 +1,22 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
+import com.example.polina.meethere.R;
+import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.activities.EventActivity;
 import com.example.polina.meethere.activities.ListOfEventsActivity;
+import com.example.polina.meethere.adapters.CursorRecyclerAdapter;
 
 /**
  * Created by polina on 08.03.16.

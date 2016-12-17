@@ -34,40 +34,19 @@
 
 
     <string-array name="category_images">
-
-
-        <item>@drawable/avto_moto</item>
         <item>@drawable/ic_social</item>
         <item>@drawable/ic_party</item>
-        <item>@drawable/for_single</item>
         <item>@drawable/spiritual</item>
         <item>@drawable/food</item>
-        <item>@drawable/ic_animal</item>
-        <item>@drawable/ic_helth</item>
         <item>@drawable/games</item>
         <item>@drawable/culture</item>
         <item>@drawable/business</item>
         <item>@drawable/cinema</item>
-        <item>@drawable/books</item>
-        <item>@drawable/biuty</item>
-        <item>@drawable/music</item>
-        <item>@drawable/outdoor</item>
         <item>@drawable/development</item>
-        <item>@drawable/communication</item>
-        <item>@drawable/paranormal</item>
-        <item>@drawable/support</item>
-        <item>@drawable/politic</item>
         <item>@drawable/family</item>
-        <item>@drawable/comunity</item>
         <item>@drawable/sport</item>
-        <item>@drawable/ic_lifestyle</item>
-        <item>@drawable/tech</item>
-        <item>@drawable/ic_fantacy</item>
-        <item>@drawable/ic_fitness</item>
-        <item>@drawable/phto</item>
         <item>@drawable/ic_hobby</item>
         <item>@drawable/ic_other</item>
-
     </string-array>
 
     <string name="title_activity_list">ListActivity</string>
@@ -240,37 +219,17 @@
     <string name="leave_event">Leave event</string>
     <string name="edit_profile">Edit profile</string>
     <string-array name="category">
-
-
-        <item>Avto/moto</item>
-        <item>Friends</item>
+        <item>Free</item>
         <item>Party</item>
-        <item>Single</item>
         <item>Spiritual</item>
         <item>Food and Drinks</item>
-        <item>Animals</item>
-        <item>Wellness</item>
         <item>Play</item>
         <item>Art</item>
         <item>Business</item>
         <item>Movie</item>
-        <item>Book</item>
-        <item>Fashion and Beauty</item>
-        <item>Music</item>
-        <item>Outdoor</item>
         <item>Education and Development</item>
-        <item>Social</item>
-        <item>Paranormal</item>
-        <item>Support</item>
-        <item>Politics</item>
-        <item>Family</item>
-        <item>Community</item>
-        <item>Sport and entertainment</item>
-        <item>Lifestyle</item>
-        <item>Technology</item>
-        <item>Science fiction and fantasy</item>
-        <item>Fitness</item>
-        <item>Photography</item>
+        <item>Family and kids</item>
+        <item>Sport</item>
         <item>Hobby</item>
         <item>Other</item>
     </string-array>
@@ -305,4 +264,5 @@
     <string name="pref_title_followers">Followers</string>
     <string name="privat_info">Private information</string>
     <string name="on_internet_connection">no internet connection</string>
+    <string name="popular">Popular</string>
 </resources>

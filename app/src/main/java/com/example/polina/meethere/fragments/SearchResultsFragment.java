@@ -14,9 +14,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.edmodo.rangebar.RangeBar;
-import com.example.polina.meethere.adapters.SimpleItem;
+import com.example.polina.meethere.model.SimpleItem;
 import com.example.polina.meethere.R;
-import com.example.polina.meethere.SimpleListAdapter;
+import com.example.polina.meethere.adapters.SimpleListAdapter;
 import com.example.polina.meethere.Utils;
 
 import java.util.ArrayList;

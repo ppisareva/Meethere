@@ -1,4 +1,4 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.adapters;
 
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;

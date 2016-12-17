@@ -1,4 +1,4 @@
-package com.example.polina.meethere.adapters;
+package com.example.polina.meethere.model;
 
 /**
  * Created by polina on 11.04.16.

@@ -1,33 +1,29 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.adapters;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.polina.meethere.R;
+import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.activities.EventActivity;
 import com.example.polina.meethere.model.Event;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by polina on 18.03.16.
  */
-public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewHolder >  {
+public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewHolder > {
 
     private static final int ID = 0;
     Context context;

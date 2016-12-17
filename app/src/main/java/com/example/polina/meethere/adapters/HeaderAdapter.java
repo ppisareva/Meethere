@@ -1,4 +1,4 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.adapters;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.polina.meethere.R;
+import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.activities.CategoryListActivity;
 import com.example.polina.meethere.activities.ListOfEventsActivity;
-import com.example.polina.meethere.adapters.Category;
+import com.example.polina.meethere.model.Category;
 
 import java.util.List;
 

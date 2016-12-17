@@ -1,25 +1,17 @@
 package com.example.polina.meethere.fragments;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.polina.meethere.MyEventsAdapter;
+import com.example.polina.meethere.adapters.MyEventsAdapter;
 import com.example.polina.meethere.R;
-import com.example.polina.meethere.Utils;
 
 public class MyEventsListsFragment extends android.support.v4.app.Fragment  {
 
@@ -68,7 +60,7 @@ public class MyEventsListsFragment extends android.support.v4.app.Fragment  {
     }
 
 
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);

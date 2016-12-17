@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
-import com.example.polina.meethere.PreferencesAdapter;
+import com.example.polina.meethere.adapters.PreferencesAdapter;
 import com.example.polina.meethere.R;
 
 import java.util.ArrayList;

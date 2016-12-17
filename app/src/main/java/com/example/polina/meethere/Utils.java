@@ -8,12 +8,10 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.provider.MediaStore;
 
-import com.example.polina.meethere.activities.ListOfEventsActivity;
-import com.example.polina.meethere.adapters.SimpleItem;
+import com.example.polina.meethere.model.SimpleItem;
 import com.example.polina.meethere.model.Event;
 import com.example.polina.meethere.model.User;
 import com.example.polina.meethere.model.UserProfile;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 
 import org.json.JSONArray;

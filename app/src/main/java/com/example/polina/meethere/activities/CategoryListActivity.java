@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
 import com.example.polina.meethere.R;
-import com.example.polina.meethere.SimpleListAdapter;
+import com.example.polina.meethere.adapters.SimpleListAdapter;
 import com.example.polina.meethere.Utils;
 
 public class CategoryListActivity extends AppCompatActivity {

@@ -19,11 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.polina.meethere.MyEventsAdapter;
+import com.example.polina.meethere.adapters.MyEventsAdapter;
 import com.example.polina.meethere.R;
-import com.example.polina.meethere.RecyclerViewPositionHelper;
+import com.example.polina.meethere.adapters.RecyclerViewPositionHelper;
 import com.example.polina.meethere.Utils;
-import com.example.polina.meethere.activities.ListOfEventsActivity;
 import com.example.polina.meethere.model.App;
 import com.example.polina.meethere.model.Event;
 

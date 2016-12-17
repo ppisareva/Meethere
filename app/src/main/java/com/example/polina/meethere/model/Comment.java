@@ -1,4 +1,4 @@
-package com.example.polina.meethere.data;
+package com.example.polina.meethere.model;
 
 import android.os.Bundle;
 

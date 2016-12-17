@@ -69,38 +69,16 @@
     <string name="sort_by">Сортировать по</string>
     <string name="ok">Выбрать</string>
     <string-array name="category">
-
-
-
-        <item>Авто мото</item>
-        <item>Встреча с друзьями</item>
+        <item>Бесплатно</item>
         <item>Вечеринки</item>
-        <item>Для одиноких</item>
         <item>Духовность</item>
         <item>Еда и напитки</item>
-        <item>Животные</item>
-        <item>Здоровье</item>
         <item>Игры</item>
         <item>Искусство и культура</item>
-        <item>Карьера и бизнес</item>
         <item>Кино</item>
-        <item>Книги</item>
-        <item>Мода и красота</item>
-        <item>Музыка</item>
-        <item>На природе</item>
         <item>Образование и развитие</item>
-        <item>Общение</item>
-        <item>Паранормальное явление</item>
-        <item>Поддержка</item>
-        <item>Политика</item>
-        <item>Родители и семья</item>
-        <item>Сообщества</item>
-        <item>Спорт и отдых</item>
-        <item>Стиль жизни</item>
-        <item>Технологии</item>
-        <item>Фантастика и Фэнтези</item>
-        <item>Фитнес</item>
-        <item>Фотография</item>
+        <item>Cемья и дети</item>
+        <item>Спорт</item>
         <item>Хобби</item>
         <item>Другое</item>
     </string-array>
@@ -171,44 +149,6 @@
         <string name="title_activity_maps">Location</string>
         <string name="hello_blank_fragment">Hello blank fragment</string>
         <string name="title_activity_my_places">MyPlacesActivity</string>
-
-
-        <string-array name="category_images">
-
-
-            <item>@drawable/avto_moto</item>
-            <item>@drawable/ic_social</item>
-            <item>@drawable/ic_party</item>
-            <item>@drawable/for_single</item>
-            <item>@drawable/spiritual</item>
-            <item>@drawable/food</item>
-            <item>@drawable/ic_animal</item>
-            <item>@drawable/ic_helth</item>
-            <item>@drawable/games</item>
-            <item>@drawable/culture</item>
-            <item>@drawable/business</item>
-            <item>@drawable/cinema</item>
-            <item>@drawable/books</item>
-            <item>@drawable/biuty</item>
-            <item>@drawable/music</item>
-            <item>@drawable/outdoor</item>
-            <item>@drawable/development</item>
-            <item>@drawable/communication</item>
-            <item>@drawable/paranormal</item>
-            <item>@drawable/support</item>
-            <item>@drawable/politic</item>
-            <item>@drawable/family</item>
-            <item>@drawable/comunity</item>
-            <item>@drawable/sport</item>
-            <item>@drawable/ic_lifestyle</item>
-            <item>@drawable/tech</item>
-            <item>@drawable/ic_fantacy</item>
-            <item>@drawable/ic_fitness</item>
-            <item>@drawable/phto</item>
-            <item>@drawable/ic_hobby</item>
-            <item>@drawable/ic_other</item>
-
-        </string-array>
 
         <string name="title_activity_list">ListActivity</string>
         <string name="ololo" translatable="false">ololo</string>
@@ -313,6 +253,7 @@
     <string name="pref_title_followers">Подписчики</string>
     <string name="privat_info">Пользователь скрыл информацию о ивентах</string>
     <string name="on_internet_connection">Нет интернета</string>
+    <string name="popular">Популярные</string>
 
 
 </resources>

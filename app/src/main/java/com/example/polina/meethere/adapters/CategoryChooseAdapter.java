@@ -1,6 +1,5 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.adapters;
 
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.example.polina.meethere.R;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;

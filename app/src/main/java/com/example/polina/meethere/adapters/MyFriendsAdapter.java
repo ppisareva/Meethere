@@ -1,21 +1,18 @@
-package com.example.polina.meethere;
+package com.example.polina.meethere.adapters;
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.polina.meethere.activities.EventActivity;
+import com.example.polina.meethere.R;
+import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.activities.UserProfileActivity;
 import com.example.polina.meethere.model.App;
 import com.facebook.drawee.generic.RoundingParams;
@@ -48,7 +45,7 @@ public class MyFriendsAdapter extends CursorRecyclerAdapter<MyFriendsAdapter.Vie
         } else {
             holder.name.setText(cursor.getString(NAME) + " " + cursor.getString(LAST_NAME));
         }
-        holder.setID(cursor.getInt(ID)+"");
+        holder.setID(cursor.getInt(ID));
         holder.image.setImageURI(Uri.parse(cursor.getString(URL)));
         RoundingParams roundingParams = RoundingParams.asCircle();
         holder.image.getHierarchy().setRoundingParams(roundingParams);
@@ -70,9 +67,9 @@ public class MyFriendsAdapter extends CursorRecyclerAdapter<MyFriendsAdapter.Vie
         private TextView name;
         private LinearLayout linearLayout;
 
-        String id;
+        int id;
 
-        public void setID(String id) {
+        public void setID(int id) {
             this.id = id;
         }
 

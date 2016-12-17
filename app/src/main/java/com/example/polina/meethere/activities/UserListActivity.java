@@ -11,11 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.polina.meethere.FollowersDialigAdapter;
+import com.example.polina.meethere.adapters.FollowersDialigAdapter;
 import com.example.polina.meethere.R;
 import com.example.polina.meethere.Utils;
 import com.example.polina.meethere.model.App;
@@ -157,7 +156,7 @@ public class UserListActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(UserListActivity.this, UserProfileActivity.class);
-                        intent.putExtra(Utils.USER_ID, list.get(position).getId());
+                        intent.putExtra(Utils.USER_ID, Integer.parseInt(list.get(position).getId()));
                         startActivity(intent);
                     }
                 });

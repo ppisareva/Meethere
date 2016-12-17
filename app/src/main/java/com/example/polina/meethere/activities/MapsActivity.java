@@ -28,10 +28,13 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class MapsActivity extends AbstractMeethereActivity implements OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor> {
@@ -49,6 +52,7 @@ public class MapsActivity extends AbstractMeethereActivity implements OnMapReady
     private static final int START = 3;
     private static final int LAT = 8;
     private static final int LNG = 9;
+    Map<Marker,String > mapOfMarkers = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +109,7 @@ public class MapsActivity extends AbstractMeethereActivity implements OnMapReady
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLocation, 15));
                 }
 
+
             }
         });
     }
@@ -156,11 +161,26 @@ public class MapsActivity extends AbstractMeethereActivity implements OnMapReady
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
         for (Event e : listOfEvents) {
-            mMap.addMarker(new MarkerOptions()
+
+            Marker marker =  mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(e.getLat(), e.getLng())).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin))
                     .title(e.getName()).snippet(Utils.parseData(e.getStart())));
+            mapOfMarkers.put(marker, e.getId());
         }
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                String idEvent = mapOfMarkers.get(marker);
+                Intent intent = new Intent(MapsActivity.this, EventActivity.class);
+                intent.putExtra(Utils.EVENT_ID, idEvent);
+                startActivity(intent);
+
+            }
+       
+        });
+
 
     }
 
