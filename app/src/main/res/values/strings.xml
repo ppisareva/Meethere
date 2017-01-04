@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Meethere</string>
-    <string name="facebook_app_id" translatable="false">463560493836897</string>
+    <string name="app_name">Tolpa</string>
+    <string name="facebook_app_id" translatable="false">898632866938130</string>
     <string name="facebook_button" translatable="false">connect_with_facebook</string>
     <string name="email">enter email</string>
     <string name="password" translatable="false">enter password</string>
     <string name="confirm_password">confirm password</string>
-    <string name="log_in_with_email">log in with email</string>
+    <string name="log_in_with_email">Log in with email</string>
     <string name="sign_up">sign up</string>
     <string name="title_activity_main">MainActivity</string>
 

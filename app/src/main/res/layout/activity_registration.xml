@@ -11,7 +11,7 @@
 
 
 
-    <com.example.polina.meethere.views.FadeView
+    <com.tolpa.views.FadeView
         android:id="@+id/fade_view"
         android:visibility="gone"
         android:layout_width="match_parent"

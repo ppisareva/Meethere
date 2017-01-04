@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "24651035152",
-    "firebase_url": "https://meethere-ff75b.firebaseio.com",
-    "project_id": "meethere-ff75b",
-    "storage_bucket": "meethere-ff75b.appspot.com"
+    "project_number": "932562994734",
+    "firebase_url": "https://tolpa-1483055321815.firebaseio.com",
+    "project_id": "tolpa-1483055321815",
+    "storage_bucket": "tolpa-1483055321815.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:24651035152:android:d7e230a94070c7d8",
+        "mobilesdk_app_id": "1:932562994734:android:209e6f87ec61ca69",
         "android_client_info": {
-          "package_name": "com.example.polina.meethere"
+          "package_name": "com.tolpa"
         }
       },
       "oauth_client": [
         {
-          "client_id": "24651035152-j7b5acmfmbiggvb1u78bd3q01cdkobur.apps.googleusercontent.com",
+          "client_id": "932562994734-tn5jntljngvlgrqlhdphd20dubh0nh9e.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD10cORiRDKXYeOCK3YCVfTH1y10coIvxI"
+          "current_key": "AIzaSyAZt3HC0E0U09YnYvsVDoa8l3LT3rAfbPo"
         }
       ],
       "services": {

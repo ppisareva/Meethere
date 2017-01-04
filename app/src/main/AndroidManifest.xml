@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.polina.meethere">
+    package="com.tolpa">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -28,9 +28,9 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
-        android:name=".model.App"
+        android:name="com.tolpa.model.App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo_images"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -39,7 +39,7 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name=".activities.LoginActivity"
+            android:name="com.tolpa.activities.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,9 +52,9 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".activities.SignUpActivity" />
+        <activity android:name="com.tolpa.activities.SignUpActivity" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.tolpa.activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -70,50 +70,51 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".activities.MapsActivity"
+            android:name="com.tolpa.activities.MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".activities.SettingsActivity"
+            android:name="com.tolpa.activities.SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <activity android:name=".activities.CategoryListActivity" />
+        <activity android:name="com.tolpa.activities.CategoryListActivity" />
         <activity
-            android:name=".activities.EventActivity"
+            android:name="com.tolpa.activities.EventActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name=".activities.MyInformationActivity" />
-        <activity android:name=".activities.MyPreferencesActivity" />
-        <activity android:name=".activities.ListOfEventsActivity" />
+        <activity android:name="com.tolpa.activities.MyInformationActivity" />
+        <activity android:name="com.tolpa.activities.MyPreferencesActivity" />
+        <activity android:name="com.tolpa.activities.ListOfEventsActivity" />
         <activity
-            android:name=".activities.NewEventActivity"
+            android:name="com.tolpa.activities.NewEventActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".activities.SearchFiltersActivity" />
+        <activity android:name="com.tolpa.activities.SearchFiltersActivity" />
         <!-- <activity android:name=".fragments.ListOfEventSearchFragment" /> -->
 
         <service
-            android:name=".network.NetworkService"
+            android:name="com.tolpa.network.NetworkService"
             android:exported="false" />
-        <service android:name=".network.MyFirebaseMessagingService">
+        <service android:name="com.tolpa.network.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".network.MyFirebaseInstanceIDService">
+        <service android:name="com.tolpa.network.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
         <provider
-            android:name=".data.EventProvider"
-            android:authorities="com.example.polina.meethere.data.data" />
+            android:name="com.tolpa.data.EventProvider"
+            android:authorities="com.tolpa.data.data"
+            />
 
-        <activity android:name=".activities.MyEventsActivity" />
+        <activity android:name="com.tolpa.activities.MyEventsActivity" />
         <activity
-            android:name=".activities.SearchResultsActivity"
+            android:name="com.tolpa.activities.SearchResultsActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activities.UserProfileActivity" />
-        <activity android:name=".activities.FeedActivity" />
-        <activity android:name=".activities.ChooseCategoryActivity" />
+        <activity android:name="com.tolpa.activities.UserProfileActivity" />
+        <activity android:name="com.tolpa.activities.FeedActivity" />
+        <activity android:name="com.tolpa.activities.ChooseCategoryActivity" />
 
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -125,15 +126,15 @@
         </intent-filter>
 
         <activity
-            android:name=".activities.EnterCredentialsActivity"
+            android:name="com.tolpa.activities.EnterCredentialsActivity"
             android:label="@string/action_sign_in"
-            android:parentActivityName=".activities.LoginActivity">
+            android:parentActivityName="com.tolpa.activities.LoginActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.polina.meethere.activities.LoginActivity" />
+                android:value="com.tolpa.activities.LoginActivity" />
         </activity>
-        <activity android:name=".activities.UserInfo" />
-        <activity android:name=".activities.UserListActivity"></activity>
+        <activity android:name="com.tolpa.activities.UserInfo" />
+        <activity android:name="com.tolpa.activities.UserListActivity"></activity>
     </application>
 
 </manifest>

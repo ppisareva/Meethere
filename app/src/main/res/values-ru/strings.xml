@@ -133,9 +133,7 @@
     <string name="remove_this_comment">Удалить коментарий?</string>
 
 
-        <string name="app_name">Meethere</string>
-        <string name="facebook_app_id" translatable="false">463560493836897</string>
-        <string name="facebook_button" translatable="false">connect_with_facebook</string>
+        <string name="app_name">Толпа</string>
         <string name="email">Введите имеил</string>
         <string name="password" translatable="false">Введите пароль</string>
         <string name="confirm_password">Подтвердте пароль</string>
