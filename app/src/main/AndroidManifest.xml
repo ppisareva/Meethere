@@ -39,7 +39,7 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name="com.tolpa.activities.LoginActivity"
+            android:name="com.tolpa.activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,7 +54,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name="com.tolpa.activities.SignUpActivity" />
         <activity
-            android:name="com.tolpa.activities.MainActivity"
+            android:name="com.tolpa.activities.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

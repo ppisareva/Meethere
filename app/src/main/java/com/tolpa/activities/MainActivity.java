@@ -130,6 +130,12 @@ public class MainActivity extends AbstractMeethereActivity
     }
 
     public void initUserInfo() {
+        if (app().getUserProfile() == null) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            return;
+        }
         NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
         View root = nv.getHeaderView(0);
         FirebaseCrash.log("Main Activity: user_id=" + app().getUserProfile().getId());
@@ -211,8 +217,9 @@ public class MainActivity extends AbstractMeethereActivity
         LoginManager.getInstance().logOut();
         app().logout();
         System.err.println("====================!!!!! >>>>>>>>>>>>>>>>>>");
-        finish();
+
         startActivity(new Intent(this, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+        finish();
 
     }
 

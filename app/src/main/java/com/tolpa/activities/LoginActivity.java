@@ -56,10 +56,7 @@ public class LoginActivity extends AbstractMeethereActivity {
         app = (App) getApplication();
         loader = (ProgressBar) findViewById(R.id.avloadingIndicatorView);
         callbackManager = CallbackManager.Factory.create();
-        if (app().getUserProfile() != null) {
-            goToMain();
-            return;
-        }
+
 //        Vlad's login
 //      new LoginWithFbTask().execute("EAAGlmxaRKmEBAMuE70E98Brd6gRsaKKdqrInH2w2Ju9aDa1vZAlxrlilDOUp1h7l52LK6iMbqXZCHyKkAtWrMBCcyBlAuVB6kxfEEOoVATdesZAp5y4fkhnb95HZCNL4xBFncr7EdTaXL2PmDrT8HMmJTY9PKZA2nKO5NF0AwpUUYVifUiKaW0tEEDTXVfnsZD");
         loginButton = (LoginButton) findViewById(R.id.login_button);
