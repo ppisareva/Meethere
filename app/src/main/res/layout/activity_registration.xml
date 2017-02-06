@@ -8,9 +8,6 @@
     android:theme="@style/Profile"
     android:layout_above="@+id/login_button">
 
-
-
-
     <com.tolpa.views.FadeView
         android:id="@+id/fade_view"
         android:visibility="gone"
@@ -36,13 +33,14 @@
         android:layout_margin="40dp" />
 
     <TextView
+        android:id="@+id/email_sign_in_button"
         android:text="@string/log_in_with_email"
         android:layout_width="match_parent"
        android:onClick="onLogIn"
         android:clickable="true"
         android:background="@color/colorPrimaryDark"
         android:textColor="@color/white_transperent"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:layout_marginBottom="38dp"
         android:layout_alignBottom="@+id/login_button"
         android:layout_alignLeft="@+id/login_button"
@@ -54,27 +52,13 @@
         android:layout_height="30dp" />
     <ImageView
         app:srcCompat="@android:drawable/ic_dialog_email"
-        android:id="@+id/imageView6"
-        android:layout_marginBottom="43dp"
-        android:layout_alignBottom="@+id/login_button"
-        android:layout_alignLeft="@+id/login_button"
-        android:layout_alignStart="@+id/login_button"
-        android:layout_alignRight="@+id/login_button"
+        android:layout_alignTop="@+id/email_sign_in_button"
+        android:layout_alignBottom="@+id/email_sign_in_button"
+        android:layout_alignLeft="@+id/email_sign_in_button"
         android:layout_height="20dp"
         android:layout_marginLeft="7dp"
         android:layout_width="17dp" />
 
-
-    <TextView
-        android:text="@string/sign_up"
-        android:layout_width="wrap_content"
-        android:clickable="true"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="onSignUp"
-        android:textColor="@color/white_transperent"
-        android:layout_marginBottom="10dp" />
 
 
     <ProgressBar

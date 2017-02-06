@@ -52,11 +52,6 @@ public class App extends MultiDexApplication {
         return userProfile;
     }
 
-    public void utdateUserProfileIfExist(JSONObject o){
-
-
-    }
-
     public void saveUserProfile(JSONObject o) throws JSONException {
         SharedPreferences.Editor editor = pref().edit();
         if (o.has(UserProfile.TOKEN))
@@ -121,13 +116,17 @@ public class App extends MultiDexApplication {
 
             }
         };
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 1, mLocationListener);
+        if (locationManager.getAllProviders().contains(LocationManager.GPS_PROVIDER))
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 1, mLocationListener);
 
-        locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 5000, 1, mLocationListener);
-        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        if (location == null)
+        if (locationManager.getAllProviders().contains(LocationManager.PASSIVE_PROVIDER))
+            locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 5000, 1, mLocationListener);
+        Location location = null;
+        if (locationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER))
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        else if (locationManager.getAllProviders().contains(LocationManager.GPS_PROVIDER))
             location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if (location == null)
+        else if (locationManager.getAllProviders().contains(LocationManager.PASSIVE_PROVIDER))
             location = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
         return location;
     }

@@ -1,5 +1,6 @@
 package com.tolpa.network;
 
+import com.tolpa.BuildConfig;
 import com.tolpa.Utils;
 import com.tolpa.model.Comment;
 import com.tolpa.model.App;
@@ -25,7 +26,9 @@ import java.util.List;
  * Created by ko3a4ok on 5/7/16.
  */
 public class ServerApi {
-    public static final String HOST = "https://meethere-prod.herokuapp.com/";
+    public static final String HOST = BuildConfig.DEBUG
+                                        ? "https://meethere-dev.herokuapp.com/"
+                                        : "https://meethere-prod.herokuapp.com/";
 
     public static final String AUTH = "/auth/facebook";
     public static final String LOGIN = "auth/email/login";
@@ -293,6 +296,7 @@ public class ServerApi {
         List<Comment> comments = new ArrayList();
         for (int i = 0; i < arr.length(); i++)
             comments.add(new Comment(arr.optJSONObject(i)));
+        System.err.println("COMMENTS: " + comments);
         return comments;
     }
 

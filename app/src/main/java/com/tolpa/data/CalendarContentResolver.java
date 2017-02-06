@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 
 import com.tolpa.model.Event;
@@ -80,55 +81,13 @@ public class CalendarContentResolver {
         values.put( "event_id", Long.parseLong(res.getLastPathSegment()));
         values.put( "method", 1 );
         values.put( "minutes", 10 );
-        contentResolver.insert( REMINDERS_URI, values );
+        try {
+            contentResolver.insert(REMINDERS_URI, values);
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+        }
     }
 
-//    private String getCalendarId(){
-//        Cursor cursor = null ;
-//        String[] projection = new String[] {
-//                CalendarContract.Calendars._ID,
-//                CalendarContract.Calendars.NAME,};
-//        cursor = contentResolver.query(Uri.parse("content://com.android.calendar/calendars"), projection, null, null, null);
-//        final String[] calNames = new String[cursor.getCount()];
-//        int[]  calIds = new int[cursor.getCount()];
-//        if ( cursor.moveToFirst() ) {
-//
-//            for (int i = 0; i < calNames.length; i++) {
-//                calIds[i] = cursor.getInt(0);
-//                calNames[i] = cursor.getString(1);
-//                cursor.moveToNext();
-//            }
-//        }
-//
-//        return "";
-//
-//    }
-//
-//    private long getIdCalendar() {
-//        String[] projection = new String[]{CalendarContract.Calendars._ID};
-//        String selection =
-//                CalendarContract.Calendars.ACCOUNT_NAME +
-//                        " = ? AND " +
-//                        CalendarContract.Calendars.ACCOUNT_TYPE +
-//                        " = ? ";
-//        // use the same values as above:
-//        String[] selArgs =
-//                new String[]{
-//                       "roman.slyusarchuk@gmail.com",
-//                        CalendarContract.ACCOUNT_TYPE_LOCAL};
-//        Cursor cursor =
-//                contentResolver.
-//                        query(
-//                                CalendarContract.Calendars.CONTENT_URI,
-//                                projection,
-//                                selection,
-//                                selArgs,
-//                                null);
-//        if (cursor.moveToFirst()) {
-//            return cursor.getLong(0);
-//        }
-//        return -1;
-//    }
 
 
 }

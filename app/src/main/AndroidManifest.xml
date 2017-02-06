@@ -134,7 +134,7 @@
                 android:value="com.tolpa.activities.LoginActivity" />
         </activity>
         <activity android:name="com.tolpa.activities.UserInfo" />
-        <activity android:name="com.tolpa.activities.UserListActivity"></activity>
+        <activity android:name="com.tolpa.activities.UserListActivity" />
     </application>
 
 </manifest>

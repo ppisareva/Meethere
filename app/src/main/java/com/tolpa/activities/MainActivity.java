@@ -40,6 +40,7 @@ import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
@@ -71,9 +72,6 @@ public class MainActivity extends AbstractMeethereActivity
     private String FEED = "feed";
     Set<String> category;
 
-    public Fragment getmContent() {
-        return mContent;
-    }
 
     public void setmContent(Fragment mContent) {
         this.mContent = mContent;
@@ -106,15 +104,13 @@ public class MainActivity extends AbstractMeethereActivity
         }
         SharedPreferences sharedPreferences = getSharedPreferences("pref", MODE_PRIVATE);
         category =  sharedPreferences.getStringSet(UserProfile.CATEGORY, new HashSet<String>());
-        feedFragment = FeedFragment.newInstance(category);
-        searchResultsFragment = SearchResultsFragment.newInstance();
 
         if (savedInstanceState != null) {
             //Restore the fragment's instance
             mContent = getSupportFragmentManager().getFragment(savedInstanceState, "mContent");
 
         } else {
-
+            feedFragment = FeedFragment.newInstance(category);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main, feedFragment, FEED).commit();
         }
 
@@ -131,8 +127,7 @@ public class MainActivity extends AbstractMeethereActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         initUserInfo();
-        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        System.out.println(" TTTTTTTTTTTTTTTTTTTTTTTTTTTTTToken" + refreshedToken);
+        FirebaseInstanceId.getInstance().getToken();
     }
 
     public void initUserInfo() {
@@ -188,17 +183,10 @@ public class MainActivity extends AbstractMeethereActivity
 
     }
     public void onUse (View v){
+        if (searchResultsFragment == null)
+            searchResultsFragment = SearchResultsFragment.newInstance();
         searchResultsFragment.highAdditionalParameters();
     }
-
-//    public void onEditProfile (View v){
-//        startActivity(new Intent(this, MyInformationActivity.class));
-//    }
-
-
-//    public void onMyEvent(View v){
-//        startActivity(new Intent(MainActivity.this, MyEventsActivity.class));
-//    }
 
     public void onFavorite(View v){
 
@@ -209,10 +197,6 @@ public class MainActivity extends AbstractMeethereActivity
 
 
 
-//    public void onSettings(View v){
-//        Intent intent = new Intent(this, SettingsActivity.class);
-//        startActivity(intent);
-//    }
     public void onLogOut(View v){
         FacebookSdk.sdkInitialize(getApplicationContext());
         LoginManager loginManager = LoginManager.getInstance();
@@ -228,29 +212,17 @@ public class MainActivity extends AbstractMeethereActivity
     }
 
     public void onDistance(View v){
-
             searchResultsFragment.onDistancePress();
-
-
     }
 
     public void onPrice (View v){
         searchResultsFragment.onPricePress();
-
     }
 
     public void onFilter (View v){
         startActivity( new Intent(this, SearchFiltersActivity.class));
 
     }
-//
-//    public void onFollowers(View v){
-//        profileFragment.onFollowers();
-//    }
-//
-//    public void onFollowings(View v){
-//        profileFragment.onFollowings();
-//    }
 
 
     public void chooseTimeDialog(Integer i) {
@@ -346,26 +318,6 @@ public class MainActivity extends AbstractMeethereActivity
 
         }
     };
-//
-//    private void changeCloseButton(SearchView searchView){
-//        try {
-//            Field searchField = SearchView.class.getDeclaredField("mCloseButton");
-//            searchField.setAccessible(true);
-//            ImageView mSearchCloseButton = (ImageView) searchField.get(searchView);
-//            if (mSearchCloseButton != null) {
-//                mSearchCloseButton.setImageResource(R.drawable.ic_tune_white_24dp);
-//
-//                mSearchCloseButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                      searchResultsFragment.showAdvancedSearch();
-//                    }
-//                });
-//            }
-//        } catch (Exception e) {
-//            Log.e("", "Error finding close button", e);
-//        }
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -397,15 +349,6 @@ public class MainActivity extends AbstractMeethereActivity
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-//                    System.out.println(newText + "++++++++++++++++++++++++++++++++++++");
-//                   if(!newText.isEmpty()){
-//                       if(newText.length()==1){
-//                           searchResultsFragment.clear();
-//                       }
-//                       searchResultsFragment.changeList(new SimpleItem(R.drawable.ic_android, newText));
-//                   }
-//
-
                     return true;
                 }
             });
@@ -471,12 +414,6 @@ public class MainActivity extends AbstractMeethereActivity
         }
         return super.onKeyDown(keyCode, event);
     }
-
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        System.err.println("========================================");
-//       // myEventsListsFragment.getAdapter().onActivityResult(requestCode, resultCode, data);
-//    }
 
 
 

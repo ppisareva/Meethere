@@ -235,9 +235,6 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter(BC_FILTER + id));
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(NetworkService.ACTION_UPDATE_EVENT));
 
-
-// dialog
-
     }
 
 
@@ -276,13 +273,10 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to the bottom of the list
                 Bundle b = new Bundle();
-                b.putInt("page", page*5);
+                b.putInt("page", (page-1)*5);
                 getSupportLoaderManager().restartLoader(1, b, EventActivity.this).forceLoad();
             }
         });
-        Bundle b = new Bundle();
-        b.putInt("page", 0);
-        getSupportLoaderManager().initLoader(1, new Bundle(), this).forceLoad();
         final View sendButton = header.findViewById(R.id.comment);
         sendButton.setEnabled(false);
         comment.addTextChangedListener(new TextWatcher() {
@@ -383,30 +377,6 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
     }
 
 
-//    private class LoadJoiners extends AsyncTask<String, Void, JSONObject>{
-//
-//        @Override
-//        protected JSONObject doInBackground(String... params) {
-//            String id = params[0];
-//
-//            JSONObject jsonObject = serverApi.loadJoiners(id);
-//
-//            return jsonObject;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(JSONObject jsonObject) {
-//            System.out.println(jsonObject + " ------------------========================");
-//            List<User> users = Utils.parseUsersList(jsonObject);
-//            System.out.println(users.toArray().toString());
-//            quantity.setText(users.size()+"");
-//
-//
-//        }
-//    }
-
-
-
     private class LoadEvent extends AsyncTask<String, Void, JSONObject> {
         protected JSONObject doInBackground(String... args) {
            String id = args[0];
@@ -430,7 +400,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
 
 
                 join.setChecked(event.getJoin());
-                if(event.getJoin()==true){
+                if(event.getJoin()){
                     join.setText(R.string.leave_event);
                 }
                 quantity.setText(event.getAttendances()+"");
