@@ -29,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,6 +37,7 @@ import java.util.Set;
 public class FeedFragment extends android.support.v4.app.Fragment implements LoaderManager.LoaderCallbacks<Cursor>  {
 
     VerticalEventAdapter verticalEventAdapter;
+    HeaderAdapter headerAdapter;
     List <Category> eventsCategoryList = new ArrayList<>();
     RecyclerView verticalList;
     RecyclerViewHeader header;
@@ -44,6 +46,7 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
     ServerApi serverApi;
     public static final String ID = "id";
     String arr[];
+    List<Category> categories = new ArrayList<Category>();
 
 
 
@@ -62,6 +65,18 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
         super.onCreate(savedInstanceState);
         serverApi = ((App)getActivity().getApplication()).getServerApi();
          arr = getResources().getStringArray(R.array.category);
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(((App)getActivity().getApplication()).pref().getString(Utils.CATEGORY, "" ));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        List<Integer> response =  getCategory(jsonObject);
+        for (Integer i :response) {
+            categories.add(new Category(i, arr[i]));
+        }
+
         if (getArguments() != null) {
            category = new HashSet<>(getArguments().getStringArrayList(Utils.CATEGORY));
 
@@ -84,10 +99,14 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
             getActivity().getSupportLoaderManager().initLoader(c.getId(), null, this);
         headerView = (RecyclerView) v.findViewById(R.id.category_list_header);
         verticalList = (RecyclerView) v.findViewById(R.id.vertical_list);
-        header = (RecyclerViewHeader) v.findViewById(R.id.header);
+        header = (RecyclerViewHeader) v.findViewById(R.id.header_feed);
 
         verticalList.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         headerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
+        final HeaderAdapter headerAdapter = new HeaderAdapter(categories);
+        headerView.setAdapter(headerAdapter);
+
         new AsyncTask<Void, Void, JSONObject>() {
             @Override
             protected JSONObject doInBackground(Void... params) {
@@ -96,15 +115,21 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
-                List<Category> categories = new ArrayList<Category>();
+
+                System.out.println(" category popular  =" +jsonObject);
                 List<Integer> response =  getCategory(jsonObject);
+
+                categories.clear();
                 for (Integer c :response) {
                     categories.add(new Category(c, arr[c]));
+
                 }
-                HeaderAdapter headerAdapter = new HeaderAdapter(categories);
-                headerView.setAdapter(headerAdapter);
+                categories.add(new Category(categories.size(), getString(R.string.more) ));
+                headerAdapter.notifyDataSetChanged();
+
             }
         }.execute();
+
 
         header.attachTo(verticalList);
         verticalList.setAdapter(verticalEventAdapter);
@@ -146,23 +171,28 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
         }
         return categoryList;
     }
+
+  public List<Integer>  getListOfAllCategory(){
+      List<Integer> list = new ArrayList<>();
+      for(int i = 0; i<12; i++){
+          list.add(i);
+      }
+      return list;
+  }
  //
     public List<Integer> getCategory(JSONObject jsonObject){
+        try {
         List<Integer> c = new ArrayList<>();
-            JSONArray arr = new JSONArray();
-        if(jsonObject==null){
-            Set<String> set = ((App)getActivity().getApplication()).getUserProfile().getCategory();
-            for(String id :set){
-                c.add(Integer.parseInt(id));
-            }
-            return c;
+        if(jsonObject==null||jsonObject.getJSONArray(Utils.RESULTS).length()==0){
+            return getListOfAllCategory();
         }
-            try {
-                arr = jsonObject.getJSONArray(Utils.RESULTS);
+
+            JSONArray arr = jsonObject.getJSONArray(Utils.RESULTS);
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject category = arr.getJSONObject(i);
                     c.add(category.getInt(ID));
                 }
+            ((App)getActivity().getApplication()).pref().edit().putString(Utils.CATEGORY, jsonObject.toString()).commit();
                 return c;
             } catch (JSONException e) {
                 e.printStackTrace();

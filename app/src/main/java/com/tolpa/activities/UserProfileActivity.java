@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -82,15 +83,15 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
         setContentView(R.layout.activity_user_profile);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         list = (RecyclerView) findViewById(R.id.list_of_created_events);
-        header = (RecyclerViewHeader)findViewById(R.id.profile_header);
-//        list.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                header.onInterceptTouchEvent(event);
-//                return false;
-//            }
-//        });
         list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        header = (RecyclerViewHeader)findViewById(R.id.profile_header);
+        list.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                header.onInterceptTouchEvent(event);
+                return false;
+            }
+        });
         adapter = new MyEventsAdapter(this);
         list.setAdapter(adapter);
         list.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -209,8 +210,6 @@ public class UserProfileActivity extends AppCompatActivity implements LoaderMana
         if(firstLoad&&data.getCount()==0){
           findViewById(R.id.private_information).setVisibility(View.VISIBLE);
             adapter.swapCursor(data);
-
-
         } else {
             adapter.swapCursor(data);
             firstLoad = false;

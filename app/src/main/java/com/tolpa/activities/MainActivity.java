@@ -22,6 +22,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.facebook.FacebookSdk;
 import com.tolpa.R;
 import com.tolpa.Utils;
 import com.tolpa.fragments.CategoryFragment;
@@ -97,7 +98,12 @@ public class MainActivity extends AbstractMeethereActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        if (app().getUserProfile() == null) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            return;
+        }
         SharedPreferences sharedPreferences = getSharedPreferences("pref", MODE_PRIVATE);
         category =  sharedPreferences.getStringSet(UserProfile.CATEGORY, new HashSet<String>());
         feedFragment = FeedFragment.newInstance(category);
@@ -130,12 +136,7 @@ public class MainActivity extends AbstractMeethereActivity
     }
 
     public void initUserInfo() {
-        if (app().getUserProfile() == null) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            return;
-        }
+
         NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
         View root = nv.getHeaderView(0);
         FirebaseCrash.log("Main Activity: user_id=" + app().getUserProfile().getId());
@@ -212,9 +213,12 @@ public class MainActivity extends AbstractMeethereActivity
 //        Intent intent = new Intent(this, SettingsActivity.class);
 //        startActivity(intent);
 //    }
-
     public void onLogOut(View v){
-        LoginManager.getInstance().logOut();
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        LoginManager loginManager = LoginManager.getInstance();
+        loginManager.logOut();
+
+
         app().logout();
         System.err.println("====================!!!!! >>>>>>>>>>>>>>>>>>");
 
@@ -468,11 +472,11 @@ public class MainActivity extends AbstractMeethereActivity
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        System.err.println("========================================");
-       // myEventsListsFragment.getAdapter().onActivityResult(requestCode, resultCode, data);
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        System.err.println("========================================");
+//       // myEventsListsFragment.getAdapter().onActivityResult(requestCode, resultCode, data);
+//    }
 
 
 

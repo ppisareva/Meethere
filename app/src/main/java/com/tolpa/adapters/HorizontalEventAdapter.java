@@ -16,6 +16,8 @@ import com.tolpa.R;
 import com.tolpa.Utils;
 import com.tolpa.activities.EventActivity;
 import com.tolpa.activities.ListOfEventsActivity;
+import com.tolpa.model.*;
+import com.tolpa.model.Event;
 
 /**
  * Created by polina on 08.03.16.
@@ -24,9 +26,14 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
 
     private static final int ID = 1;
     private static final int NAME = 2;
+    private static final int DESCRIPTION = 3;
     private static final int JOINED = 6;
     private static final int START = 4;
     private static final int BUDGET = 8;
+    private static final int LAT= 9;
+    private static final int LNG= 10;
+    private static final int ADDRESS= 7;
+
     private static final int ATTENDENCE = 11;
 
     private Activity context;
@@ -166,7 +173,14 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
             String id = cursor.getString(ID);
             intent.putExtra(Utils.EVENT_ID,id);
             intent.putExtra(Utils.EVENT_NAME, cursor.getString(NAME));
-
+            intent.putExtra(Event.DESCRIPTION, cursor.getString(DESCRIPTION));
+            intent.putExtra(Event.START, cursor.getString(START));
+            intent.putExtra(Event.BUDGET_MIN, cursor.getInt(BUDGET));
+            intent.putExtra(Event.ATTENDANCES, cursor.getInt(ATTENDENCE));
+            intent.putExtra(Event.JOINED, Boolean.parseBoolean(cursor.getString(JOINED)) );
+            intent.putExtra(Event.ADDRESS, cursor.getString(ADDRESS));
+            intent.putExtra(Event.LAT, cursor.getDouble(LAT));
+            intent.putExtra(Event.LNG, cursor.getDouble(LNG));
             context.startActivityForResult(intent, 10101);
         }
 

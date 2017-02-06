@@ -67,6 +67,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
     TextView description;
     ImageView image;
     String id;
+    String name;
     CheckBox join;
     Boolean isJoined = false;
     TextView time;
@@ -88,6 +89,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
     List<User> users = new ArrayList<>();
     CalendarContentResolver calenderReselver;
     ProgressBar progressBar;
+    OnMapReadyCallback onMapReadyCallback;
 
 
 
@@ -147,24 +149,53 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_layout_container);
         id = getIntent().getStringExtra(Utils.EVENT_ID);
+        name = getIntent().getStringExtra(Utils.EVENT_NAME);
+
         progressBarOn();
         serverApi = app().getServerApi();
         progressBar = (ProgressBar) findViewById(R.id.avloadingIndicatorView);
         View header = getLayoutInflater().inflate(R.layout.event_activity, null);
         description = (TextView) header.findViewById(R.id.descriprion_my_event);
+        description.setText(getIntent().getStringExtra(Event.DESCRIPTION));
         image = (ImageView) findViewById(R.id.image_my_event);
         inviteFriends = (LinearLayout) header.findViewById(R.id.layout_invite_friends);
         edit = (LinearLayout) header.findViewById(R.id.layout_edit_event);
         join = (CheckBox) header.findViewById(R.id.join_event);
+        join.setChecked(getIntent().getBooleanExtra(Event.JOINED, false));
         time = (TextView) header.findViewById(R.id.time_my_event);
+        time.setText(Utils.parseDataDate(getIntent().getStringExtra(Event.START)));
         date = (TextView) header.findViewById(R.id.date_my_event);
+        date.setText(Utils.parseDataTime(getIntent().getStringExtra(Event.START)));
+
+        lat = getIntent().getDoubleExtra(Event.LAT, 0);
+        lng = getIntent().getDoubleExtra(Event.LNG, 0);
+
+
 
         mapView = (MapView) header.findViewById(R.id.eventMap);
+        mapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                LatLng pin = new LatLng(lat, lng);
+
+                googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+                googleMap.setMyLocationEnabled(true);
+                googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 500, null);
+
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pin, 15));
+                googleMap.addMarker(new MarkerOptions()
+                        .position(pin).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin))
+                        .title(name));
+            }
+        });
 
         mapView.onCreate(savedInstanceState);
         budget = (TextView) header.findViewById(R.id.my_event_budget);
+        budget.setText(getIntent().getIntExtra(Event.BUDGET_MIN, 0)+"");
         address = (TextView) header.findViewById(R.id.address_myevent);
+        address.setText(getIntent().getStringExtra(Event.ADDRESS));
         quantity = (TextView) header.findViewById(R.id.people_quantity_my_event);
+        quantity.setText(getIntent().getIntExtra(Event.ATTENDANCES, 0)+"");
         comment = (EditText) header.findViewById(R.id.make_comments);
         collapseToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar);
        // collapseToolbar.setCollapsedTitleTextColor(Color.WHITE);
@@ -389,7 +420,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
                 System.out.println(result);
                 if(result==null){
                     Toast.makeText(EventActivity.this, getString(R.string.on_internet_connection), Toast.LENGTH_LONG).show();
-                    finish();
+                   return;
                 }
                 event = Utils.parseEvent(result);
                 collapseToolbar.setTitle(event.getName());
@@ -495,28 +526,29 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            Intent intent = new Intent();
-            intent.putExtra(Event.NAME, event.getName());
-            intent.putExtra(Event.START, event.getStart());
-            intent.putExtra(Event.BUDGET_MIN, event.getBudgetMin());
-            setResult(RESULT_OK, intent);
+//            Intent intent = new Intent();
+//            intent.putExtra(Event.NAME, event.getName());
+//            intent.putExtra(Event.START, event.getStart());
+//            intent.putExtra(Event.BUDGET_MIN, event.getBudgetMin());
+//            setResult(RESULT_OK, intent);
             finish();
         }
         return super.onOptionsItemSelected(item);
     }
-
-    public void onBackPressed(){
-        Intent intent = new Intent();
-      try {
-          intent.putExtra(Event.NAME, event.getName());
-          intent.putExtra(Event.START, event.getStart());
-          intent.putExtra(Event.BUDGET_MIN, event.getBudgetMin());
-          setResult(RESULT_OK, intent);
-      } catch (Exception e){
-          e.printStackTrace();
-      }
-        finish();
-    }
+//
+//    public void onBackPressed(){
+//        Intent intent = new Intent();
+//        if (event == null) finish();
+//      try {
+//          intent.putExtra(Event.NAME, event.getName());
+//          intent.putExtra(Event.START, event.getStart());
+//          intent.putExtra(Event.BUDGET_MIN, event.getBudgetMin());
+//          setResult(RESULT_OK, intent);
+//      } catch (Exception e){
+//          e.printStackTrace();
+//      }
+//        finish();
+//    }
 
 
     @Override
@@ -602,6 +634,10 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
                     e.printStackTrace();
                 }
 
+
+            } else
+          {
+                Toast.makeText(EventActivity.this, getString(R.string.on_internet_connection), Toast.LENGTH_LONG).show();
 
             }
 

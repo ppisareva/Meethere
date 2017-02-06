@@ -29,10 +29,16 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
     private static final int ID = 0;
     Context context;
     private static final int NAME = 1;
+    private static final int DESCRIPTION = 2;
+
     private static final int START = 3;
     private static final int JOINED = 5;
     private static final int BUDGET = 7;
     private static final int ATTENDANCE = 10;
+
+    private static final int LAT= 8;
+    private static final int LNG= 9;
+    private static final int ADDRESS= 6;
 
 
 
@@ -73,6 +79,7 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
         if(checked) holder.imageJoin.setVisibility(View.VISIBLE);
         holder.setID(cursor.getString(ID));
         holder.setUserName(cursor.getString(NAME));
+        holder.setItemPosition(cursor.getPosition());
         String url = String.format(IMG_PATTERN, cursor.getString(ID));
         holder.image.setImageURI(Uri.parse(url));
 //        PorterDuff.Mode[] values = PorterDuff.Mode.values();
@@ -106,6 +113,10 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
         private RelativeLayout cardView;
         String id;
         String userName;
+        int itemPosition;
+        public void setItemPosition(int itemPosition) {
+            this.itemPosition = itemPosition;
+        }
 
         public String getUserName() {
             return userName;
@@ -138,8 +149,18 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
         public void onClick(View v) {
             System.out.println(id);
             Intent intent = new Intent(context, EventActivity.class);
+            Cursor cursor = getCursor();
+            cursor.moveToPosition(itemPosition);
             intent.putExtra(Utils.EVENT_ID, id);
             intent.putExtra(Utils.EVENT_NAME, getUserName());
+            intent.putExtra(Event.DESCRIPTION, cursor.getString(DESCRIPTION));
+            intent.putExtra(Event.START, cursor.getString(START));
+            intent.putExtra(Event.BUDGET_MIN, cursor.getInt(BUDGET));
+            intent.putExtra(Event.ATTENDANCES, cursor.getInt(ATTENDANCE));
+            intent.putExtra(Event.JOINED, Boolean.parseBoolean(cursor.getString(JOINED)) );
+            intent.putExtra(Event.ADDRESS, cursor.getString(ADDRESS));
+            intent.putExtra(Event.LAT, cursor.getDouble(LAT));
+            intent.putExtra(Event.LNG, cursor.getDouble(LNG));
             ((Activity) context).startActivityForResult(intent, CHANGE_EVENT_REQUEST);
         }
 

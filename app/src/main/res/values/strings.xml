@@ -64,8 +64,15 @@
 
     </string-array>
 
+
     <!-- Example settings for Data & Sync -->
     <string name="pref_header_notification_in_facebook" translatable="false">Оповещания в Facebook</string>
+
+    <string-array name="pref_notification_list_titles">
+    <item>No one</item>
+    <item>Friends</item>
+    <item>Everyone</item>
+    </string-array>
 
     <string name="pref_title_sync_frequency">Sync frequency</string>
     <string-array name="pref_sync_frequency_titles">
@@ -265,4 +272,5 @@
     <string name="privat_info">Private information</string>
     <string name="on_internet_connection">no internet connection</string>
     <string name="popular">Popular</string>
+    <string name="atleast_one">atleast one</string>
 </resources>

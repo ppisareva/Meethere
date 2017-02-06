@@ -25,7 +25,7 @@ import java.util.List;
  * Created by ko3a4ok on 5/7/16.
  */
 public class ServerApi {
-    public static final String HOST = "https://meethere-dev.herokuapp.com/";
+    public static final String HOST = "https://meethere-prod.herokuapp.com/";
 
     public static final String AUTH = "/auth/facebook";
     public static final String LOGIN = "auth/email/login";
