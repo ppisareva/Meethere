@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "317901464381",
+    "firebase_url": "https://tolpa-debug.firebaseio.com",
+    "project_id": "tolpa-debug",
+    "storage_bucket": "tolpa-debug.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317901464381:android:9280381588452967",
+        "android_client_info": {
+          "package_name": "com.tolpa.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "317901464381-utour8rfds5spn5ntcgd1g10ru7qt7j4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRf5oQwJ4r7wcnR1mHO78Gbxi8fpdVo58"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
