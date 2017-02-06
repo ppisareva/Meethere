@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 
+import com.tolpa.BuildConfig;
 import com.tolpa.Utils;
 import com.tolpa.model.App;
 import com.tolpa.model.Event;
@@ -30,7 +31,7 @@ import java.util.Map;
  */
 public class EventProvider extends android.content.ContentProvider {
 
-    public static final String AUTHORITY = "com.tolpa.data.data";
+    public static final String AUTHORITY = BuildConfig.APPLICATION_ID + ".data";
     private static final long REFRESH_TIMEOUT = 10000;
 
     EventsSQLiteHelper database;

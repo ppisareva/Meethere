@@ -105,7 +105,7 @@
 
         <provider
             android:name="com.tolpa.data.EventProvider"
-            android:authorities="com.tolpa.data.data"
+            android:authorities="${applicationId}.data"
             />
 
         <activity android:name="com.tolpa.activities.MyEventsActivity" />

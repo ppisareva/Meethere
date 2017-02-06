@@ -3,21 +3,18 @@
     <string name="facebook_app_id" translatable="false">898632866938130</string>
     <string name="facebook_button" translatable="false">connect_with_facebook</string>
     <string name="email">enter email</string>
-    <string name="password" translatable="false">enter password</string>
+    <string name="password">enter password</string>
     <string name="confirm_password">confirm password</string>
     <string name="log_in_with_email">Log in with email</string>
     <string name="sign_up">sign up</string>
-    <string name="title_activity_main">MainActivity</string>
 
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
     <string name="action_map">Location</string>
     <string name="title_activity_maps">Location</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_my_places">MyPlacesActivity</string>
 
-    <string-array name="menu_images">
+    <string-array name="menu_images" translatable="false">
         <item>@drawable/ic_event_black_48dp</item>
         <item>@drawable/ic_event_note_black_48dp</item>
         <item>@drawable/ic_person_add_black_48dp</item>
@@ -33,7 +30,7 @@
     </string-array>
 
 
-    <string-array name="category_images">
+    <string-array name="category_images" translatable="false">
         <item>@drawable/ic_social</item>
         <item>@drawable/ic_party</item>
         <item>@drawable/spiritual</item>
@@ -49,14 +46,12 @@
         <item>@drawable/ic_other</item>
     </string-array>
 
-    <string name="title_activity_list">ListActivity</string>
-    <string name="ololo" translatable="false">ololo</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->
-    <string-array name="pref_example_list_values">
+    <string-array name="pref_example_list_values" translatable="false">
 
         <item>0</item>
         <item>1</item>
@@ -66,7 +61,6 @@
 
 
     <!-- Example settings for Data & Sync -->
-    <string name="pref_header_notification_in_facebook" translatable="false">Оповещания в Facebook</string>
 
     <string-array name="pref_notification_list_titles">
     <item>No one</item>
@@ -74,36 +68,11 @@
     <item>Everyone</item>
     </string-array>
 
-    <string name="pref_title_sync_frequency">Sync frequency</string>
-    <string-array name="pref_sync_frequency_titles">
-        <item>15 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>3 hours</item>
-        <item>6 hours</item>
 
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_sync_frequency_values">
-        <item>15</item>
-        <item>30</item>
-        <item>60</item>
-        <item>180</item>
-        <item>360</item>
-        <item>-1</item>
-    </string-array>
-
-    <string name="pref_title_system_sync_settings">System sync settings</string>
-
-    <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>
 
-    <string name="pref_title_new_message_notifications">New message notifications</string>
 
-    <string name="pref_title_ringtone">Ringtone</string>
-    <string name="pref_ringtone_silent">Silent</string>
 
-    <string name="pref_title_vibrate">Vibrate</string>
     <string name="start_age" translatable="false">15</string>
     <string name="end_age" translatable="false">45</string>
     <string name="start_budget" translatable="false">0</string>
@@ -123,7 +92,6 @@
     <string name="choose_category">Choose Category</string>
     <string name="choose_time">Choose Time</string>
     <string name="contact_information">Contact Info</string>
-    <string name="created_by_me">My Events</string>
     <string name="createt_by_my">Created</string>
     <string name="day_of_birth">Date of Birth</string>
     <string name="description">Enter description</string>
@@ -151,7 +119,6 @@
     <string name="more">More</string>
     <string name="my_events">My Events</string>
     <string name="my_location">My Location</string>
-    <string name="my_preferences">My Preferences</string>
     <string name="new_event">Create</string>
     <string name="next">Next</string>
     <string name="ok">Ok</string>
@@ -159,8 +126,6 @@
     <string name="personal_information">Personal Information</string>
     <string name="pin">Pin on map</string>
     <string name="places">My Places</string>
-    <string name="plan_to_visit">My meetings</string>
-    <string name="pref_default_display_name" translatable="false"></string>
     <string name="pref_header_privacy">Privacy</string>
     <string name="telefone">Mob. phone</string>
     <string name="start">From</string>
@@ -176,7 +141,6 @@
     <string name="pref_title_close_event">Nearest events</string>
     <string name="pref_title_coming_event">Upcoming events</string>
     <string name="pref_title_comments_mass">Notifications</string>
-    <string name="pref_title_display_name">Display name</string>
     <string name="pref_title_email">Email</string>
     <string name="pref_title_interesting_event">Interesting events</string>
     <string name="pref_title_phone">Phone</string>
@@ -188,7 +152,7 @@
     <string name="promo_2">Noone wants to fish with you?</string>
     <string name="promo_3">Don\'t know how to spend time?</string>
     <string name="quantity">Amount of people</string>
-    <string name="skype">Skype</string>
+    <string name="skype" translatable="false">Skype</string>
     <string name="start_radius" translatable="false">0</string>
     <string name="time_difference">Time bound</string>
     <string name="to">.. till</string>
@@ -220,7 +184,7 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="remove_this_comment">Delete this comment?</string>
-    <string name="joned_event">   Join event</string>
+    <string name="joned_event">Join event</string>
     <string name="edit_event">Edit event</string>
     <string name="invite_friends">Invite friends</string>
     <string name="leave_event">Leave event</string>
@@ -240,7 +204,6 @@
         <item>Hobby</item>
         <item>Other</item>
     </string-array>
-    <string name="title_activity_test_calendar">TestCalendar</string>
     <string name="events_allready_created">Event is already in calendar</string>
     <string name="friends_invited">Invitation send</string>
     <string name="hrn">UAH</string>
@@ -272,5 +235,16 @@
     <string name="privat_info">Private information</string>
     <string name="on_internet_connection">no internet connection</string>
     <string name="popular">Popular</string>
-    <string name="atleast_one">atleast one</string>
+    <string name="atleast_one">at least one</string>
+
+    <string-array name="sort_array">
+        <item>Sort by</item>
+        <item>date</item>
+        <item>location</item>
+        <item>popularity</item>
+        <item>budget: from most to least</item>
+        <item>budget: from least to most</item>
+        <item></item>
+    </string-array>
+
 </resources>

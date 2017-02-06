@@ -20,8 +20,6 @@
         android:src="@drawable/ic_no_photo"
         android:id="@+id/image_my_event"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/textView19"
-        android:layout_toEndOf="@+id/textView19"
         android:scaleType="centerCrop" />
     <TextView
         android:layout_width="match_parent"

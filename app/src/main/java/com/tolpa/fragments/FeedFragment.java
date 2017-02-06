@@ -115,7 +115,7 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
-
+                if (!isAdded()) return;
                 System.out.println(" category popular  =" +jsonObject);
                 List<Integer> response =  getCategory(jsonObject);
 

@@ -6,7 +6,7 @@
     <string name="load_photo">Завантажити фото</string>
     <string name="enter_location">Введіть адресу</string>
     <string name="aditional">Додаткові параметри</string>
-    <string name="from">от...</string>
+    <string name="from">від ...</string>
     <string name="quantity">Кількість відвідувачів</string>
     <string name="repite">Повторення</string>
     <string name="week">тижнів</string>
@@ -20,7 +20,7 @@
     <string name="telefone">Мобільний телефон</string>
 
     <string name="one_week">недiля</string>
-    <string name="two_weeks">недели</string>
+    <string name="two_weeks">тижнів</string>
     <string name="five_weeks">недель</string>
     <string name="notification_invite">%1$s запрошує до %2$s</string>
     <string name="notification_joined">%1$s щойно приєднався до %2$s</string>
@@ -39,6 +39,135 @@
     <string name="re_password">Пароль ще раз</string>
     <string name="login">Увійти</string>
     <string name="error_repassword_not_match">Паролі не однакові</string>
+    <string name="action_settings">Налаштування</string>
+    <string name="add">Додати</string>
+    <string name="add_name">Назва</string>
+    <string name="adress">Адреса</string>
+    <string name="age">Вік</string>
+    <string name="all_catrgory">Усі категорії</string>
+    <string name="app_name">Натовп</string>
+    <string name="atleast_one">Хоча б шось одне</string>
+    <string name="back">НАЗАД</string>
+    <string name="bigger">Більше</string>
+    <string name="budget">Бюджет</string>
+    <string name="category">Події</string>
+    <string name="choose_time">Оберіть час</string>
+    <string name="confirm_password">Підтвердження паролю</string>
+    <string name="contact_information">Контактна інформація</string>
+    <string name="created_event">Створити нову подію</string>
+    <string name="createt_by_my">Створені</string>
+    <string name="date">Дата</string>
+    <string name="day_of_birth">Дата народження</string>
+    <string name="deny_permission">Нема доступу</string>
+    <string name="description">Опис</string>
+    <string name="distance">Дистанція</string>
+    <string name="do_not_matter">Нема значення</string>
+    <string name="e_mail">Мило</string>
+    <string name="edit_event">Змінити подію</string>
+    <string name="edit_profile">Оновити профайл</string>
+    <string name="email">Email</string>
+    <string name="event">Створити подію</string>
+    <string name="events">Подія</string>
+    <string name="events_allready_created">Подія вже в календарі</string>
+    <string name="exit">Вихід</string>
+    <string name="favorite">Улюблені</string>
+    <string name="female">Жіноча</string>
+    <string name="filds_must_not_be_null">необхідно заповнити ВСЕ</string>
+    <string name="filter">Фільтр</string>
+    <string name="find">Категорії</string>
+    <string name="first_name">Ім\'я</string>
+    <string name="followers">Підписники</string>
+    <string name="follow">Підписатись</string>
+    <string name="followings">Слідкую</string>
+    <string name="friends_invited">Запрошення надіслано</string>
+    <string name="future_events">Найближче</string>
+    <string name="gender">Стать</string>
+    <string name="hrn">Грн</string>
+    <string name="invite">Запросив на подію</string>
+    <string name="invite_friends">Запросити друзів</string>
+    <string name="join">Доєднатись до зустрічі</string>
+    <string name="joned_event">Доєднатись до події</string>
+    <string name="last_name">Прізвище</string>
+    <string name="leave_event">Залишити зустріч</string>
+    <string name="location">Місцеположення</string>
+    <string name="log_in_with_email">Ввійти через email</string>
+    <string name="make_comment">Відкоментувати</string>
+    <string name="male">Самець</string>
+    <string name="more">Більше</string>
+    <string name="my_events">Мої події</string>
+    <string name="my_location">Моє положення</string>
+    <string name="new_event">Створити</string>
+    <string name="news">Оновлення</string>
+    <string name="next">Далі</string>
+    <string name="no_results">Нема</string>
+    <string name="not_empty">Треба заповнити</string>
+    <string name="ok">Гайда!</string>
+    <string name="on_internet_connection">Нема інтернету</string>
+    <string name="password">Введіть пароль</string>
+    <string name="past_events">Минулі</string>
+    <string name="people">Друзі</string>
+    <string name="personal_information">Особиста інформація</string>
+    <string name="pin">Місце на мапі</string>
+    <string name="places">Мої місця</string>
+    <string name="pref_header_notifications">Оповіщення</string>
+    <string name="pref_header_privacy">Приватність</string>
+    <string name="pref_how_can_see_title">Хто може бачити</string>
+    <string name="pref_how_can_send_title">Хто може надсилати</string>
+    <string name="pref_title_adding">Ходати відвідувача</string>
+    <string name="pref_title_attends">Відвідування</string>
+    <string name="pref_title_close_event">Події неподалік</string>
+    <string name="pref_title_coming_event">Найближчі події</string>
+    <string name="pref_title_comments_mass">Повідомлення</string>
+    <string name="pref_title_email">Мило</string>
+    <string name="pref_title_followers">Підписники</string>
+    <string name="pref_title_interesting_event">Цікаві події</string>
+    <string name="pref_title_messages">Коментарі до подій</string>
+    <string name="pref_title_phone">Телефони</string>
+    <string name="pref_title_preferences">Вподобання</string>
+    <string name="pref_title_private_information">Приватна інформація</string>
+    <string name="pref_title_send_mass">Повідомлення</string>
+    <string name="enter_preferences">Додати вподобання</string>
+    <string name="error_auth">Щось пішло не так</string>
+    <string name="popular">Популярне</string>
+    <string name="preferences">Вподобання</string>
+    <string name="price">Ціна</string>
+    <string name="privat_info">Прихована інфа</string>
+    <string name="profile">Мій профайл</string>
+    <string name="req_permission">Нема доступу</string>
+    <string name="set_birthday">Дата народження</string>
+    <string name="set_email">Email</string>
+    <string name="set_location">Адреса</string>
+    <string name="set_phone">Телефон</string>
+    <string name="settings">Налаштування</string>
+    <string name="sign_up">Зареєструватись</string>
+    <string name="sort_by">Сортувати по</string>
+    <string name="start">від...</string>
+    <string name="submit">Увійти</string>
+    <string name="title_activity_maps">Місцезнаходження</string>
+    <string name="title_activity_settings">Налаштування</string>
+    <string name="to">...до</string>
+    <string name="unfollow">Відписатись</string>
+    <string name="use">Застосувати</string>
+    <string name="user_already_exist">Такий користувач вже є</string>
+    <string name="user_cannot_be_created">Користувач не може бути створений</string>
+    <string name="wrong_password">Невірний пароль</string>
+    <string name="wrong_password_email">Невірний email або пароль</string>
+
+    <string-array name="pref_notification_list_titles">
+        <item>Ніхто</item>
+        <item>Друзі</item>
+        <item>Усі</item>
+    </string-array>
+
+    <string-array name="sort_array">
+        <item>Оберіть сортування по</item>
+        <item>Даті</item>
+        <item>Місцеположенню</item>
+        <item>Популярності</item>
+        <item>бюджету: від дешевого</item>
+        <item>бюджету: від дорожчого</item>
+        <item></item>
+    </string-array>
 
 
 

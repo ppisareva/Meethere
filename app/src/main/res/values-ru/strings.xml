@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="created_by_me">мое событие</string>
     <string name="all_catrgory">Все категории</string>
     <string name="bigger">Больше</string>
     <string name="distance">Дистанция</string>
@@ -10,7 +9,6 @@
     <string name="contact_information">Контактная информация</string>
     <string name="telefone">Мобильный телефон</string>
     <string name="adress">Адресс</string>
-    <string name="skype">Skype</string>
     <string name="e_mail">Эл. почта</string>
     <string name="personal_information">Личная информация</string>
     <string name="day_of_birth">Дата рождения</string>
@@ -19,15 +17,11 @@
     <string name="female">Женский</string>
     <string name="preferences">Предпочтения</string>
     <string name="enter_preferences">Добавить предпочтение</string>
-    <string name="plan_to_visit">Мои встречи</string>
     <string name="my_events">Мои встречи</string>
-    <string name="favorite">Избранные</string>
-    <string name="my_preferences">Мои предпочтения</string>
     <string name="exit">Выход</string>
     <string name="location">Местоположение</string>
     <string name="price">Цена</string>
     <string name="filter">Фильтр</string>
-    <string name="next">Далее</string>
     <string name="description">Введите описание</string>
     <string name="choose_time">Выберите время</string>
     <string name="end">Конец</string>
@@ -100,8 +94,6 @@
     <string name="pref_title_adding">Добавление участников в ваши события</string>
 
 
-    <string name="pref_default_display_name">Паша Мороз</string>
-
     <string name="pref_title_email">Email</string>
     <string name="pref_title_phone">Телефоны</string>
     <string name="pref_title_private_information">Личную информация</string>
@@ -135,71 +127,21 @@
 
         <string name="app_name">Толпа</string>
         <string name="email">Введите имеил</string>
-        <string name="password" translatable="false">Введите пароль</string>
+        <string name="password">Введите пароль</string>
         <string name="confirm_password">Подтвердте пароль</string>
         <string name="log_in_with_email">Вход через имеил</string>
         <string name="sign_up">Зарегестрироваться</string>
-        <string name="title_activity_main">MainActivity</string>
 
-        <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
-        <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="title_activity_maps">Положение</string>
 
-        <string name="title_activity_maps">Location</string>
-        <string name="hello_blank_fragment">Hello blank fragment</string>
-        <string name="title_activity_my_places">MyPlacesActivity</string>
-
-        <string name="title_activity_list">ListActivity</string>
-        <string name="ololo" translatable="false">ololo</string>
         <string name="title_activity_settings">Настройки</string>
 
-        <!-- Strings related to Settings -->
+    <string name="error_auth">Что то пошло не так.. :(</string>
 
-
-
-        <string-array name="pref_example_list_values">
-            <item>3</item>
-            <item>2</item>
-            <item>1</item>
-            <item>0</item>
-            <item>-1</item>
-        </string-array>
-
-        <!-- Example settings for Data & Sync -->
-        <string name="pref_header_notification_in_facebook" translatable="false">Оповещания в Facebook</string>
-
-        <string name="pref_title_sync_frequency">Sync frequency</string>
-        <string-array name="pref_sync_frequency_titles">
-            <item>15 минут</item>
-            <item>30 минут</item>
-            <item>1 час</item>
-            <item>3 часа</item>
-            <item>6 часов</item>
-
-            <item>Ниогда</item>
-        </string-array>
-        <string-array name="pref_sync_frequency_values">
-            <item>15</item>
-            <item>30</item>
-            <item>60</item>
-            <item>180</item>
-            <item>360</item>
-            <item>-1</item>
-        </string-array>
-
-        <string name="pref_title_vibrate">Vibrate</string>
-        <string name="start_age" translatable="false">15</string>
-        <string name="end_age" translatable="false">45</string>
-        <string name="start_budget" translatable="false">0</string>
-        <string name="end_budget" translatable="false">2000</string>
-
-        <string name="error_auth">Что то пошло не так.. :(</string>
-        <string name="end_radius" translatable="false">10000</string>
-
-        <string name="promo_1">Не с кем поиграть в футбол?</string>
+    <string name="promo_1">Не с кем поиграть в футбол?</string>
         <string name="promo_2">Не с кем пойти на рыбалку?</string>
         <string name="promo_3">Не знаешь как провести время?</string>
-        <string name="start_radius" translatable="false">0</string>
-        <string name="make_comment">Откоментировать</string>
+    <string name="make_comment">Откоментировать</string>
         <string name="events">События</string>
         <string name="people">Друзья</string>
         <string name="no_results">Результат не найден</string>
@@ -215,7 +157,7 @@
         <string name="news">Мои новости</string>
         <string name="first_name">Имя</string>
         <string name="last_name">Фамилия</string>
-        <string name="joned_event">   присоедениться к встрече</string>
+        <string name="joned_event">присоедениться к встрече</string>
         <string name="edit_event">изменить событие</string>
         <string name="invite_friends">пригласить друзей</string>
         <string name="leave_event">покинуть встречу</string>
@@ -239,7 +181,6 @@
     <string name="wrong_password_email">не правельный имеил или пароль</string>
     <!-- Strings related to login -->
     <string name="action_sign_in">Войти</string>
-    <string name="action_sign_in_short">Войти</string>
     <string name="error_invalid_email">Email не валиден</string>
     <string name="error_invalid_password">У когото очень маленький пароль</string>
     <string name="error_incorrect_password">Некоректный пароль</string>
@@ -254,6 +195,8 @@
     <string name="on_internet_connection">Нет интернета</string>
     <string name="popular">Популярные</string>
     <string name="atleast_one">Хотя бы одну</string>
+    <string name="favorite">Избранное</string>
+    <string name="next">Далее</string>
 
 
 </resources>

@@ -66,7 +66,7 @@ public class Utils {
     public static final String EVENT_START = "event_start";
     public static final String BUDGET =  "budget";
     public static final String CURSOR_POSITION = "cursor";
-    public static final String URI_ATHORITY = "content://com.tolpa.data.data/";
+    public static final String URI_ATHORITY = String.format("content://%s.data/", BuildConfig.APPLICATION_ID);
 
 
     static {
