@@ -49,6 +49,16 @@ public class Event {
     int attendances;
     User createdBy;
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    String imageUrl;
+
     public void setLat(Double lat) {
         this.lat = lat;
     }

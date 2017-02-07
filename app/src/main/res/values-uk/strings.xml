@@ -168,8 +168,7 @@
         <item>бюджету: від дорожчого</item>
         <item></item>
     </string-array>
-
-
+    <string name="add_to_calendar">Додати у календар?</string>
 
 
 </resources>

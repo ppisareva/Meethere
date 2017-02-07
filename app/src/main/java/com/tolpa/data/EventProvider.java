@@ -111,11 +111,6 @@ public class EventProvider extends android.content.ContentProvider {
         String categoryId = "";
         String lon ="";
         String lat = "";
-
-
-
-
-
         Uri previousUri = uri;
         switch (URI_MATCHER.match(uri)) {  /// done
             case CATEGORY_FEED:
@@ -123,13 +118,13 @@ public class EventProvider extends android.content.ContentProvider {
                 if(categoryId.equals(Utils.POPULAR+"")){
                     jsonObject = serverApi.loadEventsByCategory(categoryId, offset);
                     MatrixCursor  cursor =  new MatrixCursor(new String[]{"_id",  Event.ID, Event.NAME, Event.DESCRIPTION, Event.START,
-                            Event.TAGS, Event.JOINED, Event.ADDRESS,  Event.BUDGET_MIN, Event.LAT, Event.LNG, Event.ATTENDANCES});
+                            Event.TAGS, Event.JOINED, Event.ADDRESS,  Event.BUDGET_MIN, Event.LAT, Event.LNG, Event.ATTENDANCES, Utils.IMAGE_URL});
                     events = Utils.parseEventList(jsonObject);
                         eventsData.clear();
                     if(events==null) return null;
                     for (Event event : events) {
                         eventsData.add(new Object[]{event.getId(), event.getId(), event.getName(), event.getDescription(), event.getStart(),
-                                event.getTag(), event.getJoin(),  event.getAddress(), event.getBudgetMin(), event.getLat(), event.getLng(), event.getAttendances()});
+                                event.getTag(), event.getJoin(),  event.getAddress(), event.getBudgetMin(), event.getLat(), event.getLng(), event.getAttendances(), event.getImageUrl()});
                     }
                     for (Object[] row : eventsData) {
                         cursor.addRow(row);
@@ -245,17 +240,38 @@ public class EventProvider extends android.content.ContentProvider {
                 offset = uri.getQueryParameter("offset");
                 jsonObject = serverApi.loadFeed(offset);
                 List<Feed> feed = Feed.parseFeed(jsonObject);
-                MatrixCursor feedCursor = new MatrixCursor(new String[]{"_id", User.LAST_NAME,User.FIRST_NAME, User.IMAGE, User.ID, Feed.TYPE, Feed.TIME,
-                        com.tolpa.adapters.Event.START, com.tolpa.adapters.Event.BUDGET,
-                        com.tolpa.adapters.Event.ID, com.tolpa.adapters.Event.NAME, com.tolpa.adapters.Event.DESCRIPTION});
+                MatrixCursor feedCursor = new MatrixCursor(
+                        new String[]{"_id",
+                                User.LAST_NAME,
+                                User.FIRST_NAME,
+                                User.IMAGE,
+                                User.ID,
+                                Feed.TYPE,
+                                Feed.TIME,
+                                com.tolpa.adapters.Event.START,
+                                com.tolpa.adapters.Event.BUDGET,
+                                com.tolpa.adapters.Event.ID,
+                                com.tolpa.adapters.Event.NAME,
+                                Utils.IMAGE_URL});
                 if ("0".equals(offset))
                     feedData.clear();
                 int id_cursor=feedData.size();
                 for(int i =0; i<feed.size(); i++){
 
-                    feedData.add(new Object[]{i+id_cursor, feed.get(i).getUser().getLastName(), feed.get(i).getUser().getFirstName(), feed.get(i).getUser().getImage(), feed.get(i).getUser().getId(),
-                    feed.get(i).getType(), feed.get(i).getTime(), feed.get(i).getEvent().getStart(), feed.get(i).getEvent().getBudget_min(), feed.get(i).getEvent().getId(), feed.get(i).getEvent().getName()
-                    , feed.get(i).getEvent().getDescription()});
+                    feedData.add(new Object[]{
+                            i+id_cursor,
+                            feed.get(i).getUser().getLastName(),
+                            feed.get(i).getUser().getFirstName(),
+                            feed.get(i).getUser().getImage(),
+                            feed.get(i).getUser().getId(),
+                            feed.get(i).getType(),
+                            feed.get(i).getTime(),
+                            feed.get(i).getEvent().getStart(),
+                            feed.get(i).getEvent().getBudget_min(),
+                            feed.get(i).getEvent().getId(),
+                            feed.get(i).getEvent().getName(),
+                            feed.get(i).getEvent().getImageUrl(),
+                    });
                 }
                 for (Object[] row : feedData) {
                     feedCursor.addRow(row);
@@ -265,18 +281,15 @@ public class EventProvider extends android.content.ContentProvider {
 
         }
 
-
-
-
-       MatrixCursor  cursor = getEventCursor();
-                events = Utils.parseEventList(jsonObject);
+        MatrixCursor  cursor = getEventCursor();
+        events = Utils.parseEventList(jsonObject);
         if("0".equals(offset)) {
             eventsData.clear();
         }
             if(events==null) return null;
             for (Event event : events) {
                 eventsData.add(new Object[]{event.getId(), event.getName(), event.getDescription(), event.getStart(),
-                        event.getTag(), event.getJoin(), event.getAddress(), event.getBudgetMin(), event.getLat(), event.getLng(), event.getAttendances()});
+                        event.getTag(), event.getJoin(), event.getAddress(), event.getBudgetMin(), event.getLat(), event.getLng(), event.getAttendances(), event.getImageUrl()});
             }
         for (Object[] row : eventsData) {
             cursor.addRow(row);
@@ -285,8 +298,19 @@ public class EventProvider extends android.content.ContentProvider {
     }
 
     private MatrixCursor getEventCursor(){
-        return  new MatrixCursor(new String[]{"_id", Event.NAME, Event.DESCRIPTION, Event.START,
-               Event.TAGS, Event.JOINED, Event.ADDRESS, Event.BUDGET_MIN, Event.LAT, Event.LNG, Event.ATTENDANCES});
+        return  new MatrixCursor(new String[]{"_id",
+                Event.NAME,
+                Event.DESCRIPTION,
+                Event.START,
+                Event.TAGS,
+                Event.JOINED,
+                Event.ADDRESS,
+                Event.BUDGET_MIN,
+                Event.LAT,
+                Event.LNG,
+                Event.ATTENDANCES,
+                Utils.IMAGE_URL
+        });
     }
 
     private MatrixCursor getEventCursor(List<Object[]> list, String offset, List<Event> events){
@@ -296,7 +320,7 @@ public class EventProvider extends android.content.ContentProvider {
         if(events==null) return null;
         for (Event event : events) {
             list.add(new Object[]{event.getId(), event.getName(), event.getDescription(), event.getStart(),
-                    event.getTag(), event.getJoin(), event.getAddress(), event.getBudgetMin(), event.getLat(), event.getLng(), event.getAttendances()});
+                    event.getTag(), event.getJoin(), event.getAddress(), event.getBudgetMin(), event.getLat(), event.getLng(), event.getAttendances(), event.getImageUrl()});
         }
         for (Object[] row : list) {
             cursor.addRow(row);
@@ -384,6 +408,7 @@ public class EventProvider extends android.content.ContentProvider {
                 contentValues.put(EventsSQLiteHelper.COLUMN_LAT, event.getLat());
                 contentValues.put(EventsSQLiteHelper.COLUMN_LNG, event.getLng());
                 contentValues.put(EventsSQLiteHelper.ATTENDANCE, event.getAttendances());
+                contentValues.put(EventsSQLiteHelper.IMAGE_URL, event.getImageUrl());
                 cvs[i]=contentValues;
             }
             System.out.println(getContext().getContentResolver().bulkInsert(uri, cvs));

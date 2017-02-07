@@ -42,6 +42,9 @@ public class Utils {
     public static final String RESULTS = "results";
     public static final String CATEGORY = "category";
     public static final String EVENT_ID = "event_id";
+    public static final String MINI_IMAGE_URL = "mini_image_url";
+    public static final String IMAGE_URL = "image_url";
+
     public static final String TIME_TAG = "tag";
     public static final String SEARCH = "search";
     public static final String EVENT_NAME = "name";
@@ -111,7 +114,7 @@ public class Utils {
                 date = simpleDateFormat.parse(time);
             }
 
-        } catch (ParseException e) {
+        } catch (ParseException | NullPointerException e) {
             e.printStackTrace();
         }
         simpleDateFormat = new SimpleDateFormat("EEEE, kk:mm");
@@ -131,7 +134,7 @@ public class Utils {
                 date = simpleDateFormat.parse(time);
             }
 
-        } catch (ParseException e) {
+        } catch (ParseException | NullPointerException e) {
             e.printStackTrace();
         }
         simpleDateFormat = new SimpleDateFormat("dd MMM");
@@ -371,6 +374,10 @@ public class Utils {
             event.setBudgetMin(eventJSON.optInt(Event.BUDGET_MIN,0 ));
             if (eventJSON.has("created_by"))
                 event.setCreatedBy(User.parseUser(eventJSON.optJSONObject("created_by")));
+            if (eventJSON.has(Utils.IMAGE_URL))
+                event.setImageUrl(eventJSON.optString(Utils.IMAGE_URL));
+            else
+                event.setImageUrl(eventJSON.optString(Utils.MINI_IMAGE_URL));
             return event;
 
 

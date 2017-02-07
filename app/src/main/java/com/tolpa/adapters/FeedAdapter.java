@@ -19,12 +19,12 @@ import com.tolpa.Utils;
 import com.tolpa.activities.EventActivity;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.tolpa.model.*;
 
 /**
  * Created by polina on 27.07.16.
  */
 public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder > {
-    public static final String IMG_PATTERN = "https://s3-us-west-1.amazonaws.com/meethere/%s.jpg";
     private static final int ID = 0;
     private static final int LAST_NAME = 1;
     private static final int FIRST_NAME = 2;
@@ -36,7 +36,7 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder > 
     private static final int EVENT_BUDGET = 8;
     private static final int EVENT_ID = 9;
     private static final int EVENT_NAME = 10;
-    private static final int EVENT_DESCRIPTION = 11;
+    private static final int EVENT_URL = 11;
     Context context;
 
 
@@ -55,9 +55,8 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder > 
     }
     @Override
     public void onBindViewHolderCursor(ViewHolder holder, Cursor cursor) {
-
-        String uri = String.format(IMG_PATTERN, cursor.getString(EVENT_ID));
-        holder.eventImage.setImageURI(Uri.parse(uri));
+        holder.imageUrl = cursor.getString(EVENT_URL);
+        holder.eventImage.setImageURI(Uri.parse(cursor.getString(EVENT_URL)));
        // holder.eventImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
         holder.userPhoto.setImageURI(Uri.parse(cursor.getString(IMAGE)));
         RoundingParams roundingParams = RoundingParams.asCircle();
@@ -109,6 +108,7 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder > 
         TextView eventBudget;
         int userId;
         String eventId;
+        String imageUrl;
 
         public void setUserId(int userId) {
             this.userId = userId;
@@ -136,6 +136,8 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder > 
         public void onClick(View v) {
             Intent intent = new Intent(context, EventActivity.class);
             intent.putExtra(Utils.EVENT_ID, eventId);
+            intent.putExtra(Utils.EVENT_NAME, eventName.getText().toString());
+            intent.putExtra(Utils.IMAGE_URL, imageUrl);
             context.startActivity(intent);
         }
     }

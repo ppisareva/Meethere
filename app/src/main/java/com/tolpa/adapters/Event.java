@@ -1,5 +1,7 @@
 package com.tolpa.adapters;
 
+import com.tolpa.Utils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,6 +15,7 @@ public class Event {
     private String start;
     private int budget_min;
     private String id;
+    private String imageUrl;
 
     public static final String START = "start";
     public static final String BUDGET = "budget_min";
@@ -28,6 +31,7 @@ public class Event {
             event.setName(jsonObject.getString(NAME));
             event.setDescription(jsonObject.getString(DESCRIPTION));
             event.setStart(jsonObject.getString(START));
+            event.imageUrl = jsonObject.optString(Utils.MINI_IMAGE_URL);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -35,6 +39,10 @@ public class Event {
         return event;
     }
 
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
     public String getName() {
         return name;

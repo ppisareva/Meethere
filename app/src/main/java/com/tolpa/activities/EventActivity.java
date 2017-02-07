@@ -89,13 +89,9 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
     List<User> users = new ArrayList<>();
     CalendarContentResolver calenderReselver;
     ProgressBar progressBar;
-    OnMapReadyCallback onMapReadyCallback;
-
-
 
     Event event;
 
-    public static final String IMG_PATTERN = "https://s3-us-west-1.amazonaws.com/meethere/%s.jpg";
     public static final String BC_FILTER = "broadcast.filter.event.";
     private LinearLayout edit;
     private BroadcastReceiver createUpdateReceiver = new BroadcastReceiver() {
@@ -103,7 +99,6 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         public void onReceive(Context context, Intent intent) {
             boolean status = intent.getBooleanExtra(NetworkService.STATUS, false);
             if (status) {
-                String url = String.format(IMG_PATTERN, id);
                 image.setImageResource(R.drawable.ic_star);
                 new LoadEvent().execute(id);
 
@@ -225,7 +220,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
 
             }
         });
-        String url = String.format(IMG_PATTERN, id);
+        String url = getIntent().getStringExtra(Utils.IMAGE_URL);
         image.setImageURI(Uri.parse(url));
         new LoadEvent().execute(id);
         new LoadUsers().execute();
@@ -365,8 +360,8 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
             {
                 if(!isJoined) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(EventActivity.this);
-                    builder.setMessage("Добавить в календарь?").setPositiveButton("Да", dialogClickListener)
-                            .setNegativeButton("Нет", dialogClickListener).show();
+                    builder.setMessage(R.string.add_to_calendar).setPositiveButton(android.R.string.yes, dialogClickListener)
+                            .setNegativeButton(android.R.string.no, dialogClickListener).show();
                 }
 
             } else {
@@ -431,7 +426,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
                             intent.putExtra(Event.LNG, event.getPlace()!=null?event.getPlace().get(1):0);
                             intent.putExtra(Event.BUDGET_MIN, event.getBudgetMin());
                             intent.putExtra(Event.BUDGET_MAX, event.getBudgetMax());
-
+                            intent.putExtra(Utils.IMAGE_URL, event.getImageUrl());
 
                             startActivity(intent);
                         }
@@ -472,6 +467,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
                 }
 
                 address.setText(event.getAddress());
+                image.setImageURI(Uri.parse(event.getImageUrl()));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -496,30 +492,10 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-//            Intent intent = new Intent();
-//            intent.putExtra(Event.NAME, event.getName());
-//            intent.putExtra(Event.START, event.getStart());
-//            intent.putExtra(Event.BUDGET_MIN, event.getBudgetMin());
-//            setResult(RESULT_OK, intent);
             finish();
         }
         return super.onOptionsItemSelected(item);
     }
-//
-//    public void onBackPressed(){
-//        Intent intent = new Intent();
-//        if (event == null) finish();
-//      try {
-//          intent.putExtra(Event.NAME, event.getName());
-//          intent.putExtra(Event.START, event.getStart());
-//          intent.putExtra(Event.BUDGET_MIN, event.getBudgetMin());
-//          setResult(RESULT_OK, intent);
-//      } catch (Exception e){
-//          e.printStackTrace();
-//      }
-//        finish();
-//    }
-
 
     @Override
     protected void onPrepareDialog(int id, final Dialog dialog, final Bundle args) {

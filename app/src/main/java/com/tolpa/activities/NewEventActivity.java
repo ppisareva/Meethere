@@ -20,6 +20,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.tolpa.R;
+import com.tolpa.Utils;
 import com.tolpa.fragments.NewEventCategoryChooseFragment;
 import com.tolpa.fragments.NewEventDescriptionFragment;
 import com.tolpa.fragments.NewEventImageFragment;
@@ -70,6 +71,7 @@ public class NewEventActivity extends AppCompatActivity {
     Double lat;
     Double lng;
     int category[];
+    String imageUrl;
 
 
 
@@ -92,7 +94,7 @@ public class NewEventActivity extends AppCompatActivity {
             lng = intent.getDoubleExtra(Event.LNG, 0);
             budgetMin = intent.getIntExtra(Event.BUDGET_MIN, 0);
             budgetMax = intent.getIntExtra(Event.BUDGET_MAX, 0);
-
+            imageUrl = intent.getStringExtra(Utils.IMAGE_URL);
 
         }
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -128,7 +130,7 @@ public class NewEventActivity extends AppCompatActivity {
                     newEventDescriprionFragment = NewEventDescriptionFragment.newInstance(name,description, budgetMin, budgetMax, timeStart, timeEnd);
                     return newEventDescriprionFragment;
                 case FRAGMENT_PHOTO:
-                    newEventImageFragment = NewEventImageFragment.newInstance(id);
+                    newEventImageFragment = NewEventImageFragment.newInstance(id, imageUrl);
                     return newEventImageFragment;
                 case FRAGMENT_LOCATION:
                     locationFragment = NewEventLocationFragment.newInstance(address, lat, lng);

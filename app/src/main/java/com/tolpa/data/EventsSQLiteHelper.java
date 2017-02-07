@@ -24,9 +24,10 @@ public class EventsSQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_LAT = "lat";
     public static final String COLUMN_LNG = "lng";
     public static final String ATTENDANCE = "attendance";
+    public static final String IMAGE_URL = "image_url";
 
     private static final String DATABASE_NAME = "events.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 6;
 
     // Database creation SQL statement
     private static final String DATABASE_CREATE = "create table IF NOT EXISTS "
@@ -43,7 +44,8 @@ public class EventsSQLiteHelper extends SQLiteOpenHelper {
             + COLUMN_BUDGET_MIN  + "  ,"
             + COLUMN_LAT  + "  ,"
             + COLUMN_LNG  + "  ,"
-            + ATTENDANCE
+            + ATTENDANCE  + "  ,"
+            + IMAGE_URL
             + ");";
 
     public EventsSQLiteHelper(Context context) {
@@ -55,9 +57,6 @@ public class EventsSQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(DATABASE_CREATE);
     }
 
-    public void deleteDB (SQLiteDatabase db) {
-        db.execSQL(DATABASE_CREATE);
-    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

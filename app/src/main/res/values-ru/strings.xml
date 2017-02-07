@@ -197,6 +197,7 @@
     <string name="atleast_one">Хотя бы одну</string>
     <string name="favorite">Избранное</string>
     <string name="next">Далее</string>
+    <string name="add_to_calendar">Добавить в календарь?</string>
 
 
 </resources>

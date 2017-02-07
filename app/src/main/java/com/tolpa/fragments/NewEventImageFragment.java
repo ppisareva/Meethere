@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.tolpa.R;
+import com.tolpa.Utils;
 import com.tolpa.model.App;
 import com.tolpa.model.Event;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -27,14 +28,15 @@ public class NewEventImageFragment extends android.support.v4.app.Fragment {
     private SimpleDraweeView imageView;
     private ImageButton imageButton;
     String id;
+    String imageUrl;
     Boolean isUpdate = false;
 
-    public static final String IMG_PATTERN = "https://s3-us-west-1.amazonaws.com/meethere/%s.jpg";
 
-    public static NewEventImageFragment newInstance(String id) {
+    public static NewEventImageFragment newInstance(String id, String imageUrl) {
         NewEventImageFragment fragment = new NewEventImageFragment();
         Bundle b = new Bundle();
         b.putString(Event.ID, id);
+        b.putString(Utils.IMAGE_URL, imageUrl);
         fragment.setArguments(b);
         return fragment;
     }
@@ -48,6 +50,7 @@ public class NewEventImageFragment extends android.support.v4.app.Fragment {
         super.onCreate(savedInstanceState);
         if(getArguments()!=null){
             id = getArguments().getString(Event.ID);
+            imageUrl = getArguments().getString(Utils.IMAGE_URL);
         }
     }
 
@@ -59,9 +62,8 @@ public class NewEventImageFragment extends android.support.v4.app.Fragment {
 
         View v = inflater.inflate(R.layout.fragment_new_event_image, container, false);
         imageView = (SimpleDraweeView) v.findViewById(R.id.event_image);
-        if(id!=null){
-            String url = String.format(IMG_PATTERN, id);
-            imageView.setImageURI(Uri.parse(url));
+        if(imageUrl!=null){
+            imageView.setImageURI(Uri.parse(imageUrl));
         }
         imageButton = (ImageButton)v.findViewById(R.id.image_button);
 

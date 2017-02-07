@@ -66,8 +66,6 @@ public class MainActivity extends AbstractMeethereActivity
     SimpleDraweeView profileImage;
     public NavigationView navigationView;
 
-    public static final String IMG_PATTERN = "https://s3-us-west-1.amazonaws.com/meethere/%s.jpg";
-
     private FindEventFragment findEventFragment;
     private String FEED = "feed";
     Set<String> category;

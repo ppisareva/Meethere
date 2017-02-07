@@ -204,6 +204,7 @@
         <item>Hobby</item>
         <item>Other</item>
     </string-array>
+    <string name="add_to_calendar">Add to your calendar?</string>
     <string name="events_allready_created">Event is already in calendar</string>
     <string name="friends_invited">Invitation send</string>
     <string name="hrn">UAH</string>

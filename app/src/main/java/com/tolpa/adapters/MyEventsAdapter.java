@@ -35,6 +35,7 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
     private static final int JOINED = 5;
     private static final int BUDGET = 7;
     private static final int ATTENDANCE = 10;
+    private static final int IMAGE_URL = 11;
 
     private static final int LAT= 8;
     private static final int LNG= 9;
@@ -43,12 +44,6 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
 
 
     private static final int CHANGE_EVENT_REQUEST = 7;
-
-
-
-
-
-    public static final String IMG_PATTERN = "https://s3-us-west-1.amazonaws.com/meethere/%s.jpg";
 
     public MyEventsAdapter(Context context) {
         super(null);
@@ -80,8 +75,7 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
         holder.setID(cursor.getString(ID));
         holder.setUserName(cursor.getString(NAME));
         holder.setItemPosition(cursor.getPosition());
-        String url = String.format(IMG_PATTERN, cursor.getString(ID));
-        holder.image.setImageURI(Uri.parse(url));
+        holder.image.setImageURI(Uri.parse(cursor.getString(IMAGE_URL)));
 //        PorterDuff.Mode[] values = PorterDuff.Mode.values();
 //        holder.image.setColorFilter(0x7700ff00, values[cursor.getPosition()%values.length]);
 //        System.err.println(values[cursor.getPosition()%values.length] + " || " + cursor.getString(NAME) + " " + Utils.parseData(cursor.getString(START)));
@@ -161,6 +155,7 @@ public class MyEventsAdapter extends CursorRecyclerAdapter<MyEventsAdapter.ViewH
             intent.putExtra(Event.ADDRESS, cursor.getString(ADDRESS));
             intent.putExtra(Event.LAT, cursor.getDouble(LAT));
             intent.putExtra(Event.LNG, cursor.getDouble(LNG));
+            intent.putExtra(Utils.IMAGE_URL, cursor.getString(IMAGE_URL));
             ((Activity) context).startActivityForResult(intent, CHANGE_EVENT_REQUEST);
         }
 

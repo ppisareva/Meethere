@@ -52,7 +52,6 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
     ServerApi serverApi;
     App app;
     int id;
-    public static final String IMG_PATTERN = "https://s3-us-west-1.amazonaws.com/meethere/%s.jpg";
 
     public static ProfileFragment newInstance() {
         ProfileFragment fragment = new ProfileFragment();

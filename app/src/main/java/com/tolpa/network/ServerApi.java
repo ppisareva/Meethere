@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class ServerApi {
     public static final String HOST = BuildConfig.DEBUG
-                                        ? "https://meethere-dev.herokuapp.com/"
+                                        ? "http://10.0.0.113:8000/" // "https://meethere-dev.herokuapp.com/"
                                         : "https://meethere-prod.herokuapp.com/";
 
     public static final String AUTH = "/auth/facebook";

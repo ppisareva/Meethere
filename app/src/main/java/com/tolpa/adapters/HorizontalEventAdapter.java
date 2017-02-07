@@ -35,14 +35,12 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
     private static final int ADDRESS= 7;
 
     private static final int ATTENDENCE = 11;
+    private static final int IMAGE_URL = 12;
 
     private Activity context;
     private static final int FOOTER_VIEW = 3223;
    int category;
     static final int CHANGE_EVENT_REQUEST = 1;
-
-    public static final String IMG_PATTERN = "https://s3-us-west-1.amazonaws.com/meethere/%s.jpg";
-
 
     public HorizontalEventAdapter(Activity context, int category) {
         super(null);
@@ -63,11 +61,6 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
                 .inflate(R.layout.event, parent, false);
             ViewHolder vh = new ViewHolder(v);
         return vh;
-    }
-
-    @Override
-    public Cursor getCursor() {
-        return super.getCursor();
     }
 
     @Override
@@ -107,28 +100,20 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
 
     @Override
     public void onBindViewHolderCursor(RecyclerView.ViewHolder h, Cursor cursor) {
-
-        try {
-            if (h instanceof ViewHolder) {
-                ViewHolder  holder = (ViewHolder) h;
-                holder.text.setText(cursor.getString(NAME));
-                holder.date.setText(Utils.parseDataDate(cursor.getString(START)));
-                holder.time.setText(Utils.parseDataTime(cursor.getString(START)));
-                boolean checked = Boolean.parseBoolean(cursor.getString(JOINED));
-                holder.budget.setText((cursor.getInt(BUDGET)==0?context.getString(R.string.free): (cursor.getInt(BUDGET))+" "+context.getString(R.string.hrn)));
-                holder.attendance.setText(cursor.getInt(ATTENDENCE)+"");
-                holder.joined.setVisibility(View.GONE);
-                if(checked) holder.joined.setVisibility(View.VISIBLE);
-                holder.setItemPosition(cursor.getPosition());
-                String id = cursor.getString(ID);
-                String url = String.format(IMG_PATTERN, id);
-                holder.image.setImageURI(Uri.parse(url));
-            }
-
-        } catch (Exception e){
-
+        if (h instanceof ViewHolder) {
+            ViewHolder  holder = (ViewHolder) h;
+            holder.text.setText(cursor.getString(NAME));
+            holder.date.setText(Utils.parseDataDate(cursor.getString(START)));
+            holder.time.setText(Utils.parseDataTime(cursor.getString(START)));
+            boolean checked = Boolean.parseBoolean(cursor.getString(JOINED));
+            holder.budget.setText((cursor.getInt(BUDGET)==0?context.getString(R.string.free): (cursor.getInt(BUDGET))+" "+context.getString(R.string.hrn)));
+            holder.attendance.setText("" + cursor.getInt(ATTENDENCE));
+            holder.joined.setVisibility(View.GONE);
+            if(checked) holder.joined.setVisibility(View.VISIBLE);
+            holder.setItemPosition(cursor.getPosition());
+            String url = cursor.getString(IMAGE_URL);
+            holder.image.setImageURI(Uri.parse(url));
         }
-
     }
 
     @Override
@@ -181,6 +166,7 @@ public class HorizontalEventAdapter extends CursorRecyclerAdapter<RecyclerView.V
             intent.putExtra(Event.ADDRESS, cursor.getString(ADDRESS));
             intent.putExtra(Event.LAT, cursor.getDouble(LAT));
             intent.putExtra(Event.LNG, cursor.getDouble(LNG));
+            intent.putExtra(Utils.IMAGE_URL, cursor.getString(IMAGE_URL));
             context.startActivityForResult(intent, 10101);
         }
 

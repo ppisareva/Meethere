@@ -154,6 +154,7 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
             offset = 0;
             Bundle arg = new Bundle();
             Location location = app.getCurrentLocation();
+            if (location == null) return;
             arg.putDouble(Utils.LON,location.getLongitude());
             arg.putDouble(Utils.LAT,location.getLatitude());
             arg.putString(Utils.CATEGORY, category+"");
@@ -236,7 +237,7 @@ public class ListOfEventsActivity extends AppCompatActivity implements LoaderMan
                Event.DESCRIPTION, Event.START,
                Event.TAGS,
                 Event.JOINED, Event.ADDRESS,
-               Event.BUDGET_MIN, Event.LAT, Event.LNG, Event.ATTENDANCES};
+               Event.BUDGET_MIN, Event.LAT, Event.LNG, Event.ATTENDANCES, Utils.IMAGE_URL};
         String category = args.getString(Utils.CATEGORY);
         String offset = args.getString(Utils.OFFSET);
         Uri uri = null;
