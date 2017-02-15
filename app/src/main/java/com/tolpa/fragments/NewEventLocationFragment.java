@@ -1,12 +1,15 @@
 package com.tolpa.fragments;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -170,7 +173,9 @@ public class NewEventLocationFragment extends android.support.v4.app.Fragment im
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Location location = application.getCurrentLocation();
+        Location location = null;
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+            location = application.getCurrentLocation();
         map = googleMap;
         if ( map!=null ) {
             MarkerOptions markerOptions = new MarkerOptions();
@@ -186,8 +191,10 @@ public class NewEventLocationFragment extends android.support.v4.app.Fragment im
                 e.printStackTrace();
             }
             // Updates the location and zoom of the MapView
-            map.getUiSettings().setMyLocationButtonEnabled(true);
-            map.setMyLocationEnabled(true);
+            if (location != null) {
+                map.getUiSettings().setMyLocationButtonEnabled(true);
+                map.setMyLocationEnabled(true);
+            }
             map.animateCamera(CameraUpdateFactory.zoomTo(15), 500, null);
 
 

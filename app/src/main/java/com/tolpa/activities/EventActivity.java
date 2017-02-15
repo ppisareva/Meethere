@@ -23,6 +23,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
@@ -149,7 +150,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         progressBarOn();
         serverApi = app().getServerApi();
         progressBar = (ProgressBar) findViewById(R.id.avloadingIndicatorView);
-        View header = getLayoutInflater().inflate(R.layout.event_activity, null);
+        View header = getLayoutInflater().inflate(R.layout.event_activity, (ViewGroup) findViewById(android.R.id.content), false);
         description = (TextView) header.findViewById(R.id.descriprion_my_event);
         description.setText(getIntent().getStringExtra(Event.DESCRIPTION));
         image = (ImageView) findViewById(R.id.image_my_event);
@@ -174,7 +175,6 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
                 LatLng pin = new LatLng(lat, lng);
 
                 googleMap.getUiSettings().setMyLocationButtonEnabled(true);
-                googleMap.setMyLocationEnabled(true);
                 googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 500, null);
 
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pin, 15));
@@ -186,7 +186,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
 
         mapView.onCreate(savedInstanceState);
         budget = (TextView) header.findViewById(R.id.my_event_budget);
-        budget.setText(getIntent().getIntExtra(Event.BUDGET_MIN, 0)+"");
+        budget.setText(Integer.toString(getIntent().getIntExtra(Event.BUDGET_MIN, 0)));
         address = (TextView) header.findViewById(R.id.address_myevent);
         address.setText(getIntent().getStringExtra(Event.ADDRESS));
         quantity = (TextView) header.findViewById(R.id.people_quantity_my_event);
@@ -453,8 +453,6 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
                         public void onMapReady(GoogleMap googleMap) {
                             LatLng pin = new LatLng(lat, lng);
 
-                            googleMap.getUiSettings().setMyLocationButtonEnabled(true);
-                            googleMap.setMyLocationEnabled(true);
                             googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 500, null);
 
                             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pin, 15));

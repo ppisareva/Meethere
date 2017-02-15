@@ -46,14 +46,14 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
     ServerApi serverApi;
     public static final String ID = "id";
     String arr[];
-    List<Category> categories = new ArrayList<Category>();
+    List<Category> categories = new ArrayList();
 
 
 
     public static FeedFragment newInstance(Set<String> c) {
         FeedFragment fragment = new FeedFragment();
         Bundle b = new Bundle();
-        ArrayList<String> list = new ArrayList<String>(c);
+        ArrayList<String> list = new ArrayList(c);
         b.putStringArrayList(Utils.CATEGORY, list);
         fragment.setArguments(b);
         return fragment;
@@ -78,7 +78,7 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
         }
 
         if (getArguments() != null) {
-           category = new HashSet<>(getArguments().getStringArrayList(Utils.CATEGORY));
+           category = new HashSet(getArguments().getStringArrayList(Utils.CATEGORY));
 
         }
     }
@@ -157,7 +157,7 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
     public List<Category> getListEvents(){
         List<Category> categoryList = new ArrayList<>();
 
-        categoryList.add(new Category(445445, "Популярное"));
+        categoryList.add(new Category(445445, getString(R.string.popular)));
         for(String c: category){
 
                 int idCategory = Integer.parseInt(c);
@@ -192,7 +192,7 @@ public class FeedFragment extends android.support.v4.app.Fragment implements Loa
                     JSONObject category = arr.getJSONObject(i);
                     c.add(category.getInt(ID));
                 }
-            ((App)getActivity().getApplication()).pref().edit().putString(Utils.CATEGORY, jsonObject.toString()).commit();
+            ((App)getActivity().getApplication()).pref().edit().putString(Utils.CATEGORY, jsonObject.toString()).apply();
                 return c;
             } catch (JSONException e) {
                 e.printStackTrace();

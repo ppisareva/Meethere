@@ -22,11 +22,6 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-
     <application
         android:name="com.tolpa.model.App"
         android:allowBackup="true"
@@ -115,15 +110,6 @@
         <activity android:name="com.tolpa.activities.UserProfileActivity" />
         <activity android:name="com.tolpa.activities.FeedActivity" />
         <activity android:name="com.tolpa.activities.ChooseCategoryActivity" />
-
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <action android:name="android.intent.action.EDIT" />
-
-            <category android:name="android.intent.category.APP_CALENDAR" />
-
-            <data android:mimeType="vnd.android.cursor.item/event" />
-        </intent-filter>
 
         <activity
             android:name="com.tolpa.activities.EnterCredentialsActivity"

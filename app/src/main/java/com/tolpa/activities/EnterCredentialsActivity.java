@@ -65,7 +65,6 @@ public class EnterCredentialsActivity extends AbstractMeethereActivity implement
         emailView = (AutoCompleteTextView) findViewById(R.id.email);
         emailView.setOnFocusChangeListener(onFocusChangeListener);
         additionalFields = findViewById(R.id.additional_input);
-        populateAutoComplete();
 
         passwordView = (EditText) findViewById(R.id.password);
         passwordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -137,9 +136,6 @@ public class EnterCredentialsActivity extends AbstractMeethereActivity implement
         }
     };
 
-    private void populateAutoComplete() {
-        getLoaderManager().initLoader(LOADER_EMAIL, null, this);
-    }
 
     /**
      * Set up the {@link android.app.ActionBar}, if the API is available.
@@ -261,21 +257,6 @@ public class EnterCredentialsActivity extends AbstractMeethereActivity implement
 
     @Override
     public Loader onCreateLoader(int i, Bundle bundle) {
-        if (i == LOADER_EMAIL) {
-            return new CursorLoader(this,
-                    // Retrieve data rows for the device user's 'profile' contact.
-                    Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
-                            ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
-
-                    // Select only email addresses.
-                    ContactsContract.Contacts.Data.MIMETYPE +
-                            " = ?", new String[]{ContactsContract.CommonDataKinds.Email
-                    .CONTENT_ITEM_TYPE},
-
-                    // Show primary email addresses first. Note that there won't be
-                    // a primary email address if the user hasn't specified one.
-                    ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
-        }
         if (i == LOADER_IS_REGISTRED) {
             return new CheckEmailAsyncLoader(this, emailView.getText().toString());
         }
@@ -286,17 +267,6 @@ public class EnterCredentialsActivity extends AbstractMeethereActivity implement
     @Override
     public void onLoadFinished(Loader loader, Object result) {
         switch (loader.getId()) {
-            case LOADER_EMAIL:
-                List<String> emails = new ArrayList<>();
-                Cursor cursor = (Cursor) result;
-                cursor.moveToFirst();
-                while (!cursor.isAfterLast()) {
-                    emails.add(cursor.getString(ProfileQuery.ADDRESS));
-                    cursor.moveToNext();
-                }
-
-                addEmailsToAutoComplete(emails);
-                return;
             case LOADER_IS_REGISTRED:
                 boolean registered = (Boolean) result;
                 additionalFields.setVisibility(registered ? View.GONE : View.VISIBLE);
@@ -309,26 +279,6 @@ public class EnterCredentialsActivity extends AbstractMeethereActivity implement
     @Override
     public void onLoaderReset(Loader cursorLoader) {
 
-    }
-
-    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(EnterCredentialsActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-
-        emailView.setAdapter(adapter);
-    }
-
-
-    private interface ProfileQuery {
-        String[] PROJECTION = {
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
-        };
-
-        int ADDRESS = 0;
-        int IS_PRIMARY = 1;
     }
 
     /**
