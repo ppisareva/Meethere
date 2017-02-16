@@ -49,6 +49,8 @@ public class CalendarContentResolver {
 
         } catch (AssertionError ex) {
             ex.printStackTrace();
+        } finally {
+            cursor.close();
         }
 
         return res;

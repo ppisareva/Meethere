@@ -1,17 +1,22 @@
 package com.tolpa.activities;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
@@ -64,6 +69,7 @@ import java.util.List;
 
 public class EventActivity extends AbstractMeethereActivity implements LoaderManager.LoaderCallbacks<List<Comment>> {
     private static final int DIALOG_REMOVE_COMMENT = 101011;
+    private static final int PERMISSION_CALENDAR = 1000;
 
     TextView description;
     ImageView image;
@@ -112,13 +118,11 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
             switch (which){
                 case DialogInterface.BUTTON_POSITIVE:
                    if(event!=null) {
-                       calenderReselver = new CalendarContentResolver(EventActivity.this);
-
-                    if(calenderReselver.isInCalendar(event.getStart(),event.getName())){
-                        Toast.makeText(EventActivity.this, getString(R.string.events_allready_created), Toast.LENGTH_LONG).show();
-                    } else {
-                        calenderReselver.addEventToCalendar(event);
-                    }
+                       if (ContextCompat.checkSelfPermission(EventActivity.this, Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
+                           addEventToCalendar();
+                       } else {
+                           ActivityCompat.requestPermissions(EventActivity.this, new String[]{Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR}, PERMISSION_CALENDAR);
+                       }
                    }
                     break;
 
@@ -128,6 +132,24 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
             }
         }
     };
+
+    private void addEventToCalendar() {
+        CalendarContentResolver calenderReselver = new CalendarContentResolver(EventActivity.this);
+        if (calenderReselver.isInCalendar(event.getStart(), event.getName())) {
+            Toast.makeText(EventActivity.this, getString(R.string.events_allready_created), Toast.LENGTH_LONG).show();
+        } else {
+            calenderReselver.addEventToCalendar(event);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults.length == 0) return;
+        if (requestCode == PERMISSION_CALENDAR && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            addEventToCalendar();
+        }
+    }
 
     public void progressBarOn(){
         if(progressBar==null) return;
@@ -150,7 +172,7 @@ public class EventActivity extends AbstractMeethereActivity implements LoaderMan
         progressBarOn();
         serverApi = app().getServerApi();
         progressBar = (ProgressBar) findViewById(R.id.avloadingIndicatorView);
-        View header = getLayoutInflater().inflate(R.layout.event_activity, (ViewGroup) findViewById(android.R.id.content), false);
+        View header = getLayoutInflater().inflate(R.layout.event_activity, null);
         description = (TextView) header.findViewById(R.id.descriprion_my_event);
         description.setText(getIntent().getStringExtra(Event.DESCRIPTION));
         image = (ImageView) findViewById(R.id.image_my_event);
