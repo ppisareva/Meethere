@@ -492,4 +492,8 @@ public class ServerApi {
         return  connector.response();
     }
 
+    public void ping() {
+        HttpConnector connector = new HttpConnector(HOST + "ping");
+        connector.response();
+    }
 }

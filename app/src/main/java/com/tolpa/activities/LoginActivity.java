@@ -82,6 +82,7 @@ public class LoginActivity extends AbstractMeethereActivity {
         background.setVisibility(View.VISIBLE);
         initPager();
         initTimer();
+        new PingTask().execute();
     }
 
 
@@ -194,4 +195,11 @@ public class LoginActivity extends AbstractMeethereActivity {
         startActivity(new Intent(this, EnterCredentialsActivity.class));
     }
 
+    private class PingTask extends AsyncTask<Void, Void, Void>{
+        @Override
+        protected Void doInBackground(Void... params) {
+            app().getServerApi().ping();
+            return null;
+        }
+    }
 }
